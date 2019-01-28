@@ -8,6 +8,9 @@ using WindEnergy.Lib.Data;
 
 namespace WindEnergy.UI.Ext
 {
+    /// <summary>
+    /// вкладка-документ
+    /// </summary>
     public class TabPageExt : TabPage
     {
         /// <summary>

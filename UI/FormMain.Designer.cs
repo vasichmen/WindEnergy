@@ -50,8 +50,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.createNewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.saveAlltoolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -248,16 +248,6 @@
             this.createNewToolStripMenuItem.Text = "Создать";
             this.createNewToolStripMenuItem.Click += new System.EventHandler(this.createNewToolStripMenuItem_Click);
             // 
-            // mainTabControl
-            // 
-            this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainTabControl.Location = new System.Drawing.Point(3, 3);
-            this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.ShowToolTips = true;
-            this.mainTabControl.Size = new System.Drawing.Size(1151, 496);
-            this.mainTabControl.TabIndex = 0;
-            // 
             // saveAlltoolStripButton
             // 
             this.saveAlltoolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -268,6 +258,16 @@
             this.saveAlltoolStripButton.Text = "toolStripButton1";
             this.saveAlltoolStripButton.ToolTipText = "Сохранить все";
             this.saveAlltoolStripButton.Click += new System.EventHandler(this.saveAlltoolStripButton_Click);
+            // 
+            // mainTabControl
+            // 
+            this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainTabControl.Location = new System.Drawing.Point(3, 3);
+            this.mainTabControl.Name = "mainTabControl";
+            this.mainTabControl.SelectedIndex = 0;
+            this.mainTabControl.ShowToolTips = true;
+            this.mainTabControl.Size = new System.Drawing.Size(1151, 496);
+            this.mainTabControl.TabIndex = 0;
             // 
             // FormMain
             // 
