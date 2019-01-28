@@ -160,6 +160,7 @@ namespace WindEnergy.Lib.Data.Providers
 
             //открытие файла
             RawRange res = RawRangeSerializer.DeserializeFile(tmp_unpack_file);
+            res.Name = info.Name;
             return res;
         }
 

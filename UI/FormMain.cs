@@ -16,10 +16,16 @@ using WindEnergy.UI.Helpers;
 
 namespace WindEnergy.UI
 {
+    /// <summary>
+    /// главное окно программы
+    /// </summary>
     public partial class FormMain : Form
     {
-        private MainHelper mainHelper;
-        private RawRange r;
+        /// <summary>
+        /// вспомогательные методы интерфейса
+        /// </summary>
+        public MainHelper mainHelper;
+
         public FormMain()
         {
             InitializeComponent();
@@ -47,6 +53,7 @@ namespace WindEnergy.UI
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mainHelper.Save(mainTabControl.SelectedTab);
+            (mainTabControl.SelectedTab as TabPageExt).HasNotSavedChanges = false;
         }
 
         /// <summary>
@@ -63,6 +70,7 @@ namespace WindEnergy.UI
                 mainTabControl.SelectedTab.Text = Path.GetFileName(name);
                 mainTabControl.SelectedTab.ToolTipText = name;
             }
+            (mainTabControl.SelectedTab as TabPageExt).HasNotSavedChanges = false;
         }
 
         /// <summary>
@@ -73,7 +81,9 @@ namespace WindEnergy.UI
         private void createNewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RawRange r = new RawRange();
-            mainTabControl.OpenNewTab(r);
+            r.Name = "Новый документ";
+            TabPageExt tab = mainTabControl.OpenNewTab(r);
+            tab.HasNotSavedChanges = true;
         }
 
         /// <summary>
@@ -94,7 +104,9 @@ namespace WindEnergy.UI
                     string ext = Path.GetExtension(file).ToLower();
                     RawRange rang = RawRangeSerializer.DeserializeFile(file, null);
                     rang.FilePath = file;
-                    mainTabControl.OpenNewTab(rang, rang.FileName);
+                    rang.Name = Path.GetFileNameWithoutExtension(file);
+                   TabPageExt tab =  mainTabControl.OpenNewTab(rang, rang.FileName);
+                    tab.HasNotSavedChanges = false;
                 }
             }
         }
@@ -111,7 +123,8 @@ namespace WindEnergy.UI
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 RawRange res = frm.Result;
-                mainTabControl.OpenNewTab(res);
+                TabPageExt tab = mainTabControl.OpenNewTab(res);
+                tab.HasNotSavedChanges = true;
             }
         }
 
@@ -172,12 +185,38 @@ namespace WindEnergy.UI
         #endregion
 
 
+
+        /// <summary>
+        /// подтверждение закрытия окна приложения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            switch (e.CloseReason)
+            {
+                case CloseReason.MdiFormClosing: //если окно закрывается пользователем, то надо проверить все вкладки и сохранить
+                case CloseReason.FormOwnerClosing:
+                case CloseReason.UserClosing: 
+                    foreach (TabPageExt tab in mainTabControl.TabPages)
+                    {
+                        bool cancelClosing = tab.ClosePage();
+                        if(cancelClosing)
+                        {
+                            e.Cancel = true;
+                            break;
+                        }
+                    }
+                    break;
+            }
+        }
+
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             //new RP5ru().GetFromServer(DateTime.Now.AddMonths(-1), DateTime.Now.AddDays(-1), 29865);
             //new RP5ru().Search("ус");
         }
-
-        
     }
 }

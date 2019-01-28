@@ -14,29 +14,24 @@ namespace WindEnergy.Lib.Data
         private double direction = double.NaN;
 
         /// <summary>
-        /// скорость ветра в м/с
+        /// дата и время наблюдения
         /// </summary>
-        public double Speed { get; set; }
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// направление ветра в градусах
         /// </summary>
-        public double Direction { get => direction; set => direction = value; }
-
-        /// <summary>
-        /// температура воздуха в градусах цельсия
-        /// </summary>
-        public double Temperature { get; set; }
-
-        /// <summary>
-        /// влажность воздуха в процентах
-        /// </summary>
-        public double Wetness { get; set; }
-
-        /// <summary>
-        /// дата и время наблюдения
-        /// </summary>
-        public DateTime Date { get; set; }
+        public double Direction
+        {
+            get => direction;
+            set
+            {
+                if (value < 0 || value >= 360)
+                    throw new ArgumentOutOfRangeException("Направление ветра должно быть от 0 до 360 градусов");
+                else
+                    direction = value;
+            }
+        }
 
         /// <summary>
         /// направление ветра по румбам
@@ -166,6 +161,20 @@ namespace WindEnergy.Lib.Data
             }
         }
 
+        /// <summary>
+        /// скорость ветра в м/с
+        /// </summary>
+        public double Speed { get; set; }
+
+        /// <summary>
+        /// температура воздуха в градусах цельсия
+        /// </summary>
+        public double Temperature { get; set; }
+
+        /// <summary>
+        /// влажность воздуха в процентах
+        /// </summary>
+        public double Wetness { get; set; }
 
         public RawItem()
         {
@@ -173,6 +182,7 @@ namespace WindEnergy.Lib.Data
             Wetness = double.NaN;
             Date = DateTime.MinValue;
             Temperature = double.NaN;
+            Speed = double.NaN;
         }
     }
 }

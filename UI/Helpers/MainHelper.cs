@@ -32,6 +32,7 @@ namespace WindEnergy.UI.Helpers
             SaveFileDialog sf = new SaveFileDialog();
             sf.InitialDirectory = Vars.Options.LastDirectory;
             sf.AddExtension = true;
+            sf.FileName = rang.Name;
 
             sf.Filter = "Файл rp5.ru METAR (*.csv)|*.csv";
             sf.Filter += "|Файл rp5.ru WMO (*.csv)|*.csv";

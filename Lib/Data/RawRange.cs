@@ -34,6 +34,11 @@ namespace WindEnergy.Lib.Data
         }
 
         /// <summary>
+        /// название
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
         /// формат файла
         /// </summary>
         public FileFormats FileFormat { get; set; }
