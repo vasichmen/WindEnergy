@@ -20,12 +20,18 @@ namespace WindEnergy.Lib.Classes.Options
         /// </summary>
         public Options()
         {
+            TempFolder = "\\tmp";
         }
 
         /// <summary>
-        /// адрес файла
+        /// адрес файла настроек
         /// </summary>
         public string FilePath { get; set; }
+
+        /// <summary>
+        /// временния папка 
+        /// </summary>
+        public string TempFolder { get;}
 
         /// <summary>
         /// сохранение настроек в файл

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib;
 using WindEnergy.Lib.Data;
+using WindEnergy.Lib.Data.Providers;
 using WindEnergy.UI.Ext;
 using WindEnergy.UI.Helpers;
 
@@ -25,6 +26,8 @@ namespace WindEnergy.UI
             mainHelper = new MainHelper(this);
         }
 
+        #region Главное меню
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
@@ -35,7 +38,7 @@ namespace WindEnergy.UI
 
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
             of.InitialDirectory = Application.StartupPath;
@@ -51,14 +54,10 @@ namespace WindEnergy.UI
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void equalizeRangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
 
             OpenFileDialog ofMax = new OpenFileDialog()
             {
@@ -84,5 +83,24 @@ namespace WindEnergy.UI
                 }
             }
         }
+
+        private void downloadRP5ruToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormLoadFromRP5 frm = new FormLoadFromRP5();
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                RawRange res = frm.Result;
+                mainTabControl.OpenNewTab(res);
+            }
+        }
+
+        #endregion
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //new RP5ru().GetFromServer(DateTime.Now.AddMonths(-1), DateTime.Now.AddDays(-1), 29865);
+            //new RP5ru().Search("ус");
+        }
+
     }
 }

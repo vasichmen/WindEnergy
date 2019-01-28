@@ -91,4 +91,25 @@ namespace WindEnergy
         /// </summary>
         NNW
     }
+
+    /// <summary>
+    /// тип источника информации о погоде
+    /// </summary>
+    public enum MeteoSourceType
+    {
+        /// <summary>
+        /// метеостанция
+        /// </summary>
+        Meteostation,
+
+        /// <summary>
+        /// аэропорт
+        /// </summary>
+        Airport,
+
+        /// <summary>
+        /// неофициальная метеостанция
+        /// </summary>
+        UnofficialMeteostation
+    }
 }
