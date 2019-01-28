@@ -60,6 +60,7 @@ namespace WindEnergy.UI
             RawRange res = new RP5ru().GetFromServer(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation);
             Result = res;
             DialogResult = DialogResult.OK;
+            Close();
         }
 
         /// <summary>
@@ -70,13 +71,13 @@ namespace WindEnergy.UI
         private void comboBoxWMO_TextUpdate(object sender, EventArgs e)
         {
             selectedMeteostation = null;
-            string query = comboBoxWMO.Text.Trim();
+            string query = comboBoxPoint.Text.Trim();
             if (query.Length < 2)
                 return;
             List<RP5ru.WmoInfo> results = new RP5ru().Search(query);
-            comboBoxWMO.Items.Clear();
-            comboBoxWMO.Items.AddRange(results.ToArray());
-            comboBoxWMO.SelectionStart = comboBoxWMO.Text.Length;
+            comboBoxPoint.Items.Clear();
+            comboBoxPoint.Items.AddRange(results.ToArray());
+            comboBoxPoint.SelectionStart = comboBoxPoint.Text.Length;
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace WindEnergy.UI
         private void comboBoxWMO_SelectionChangeCommitted(object sender, EventArgs e)
         {
             //после того, как из поиска выбрана точка, надо проверить, есть ли на ней архив погоды. и вывести предупреждение, если ближайший архив далеко
-            List<RP5ru.MeteostationInfo> meteost = new RP5ru().GetNearestMeteostations(comboBoxWMO.SelectedItem as RP5ru.WmoInfo);
+            List<RP5ru.MeteostationInfo> meteost = new RP5ru().GetNearestMeteostations(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
 
             //выбор метеостанции
             RP5ru.MeteostationInfo meteostation;
@@ -95,18 +96,31 @@ namespace WindEnergy.UI
                 meteostation = meteost[0];
             else
             {
-                string text = "В выбранной точке нет метеостанции. Ближайшие находятся:\r\n";
+                string text = "Ближайшие метеостанции к выбранной точке:\r\n";
                 text += meteost[0].Name + ", (" + meteost[0].OwnerDistance + " км)\r\n";
                 text += meteost[1].Name + ", (" + meteost[1].OwnerDistance + " км)\r\n";
-                FormChooseMeteostAirportDialog dlg = new FormChooseMeteostAirportDialog("Загрузка ряда", text, "Первая", "Вторая");
+                FormChooseMeteostAirportDialog dlg = new FormChooseMeteostAirportDialog("Загрузка ряда с rp5.ru", text, meteost[0].Name, meteost[1].Name);
                 if (dlg.ShowDialog(this) == DialogResult.OK)
-                    meteostation = meteost[dlg.Result-1];
+                    meteostation = meteost[dlg.Result - 1];
                 else return;
             }
             this.selectedMeteostation = meteostation;
 
-            //установка времени начала наблюдений
+            //установка времени начала и конца наблюдений
             dateTimePickerFromDate.MinDate = selectedMeteostation.MonitoringFrom;
+            dateTimePickerToDate.MaxDate = DateTime.Now;
+            labelDateRange.Text = "Выберите диапазон дат: (дата начала наблюдений: " + selectedMeteostation.MonitoringFrom.ToString() + ")";
+
+            //разблокировка элементов
+            dateTimePickerFromDate.Enabled = true;
+            dateTimePickerToDate.Enabled = true;
+            buttonDownload.Enabled = true;
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

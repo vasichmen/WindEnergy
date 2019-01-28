@@ -13,27 +13,21 @@ namespace WindEnergy.UI.Ext
     /// </summary>
     public class TabControlExt : TabControl
     {
-        private List<RawRange> ranges;
-
-
         public TabControlExt()
         {
-            ranges = new List<RawRange>();
+            ShowToolTips = true;
         }
 
         /// <summary>
         /// открыть новую вкладку с заданным рядом
         /// </summary>
-        /// <param name="res"></param>
-        internal void OpenNewTab(RawRange res, string text = "Новый документ")
+        /// <param name="range">ряд данных для отображения</param>
+        /// <param name="text">заголовок вкладки</param>
+        internal void OpenNewTab(RawRange range, string text = "Новый документ")
         {
-            //TODO: проверить открытие вкладки
-            TabPage ntab = new TabPage(text);
-            DataGridViewExt ndgv = new DataGridViewExt();
-            ndgv.Dock = DockStyle.Fill;
-            ndgv.DataSource = res;
-            ndgv.Parent = ntab;
+            TabPageExt ntab = new TabPageExt(range,text);
             this.TabPages.Add(ntab);
+            this.SelectedTab = ntab;
         }
     }
 }

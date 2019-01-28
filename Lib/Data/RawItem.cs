@@ -45,7 +45,6 @@ namespace WindEnergy.Lib.Data
         {
             get
             {
-
                 //получаем градации по румбам, начиная с севера
                 double[] l = new double[17];
                 double[] r = new double[17];
@@ -159,9 +158,21 @@ namespace WindEnergy.Lib.Data
                     case WindDirections.NNW:
                         direction = 337.5;
                         break;
+                    case WindDirections.Variable:
+                        direction = 0;
+                        break;
                     default: throw new Exception("Такого румба нет");
                 }
             }
+        }
+
+
+        public RawItem()
+        {
+            direction = 0;
+            Wetness = double.NaN;
+            Date = DateTime.MinValue;
+            Temperature = double.NaN;
         }
     }
 }

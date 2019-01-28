@@ -21,6 +21,7 @@ namespace WindEnergy.Lib.Classes.Options
         public Options()
         {
             TempFolder = "\\tmp";
+            LastDirectory = Application.StartupPath;
         }
 
         /// <summary>
@@ -32,6 +33,7 @@ namespace WindEnergy.Lib.Classes.Options
         /// временния папка 
         /// </summary>
         public string TempFolder { get;}
+        public string LastDirectory { get; set; }
 
         /// <summary>
         /// сохранение настроек в файл

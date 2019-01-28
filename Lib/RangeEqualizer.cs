@@ -12,7 +12,11 @@ namespace WindEnergy.Lib
     public class RangeEqualizer
     {
 
-
+        /// <summary>
+        /// привести ряды к одному интервалу (минимальному) и удалить несовпадающие данные. 
+        /// </summary>
+        /// <param name="fileNameMaxInterval"></param>
+        /// <param name="fileNameMinInterval"></param>
         public static void ProcessRange(string fileNameMaxInterval, string fileNameMinInterval)
         {
             StreamReader sr1 = new StreamReader(fileNameMaxInterval, Encoding.Default);
@@ -54,7 +58,7 @@ namespace WindEnergy.Lib
                 {
                     DateTime dtMax = DateTime.Parse(arrMax[0]);
 
-                    string[] arrMin = TryGetPair(dtMax, lns2, 0);
+                    string[] arrMin = tryGetPair(dtMax, lns2, 0);
                     if (arrMin != null)
                     {
                         res.Add(arrMax);
@@ -79,7 +83,7 @@ namespace WindEnergy.Lib
             Process.Start(resFile);
         }
 
-        private static string[] TryGetPair(DateTime dtMax, List<string> lines, int start)
+        private static string[] tryGetPair(DateTime dtMax, List<string> lines, int start)
         {
             for (int i = lines.Count - 1; i >= 0; i--)
             {

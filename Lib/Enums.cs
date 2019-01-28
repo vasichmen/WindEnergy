@@ -89,7 +89,12 @@ namespace WindEnergy
         /// <summary>
         /// ветер с северо северо запада
         /// </summary>
-        NNW
+        NNW,
+
+        /// <summary>
+        /// Переменное направление
+        /// </summary>
+        Variable
     }
 
     /// <summary>
@@ -111,5 +116,26 @@ namespace WindEnergy
         /// неофициальная метеостанция
         /// </summary>
         UnofficialMeteostation
+    }
+
+    /// <summary>
+    /// все поддерживаемые форматы файлов
+    /// </summary>
+    public enum FileFormats
+    {
+        /// <summary>
+        /// формат файлов, полученных из архива rp5 для аэропорта
+        /// </summary>
+        RP5MetarCSV,
+
+        /// <summary>
+        /// формат файлов, полученных из архива rp5 для метеостанции
+        /// </summary>
+        RP5WmoCSV,
+
+        /// <summary>
+        /// другой формат
+        /// </summary>
+        None
     }
 }

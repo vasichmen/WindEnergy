@@ -24,6 +24,9 @@ namespace WindEnergy.UI.Dialogs
             textBoxText.Text = text;
             button1.Text = button1Text;
             button2.Text = button2Text;
+
+            new ToolTip().SetToolTip(button1, button1.Text);
+            new ToolTip().SetToolTip(button2, button2.Text);
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

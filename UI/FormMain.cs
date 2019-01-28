@@ -24,20 +24,63 @@ namespace WindEnergy.UI
         {
             InitializeComponent();
             mainHelper = new MainHelper(this);
+#if DEBUG
+            button1.Visible = true;
+#endif
+
         }
 
         #region Главное меню
+
+        #region Файл
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        /// <summary>
+        /// сохранить изменения в документе
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            mainHelper.Save(mainTabControl.SelectedTab);
         }
 
+        /// <summary>
+        /// сохранить как отдельный файл
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            string name = mainHelper.SaveAsFile(rang);
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                mainTabControl.SelectedTab.Text = Path.GetFileName(name);
+                mainTabControl.SelectedTab.ToolTipText = name;
+            }
+        }
+
+        /// <summary>
+        /// создать новый документ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void createNewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RawRange r = new RawRange();
+            mainTabControl.OpenNewTab(r);
+        }
+
+        /// <summary>
+        /// открыть файл
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
@@ -49,16 +92,40 @@ namespace WindEnergy.UI
                 foreach (string file in of.FileNames)
                 {
                     string ext = Path.GetExtension(file).ToLower();
-                    mainHelper.OpenFile(file);
+                    RawRange rang = RawRangeSerializer.DeserializeFile(file, null);
+                    rang.FilePath = file;
+                    mainTabControl.OpenNewTab(rang, rang.FileName);
                 }
             }
         }
 
 
+        /// <summary>
+        /// загрузить с сайта rp5.ru
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void downloadRP5ruToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormLoadFromRP5 frm = new FormLoadFromRP5();
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                RawRange res = frm.Result;
+                mainTabControl.OpenNewTab(res);
+            }
+        }
+
+        #endregion
+
+        #region Операции
+
+        /// <summary>
+        /// привести ряды с разными интервалами наблюдений
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void equalizeRangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-
             OpenFileDialog ofMax = new OpenFileDialog()
             {
                 DefaultExt = ".csv",
@@ -84,17 +151,26 @@ namespace WindEnergy.UI
             }
         }
 
-        private void downloadRP5ruToolStripMenuItem_Click(object sender, EventArgs e)
+        #endregion
+
+
+        #endregion
+
+        #region меню управления
+
+        /// <summary>
+        /// сохранить все документы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void saveAlltoolStripButton_Click(object sender, EventArgs e)
         {
-            FormLoadFromRP5 frm = new FormLoadFromRP5();
-            if (frm.ShowDialog(this) == DialogResult.OK)
-            {
-                RawRange res = frm.Result;
-                mainTabControl.OpenNewTab(res);
-            }
+            foreach (TabPageExt tab in mainTabControl.TabPages)
+                mainHelper.Save(tab);
         }
 
         #endregion
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -102,5 +178,6 @@ namespace WindEnergy.UI
             //new RP5ru().Search("ус");
         }
 
+        
     }
 }

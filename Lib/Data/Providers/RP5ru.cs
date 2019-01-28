@@ -98,6 +98,7 @@ namespace WindEnergy.Lib.Data.Providers
             public string Link { get { return @"https://rp5.ru/" + altName; } set { altName = value.Replace(@"https://rp5.ru/", "").Replace(@"http://rp5.ru/", ""); } }
         }
 
+
         public override TimeSpan MinQueryInterval { get { return TimeSpan.FromSeconds(1); } }
         public override int MaxAttempts { get { return 5; } }
 
@@ -158,7 +159,7 @@ namespace WindEnergy.Lib.Data.Providers
             LocalFileSystem.UnGZip(tmp_dl_file, tmp_unpack_file);
 
             //открытие файла
-            RawRange res = RawRangeSerializer.OpenFile(tmp_unpack_file);
+            RawRange res = RawRangeSerializer.DeserializeFile(tmp_unpack_file);
             return res;
         }
 
@@ -192,7 +193,7 @@ namespace WindEnergy.Lib.Data.Providers
 
                     //название
                     int s1 = archive_link.InnerText.IndexOf(" (");
-                    nm.Name = archive_link.InnerText.Substring(0, s1 - 1);
+                    nm.Name = archive_link.InnerText.Substring(0, s1);
 
                     //расстояние до точки
                     string content = archive_link.InnerText;
@@ -202,7 +203,7 @@ namespace WindEnergy.Lib.Data.Providers
                         nm.OwnerDistance = 0;
                     else
                     {
-                        int l = end - (start + 2); //TODO: проверить индексы при разный вариантах страницы
+                        int l = end - (start + 2);
                         string dist = content.Substring(start + 2, l);
                         nm.OwnerDistance = double.Parse(dist.Replace('.', Vars.DecimalSeparator));
                     }
@@ -354,13 +355,57 @@ namespace WindEnergy.Lib.Data.Providers
                     return WindDirections.NW;
                 case "ветер, дующий с северо-северо-запада":
                     return WindDirections.NNW;
+                case "переменное направление":
+                    return WindDirections.Variable;
                 default: throw new Exception("Это направление ветра не реализовано");
             }
         }
 
+        /// <summary>
+        /// получить строку по направлению ветра
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
         public static string GetStringFromWindDirection(WindDirections direction)
         {
-            throw new NotImplementedException();
+            switch (direction)
+            {
+                case WindDirections.N:
+                    return "ветер, дующий с севера";
+                case WindDirections.NNE:
+                    return "ветер, дующий с северо-северо-востока";
+                case WindDirections.NE:
+                    return "ветер, дующий с северо-востока";
+                case WindDirections.NEE:
+                    return "ветер, дующий с востоко-северо-востока";
+                case WindDirections.E:
+                    return "ветер, дующий с востока";
+                case WindDirections.SEE:
+                    return "ветер, дующий с востоко-юго-востока";
+                case WindDirections.SE:
+                    return "ветер, дующий с юго-востока";
+                case WindDirections.SSE:
+                    return "ветер, дующий с юго-юго-востока";
+                case WindDirections.S:
+                    return "ветер, дующий с юга";
+                case WindDirections.SSW:
+                    return "ветер, дующий с юго-юго-запада";
+                case WindDirections.SW:
+                    return "ветер, дующий с юго-запада";
+                case WindDirections.SWW:
+                    return "ветер, дующий с западо-юго-запада";
+                case WindDirections.W:
+                    return "ветер, дующий с запада";
+                case WindDirections.NWW:
+                    return "ветер, дующий с западо-северо-запада";
+                case WindDirections.NW:
+                    return "ветер, дующий с северо-запада";
+                case WindDirections.NNW:
+                    return "ветер, дующий с северо-северо-запада";
+                case WindDirections.Variable:
+                    return "переменное направление";
+                default: throw new Exception("Это направление ветра не реализовано");
+            }
         }
 
         /// <summary>
@@ -386,7 +431,7 @@ namespace WindEnergy.Lib.Data.Providers
             switch (type)
             {
                 case MeteoSourceType.Meteostation: //загрузка архива с метеостанции
-                    //пропуск пустых строк
+                    //пропуск пустых строк (одна уже пропущена при чтении заголовка)
                     for (int i = 0; i < 6; i++)
                         sr.ReadLine();
 
@@ -411,12 +456,12 @@ namespace WindEnergy.Lib.Data.Providers
                         WindDirections direct = RP5ru.GetWindDirectionFromString(dirs);
                         res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet });
                     }
+                    res.FileFormat = FileFormats.RP5WmoCSV;
                     break;
                 case MeteoSourceType.Airport: //загрузка архива с аэропорта
-                    //пропуск пустых строк
+                    //пропуск пустых строк (одна уже пропущена при чтении заголовка)
                     for (int i = 0; i < 6; i++)
                         sr.ReadLine();
-
 
                     string data2 = sr.ReadToEnd();
                     sr.Close();
@@ -426,9 +471,9 @@ namespace WindEnergy.Lib.Data.Providers
                         string[] elems = line.Split(';');
                         if (elems.Length < 8)
                             continue;
-                        if (elems[6] == "")
+                        if (elems[5] == "")
                             continue;
-                        if (elems[7] == "")
+                        if (elems[6] == "")
                             continue;
 
                         double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Vars.DecimalSeparator));
@@ -439,13 +484,61 @@ namespace WindEnergy.Lib.Data.Providers
                         WindDirections direct = RP5ru.GetWindDirectionFromString(dirs);
                         res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet });
                     }
+                    res.FileFormat = FileFormats.RP5MetarCSV;
                     break;
                 case MeteoSourceType.UnofficialMeteostation:
                     throw new Exception("Этот тип файла не поддерживается");
             }
-            res.FileName = Path.GetFileName(file);
             return res;
         }
 
+        /// <summary>
+        /// сохранить как файл CSV
+        /// </summary>
+        /// <param name="rang">ряд для сохранениея</param>
+        /// <param name="filename">адрес файла</param>
+        /// <param name="rP5MetarCSV">формат</param>
+        public static void ExportCSV(RawRange rang, string filename, FileFormats format)
+        {
+            StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
+
+            switch (format)
+            {
+                case FileFormats.RP5MetarCSV:
+                    string caption = "\"Местное время\";\"T\";\"P0\";\"P\";\"U\";\"DD\";\"Ff\";\"ff10\";\"WW\";\"W'W'\";\"c\";\"VV\";\"Td\";";
+                    string title = "METAR";
+                    sw.WriteLine(title);
+                    for (int i = 0; i < 5; i++) sw.WriteLine("#");
+                    sw.WriteLine(caption);
+                    string fm = "\"{0}\";\"{1}\";\"\";\"\";\"{2}\";\"{3}\";\"{4}\";\"\";\"\";\"\";\"\";\"\";\"\";";
+                    foreach (RawItem item in rang)
+                        sw.WriteLine(fm,
+                            item.Date.ToString(),
+                            item.Temperature,
+                            item.Wetness,
+                            GetStringFromWindDirection(item.DirectionRhumb),
+                            item.Speed);
+                    break;
+
+                case FileFormats.RP5WmoCSV:
+                    string caption1 = "\"Местное время\";\"T\";\"Po\";\"P\";\"Pa\";\"U\";\"DD\";\"Ff\";\"ff10\";\"ff3\";\"N\";\"WW\";\"W1\";\"W2\";\"Tn\";\"Tx\";\"Cl\";\"Nh\";\"H\";\"Cm\";\"Ch\";\"VV\";\"Td\";\"RRR\";\"tR\";\"E\";\"Tg\";\"E'\";\"sss\"";
+                    string title1 = "WMO_ID";
+                    sw.WriteLine(title1);
+                    for (int i = 0; i < 5; i++) sw.WriteLine("#");
+                    sw.WriteLine(caption1);
+                    string fm1 = "\"{0}\";\"{1}\";\"\";\"\";\"\";\"{2}\";\"{3}\";\"{4}\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";";
+                    foreach (RawItem item in rang)
+                        sw.WriteLine(fm1,
+                            item.Date.ToString(),
+                            item.Temperature,
+                            item.Wetness,
+                            GetStringFromWindDirection(item.DirectionRhumb),
+                            item.Speed);
+                    break;
+                default: throw new Exception("Этот формат не реализован");
+            }
+
+            sw.Close();
+        }
     }
 }
