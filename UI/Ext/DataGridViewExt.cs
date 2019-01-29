@@ -14,7 +14,7 @@ namespace WindEnergy.UI.Ext
             this.ColumnAdded += dataGridView_ColumnAdded;
             this.CellValidating += dataGridView_CellValidating;
             this.CellEndEdit += dataGridView_CellEndEdit;
-            
+
         }
 
         /// <summary>
@@ -89,8 +89,7 @@ namespace WindEnergy.UI.Ext
                     break;
                 case "directionrhumb":
                     e.Column.HeaderText = "Румб";
-                    e.Column.ReadOnly = true;
-                    //e.Column.c = new DataGridViewComboBoxCell();
+                    e.Column.CellTemplate = new DataGridViewComboboxCell<WindDirections>();
                     break;
                 case "speed":
                     e.Column.HeaderText = "Скорость, м/с";
