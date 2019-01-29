@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindEnergy.Lib.Classes.Options;
+using WindEnergy.Lib.Classes.Structures.Options;
 using WindEnergy.Lib.Data.Providers;
 
 namespace WindEnergy.UI

@@ -14,10 +14,11 @@ namespace WindEnergy.UI.Ext
             this.ColumnAdded += dataGridView_ColumnAdded;
             this.CellValidating += dataGridView_CellValidating;
             this.CellEndEdit += dataGridView_CellEndEdit;
+            
         }
 
         /// <summary>
-        /// 
+        /// установка флага несоранённых данных на вкладке
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -58,10 +59,20 @@ namespace WindEnergy.UI.Ext
                     return;
                 }
             }
+            //проверка влажности на допустимый диапазон
+            if (e.ColumnIndex == 5)
+            {
+                double dir = double.Parse(e.FormattedValue as string);
+                if (dir < 0 || dir > 100)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
         }
 
         /// <summary>
-        /// переисенование столбцов при добавлении
+        /// изменение типа столбцов при добавлении
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -79,6 +90,7 @@ namespace WindEnergy.UI.Ext
                 case "directionrhumb":
                     e.Column.HeaderText = "Румб";
                     e.Column.ReadOnly = true;
+                    //e.Column.c = new DataGridViewComboBoxCell();
                     break;
                 case "speed":
                     e.Column.HeaderText = "Скорость, м/с";

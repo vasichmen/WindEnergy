@@ -49,13 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Options\Options.cs" />
+    <Compile Include="Classes\Structures\Options\Options.cs" />
+    <Compile Include="Classes\Generic\PropertyComparer.cs" />
+    <Compile Include="Classes\Generic\SortableBindingList.cs" />
     <Compile Include="Data\Providers\BaseConnection.cs" />
     <Compile Include="Data\Providers\LocalFileSystem.cs" />
     <Compile Include="Data\Providers\RP5ru.cs" />
-    <Compile Include="Data\RawItem.cs" />
+    <Compile Include="Classes\Structures\RawItem.cs" />
     <Compile Include="Data\RawRangeSerializer.cs" />
-    <Compile Include="Data\RawRange.cs" />
+    <Compile Include="Classes\Collections\RawRange.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RangeEqualizer.cs" />

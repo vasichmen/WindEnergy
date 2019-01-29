@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
-namespace WindEnergy.Lib.Classes.Options
+namespace WindEnergy.Lib.Classes.Structures.Options
 {
     /// <summary>
     /// Настройки программы

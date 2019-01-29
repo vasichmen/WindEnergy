@@ -30,7 +30,7 @@ namespace WindEnergy.UI.Ext
         /// <param name="text"></param>
         public TabPageExt(RawRange range, string text)
         {
-            TextChanged += TabPageExt_TextChanged;
+            TextChanged += tabPageExt_TextChanged;
             Range = range;
             this.ToolTipText = string.IsNullOrWhiteSpace(range.FilePath) ? "" : range.FilePath;
             this.Text = text;
@@ -46,11 +46,11 @@ namespace WindEnergy.UI.Ext
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TabPageExt_TextChanged(object sender, EventArgs e)
+        private void tabPageExt_TextChanged(object sender, EventArgs e)
         {
             //пустое место, чтоб поместилась кнопка закрытия вкладки
-            if (!this.Text.EndsWith("    "))
-                this.Text += "    ";
+            if (!this.Text.EndsWith("     "))
+                this.Text += "     ";
         }
 
         /// <summary>

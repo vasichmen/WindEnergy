@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using WindEnergy.Lib.Classes.Structures;
 
 namespace WindEnergy.Lib.Data.Providers
 {
@@ -160,7 +161,7 @@ namespace WindEnergy.Lib.Data.Providers
 
             //открытие файла
             RawRange res = RawRangeSerializer.DeserializeFile(tmp_unpack_file);
-            res.Name = info.Name;
+            res.Name = info.Name+" "+ info.ParentWmo.name;
             return res;
         }
 

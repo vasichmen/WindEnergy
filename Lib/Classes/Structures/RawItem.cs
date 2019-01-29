@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindEnergy.Lib.Data
+namespace WindEnergy.Lib.Classes.Structures
 {
     /// <summary>
     /// представление данных одного элемента ряда наблюдений
@@ -12,6 +12,7 @@ namespace WindEnergy.Lib.Data
     public class RawItem
     {
         private double direction = double.NaN;
+        private double wetness;
 
         /// <summary>
         /// дата и время наблюдения
@@ -174,7 +175,14 @@ namespace WindEnergy.Lib.Data
         /// <summary>
         /// влажность воздуха в процентах
         /// </summary>
-        public double Wetness { get; set; }
+        public double Wetness { get => wetness; set
+            {
+                if (value < 0 || value > 100)
+                    throw new ArgumentOutOfRangeException("влажность воздуха должна быть от 0 до 100 %");
+                else
+                    wetness = value;
+            }
+        }
 
         public RawItem()
         {

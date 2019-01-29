@@ -1,11 +1,11 @@
-﻿using WindEnergy.Lib.Classes.Options;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Classes.Structures.Options;
 
 namespace WindEnergy
 {

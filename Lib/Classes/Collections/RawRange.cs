@@ -6,13 +6,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindEnergy.Lib.Classes.Collections.Generic;
+using WindEnergy.Lib.Classes.Structures;
 
 namespace WindEnergy.Lib.Data
 {
     /// <summary>
     /// представление ряда для редактирования
     /// </summary>
-    public class RawRange : BindingList<RawItem>
+    public class RawRange : SortableBindingList<RawItem>
     {
         /// <summary>
         /// путь к файлу

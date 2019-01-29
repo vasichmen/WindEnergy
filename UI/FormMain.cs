@@ -123,7 +123,7 @@ namespace WindEnergy.UI
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 RawRange res = frm.Result;
-                TabPageExt tab = mainTabControl.OpenNewTab(res);
+                TabPageExt tab = mainTabControl.OpenNewTab(res,res.Name);
                 tab.HasNotSavedChanges = true;
             }
         }
@@ -183,8 +183,7 @@ namespace WindEnergy.UI
         }
 
         #endregion
-
-
+        
 
         /// <summary>
         /// подтверждение закрытия окна приложения
@@ -210,8 +209,7 @@ namespace WindEnergy.UI
                     break;
             }
         }
-
-
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
