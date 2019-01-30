@@ -45,8 +45,8 @@ namespace WindEnergy.UI
             //очистка времнной папки
             try
             {
-                if (Directory.Exists(Application.StartupPath + Vars.Options.TempFolder))
-                    Directory.Delete(Application.StartupPath + Vars.Options.TempFolder, true);
+                if (Directory.Exists( Vars.Options.TempFolder))
+                    Directory.Delete( Vars.Options.TempFolder, true);
             }
             catch (Exception exxx) { Debug.Print(exxx.Message); }
             finally { Debug.Print("Temp directory removed"); }

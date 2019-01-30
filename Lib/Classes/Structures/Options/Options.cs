@@ -20,8 +20,9 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// </summary>
         public Options()
         {
-            TempFolder = "\\tmp";
+            TempFolder = Application.StartupPath+"\\tmp";
             LastDirectory = Application.StartupPath;
+            CacheFolder = Application.StartupPath+"\\cache";
         }
 
         /// <summary>
@@ -30,9 +31,18 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         public string FilePath { get; set; }
 
         /// <summary>
-        /// временния папка 
+        /// временная папка 
         /// </summary>
-        public string TempFolder { get;}
+        public string TempFolder { get; }
+
+        /// <summary>
+        /// папка кэша программы
+        /// </summary>
+        public string CacheFolder { get; set; }
+
+        /// <summary>
+        /// последняя папка сохранения или открытия файла
+        /// </summary>
         public string LastDirectory { get; set; }
 
         /// <summary>

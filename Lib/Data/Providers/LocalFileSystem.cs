@@ -17,11 +17,11 @@ namespace WindEnergy.Lib.Data.Providers
         /// <returns></returns>
         public string GetTempFileName()
         {
-            if (!Directory.Exists(Application.StartupPath + Vars.Options.TempFolder))
-                Directory.CreateDirectory(Application.StartupPath + Vars.Options.TempFolder);
-            string res = Application.StartupPath + Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString() + ".tmp";
+            if (!Directory.Exists(Vars.Options.TempFolder))
+                Directory.CreateDirectory( Vars.Options.TempFolder);
+            string res =  Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString() + ".tmp";
             while (File.Exists(res))
-                res = Application.StartupPath + Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString() + ".tmp";
+                res =  Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString() + ".tmp";
             return res;
         }
 
@@ -31,9 +31,9 @@ namespace WindEnergy.Lib.Data.Providers
         /// <returns></returns>
         public string GetTempFolderName()
         {
-            string res = Application.StartupPath + Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString();
+            string res =  Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString();
             while (Directory.Exists(res))
-                res = Application.StartupPath + Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString();
+                res = Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString();
             Directory.CreateDirectory(res);
             return res;
         }

@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -53,6 +54,7 @@
     <Compile Include="Classes\Generic\PropertyComparer.cs" />
     <Compile Include="Classes\Generic\SortableBindingList.cs" />
     <Compile Include="Data\Providers\BaseConnection.cs" />
+    <Compile Include="Data\Providers\FileSystemCache.cs" />
     <Compile Include="Data\Providers\LocalFileSystem.cs" />
     <Compile Include="Data\Providers\RP5ru.cs" />
     <Compile Include="Classes\Structures\RawItem.cs" />

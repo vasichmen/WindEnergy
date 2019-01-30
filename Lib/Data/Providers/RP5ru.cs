@@ -104,6 +104,13 @@ namespace WindEnergy.Lib.Data.Providers
         public override int MaxAttempts { get { return 5; } }
 
         /// <summary>
+        /// создаёт новый объект с кэшем в указанной папке и заданной длительностью хранения 
+        /// </summary>
+        /// <param name="cacheDirectory">папка с кэшем или null, если не надо использоать кэш</param>
+        /// <param name="duration">длительность хранения в часах. По умолчанию - неделя</param>
+        public RP5ru(string cacheDirectory, double duration = 7 * 24) : base(cacheDirectory, duration) { }
+
+        /// <summary>
         /// загрузить файл данных с сайта и открыть ряд наблюдений
         /// </summary>
         /// <param name="fromDate">с какой даты</param>

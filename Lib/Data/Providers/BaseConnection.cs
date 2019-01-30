@@ -6,9 +6,11 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace WindEnergy.Lib.Data.Providers
@@ -21,11 +23,30 @@ namespace WindEnergy.Lib.Data.Providers
         /// <summary>
         /// создает новый экземпляр класса Base Connection
         /// </summary>
-        public BaseConnection()
+        private BaseConnection()
         {
             lastQuery = DateTime.MinValue;
         }
 
+        /// <summary>
+        /// создаёт новый объект с кэшем в указанной папке и заданной длительностью хранения
+        /// </summary>
+        /// <param name="cacheDirectory">папка с кэшем или null, если не надо использоать кэш</param>
+        /// <param name="duration">длительность хранения в часах. По умолчанию - неделя</param>
+        public BaseConnection(string cacheDirectory, double duration = 7 * 24) : this()
+        {
+            useCache = cacheDirectory != null;
+            if (useCache)
+            {
+                this.cacheDirectory = cacheDirectory;
+                this.duration = duration;
+                this.cache = new FileSystemCache(cacheDirectory, TimeSpan.FromHours(duration));
+            }
+            else
+            {
+
+            }
+        }
 
         /// <summary>
         /// время последнего запроса к сервису
@@ -37,7 +58,72 @@ namespace WindEnergy.Lib.Data.Providers
         public static bool UseProxy = false;
         private readonly string ProxyHost = "127.0.0.1";
         private readonly int ProxyPort = 8118;
+        private FileSystemCache cache;
 
+        /// <summary>
+        /// загрузка изображения по заданной ссылке
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="operation">метод установки прогресса загрузки файла</param>
+        /// <param name="afterLoadComplete">действие, выполняемое по окончании загрузки файла</param>
+        /// <returns></returns>
+        public static void GetFileAsync(string url, Action<string> operation = null, Action<string> afterLoadComplete = null)
+        {
+            int i = 0;
+            string tmp_file = Vars.Options.TempFolder + "\\" + i + ".tmp";
+            Directory.CreateDirectory(Path.GetDirectoryName(tmp_file));
+            while (File.Exists(tmp_file))
+                tmp_file =  Vars.Options.TempFolder + "\\" + ++i + ".tmp";
+
+            WebClient client = new WebClient();
+            client.DownloadProgressChanged +=
+                new DownloadProgressChangedEventHandler((sender, e) =>
+                {
+                    if (operation != null)
+                    {
+                        operation.Invoke("Загрузка изображения, завершено " + (e as DownloadProgressChangedEventArgs).ProgressPercentage + "%");
+                    }
+                }
+                );
+            client.DownloadFileCompleted += new AsyncCompletedEventHandler((sender, e) =>
+            {
+                if (afterLoadComplete != null)
+                    afterLoadComplete.Invoke(tmp_file);
+                client.Dispose();
+            });
+            client.DownloadFileAsync(new Uri(url), tmp_file);
+        }
+
+        /// <summary>
+        /// получить изображение по ссылке
+        /// </summary>
+        /// <param name="url">ссылка на изображение</param>
+        /// <returns></returns>
+        public static Image GetImage(string url)
+        {
+            WebClient wc = new WebClient();
+            try
+            {
+                Stream str = wc.OpenRead(url);
+                if (wc.ResponseHeaders[HttpResponseHeader.ContentLength] == "0")
+                    return new Bitmap(256, 256);
+                Image res = Image.FromStream(str);
+                str.Close();
+                wc.Dispose();
+                return res;
+            }
+            catch (WebException ex)
+            {
+                Stream resp = ex.Response.GetResponseStream();
+                StreamReader sr = new StreamReader(resp);
+                string ans = sr.ReadToEnd();
+                sr.Close();
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                    throw new ApplicationException(ans, ex);
+                else
+                    return new Bitmap(256, 256);
+            }
+        }
 
 
 
@@ -88,7 +174,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// <param name="url">url запроса</param>
         /// <param name="data">данные POST  запроса</param>
         /// <returns></returns>
-        protected HtmlDocument SendHtmlPostRequest(string url, string data, string referer)
+        protected HtmlDocument SendHtmlPostRequest(string url, string data, string referer = "")
         {
             string ans = SendStringPostRequest(url, data, null, referer);
             //StreamReader sr = new StreamReader("sr.txt");
@@ -107,7 +193,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// <param name="url">адрес</param>
         /// <param name="data">данные</param>
         /// <returns></returns>
-        protected JObject SendJsonPostRequest(string url, string data, CookieCollection cookies, string referer)
+        protected JObject SendJsonPostRequest(string url, string data, CookieCollection cookies, string referer = "")
         {
             JObject jobj;
             string json = SendStringPostRequest(url, data, cookies, referer);
@@ -142,6 +228,12 @@ namespace WindEnergy.Lib.Data.Providers
         /// <exception cref="WebException">Если произошла ошибка при подключении</exception>
         protected string SendStringGetRequest(string url, out HttpStatusCode code, bool useGZip = true, string referer = "")
         {
+            if (useCache)
+                if (cache.ContainsWebUrl(url))
+                {
+                    code = HttpStatusCode.OK;
+                    return cache.GetWebUrl(url);
+                }
             try
             {
                 //ожидание времени интервала между запросами
@@ -162,7 +254,6 @@ namespace WindEnergy.Lib.Data.Providers
                 request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
                 if (referer != "")
                     request.Referer = referer;
-
                 //Получаем ответ от интернет-ресурса.
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 //string lng = response.Headers[HttpRequestHeader.var];
@@ -203,6 +294,10 @@ namespace WindEnergy.Lib.Data.Providers
 
                 //код ошибки
                 code = response.StatusCode;
+
+                //запись в кэш, если надо
+                if (useCache)
+                    cache.PutWebUrl(url, responsereader);
 
                 return responsereader;
             }
@@ -266,8 +361,8 @@ namespace WindEnergy.Lib.Data.Providers
                 req.Timeout = 100000;
                 req.ContentType = "application/x-www-form-urlencoded";
                 req.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
-                req.Referer = referer;
-                req.Host = "rp5.ru";
+                if (referer != "")
+                    req.Referer = referer;
                 byte[] sentData = Encoding.GetEncoding(1251).GetBytes(data);
                 req.ContentLength = sentData.Length;
                 Stream sendStream = req.GetRequestStream();
