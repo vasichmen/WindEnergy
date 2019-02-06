@@ -11,23 +11,34 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Interfaces;
 using WindEnergy.UI.Dialogs;
 
 namespace WindEnergy.UI
 {
+    /// <summary>
+    /// загрузка данных из БД NASA
+    /// </summary>
     public partial class FormLoadFromNASA : Form
     {
         public RawRange Result = null;
-        private NASA engine;
+        private NASA engineNASA;
+        private IGeocoderProvider geocoder;
         private NASA.PointInfo spoint;
 
         public FormLoadFromNASA()
         {
             InitializeComponent();
             DialogResult = DialogResult.None;
-            engine = new NASA(Vars.Options.CacheFolder + "\\nasa");
+            engineNASA = new NASA(Vars.Options.CacheFolder + "\\nasa");
+            geocoder = new Arcgis(Vars.Options.CacheFolder + "\\arcgis");
         }
 
+        /// <summary>
+        /// кнопка выбора точки на карте
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSelectPoint_Click(object sender, EventArgs e)
         {
             FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty);
@@ -43,6 +54,11 @@ namespace WindEnergy.UI
             }
         }
 
+        /// <summary>
+        /// нажатие на кнопку загрузки данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonDownload_Click(object sender, EventArgs e)
         {
             if (spoint == null)
@@ -52,7 +68,8 @@ namespace WindEnergy.UI
             }
             try
             {
-                RawRange res = engine.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, spoint);
+                RawRange res = engineNASA.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, spoint);
+                res.Name = geocoder.GetAddress(spoint.Position);
                 Result = res;
                 DialogResult = DialogResult.OK;
                 Close();
@@ -69,12 +86,22 @@ namespace WindEnergy.UI
             }
         }
 
+        /// <summary>
+        /// отмена
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
         }
 
+        /// <summary>
+        /// закрытие формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FormLoadFromNASA_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (DialogResult == DialogResult.None)
@@ -82,7 +109,7 @@ namespace WindEnergy.UI
         }
 
         /// <summary>
-        /// 
+        /// запись начальных значений выбора дат
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
