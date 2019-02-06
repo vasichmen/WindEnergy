@@ -154,6 +154,7 @@
             this.MinimumSize = new System.Drawing.Size(411, 193);
             this.Name = "FormLoadFromRP5";
             this.Text = "Загрузка ряда с Расписания погоды";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormLoadFromRP5_FormClosed);
             this.Shown += new System.EventHandler(this.formLoadFromRP5_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

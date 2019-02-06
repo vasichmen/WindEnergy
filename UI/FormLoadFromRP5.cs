@@ -22,13 +22,14 @@ namespace WindEnergy.UI
         /// <summary>
         /// список ближайших метеостанций к выбранной точке погоды
         /// </summary>
-        private RP5ru.MeteostationInfo selectedMeteostation = null;
+        private RP5ru.PointInfo selectedMeteostation = null;
         private RP5ru engine;
 
         public FormLoadFromRP5()
         {
             InitializeComponent();
             engine = new RP5ru(Vars.Options.CacheFolder + "\\rp5.ru");
+            DialogResult = DialogResult.None;
         }
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace WindEnergy.UI
             }
             try
             {
-                RawRange res = engine.GetFromServer(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation);
+                RawRange res = engine.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation);
                 Result = res;
                 DialogResult = DialogResult.OK;
                 Close();
@@ -109,9 +110,9 @@ namespace WindEnergy.UI
 
             try
             {
-                List<RP5ru.MeteostationInfo> meteost = engine.GetNearestMeteostations(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
+                List<RP5ru.PointInfo> meteost = engine.GetNearestMeteostations(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
                 //выбор метеостанции
-                RP5ru.MeteostationInfo meteostation;
+                RP5ru.PointInfo meteostation;
                 if (meteost.Count == 1)
                     meteostation = meteost[0];
                 else
@@ -150,6 +151,12 @@ namespace WindEnergy.UI
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void FormLoadFromRP5_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (DialogResult == DialogResult.None)
+                DialogResult = DialogResult.Cancel;
         }
     }
 }

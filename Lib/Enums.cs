@@ -114,9 +114,13 @@ namespace WindEnergy
         /// Переменное направление
         /// </summary>
         [Description("Переменное направление")]
-        Variable
+        Variable,
 
-
+        /// <summary>
+        /// нет данных
+        /// </summary>
+        [Description("Нет данных")]
+        Undefined
     }
 
     /// <summary>

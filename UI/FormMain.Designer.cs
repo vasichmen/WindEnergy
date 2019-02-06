@@ -34,6 +34,7 @@
             this.createNewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadRP5ruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadNASAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,7 +88,7 @@
             // createNewToolStripMenuItem
             // 
             this.createNewToolStripMenuItem.Name = "createNewToolStripMenuItem";
-            this.createNewToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.createNewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createNewToolStripMenuItem.Text = "Создать";
             this.createNewToolStripMenuItem.Click += new System.EventHandler(this.createNewToolStripMenuItem_Click);
             // 
@@ -95,9 +96,10 @@
             // 
             this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.downloadRP5ruToolStripMenuItem,
+            this.downloadNASAToolStripMenuItem,
             this.openFileToolStripMenuItem1});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Открыть";
             // 
             // downloadRP5ruToolStripMenuItem
@@ -106,6 +108,13 @@
             this.downloadRP5ruToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
             this.downloadRP5ruToolStripMenuItem.Text = "Загрузить ряд с Расписания погоды";
             this.downloadRP5ruToolStripMenuItem.Click += new System.EventHandler(this.downloadRP5ruToolStripMenuItem_Click);
+            // 
+            // downloadNASAToolStripMenuItem
+            // 
+            this.downloadNASAToolStripMenuItem.Name = "downloadNASAToolStripMenuItem";
+            this.downloadNASAToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
+            this.downloadNASAToolStripMenuItem.Text = "Загрузить ряд из СБД NASA";
+            this.downloadNASAToolStripMenuItem.Click += new System.EventHandler(this.downloadNASAToolStripMenuItem_Click);
             // 
             // openFileToolStripMenuItem1
             // 
@@ -117,21 +126,21 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Сохранить";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsToolStripMenuItem.Text = "Сохранить как";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Выход";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -323,6 +332,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
         private System.Windows.Forms.ToolStripMenuItem createNewToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton saveAlltoolStripButton;
+        private System.Windows.Forms.ToolStripMenuItem downloadNASAToolStripMenuItem;
     }
 }
 

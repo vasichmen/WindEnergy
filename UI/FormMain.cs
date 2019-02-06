@@ -128,6 +128,22 @@ namespace WindEnergy.UI
             }
         }
 
+        /// <summary>
+        /// загрузить из БД NASA
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void downloadNASAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormLoadFromNASA frm = new FormLoadFromNASA();
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                RawRange res = frm.Result;
+                TabPageExt tab = mainTabControl.OpenNewTab(res,res.Name);
+                tab.HasNotSavedChanges = true;
+            }
+        }
+
         #endregion
 
         #region Операции
@@ -216,5 +232,6 @@ namespace WindEnergy.UI
             //new RP5ru().GetFromServer(DateTime.Now.AddMonths(-1), DateTime.Now.AddDays(-1), 29865);
             //new RP5ru().Search("ус");
         }
+
     }
 }

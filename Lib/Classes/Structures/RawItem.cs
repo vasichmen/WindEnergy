@@ -41,6 +41,9 @@ namespace WindEnergy.Lib.Classes.Structures
         {
             get
             {
+                if (double.IsNaN(direction))
+                    return WindDirections.Undefined;
+
                 //получаем градации по румбам, начиная с севера
                 double[] l = new double[17];
                 double[] r = new double[17];

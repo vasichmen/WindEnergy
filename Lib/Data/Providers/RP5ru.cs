@@ -9,13 +9,14 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Structures;
+using WindEnergy.Lib.Data.Interfaces;
 
 namespace WindEnergy.Lib.Data.Providers
 {
     /// <summary>
     /// взаимодействие с сайтом RP5.ru
     /// </summary>
-    public class RP5ru : BaseConnection
+    public class RP5ru : BaseConnection, IRangeProvider
     {
         /// <summary>
         /// информация о точке с погодой
@@ -51,7 +52,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// <summary>
         /// информация о метеостанции с архивом погоды
         /// </summary>
-        public class MeteostationInfo
+        public class PointInfo
         {
             /// <summary>
             /// id метеостанции для загрузки архива
@@ -115,10 +116,12 @@ namespace WindEnergy.Lib.Data.Providers
         /// </summary>
         /// <param name="fromDate">с какой даты</param>
         /// <param name="toDate">до какой даты</param>
-        /// <param name="wmo_id">id метеостанции</param>
+        /// <param name="point_info">объект MeteostationInfo - информация о метеостанции</param>
         /// <returns></returns>
-        public RawRange GetFromServer(DateTime fromDate, DateTime toDate, MeteostationInfo info)
+        public RawRange GetRange(DateTime fromDate, DateTime toDate, object point_info)
         {
+            PointInfo info = point_info as PointInfo;
+
             //получение ссылки на файл
             string data, link;
             switch (info.MeteoSourceType)
@@ -177,7 +180,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// </summary>
         /// <param name="wmoInfo">информация о точке с погодой</param>
         /// <returns></returns>
-        public List<MeteostationInfo> GetNearestMeteostations(WmoInfo wmoInfo)
+        public List<PointInfo> GetNearestMeteostations(WmoInfo wmoInfo)
         {
             //страница погоды в заданной точке
             HtmlDocument point_page = SendHtmlGetRequest(wmoInfo.Link, out HttpStatusCode code);
@@ -192,11 +195,11 @@ namespace WindEnergy.Lib.Data.Providers
                 point_page.GetElementbyId("wug_link"), //на неофициальной метеостанции
             };
 
-            List<MeteostationInfo> res = new List<MeteostationInfo>();
+            List<PointInfo> res = new List<PointInfo>();
             foreach (HtmlNode archive_link in archives)
                 if (archive_link != null)
                 {
-                    MeteostationInfo nm = new MeteostationInfo();
+                    PointInfo nm = new PointInfo();
                     nm.ParentWmo = wmoInfo; //искомая точка
                     nm.Link = archive_link.Attributes["href"].Value; //ссылка на страницу
 
@@ -243,7 +246,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// </summary>
         /// <param name="page_link">ссылка на страницу архива</param>
         /// <returns></returns>
-        private void getMeteostationExtInfo(ref MeteostationInfo info)
+        private void getMeteostationExtInfo(ref PointInfo info)
         {
             if (info == null)
                 throw new ArgumentException("info");

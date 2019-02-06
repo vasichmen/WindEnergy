@@ -97,6 +97,7 @@
             this.Name = "FormChooseMeteostAirportDialog";
             this.ShowInTaskbar = false;
             this.Text = "Загрузка";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormChooseMeteostAirportDialog_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

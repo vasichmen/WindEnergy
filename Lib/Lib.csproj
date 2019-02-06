@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GMap.NET.Core, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>..\packages\GMap.NET.WindowsForms.1.7.5\lib\net40\GMap.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsForms, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>..\packages\GMap.NET.WindowsForms.1.7.5\lib\net40\GMap.NET.WindowsForms.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.8.11.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.8.11\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -50,12 +56,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\MapMarker.cs" />
     <Compile Include="Classes\Structures\Options\Options.cs" />
     <Compile Include="Classes\Generic\PropertyComparer.cs" />
     <Compile Include="Classes\Generic\SortableBindingList.cs" />
     <Compile Include="Data\Providers\BaseConnection.cs" />
     <Compile Include="Data\Providers\FileSystemCache.cs" />
+    <Compile Include="Data\Interfaces\IRangeProvider.cs" />
     <Compile Include="Data\Providers\LocalFileSystem.cs" />
+    <Compile Include="Data\Providers\NASA.cs" />
     <Compile Include="Data\Providers\RP5ru.cs" />
     <Compile Include="Classes\Structures\RawItem.cs" />
     <Compile Include="Data\RawRangeSerializer.cs" />
@@ -67,7 +76,6 @@
     <Compile Include="Vars.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\Interfaces\" />
     <Folder Include="Math\" />
   </ItemGroup>
   <ItemGroup>
