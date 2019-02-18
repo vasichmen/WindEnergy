@@ -23,6 +23,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             TempFolder = Application.StartupPath+"\\tmp";
             LastDirectory = Application.StartupPath;
             CacheFolder = Application.StartupPath+"\\cache";
+            MapProvider = MapProviders.YandexMap;
         }
 
         /// <summary>
@@ -46,6 +47,11 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         public string LastDirectory { get; set; }
 
         /// <summary>
+        /// тип карты при выборе точек
+        /// </summary>
+        public MapProviders MapProvider { get; set; }
+
+        /// <summary>
         /// сохранение настроек в файл
         /// </summary>
         /// <param name="Directory">адрес папки, куда сохранить файл</param>
@@ -61,19 +67,13 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// </summary>
         /// <param name="Directory">адрес файла</param>
         /// <returns></returns>
-        public static Options Load(string Directory)
+        public static Options Load(string filename)
         {
-            string[] arr = System.IO.Directory.GetFiles(Directory);
-            List<string> files = new List<string>(arr);
-
-            foreach (string file in files)
+            try
             {
-                string name = Path.GetFileName(file);
-                return XMLDeserialize(file);
+                return XMLDeserialize(filename);
             }
-
-            return new Options();
-
+            catch (Exception) { return new Options(); }
         }
 
         #region сериализация

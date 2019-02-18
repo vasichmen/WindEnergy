@@ -22,7 +22,7 @@ namespace WindEnergy.UI.Dialogs
     /// </summary>
     public partial class FormSelectMapPointDialog : Form
     {
-        public PointLatLng Result;
+        public PointLatLng Result { get; set; }
         private PointLatLng cPoint;
         private GMapOverlay lay;
 
@@ -76,10 +76,22 @@ namespace WindEnergy.UI.Dialogs
 
             //язык карты
             GMapProvider.Language = LanguageType.Russian;
-            
+
 
             //поставщик карты
-            gmapControlMap.MapProvider = GMapProviders.GoogleMap;
+            switch (Vars.Options.MapProvider) {
+                case MapProviders.GoogleSatellite:
+                    gmapControlMap.MapProvider = GMapProviders.GoogleSatelliteMap;
+                    break;
+                case MapProviders.OpenStreetMap:
+                    gmapControlMap.MapProvider = GMapProviders.OpenStreetMap;
+                    break;
+                case MapProviders.YandexMap:
+                    gmapControlMap.MapProvider = GMapProviders.YandexMap;
+                    break;
+                default:
+                    throw new Exception("Этот тип карты не реализован");
+            }
 
 
             //Если вы используете интернет через прокси сервер,

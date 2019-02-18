@@ -100,6 +100,11 @@ namespace WindEnergy.UI.Ext
                 case "wetness":
                     e.Column.HeaderText = "Влажность, %";
                     break;
+
+                //удаляемые колонки пишем тут:
+                case "dateargument":
+                    e.Column.DataGridView.Columns.Remove(e.Column);
+                    break;
                 default: throw new Exception("Для этой колонки нет названия");
             }
         }

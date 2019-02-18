@@ -40,8 +40,10 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkRepairRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.операцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.createNewToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -72,6 +74,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(1157, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.MenuActivate += new System.EventHandler(this.menuStrip1_MenuActivate);
             // 
             // файлToolStripMenuItem
             // 
@@ -146,14 +149,24 @@
             // 
             // правкаToolStripMenuItem
             // 
+            this.правкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkRepairRangeToolStripMenuItem});
             this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
             this.правкаToolStripMenuItem.Size = new System.Drawing.Size(64, 21);
             this.правкаToolStripMenuItem.Text = "Правка";
             // 
+            // checkRepairRangeToolStripMenuItem
+            // 
+            this.checkRepairRangeToolStripMenuItem.Name = "checkRepairRangeToolStripMenuItem";
+            this.checkRepairRangeToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.checkRepairRangeToolStripMenuItem.Text = "Проверить и восстановить ряд";
+            this.checkRepairRangeToolStripMenuItem.Click += new System.EventHandler(this.checkRepairRangeToolStripMenuItem_Click);
+            // 
             // операцииToolStripMenuItem
             // 
             this.операцииToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.equalizeRangesToolStripMenuItem});
+            this.equalizeRangesToolStripMenuItem,
+            this.optionsToolStripMenuItem});
             this.операцииToolStripMenuItem.Name = "операцииToolStripMenuItem";
             this.операцииToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
             this.операцииToolStripMenuItem.Text = "Операции";
@@ -166,6 +179,13 @@
             this.equalizeRangesToolStripMenuItem.ToolTipText = "Для каждого наблюдения из ряда с большим интервалом подобрать наблюдение из ряда " +
     "с меньшим интервалом и сохранить";
             this.equalizeRangesToolStripMenuItem.Click += new System.EventHandler(this.equalizeRangesToolStripMenuItem_Click);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.optionsToolStripMenuItem.Text = "Настройки";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // помощьToolStripMenuItem
             // 
@@ -333,6 +353,8 @@
         private System.Windows.Forms.ToolStripMenuItem createNewToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton saveAlltoolStripButton;
         private System.Windows.Forms.ToolStripMenuItem downloadNASAToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkRepairRangeToolStripMenuItem;
     }
 }
 

@@ -44,10 +44,6 @@ namespace WindEnergy.UI.Ext
     /// <typeparam name="T"></typeparam>
     public class DataGridViewComboboxCell<T> : DataGridViewTextBoxCell
     {
-        /// <summary>
-        /// конвертер типов для перечисления T
-        /// </summary>
-        private TypeConverter typeConverter;
         private List<object> items;
 
         public DataGridViewComboboxCell()
@@ -56,8 +52,7 @@ namespace WindEnergy.UI.Ext
             switch (typeof(T).Name)
             {
                 case "WindDirections":
-                    typeConverter = new EnumTypeConverter<T>();
-                    items = getItems();
+                    items =  WindDirections.Undefined.GetItems(); // получение списка элементов перечисления
                     break;
 
                 default: throw new Exception("Конвертер типов для этого перечисления не реализован");
@@ -65,17 +60,7 @@ namespace WindEnergy.UI.Ext
             }
         }
 
-        /// <summary>
-        /// получить все значений Enum для вывода в выпадающий список
-        /// </summary>
-        /// <returns></returns>
-        private List<object> getItems()
-        {
-            List<object> res = new List<object>();
-            foreach (Enum en in Enum.GetValues(typeof(T)))
-                res.Add(en.Description());
-            return res;
-        }
+      
 
         /// <summary>
         /// начало редактирования ячейки

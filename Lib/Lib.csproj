@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\MapMarker.cs" />
+    <Compile Include="Classes\Structures\Diapason.cs" />
     <Compile Include="Classes\Structures\Options\Options.cs" />
     <Compile Include="Classes\Generic\PropertyComparer.cs" />
     <Compile Include="Classes\Generic\SortableBindingList.cs" />
@@ -73,12 +74,22 @@
     <Compile Include="Classes\Collections\RawRange.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EnumExtensions.cs" />
+    <Compile Include="Operations\Checker.cs" />
+    <Compile Include="Operations\Interpolation\IInterpolateMathod.cs" />
+    <Compile Include="Operations\Interpolation\LagrangeInterpolateMethod.cs" />
+    <Compile Include="Operations\Interpolation\LinearInterpolateMethod.cs" />
+    <Compile Include="Operations\Interpolation\StepwiseInterpolateMethod.cs" />
+    <Compile Include="Operations\Restorer.cs" />
+    <Compile Include="Statistic\Structures\GradationInfo.cs" />
+    <Compile Include="Statistic\Structures\GradationItem.cs" />
+    <Compile Include="Statistic\Structures\EnergyInfo.cs" />
+    <Compile Include="Statistic\Collections\StatisticalRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RangeEqualizer.cs" />
+    <Compile Include="Operations\Equalizer.cs" />
     <Compile Include="Vars.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Math\" />
+    <Folder Include="Statistic\Calculations\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

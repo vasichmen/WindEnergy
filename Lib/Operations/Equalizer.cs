@@ -7,9 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindEnergy.Lib
+namespace WindEnergy.Lib.Operations
 {
-    public class RangeEqualizer
+    /// <summary>
+    /// приведение двух рядов к одному интервалу
+    /// </summary>
+    public static class Equalizer
     {
 
         /// <summary>

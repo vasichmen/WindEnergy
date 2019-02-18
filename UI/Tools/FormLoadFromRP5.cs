@@ -8,11 +8,12 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.UI.Dialogs;
 
-namespace WindEnergy.UI
+namespace WindEnergy.UI.Tools
 {
     /// <summary>
     /// окно загрузки ряда с сайта rp5.ru

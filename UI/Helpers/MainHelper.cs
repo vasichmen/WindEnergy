@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Data;
 using WindEnergy.UI.Ext;
 

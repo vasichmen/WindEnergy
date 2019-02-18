@@ -50,6 +50,9 @@ namespace WindEnergy.UI
             }
             catch (Exception exxx) { Debug.Print(exxx.Message); }
             finally { Debug.Print("Temp directory removed"); }
+
+            //сохранение настроек
+            Vars.Options.Save(Application.StartupPath + "\\options.xml");
         }
     }
 }

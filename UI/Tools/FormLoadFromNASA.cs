@@ -13,8 +13,9 @@ using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Data.Interfaces;
 using WindEnergy.UI.Dialogs;
+using WindEnergy.Lib.Classes.Collections;
 
-namespace WindEnergy.UI
+namespace WindEnergy.UI.Tools
 {
     /// <summary>
     /// загрузка данных из БД NASA

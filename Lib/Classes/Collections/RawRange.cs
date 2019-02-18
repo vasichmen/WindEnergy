@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GMap.NET;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Collections.Generic;
 using WindEnergy.Lib.Classes.Structures;
 
-namespace WindEnergy.Lib.Data
+namespace WindEnergy.Lib.Classes.Collections
 {
     /// <summary>
     /// представление ряда для редактирования
@@ -44,6 +45,7 @@ namespace WindEnergy.Lib.Data
         /// формат файла
         /// </summary>
         public FileFormats FileFormat { get; set; }
+
 
         public RawRange()
         {

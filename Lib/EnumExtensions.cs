@@ -33,7 +33,20 @@ namespace WindEnergy
 
             return enumElement.ToString();
         }
+
+        /// <summary>
+        /// получить все значений Enum для вывода в выпадающий список
+        /// </summary>
+        /// <returns></returns>
+        public static List<object> GetItems(this Enum element)
+        {
+            List<object> res = new List<object>();
+            foreach (Enum en in Enum.GetValues(element.GetType()))
+                res.Add(en.Description());
+            return res;
+        }
     }
+
 
     /// <summary>
     /// преобразователь типов для перечислений

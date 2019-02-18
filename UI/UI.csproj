@@ -68,6 +68,12 @@
     <Compile Include="Dialogs\FormChooseMeteostAirportDialog.Designer.cs">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\FormEditDiapasons.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FormEditDiapasons.Designer.cs">
+      <DependentUpon>FormEditDiapasons.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\FormSelectMapPointDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,16 +91,22 @@
     <Compile Include="Ext\TabPageExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="FormLoadFromNASA.cs">
+    <Compile Include="Tools\FormCheckRepairRange.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormLoadFromNASA.Designer.cs">
+    <Compile Include="Tools\FormCheckRepairRange.Designer.cs">
+      <DependentUpon>FormCheckRepairRange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\FormLoadFromNASA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FormLoadFromNASA.Designer.cs">
       <DependentUpon>FormLoadFromNASA.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormLoadFromRP5.cs">
+    <Compile Include="Tools\FormLoadFromRP5.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormLoadFromRP5.Designer.cs">
+    <Compile Include="Tools\FormLoadFromRP5.Designer.cs">
       <DependentUpon>FormLoadFromRP5.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain.cs">
@@ -106,16 +118,28 @@
     <Compile Include="Helpers\MainHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\FormOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FormOptions.Designer.cs">
+      <DependentUpon>FormOptions.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Dialogs\FormChooseMeteostAirportDialog.resx">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FormEditDiapasons.resx">
+      <DependentUpon>FormEditDiapasons.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FormSelectMapPointDialog.resx">
       <DependentUpon>FormSelectMapPointDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormLoadFromNASA.resx">
+    <EmbeddedResource Include="Tools\FormCheckRepairRange.resx">
+      <DependentUpon>FormCheckRepairRange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FormLoadFromNASA.resx">
       <DependentUpon>FormLoadFromNASA.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormLoadFromRP5.resx">
+    <EmbeddedResource Include="Tools\FormLoadFromRP5.resx">
       <DependentUpon>FormLoadFromRP5.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
@@ -131,6 +155,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Tools\FormOptions.resx">
+      <DependentUpon>FormOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

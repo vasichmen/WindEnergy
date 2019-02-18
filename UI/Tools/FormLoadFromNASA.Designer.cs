@@ -1,4 +1,4 @@
-﻿namespace WindEnergy.UI
+﻿namespace WindEnergy.UI.Tools
 {
     partial class FormLoadFromNASA
     {

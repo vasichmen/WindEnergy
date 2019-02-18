@@ -187,13 +187,43 @@ namespace WindEnergy.Lib.Classes.Structures
             }
         }
 
+        /// <summary>
+        /// дата измерения, представленная в минутах от минимальной даты DateTime.MinValue
+        /// </summary>
+        public double DateArgument { get {
+                //               9223372036854775807 maxLong
+                //               2193385800000000 ticks
+                //               219338580 seconds
+                return (Date.Ticks / 1e7) / 60d;
+            } }
+
+        /// <summary>
+        /// создаёт новый объект с значениями по умолчанию
+        /// </summary>
         public RawItem()
         {
-            direction = 0;
+            direction = double.NaN;
             Wetness = double.NaN;
             Date = DateTime.MinValue;
             Temperature = double.NaN;
             Speed = double.NaN;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p">время измрения в минутах от DateTime.MinValue</param>
+        /// <param name="speed">скорость м/с</param>
+        /// <param name="direct">направление, град</param>
+        /// <param name="temp">температура град,С</param>
+        /// <param name="wet">влажность, %</param>
+        public RawItem(double p, double speed, double direct, double temp, double wet)
+        {
+            Speed = speed;
+            Direction = direct;
+            Temperature = temp;
+            Wetness = wet;
+            Date = DateTime.MinValue + TimeSpan.FromMinutes(p);
         }
     }
 }

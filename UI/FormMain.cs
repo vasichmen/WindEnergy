@@ -9,10 +9,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib;
+using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Operations;
+using WindEnergy.Lib.Operations.Interpolation;
+using WindEnergy.Lib.Statistic.Structures;
 using WindEnergy.UI.Ext;
 using WindEnergy.UI.Helpers;
+using WindEnergy.UI.Tools;
 
 namespace WindEnergy.UI
 {
@@ -37,6 +43,18 @@ namespace WindEnergy.UI
         }
 
         #region Главное меню
+
+        /// <summary>
+        /// обновление состояний кнопок
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuStrip1_MenuActivate(object sender, EventArgs e)
+        {
+            saveToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
+            saveAsToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
+            checkRepairRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
+        }
 
         #region Файл
 
@@ -146,6 +164,26 @@ namespace WindEnergy.UI
 
         #endregion
 
+        #region Правка
+
+        /// <summary>
+        /// проверить и восстановить ряд
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkRepairRangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            FormCheckRepairRange frm = new FormCheckRepairRange(rang);
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
+            }
+            
+        }
+
+        #endregion
+
         #region Операции
 
         /// <summary>
@@ -175,9 +213,19 @@ namespace WindEnergy.UI
                 MessageBox.Show("Выберите ряд с меньшим интервалом");
                 if (ofMin.ShowDialog() == DialogResult.OK)
                 {
-                    RangeEqualizer.ProcessRange(ofMax.FileName, ofMin.FileName);
+                    Equalizer.ProcessRange(ofMax.FileName, ofMin.FileName);
                 }
             }
+        }
+
+        /// <summary>
+        /// настройки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormOptions().Show(this);
         }
 
         #endregion
@@ -229,9 +277,13 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //new RP5ru().GetFromServer(DateTime.Now.AddMonths(-1), DateTime.Now.AddDays(-1), 29865);
-            //new RP5ru().Search("ус");
+            RawItem ff = new RawItem() { };
+            //unsafe
+            {
+               int f= System.Runtime.InteropServices.Marshal.SizeOf(ff);
+            }
         }
 
+       
     }
 }
