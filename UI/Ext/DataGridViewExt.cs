@@ -82,6 +82,7 @@ namespace WindEnergy.UI.Ext
             {
                 case "date":
                     e.Column.HeaderText = "Дата наблюдения";
+                    e.Column.Width = 130;
                     e.Column.CellTemplate = new DataGridViewCalendarCell();
                     break;
                 case "direction":
@@ -89,6 +90,7 @@ namespace WindEnergy.UI.Ext
                     break;
                 case "directionrhumb":
                     e.Column.HeaderText = "Румб";
+                    e.Column.Width = 55;
                     e.Column.CellTemplate = new DataGridViewComboboxCell<WindDirections>();
                     break;
                 case "speed":

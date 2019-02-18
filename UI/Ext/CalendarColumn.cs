@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,8 +24,7 @@ namespace WindEnergy.UI.Ext
             set
             {
                 // Ensure that the cell used for the template is a CalendarCell.
-                if (value != null &&
-                    !value.GetType().IsAssignableFrom(typeof(DataGridViewCalendarCell)))
+                if (value != null && !value.GetType().IsAssignableFrom(typeof(DataGridViewCalendarCell)))
                 {
                     throw new InvalidCastException("Must be a CalendarCell");
                 }
@@ -34,22 +34,20 @@ namespace WindEnergy.UI.Ext
     }
     public class DataGridViewCalendarCell : DataGridViewTextBoxCell
     {
+        private const string FORMAT = "dd.MM.yyyy HH:mm";
 
         public DataGridViewCalendarCell()
             : base()
         {
             // Use the short date format.
-            this.Style.Format = "d";
+            this.Style.Format = FORMAT;
         }
 
-        public override void InitializeEditingControl(int rowIndex, object
-            initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
+        public override void InitializeEditingControl(int rowIndex, object  initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
         {
             // Set the value of the editing control to the current cell value.
-            base.InitializeEditingControl(rowIndex, initialFormattedValue,
-                dataGridViewCellStyle);
-            CalendarEditingControl ctl =
-                DataGridView.EditingControl as CalendarEditingControl;
+            base.InitializeEditingControl(rowIndex, initialFormattedValue,  dataGridViewCellStyle);
+            CalendarEditingControl ctl =  DataGridView.EditingControl as CalendarEditingControl;
             // Use the default row value when Value property is null.
             if (this.Value == null)
             {
@@ -85,20 +83,24 @@ namespace WindEnergy.UI.Ext
             get
             {
                 // Use the current date and time as the default value.
-                return DateTime.MinValue;
+                return DateTime.Now;
             }
         }
     }
+
+
 
     internal class CalendarEditingControl : DateTimePicker, IDataGridViewEditingControl
     {
         private DataGridView dataGridView;
         private bool valueChanged = false;
         private int rowIndex;
+        private const string FORMAT = "dd.MM.yyyy HH:mm";
 
         public CalendarEditingControl()
         {
-            this.Format = DateTimePickerFormat.Short;
+            this.Format = DateTimePickerFormat.Custom;
+            CustomFormat = FORMAT;
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlFormattedValue
@@ -107,17 +109,18 @@ namespace WindEnergy.UI.Ext
         {
             get
             {
-                return this.Value.ToShortDateString();
+                return this.Value.ToString(FORMAT);
             }
             set
             {
-                if (value is String)
+                if (value is string)
                 {
                     try
                     {
                         // This will throw an exception of the string is
                         // null, empty, or not in the format of a date.
-                        this.Value = DateTime.Parse((String)value);
+                        //DateTimeFormatInfo fo = new DateTimeFormatInfo();
+                        this.Value = DateTime.ParseExact(value as string, FORMAT, new DateTimeFormatInfo());
                     }
                     catch
                     {
