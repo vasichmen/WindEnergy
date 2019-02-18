@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace WindEnergy.UI.Ext
 {
+    /// <summary>
+    /// расширенный вариант DataGridView
+    /// </summary>
     public class DataGridViewExt : DataGridView
     {
         public DataGridViewExt()

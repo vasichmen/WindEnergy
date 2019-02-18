@@ -51,26 +51,10 @@ namespace WindEnergy.Lib.Data.Providers
                 {
                     using (GZipStream fileGZip = new GZipStream(fileOpen, CompressionMode.Decompress))
                     {
-                        //     сжатие файла по одному байту
-                        if (false)
-                        {
-                            int buf;
-                            while ((buf = fileGZip.ReadByte()) > 0)
-                            {
-                                fileCreate.WriteByte((byte)buf);
-                            }
-                        }
-
                         //     сжатие файла целиком
                         if (true)
                         {
                             fileGZip.CopyTo(fileCreate, (int)fileOpen.Length);
-                        }
-
-                        //     сжатие файла с буффером по умолчанию(4096 байт)
-                        if (false)
-                        {
-                            fileGZip.CopyTo(fileCreate);
                         }
                     }
                 }
@@ -90,26 +74,10 @@ namespace WindEnergy.Lib.Data.Providers
                 {
                     using (GZipStream fileGZip = new GZipStream(fileCreate, CompressionMode.Compress))
                     {
-                        //     сжатие файла по одному байту
-                        if (false)
-                        {
-                            int buf;
-                            while ((buf = fileOpen.ReadByte()) > 0)
-                            {
-                                fileGZip.WriteByte((byte)buf);
-                            }
-                        }
-
                         //     сжатие файла целиком
                         if (true)
                         {
                             fileOpen.CopyTo(fileGZip, (int)fileOpen.Length);
-                        }
-
-                        //     сжатие файла с буффером по умолчанию(4096 байт)
-                        if (false)
-                        {
-                            fileOpen.CopyTo(fileGZip);
                         }
                     }
                 }

@@ -254,7 +254,7 @@ namespace WindEnergy.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void formMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             switch (e.CloseReason)
             {

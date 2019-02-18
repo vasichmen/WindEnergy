@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 
@@ -8,6 +9,7 @@ namespace WindEnergy.Lib.Classes
     /// <summary>
     /// маркер на карте
     /// </summary>
+    [Serializable]
     public class MapMarker: GMapMarker
     {       
                 /// <summary>

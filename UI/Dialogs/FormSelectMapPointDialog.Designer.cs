@@ -16,6 +16,8 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                if(lay!=null)
+                lay.Dispose();
             }
             base.Dispose(disposing);
         }
