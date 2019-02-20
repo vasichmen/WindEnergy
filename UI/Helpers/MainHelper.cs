@@ -64,6 +64,8 @@ namespace WindEnergy.UI.Helpers
         /// <param name="tab">вкладка, документ которой надо сохранить</param>
         internal void Save(TabPage tab)
         {
+            if (tab == null)
+                return;
             RawRange rang = (tab as TabPageExt).Range;
             if (!string.IsNullOrWhiteSpace(rang.FilePath)) // если есть путь для сохранения
                 RawRangeSerializer.SerializeFile(rang, rang.FilePath, rang.FileFormat);

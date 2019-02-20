@@ -15,9 +15,20 @@ namespace WindEnergy.Lib.Statistic.Structures
     /// <typeparam name="T"></typeparam>
     public class GradationInfo<T>
     {
-        private List<GradationItem> items;
+        /// <summary>
+        /// коллекция диапазонов-градаций
+        /// </summary>
+        public List<object> Items=>items;
 
-        private GradationInfo() { }
+        private List<object> items;
+
+        private GradationInfo() {
+            if (typeof(T) == typeof(WindDirections))
+            {
+                items = new List<object>();
+                items.AddRange(WindDirections.Calm.GetEnumItems());
+            }
+        }
 
         /// <summary>
         /// новые градации в указанном диапазоне с указанным шагом
@@ -30,7 +41,7 @@ namespace WindEnergy.Lib.Statistic.Structures
             if (to == double.PositiveInfinity)
                 throw new ArgumentOutOfRangeException("Диапазон градаций должен быть конечным числом");
 
-            items = new List<GradationItem>();
+            items = new List<object>();
             for (double i = from; i < to - step; i += step)
                 items.Add(new GradationItem(i, i + step));
         }
@@ -44,7 +55,7 @@ namespace WindEnergy.Lib.Statistic.Structures
             {
                 return new GradationInfo<GradationItem>()
                 {
-                    items = new List<GradationItem>() {
+                    items = new List<object>() {
                         new GradationItem(0, 1.5),
                         new GradationItem(1.5, 3.5),
                         new GradationItem(3.5, 5.5),
@@ -58,8 +69,7 @@ namespace WindEnergy.Lib.Statistic.Structures
                         new GradationItem(20.5, 24.5),
                         new GradationItem(24.5, 28.5),
                         new GradationItem(28.5, 34.5),
-                        new GradationItem(34.5, 36.75),
-                        new GradationItem(36.75, double.PositiveInfinity)
+                        new GradationItem(34.5, 36.75)
                     }
                 };
             }
@@ -87,7 +97,7 @@ namespace WindEnergy.Lib.Statistic.Structures
             {
                 case "GradationItem":
                     foreach (var v in items)
-                        if (val >= v.From && val < v.To)
+                        if (val >= (v as GradationItem).From && val <  (v as GradationItem).To)
                             return v;
                     return GradationItem.Empty;
                 case "WindDirections":
@@ -95,7 +105,8 @@ namespace WindEnergy.Lib.Statistic.Structures
 
                 default: throw new Exception("Этот тип перечисления не реализован");
             }
-
+            throw new Exception("элемент не подходит ни к одной градации");
         }
+        
     }
 }

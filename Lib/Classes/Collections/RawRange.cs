@@ -66,6 +66,18 @@ namespace WindEnergy.Lib.Classes.Collections
         }
 
         /// <summary>
+        /// создаёт ряд с указанными элементами внутри
+        /// </summary>
+        /// <param name="list"></param>
+        public RawRange(List<RawItem> list)
+        {
+            BeginChange();
+            foreach (var t in list)
+                this.Add(t);
+            EndChange();
+        }
+
+        /// <summary>
         /// Начало добавления большого числа элементов. Приостанавливает пересчёт всех параметров ряда
         /// </summary>
         public void BeginChange()

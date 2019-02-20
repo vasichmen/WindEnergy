@@ -9,7 +9,7 @@ namespace WindEnergy.Lib.Statistic.Structures
     /// <summary>
     /// диапазон одной градации
     /// </summary>
-    public struct GradationItem
+    public class GradationItem
     {
         private readonly double _from;
         private readonly double _to;
@@ -17,11 +17,13 @@ namespace WindEnergy.Lib.Statistic.Structures
 
         public double From => _from;
         public double To => _to;
-
+        public double Average => (From + To) / 2d;
         /// <summary>
         /// истина, если структура пустая
         /// </summary>
         public bool isEmpty { get { return !notEmpty; } }
+
+        private GradationItem() { }
 
         public GradationItem(double from, double to)
         {

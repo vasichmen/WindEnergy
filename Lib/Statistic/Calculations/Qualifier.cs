@@ -57,12 +57,14 @@ namespace WindEnergy.Lib.Statistic.Calculations
             //делим ряд по 10 измерений и для каждого отрезка находим минимальный интервал
             List<Diapason<int>> diapasons = new List<Diapason<int>>();
             List<StandartIntervals> intervals = new List<StandartIntervals>();
+            //int k = 0;
             for (int i = 0; i < range.Count - SECTION_LENGTH; i += SECTION_LENGTH)
             {
                 Diapason<int> d = new Diapason<int>(i, i + SECTION_LENGTH);
                 TimeSpan minSpan = TimeSpan.MaxValue;
-                for (int j = i; j < i + SECTION_LENGTH - 1; j++)
+                for (int j = i; j < i + SECTION_LENGTH; j++)
                 {
+                   // k++;
                     TimeSpan nsp = range[j].Date > range[j + 1].Date ? range[j].Date - range[j + 1].Date : range[j + 1].Date - range[j].Date;
                     if (nsp.TotalMinutes == 0)
                         continue;
@@ -94,11 +96,17 @@ namespace WindEnergy.Lib.Statistic.Calculations
                     if (end - start > TimeSpan.FromDays(DAYS_TO_NEW_INTERVAL)) //если диапазон получается больше месяца, то добавляем
                     {
                         rangeIntervals.Add(new RangeInterval() { Diapason = new Diapason<DateTime>(start, end), Interval = intervals[i] }); // добавление диапазона
-                        start = range[diapasons[i + 1].To].Date;
+                        start = end;
+                    }
+                    else {
+
                     }
                 }
-            end = range[diapasons[diapasons.Count - 1].To].Date; //конец диапазона
+            end = range[range.Count - 1].Date; //конец диапазона
             rangeIntervals.Add(new RangeInterval() { Diapason = new Diapason<DateTime>(start, end), Interval = intervals[intervals.Count - 1] }); // добавление диапазона
+
+
+
             QualityInfo res = new QualityInfo(rangeIntervals, range.Count);
             return res;
         }

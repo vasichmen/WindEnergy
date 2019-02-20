@@ -38,23 +38,23 @@ namespace WindEnergy.Lib.Statistic.Structures
         public double Cv { get; set; }
 
         /// <summary>
-        /// удельная мощность, кВт/м2
+        /// удельная мощность, Вт/м2
         /// </summary>
         public double PowerDensity { get; set; }
 
         /// <summary>
-        /// удельная энергия кВт*ч/м2
+        /// удельная энергия Вт*ч/м2
         /// </summary>
         public double EnergyDensity { get; set; }
 
         /// <summary>
-        /// распределение по направлениям ветра
+        /// среднеквадратическое отклонение
         /// </summary>
-        public StatisticalRange<WindDirections> DirectionExpectancy { get; set; }
+        public double StandardDeviation { get;  set; }
 
         /// <summary>
-        /// распределение по скоростям
+        /// максимальная скорость за период времени
         /// </summary>
-        public StatisticalRange<GradationItem> SpeedExpectancy { get; set; }
+        public double Vmax { get; set; }
     }
 }

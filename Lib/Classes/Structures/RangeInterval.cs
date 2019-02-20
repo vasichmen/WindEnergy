@@ -9,7 +9,7 @@ namespace WindEnergy.Lib.Classes.Structures
     /// <summary>
     /// диапазон измерений с одинаковым интервалом
     /// </summary>
-   public  class RangeInterval
+    public class RangeInterval
     {
         /// <summary>
         /// начальная и конечная дата измерений
@@ -20,5 +20,10 @@ namespace WindEnergy.Lib.Classes.Structures
         /// интервал измерений
         /// </summary>
         public StandartIntervals Interval { get; set; }
+
+        public override string ToString()
+        {
+            return Diapason.ToString() + "  " + Interval.Description();
+        }
     }
 }

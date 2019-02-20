@@ -33,6 +33,7 @@ namespace WindEnergy.UI
         /// </summary>
         public MainHelper mainHelper;
 
+
         public FormMain()
         {
             InitializeComponent();
@@ -72,6 +73,8 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (mainTabControl.SelectedTab == null)
+                return;
             mainHelper.Save(mainTabControl.SelectedTab);
             (mainTabControl.SelectedTab as TabPageExt).HasNotSavedChanges = false;
         }
@@ -83,6 +86,8 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (mainTabControl.SelectedTab == null)
+                return;
             RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
             string name = mainHelper.SaveAsFile(rang);
             if (!string.IsNullOrWhiteSpace(name))
@@ -307,6 +312,23 @@ namespace WindEnergy.UI
         private void button1_Click(object sender, EventArgs e)
         {
             int i = (int)StandartIntervals.M10;
+        }
+
+        private void toolStripStatusLabelInterval_MouseEnter(object sender, EventArgs e)
+        {
+            if (mainTabControl.SelectedTab == null)
+                return;
+            contextMenuStripRangeIntervals.Items.Clear();
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            foreach (RangeInterval intt in rang.Quality.Intervals)
+                contextMenuStripRangeIntervals.Items.Add(intt.ToString());
+
+            contextMenuStripRangeIntervals.Show(MousePosition);
+        }
+
+        private void toolStripStatusLabelInterval_MouseLeave(object sender, EventArgs e)
+        {
+            contextMenuStripRangeIntervals.Close();
         }
 
     }

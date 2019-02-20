@@ -156,9 +156,6 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void radioButtonLimits_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonEnterLimits.Checked != radioButtonSelectLimitsProvider.Checked)
-                radioButtonEnterLimits.Checked = !radioButtonSelectLimitsProvider.Checked;
-
             buttonSelectPoint.Enabled = radioButtonSelectLimitsProvider.Checked;
             comboBoxLimitsProvider.Enabled = radioButtonSelectLimitsProvider.Checked;
             buttonEnterDirectionDiapason.Enabled = radioButtonEnterLimits.Checked;

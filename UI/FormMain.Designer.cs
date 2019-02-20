@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,11 +55,12 @@
             this.saveAlltoolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
             this.toolStripStatusLabelRangeCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelCompletness = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelInterval = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.contextMenuStripRangeIntervals = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -280,6 +282,7 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.ContextMenuStrip = this.contextMenuStripRangeIntervals;
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelRangeCount,
@@ -290,6 +293,27 @@
             this.statusStrip1.Size = new System.Drawing.Size(1157, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabelRangeCount
+            // 
+            this.toolStripStatusLabelRangeCount.Name = "toolStripStatusLabelRangeCount";
+            this.toolStripStatusLabelRangeCount.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabelRangeCount.Text = "toolStripStatusLabel1";
+            // 
+            // toolStripStatusLabelCompletness
+            // 
+            this.toolStripStatusLabelCompletness.Name = "toolStripStatusLabelCompletness";
+            this.toolStripStatusLabelCompletness.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabelCompletness.Text = "toolStripStatusLabel1";
+            // 
+            // toolStripStatusLabelInterval
+            // 
+            this.toolStripStatusLabelInterval.IsLink = true;
+            this.toolStripStatusLabelInterval.Name = "toolStripStatusLabelInterval";
+            this.toolStripStatusLabelInterval.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabelInterval.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabelInterval.MouseEnter += new System.EventHandler(this.toolStripStatusLabelInterval_MouseEnter);
+            this.toolStripStatusLabelInterval.MouseLeave += new System.EventHandler(this.toolStripStatusLabelInterval_MouseLeave);
             // 
             // tableLayoutPanel1
             // 
@@ -316,23 +340,10 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // toolStripStatusLabelRangeCount
+            // contextMenuStripRangeIntervals
             // 
-            this.toolStripStatusLabelRangeCount.Name = "toolStripStatusLabelRangeCount";
-            this.toolStripStatusLabelRangeCount.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabelRangeCount.Text = "toolStripStatusLabel1";
-            // 
-            // toolStripStatusLabelCompletness
-            // 
-            this.toolStripStatusLabelCompletness.Name = "toolStripStatusLabelCompletness";
-            this.toolStripStatusLabelCompletness.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabelCompletness.Text = "toolStripStatusLabel1";
-            // 
-            // toolStripStatusLabelInterval
-            // 
-            this.toolStripStatusLabelInterval.Name = "toolStripStatusLabelInterval";
-            this.toolStripStatusLabelInterval.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabelInterval.Text = "toolStripStatusLabel1";
+            this.contextMenuStripRangeIntervals.Name = "contextMenuStripRangeIntervals";
+            this.contextMenuStripRangeIntervals.Size = new System.Drawing.Size(61, 4);
             // 
             // mainTabControl
             // 
@@ -409,6 +420,7 @@
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelRangeCount;
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelCompletness;
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInterval;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripRangeIntervals;
     }
 }
 
