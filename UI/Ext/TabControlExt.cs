@@ -37,6 +37,7 @@ namespace WindEnergy.UI.Ext
             TabPageExt ntab = new TabPageExt(range, text);
             this.TabPages.Add(ntab);
             this.SelectedTab = ntab;
+            Program.winMain.mainHelper.RefreshStatusBar();
             return ntab;
         }
 

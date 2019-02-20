@@ -172,7 +172,7 @@ namespace WindEnergy.Lib.Data.Providers
 
             //открытие файла
             RawRange res = RawRangeSerializer.DeserializeFile(tmp_unpack_file);
-            res.Name = info.Name+" "+ info.ParentWmo.name;
+            res.Name = info.Name + " " + info.ParentWmo.name;
             return res;
         }
 
@@ -197,19 +197,21 @@ namespace WindEnergy.Lib.Data.Providers
             };
 
             List<PointInfo> res = new List<PointInfo>();
-            foreach (HtmlNode archive_link in archives)
-                if (archive_link != null)
+            foreach (HtmlNode some_link in archives)
+                if (some_link != null)
                 {
                     PointInfo nm = new PointInfo();
                     nm.ParentWmo = wmoInfo; //искомая точка
-                    nm.Link = archive_link.Attributes["href"].Value; //ссылка на страницу
+                    nm.Link = some_link.Attributes["href"].Value; //ссылка на страницу
 
                     //название
-                    int s1 = archive_link.InnerText.IndexOf(" (");
-                    nm.Name = archive_link.InnerText.Substring(0, s1);
+                    int s1 = some_link.InnerText.IndexOf(" (");
+                    string onmouseover = some_link.Attributes["onmouseover"].Value; //значение атрибута вывода подсказки
+                    string nmm = onmouseover.Replace("tooltip(this, '", "").Replace("' , 'hint')", "");
+                    nm.Name = some_link.InnerText.Substring(0, s1) +" ("+nmm+")";
 
                     //расстояние до точки
-                    string content = archive_link.InnerText;
+                    string content = some_link.InnerText;
                     int start = content.IndexOf("( ");
                     int end = content.IndexOf(" км");
                     if (start == -1 || end == -1)
@@ -222,7 +224,7 @@ namespace WindEnergy.Lib.Data.Providers
                     }
 
                     //тип источника
-                    string a_id = archive_link.Attributes["id"].Value;
+                    string a_id = some_link.Attributes["id"].Value;
                     switch (a_id)
                     {
                         case "archive_link":
@@ -336,6 +338,7 @@ namespace WindEnergy.Lib.Data.Providers
             switch (direction.ToLower())
             {
                 case "штиль, безветрие":
+                    return WindDirections.Calm;
                 case "ветер, дующий с севера":
                     return WindDirections.N;
                 case "ветер, дующий с северо-северо-востока":
@@ -430,7 +433,7 @@ namespace WindEnergy.Lib.Data.Providers
         {
             StreamReader sr = new StreamReader(file, Encoding.UTF8, true);
             RawRange res = new RawRange();
-
+            res.BeginChange();
 
             //определение формата файла csv
             MeteoSourceType type;
@@ -502,6 +505,7 @@ namespace WindEnergy.Lib.Data.Providers
                 case MeteoSourceType.UnofficialMeteostation:
                     throw new Exception("Этот тип файла не поддерживается");
             }
+            res.EndChange();
             return res;
         }
 
@@ -525,12 +529,16 @@ namespace WindEnergy.Lib.Data.Providers
                     sw.WriteLine(caption);
                     string fm = "\"{0}\";\"{1}\";\"\";\"\";\"{2}\";\"{3}\";\"{4}\";\"\";\"\";\"\";\"\";\"\";\"\";";
                     foreach (RawItem item in rang)
+                    {
+                        if (item.Direction == double.NaN || item.Speed == double.NaN || item.DirectionRhumb == WindDirections.Undefined)
+                            continue;
                         sw.WriteLine(fm,
                             item.Date.ToString(),
                             item.Temperature,
                             item.Wetness,
                             GetStringFromWindDirection(item.DirectionRhumb),
                             item.Speed);
+                    }
                     break;
 
                 case FileFormats.RP5WmoCSV:
@@ -541,12 +549,16 @@ namespace WindEnergy.Lib.Data.Providers
                     sw.WriteLine(caption1);
                     string fm1 = "\"{0}\";\"{1}\";\"\";\"\";\"\";\"{2}\";\"{3}\";\"{4}\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";";
                     foreach (RawItem item in rang)
+                    {
+                        if (item.Direction == double.NaN || item.Speed == double.NaN || item.DirectionRhumb == WindDirections.Undefined)
+                            continue;
                         sw.WriteLine(fm1,
                             item.Date.ToString(),
                             item.Temperature,
                             item.Wetness,
                             GetStringFromWindDirection(item.DirectionRhumb),
                             item.Speed);
+                    }
                     break;
                 default: throw new Exception("Этот формат не реализован");
             }

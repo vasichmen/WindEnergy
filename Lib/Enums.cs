@@ -121,7 +121,13 @@ namespace WindEnergy
         /// Переменное направление
         /// </summary>
         [Description("Переменное направление")]
-        Variable
+        Variable,
+
+        /// <summary>
+        /// штиль
+        /// </summary>
+        [Description("Штиль")]
+        Calm
     }
 
     /// <summary>
@@ -216,46 +222,52 @@ namespace WindEnergy
     }
 
     /// <summary>
-    /// Интервалы восстановления ряда
+    /// Интервалы наблюдений. При приведении к int - время в минутах
     /// </summary>
-    [TypeConverter(typeof(EnumTypeConverter<InterpolateIntervals>))]
-    public enum InterpolateIntervals
+    [TypeConverter(typeof(EnumTypeConverter<StandartIntervals>))]
+    public enum StandartIntervals
     {
         /// <summary>
         /// 10 минут
         /// </summary>
         [Description("10 минут")]
-        M10,
+        M10 = 10,
 
         /// <summary>
         /// 30 минут
         /// </summary>
         [Description("30 минут")]
-        M30,
+        M30 = 30,
 
         /// <summary>
         /// 1 час
         /// </summary>
         [Description("1 час")]
-        H1,
+        H1 = 60,
 
         /// <summary>
         /// 3 часа
         /// </summary>
         [Description("3 часа")]
-        H3,
+        H3 = 180,
 
         /// <summary>
         /// 6 часов
         /// </summary>
         [Description("6 часов")]
-        H6,
+        H6 = 360,
+
+        /// <summary>
+        /// 8 часов
+        /// </summary>
+        [Description("8 часов")]
+        H8 = 480,
 
         /// <summary>
         /// 1 день
         /// </summary>
         [Description("1 день")]
-        D1
+        D1 = 24 * 60
     }
 
     /// <summary>
@@ -265,9 +277,21 @@ namespace WindEnergy
     public enum LimitsProviders
     {
         /// <summary>
+        /// стандартные ограничения по регионам
+        /// </summary>
+        [Description("Стандартные ограничения по регионам")]
+        StaticLimits,
+
+        /// <summary>
         /// источник не выбран
         /// </summary>
         [Description("Источник не выбран")]
-        None
+        None,
+
+        /// <summary>
+        /// ручной режим
+        /// </summary>
+        [Description("Пользовательские ограничения")]
+        Manual
     }
 }

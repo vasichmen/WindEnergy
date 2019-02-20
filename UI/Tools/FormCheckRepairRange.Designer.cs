@@ -41,7 +41,6 @@
             this.buttonSelectPoint = new System.Windows.Forms.Button();
             this.radioButtonEnterLimits = new System.Windows.Forms.RadioButton();
             this.radioButtonSelectLimitsProvider = new System.Windows.Forms.RadioButton();
-            this.label3 = new System.Windows.Forms.Label();
             this.comboBoxLimitsProvider = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.buttonRepairRange = new System.Windows.Forms.Button();
@@ -85,7 +84,6 @@
             this.groupBox1.Controls.Add(this.buttonSelectPoint);
             this.groupBox1.Controls.Add(this.radioButtonEnterLimits);
             this.groupBox1.Controls.Add(this.radioButtonSelectLimitsProvider);
-            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.comboBoxLimitsProvider);
             this.groupBox1.Controls.Add(this.buttonCheckRange);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
@@ -138,7 +136,7 @@
             // labelPointCoordinates
             // 
             this.labelPointCoordinates.AutoSize = true;
-            this.labelPointCoordinates.Location = new System.Drawing.Point(177, 75);
+            this.labelPointCoordinates.Location = new System.Drawing.Point(111, 75);
             this.labelPointCoordinates.Name = "labelPointCoordinates";
             this.labelPointCoordinates.Size = new System.Drawing.Size(99, 13);
             this.labelPointCoordinates.TabIndex = 8;
@@ -148,9 +146,9 @@
             // 
             this.buttonSelectPoint.Location = new System.Drawing.Point(9, 70);
             this.buttonSelectPoint.Name = "buttonSelectPoint";
-            this.buttonSelectPoint.Size = new System.Drawing.Size(162, 23);
+            this.buttonSelectPoint.Size = new System.Drawing.Size(96, 23);
             this.buttonSelectPoint.TabIndex = 7;
-            this.buttonSelectPoint.Text = "Выбрать точку на карте";
+            this.buttonSelectPoint.Text = "Выбрать точку";
             this.buttonSelectPoint.UseVisualStyleBackColor = true;
             this.buttonSelectPoint.Click += new System.EventHandler(this.buttonSelectPoint_Click);
             // 
@@ -178,21 +176,12 @@
             this.radioButtonSelectLimitsProvider.UseVisualStyleBackColor = true;
             this.radioButtonSelectLimitsProvider.CheckedChanged += new System.EventHandler(this.radioButtonLimits_CheckedChanged);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(177, 46);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(122, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Источник информации";
-            // 
             // comboBoxLimitsProvider
             // 
             this.comboBoxLimitsProvider.FormattingEnabled = true;
             this.comboBoxLimitsProvider.Location = new System.Drawing.Point(9, 43);
             this.comboBoxLimitsProvider.Name = "comboBoxLimitsProvider";
-            this.comboBoxLimitsProvider.Size = new System.Drawing.Size(162, 21);
+            this.comboBoxLimitsProvider.Size = new System.Drawing.Size(210, 21);
             this.comboBoxLimitsProvider.TabIndex = 2;
             // 
             // buttonRepairRange
@@ -307,7 +296,6 @@
         private System.Windows.Forms.Button buttonSelectPoint;
         private System.Windows.Forms.RadioButton radioButtonEnterLimits;
         private System.Windows.Forms.RadioButton radioButtonSelectLimitsProvider;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labeldirectDiap;

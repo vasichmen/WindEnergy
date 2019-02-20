@@ -70,7 +70,7 @@ namespace WindEnergy.UI.Tools
             }
             catch (WebException ex)
             {
-                MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message+"\r\n"+ex.InnerException!=null?ex.InnerException.Message:"", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -118,9 +118,9 @@ namespace WindEnergy.UI.Tools
                     meteostation = meteost[0];
                 else
                 {
-                    string text = "Ближайшие метеостанции к выбранной точке:\r\n";
-                    text += meteost[0].Name + ", (" + meteost[0].OwnerDistance + " км)\r\n";
-                    text += meteost[1].Name + ", (" + meteost[1].OwnerDistance + " км)\r\n";
+                    string text = "Ближайшие метеостанции к выбранной точке:\r\n\r\n";
+                    text += meteost[0].Name + ", (" + meteost[0].OwnerDistance + " км)\r\n\r\n";
+                    text += meteost[1].Name + ", (" + meteost[1].OwnerDistance + " км)\r\n\r\n";
                     FormChooseMeteostAirportDialog dlg = new FormChooseMeteostAirportDialog("Загрузка ряда с rp5.ru", text, meteost[0].Name, meteost[1].Name);
                     if (dlg.ShowDialog(this) == DialogResult.OK)
                         meteostation = meteost[dlg.Result - 1];

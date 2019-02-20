@@ -15,6 +15,7 @@ using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Operations;
 using WindEnergy.Lib.Operations.Interpolation;
+using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.Lib.Statistic.Structures;
 using WindEnergy.UI.Ext;
 using WindEnergy.UI.Helpers;
@@ -54,6 +55,7 @@ namespace WindEnergy.UI
             saveToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             saveAsToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             checkRepairRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
+            calculateEnergyInfoToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
         }
 
         #region Файл
@@ -123,7 +125,7 @@ namespace WindEnergy.UI
                     RawRange rang = RawRangeSerializer.DeserializeFile(file, null);
                     rang.FilePath = file;
                     rang.Name = Path.GetFileNameWithoutExtension(file);
-                   TabPageExt tab =  mainTabControl.OpenNewTab(rang, rang.FileName);
+                    TabPageExt tab = mainTabControl.OpenNewTab(rang, rang.FileName);
                     tab.HasNotSavedChanges = false;
                 }
             }
@@ -141,7 +143,7 @@ namespace WindEnergy.UI
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 RawRange res = frm.Result;
-                TabPageExt tab = mainTabControl.OpenNewTab(res,res.Name);
+                TabPageExt tab = mainTabControl.OpenNewTab(res, res.Name);
                 tab.HasNotSavedChanges = true;
             }
         }
@@ -157,7 +159,7 @@ namespace WindEnergy.UI
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 RawRange res = frm.Result;
-                TabPageExt tab = mainTabControl.OpenNewTab(res,res.Name);
+                TabPageExt tab = mainTabControl.OpenNewTab(res, res.Name);
                 tab.HasNotSavedChanges = true;
             }
         }
@@ -179,7 +181,7 @@ namespace WindEnergy.UI
             {
                 mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
             }
-            
+
         }
 
         #endregion
@@ -219,6 +221,19 @@ namespace WindEnergy.UI
         }
 
         /// <summary>
+        /// расчитать основные энергетические характеристики
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void calculateEnergyInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            FormEnergyInfo fei = new FormEnergyInfo(rang);
+            fei.Show(this);
+        }
+
+        /// <summary>
         /// настройки
         /// </summary>
         /// <param name="sender"></param>
@@ -247,7 +262,7 @@ namespace WindEnergy.UI
         }
 
         #endregion
-        
+
 
         /// <summary>
         /// подтверждение закрытия окна приложения
@@ -260,11 +275,11 @@ namespace WindEnergy.UI
             {
                 case CloseReason.MdiFormClosing: //если окно закрывается пользователем, то надо проверить все вкладки и сохранить
                 case CloseReason.FormOwnerClosing:
-                case CloseReason.UserClosing: 
+                case CloseReason.UserClosing:
                     foreach (TabPageExt tab in mainTabControl.TabPages)
                     {
                         bool cancelClosing = tab.ClosePage();
-                        if(cancelClosing)
+                        if (cancelClosing)
                         {
                             e.Cancel = true;
                             break;
@@ -273,17 +288,26 @@ namespace WindEnergy.UI
                     break;
             }
         }
-        
+
+        private void formMain_Shown(object sender, EventArgs e)
+        {
+            mainHelper.RefreshStatusBar();
+        }
+
+        /// <summary>
+        /// обновление информации в статусной строке при изменении выбранной вкладки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mainTabControl_Selected(object sender, TabControlEventArgs e)
+        {
+            mainHelper.RefreshStatusBar();
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            RawItem ff = new RawItem() { };
-            //unsafe
-            {
-               int f= System.Runtime.InteropServices.Marshal.SizeOf(ff);
-            }
+            int i = (int)StandartIntervals.M10;
         }
 
-       
     }
 }

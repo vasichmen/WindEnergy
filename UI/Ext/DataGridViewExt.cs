@@ -17,7 +17,12 @@ namespace WindEnergy.UI.Ext
             this.ColumnAdded += dataGridView_ColumnAdded;
             this.CellValidating += dataGridView_CellValidating;
             this.CellEndEdit += dataGridView_CellEndEdit;
+            this.UserDeletedRow += dataGridView_UserDeletedRow;
+        }
 
+        private void dataGridView_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            performUpdate();
         }
 
         /// <summary>
@@ -27,8 +32,7 @@ namespace WindEnergy.UI.Ext
         /// <param name="e"></param>
         private void dataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            TabPageExt tab = this.Parent as TabPageExt;
-            tab.HasNotSavedChanges = true;
+            performUpdate();
         }
 
 
@@ -90,6 +94,7 @@ namespace WindEnergy.UI.Ext
                     break;
                 case "direction":
                     e.Column.HeaderText = "Направление, °";
+                    e.Column.DefaultCellStyle.Format = "n2";
                     break;
                 case "directionrhumb":
                     e.Column.HeaderText = "Румб";
@@ -98,12 +103,15 @@ namespace WindEnergy.UI.Ext
                     break;
                 case "speed":
                     e.Column.HeaderText = "Скорость, м/с";
+                    e.Column.DefaultCellStyle.Format = "n1";
                     break;
                 case "temperature":
                     e.Column.HeaderText = "Температура, °С";
+                    e.Column.DefaultCellStyle.Format = "n1";
                     break;
                 case "wetness":
                     e.Column.HeaderText = "Влажность, %";
+                    e.Column.DefaultCellStyle.Format = "n1";
                     break;
 
                 //удаляемые колонки пишем тут:
@@ -112,6 +120,17 @@ namespace WindEnergy.UI.Ext
                     break;
                 default: throw new Exception("Для этой колонки нет названия");
             }
+        }
+
+        /// <summary>
+        /// принудительное обновление документа
+        /// </summary>
+        private void performUpdate()
+        {
+            TabPageExt tab = this.Parent as TabPageExt;
+            tab.HasNotSavedChanges = true;
+            tab.Range.PerformRefreshQuality();
+            Program.winMain.mainHelper.RefreshStatusBar();
         }
     }
 }

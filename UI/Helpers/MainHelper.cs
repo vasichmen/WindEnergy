@@ -77,5 +77,34 @@ namespace WindEnergy.UI.Helpers
                 }
             }
         }
+
+        /// <summary>
+        /// обновление информации в статусной строке в соответствии с выбранной вкладкой
+        /// </summary>
+        internal void RefreshStatusBar()
+        {
+            if (f.mainTabControl.SelectedTab != null)
+            {
+                RawRange rang = (f.mainTabControl.SelectedTab as TabPageExt).Range;
+                if (rang.Quality != null)
+                {
+                    f.toolStripStatusLabelRangeCount.Text = "Количество измерений: " + rang.Count;
+                    f.toolStripStatusLabelCompletness.Text = "Полнота ряда: " + (rang.Quality.Completeness * 100).ToString("0.00") + "%";
+                    f.toolStripStatusLabelInterval.Text = "Интервал: " + (rang.Quality.Intervals.Count == 1 ? rang.Quality.Intervals[0].Interval.Description() : "Неоднородный ряд");
+                }
+                else
+                {
+                    f.toolStripStatusLabelRangeCount.Text = "";
+                    f.toolStripStatusLabelCompletness.Text = "";
+                    f.toolStripStatusLabelInterval.Text = "";
+                }
+            }
+            else
+            {
+                f.toolStripStatusLabelRangeCount.Text = "";
+                f.toolStripStatusLabelCompletness.Text = "";
+                f.toolStripStatusLabelInterval.Text = "";
+            }
+        }
     }
 }

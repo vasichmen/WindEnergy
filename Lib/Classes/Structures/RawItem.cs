@@ -157,6 +157,7 @@ namespace WindEnergy.Lib.Classes.Structures
                     case WindDirections.NNW:
                         direction = 337.5;
                         break;
+                    case WindDirections.Calm:
                     case WindDirections.Variable:
                         direction = 0;
                         break;

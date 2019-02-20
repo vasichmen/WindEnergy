@@ -61,6 +61,7 @@
     <Compile Include="Classes\Structures\Options\Options.cs" />
     <Compile Include="Classes\Generic\PropertyComparer.cs" />
     <Compile Include="Classes\Generic\SortableBindingList.cs" />
+    <Compile Include="Classes\Structures\RangeInterval.cs" />
     <Compile Include="Data\Providers\ArcGis.cs" />
     <Compile Include="Data\Providers\BaseConnection.cs" />
     <Compile Include="Data\Providers\FileSystemCache.cs" />
@@ -74,12 +75,21 @@
     <Compile Include="Classes\Collections\RawRange.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EnumExtensions.cs" />
+    <Compile Include="Geomodel\EarthModel.cs" />
+    <Compile Include="Geomodel\SphereCalculations.cs" />
     <Compile Include="Operations\Checker.cs" />
     <Compile Include="Operations\Interpolation\IInterpolateMathod.cs" />
     <Compile Include="Operations\Interpolation\LagrangeInterpolateMethod.cs" />
     <Compile Include="Operations\Interpolation\LinearInterpolateMethod.cs" />
     <Compile Include="Operations\Interpolation\StepwiseInterpolateMethod.cs" />
+    <Compile Include="Operations\Limits\ILimitsProvider.cs" />
+    <Compile Include="Operations\Limits\ManualLimits.cs" />
+    <Compile Include="Operations\Limits\StaticRegionLimits.cs" />
+    <Compile Include="Statistic\Calculations\Qualifier.cs" />
     <Compile Include="Operations\Restorer.cs" />
+    <Compile Include="Operations\Structures\CheckerParameters.cs" />
+    <Compile Include="Operations\Structures\QualityInfo.cs" />
+    <Compile Include="Operations\Structures\RestorerParameters.cs" />
     <Compile Include="Statistic\Structures\GradationInfo.cs" />
     <Compile Include="Statistic\Structures\GradationItem.cs" />
     <Compile Include="Statistic\Structures\EnergyInfo.cs" />
@@ -88,9 +98,7 @@
     <Compile Include="Operations\Equalizer.cs" />
     <Compile Include="Vars.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Statistic\Calculations\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

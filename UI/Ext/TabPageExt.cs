@@ -14,6 +14,8 @@ namespace WindEnergy.UI.Ext
     /// </summary>
     public class TabPageExt : TabPage
     {
+        public DataGridViewExt DataGrid { get; }
+
         /// <summary>
         /// ряд данных, для этой вкладки
         /// </summary>
@@ -40,6 +42,7 @@ namespace WindEnergy.UI.Ext
             ndgv.Parent = this;
             ndgv.DataSource = range;
             HasNotSavedChanges = false;
+            DataGrid = ndgv;
         }
 
         /// <summary>

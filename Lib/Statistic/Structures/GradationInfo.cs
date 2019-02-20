@@ -19,9 +19,20 @@ namespace WindEnergy.Lib.Statistic.Structures
 
         private GradationInfo() { }
 
+        /// <summary>
+        /// новые градации в указанном диапазоне с указанным шагом
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="step"></param>
+        /// <param name="to"></param>
         public GradationInfo(double from, double step, double to)
         {
-            //TODO: заполнение items элементами, длиной step
+            if (to == double.PositiveInfinity)
+                throw new ArgumentOutOfRangeException("Диапазон градаций должен быть конечным числом");
+
+            items = new List<GradationItem>();
+            for (double i = from; i < to - step; i += step)
+                items.Add(new GradationItem(i, i + step));
         }
 
         /// <summary>
@@ -36,17 +47,17 @@ namespace WindEnergy.Lib.Statistic.Structures
                     items = new List<GradationItem>() {
                         new GradationItem(0, 1.5),
                         new GradationItem(1.5, 3.5),
-                        new GradationItem( 3.5, 5.5),
-                        new GradationItem(5.5, 7.5 ),
+                        new GradationItem(3.5, 5.5),
+                        new GradationItem(5.5, 7.5),
                         new GradationItem(7.5, 9.5),
-                        new GradationItem( 9.5, 11.5),
-                        new GradationItem( 11.5, 13.5 ),
-                        new GradationItem( 13.5, 15.5),
+                        new GradationItem(9.5, 11.5),
+                        new GradationItem(11.5, 13.5),
+                        new GradationItem(13.5, 15.5),
                         new GradationItem(15.5, 17.5),
                         new GradationItem(17.5, 20.5),
-                        new GradationItem(20.5, 24.5 ),
-                        new GradationItem(24.5, 28.5 ),
-                        new GradationItem(28.5 ,34.5),
+                        new GradationItem(20.5, 24.5),
+                        new GradationItem(24.5, 28.5),
+                        new GradationItem(28.5, 34.5),
                         new GradationItem(34.5, 36.75),
                         new GradationItem(36.75, double.PositiveInfinity)
                     }

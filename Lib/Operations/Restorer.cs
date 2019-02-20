@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Operations.Interpolation;
+using WindEnergy.Lib.Operations.Structures;
 
 namespace WindEnergy.Lib.Operations
 {
@@ -14,38 +15,14 @@ namespace WindEnergy.Lib.Operations
     /// </summary>
     public static class Restorer
     {
-        /// <summary>
-        /// параметры восстановления ряда
-        /// </summary>
-        public class RestoreParameters
-        {
-            /// <summary>
-            /// создаёт значения по умолчанию
-            /// </summary>
-            public RestoreParameters()
-            {
-                Interval = InterpolateIntervals.H1;
-                Method = InterpolateMathods.Stepwise;
-            }
-
-            /// <summary>
-            /// интервал наблюдений в новом ряде
-            /// </summary>
-            public InterpolateIntervals Interval { get; set; }
-
-            /// <summary>
-            /// метод интерполяции
-            /// </summary>
-            public InterpolateMathods Method { get; set; }
-        }
-
+      
         /// <summary>
         /// восстановить ряд до нужного интревала наблюдений
         /// </summary>
         /// <param name="range"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static RawRange ProcessRange(RawRange range, RestoreParameters param)
+        public static RawRange ProcessRange(RawRange range, RestorerParameters param)
         {
             Dictionary<double, double>
                 speedFunc = new Dictionary<double, double>(), //функция скорости
@@ -57,6 +34,8 @@ namespace WindEnergy.Lib.Operations
             foreach (var item in range)
             {
                 double timeStamp = item.DateArgument;
+                if (speedFunc.ContainsKey(timeStamp))
+                    throw new ApplicationException("В ряде наблюдений есть повторяющиеся даты. Восстановление невозможно, попробуйте проверить ряд на ошибки.");
                 speedFunc.Add(timeStamp, item.Speed);
                 directsFunc.Add(timeStamp, item.Direction);
                 wetFunc.Add(timeStamp, item.Wetness);
@@ -64,29 +43,7 @@ namespace WindEnergy.Lib.Operations
             }
 
             //новый интервал наблюдений в минутах
-            double newInterval;
-            switch (param.Interval)
-            {
-                case InterpolateIntervals.D1:
-                    newInterval = 24 * 60; // 1 день
-                    break;
-                case InterpolateIntervals.H1:
-                    newInterval = 60; // 1 час
-                    break;
-                case InterpolateIntervals.H3:
-                    newInterval = 3 * 60; // 3 часа
-                    break;
-                case InterpolateIntervals.H6:
-                    newInterval = 6 * 60; // 6 часов
-                    break;
-                case InterpolateIntervals.M10:
-                    newInterval = 10; // 10 минут
-                    break;
-                case InterpolateIntervals.M30:
-                    newInterval = 30; // 30 минут
-                    break;
-                default: throw new Exception("Этот интервал времени не реализован");
-            }
+            int newInterval = (int)param.Interval;
 
 
             //метки времени для нового ряда
@@ -115,6 +72,7 @@ namespace WindEnergy.Lib.Operations
 
             //создание нового ряда
             RawRange res = new RawRange();
+            res.BeginChange();
             foreach (var p in newRangeX)
             {
                 double speed = methodSpeeds.GetValue(p);
@@ -123,6 +81,7 @@ namespace WindEnergy.Lib.Operations
                 double wet = methodWet.GetValue(p);
                 res.Add(new RawItem(p,speed,direct,temp,wet));
             }
+            res.EndChange();
             return res;
         }
 
