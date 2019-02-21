@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
+using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Operations;
 using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.Lib.Statistic.Calculations;
@@ -23,10 +25,35 @@ namespace WindEnergy.UI.Tools
     /// </summary>
     public partial class FormEnergyInfo : Form
     {
-        bool ready = false;
+        /// <summary>
+        /// если истина, то окно загружено и произвеены первоначальные настройки элементов
+        /// </summary>
+        private bool ready = false;
+
+        /// <summary>
+        /// исходный ряд, для которого ведётся расчёт
+        /// </summary>
         private RawRange range;
+
+        /// <summary>
+        /// повторяемости скоростей
+        /// </summary>
         private StatisticalRange<GradationItem> stat_speeds;
+
+        /// <summary>
+        ///  повторяекмости направлений
+        /// </summary>
         private StatisticalRange<WindDirections> stat_directions;
+
+        /// <summary>
+        /// характеристики по всему ряду
+        /// </summary>
+        private EnergyInfo range_info;
+
+        /// <summary>
+        /// характеристики по градациям
+        /// </summary>
+        private EnergyInfo exp_info;
 
         /// <summary>
         /// создаёт новое окно с заданным рядом
@@ -125,6 +152,24 @@ namespace WindEnergy.UI.Tools
         }
 
         /// <summary>
+        /// сохранение результатов расчетов в файл
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSaveAs_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.InitialDirectory = Vars.Options.LastDirectory;
+            sf.Filter = "Файл MS Excel с разделителями-запятыми *.csv | *.csv";
+            sf.AddExtension = true;
+            if (sf.ShowDialog(this) == DialogResult.OK)
+            {
+                MSExcel.SaveEnergyInfoCSV(sf.FileName, range_info, exp_info, stat_directions, stat_speeds);
+                Process.Start(sf.FileName);
+            }
+        }
+
+        /// <summary>
         /// обновление всех элементов в соответствии с выбранными параметрами
         /// </summary>
         private void refreshInfo()
@@ -187,10 +232,10 @@ namespace WindEnergy.UI.Tools
                 throw new Exception("что-то совсем не так!!");
 
             //расчет параметров
-            EnergyInfo range_info = StatisticEngine.ProcessRange(tempr);
+            range_info = StatisticEngine.ProcessRange(tempr);
             stat_speeds = StatisticEngine.GetSpeedExpectancy(tempr, GradationInfo<GradationItem>.VoeykowGradations);
             stat_directions = StatisticEngine.GetDirectionExpectancy(tempr, GradationInfo<WindDirections>.Rhumb16Gradations);
-            EnergyInfo exp_info = StatisticEngine.ProcessRange(stat_speeds);
+            exp_info = StatisticEngine.ProcessRange(stat_speeds);
 
             //вывод параметров
             labelEnergyDensity.Text = range_info.EnergyDensity.ToString("0.00") + " Вт*ч/м^2";
@@ -251,6 +296,7 @@ namespace WindEnergy.UI.Tools
             zedGraphControlDirection.Invalidate();
 
         }
+
 
     }
 }

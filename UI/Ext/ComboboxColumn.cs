@@ -52,7 +52,7 @@ namespace WindEnergy.UI.Ext
             switch (typeof(T).Name)
             {
                 case "WindDirections":
-                    items =  WindDirections.Undefined.GetItems(); // получение списка элементов перечисления
+                    items =  WindDirections.Undefined.GetItems().ConvertAll<object>((s)=>(object)s); // получение списка элементов перечисления
                     break;
 
                 default: throw new Exception("Конвертер типов для этого перечисления не реализован");

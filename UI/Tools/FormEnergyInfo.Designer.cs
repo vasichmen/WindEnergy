@@ -64,6 +64,7 @@
             this.comboBoxYearMonth = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.buttonSaveAs = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -393,14 +394,14 @@
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Location = new System.Drawing.Point(7, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(456, 100);
+            this.groupBox3.Size = new System.Drawing.Size(447, 100);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             // 
             // radioButtonSelectYearMonth
             // 
             this.radioButtonSelectYearMonth.AutoSize = true;
-            this.radioButtonSelectYearMonth.Location = new System.Drawing.Point(266, 16);
+            this.radioButtonSelectYearMonth.Location = new System.Drawing.Point(253, 16);
             this.radioButtonSelectYearMonth.Name = "radioButtonSelectYearMonth";
             this.radioButtonSelectYearMonth.Size = new System.Drawing.Size(133, 17);
             this.radioButtonSelectYearMonth.TabIndex = 16;
@@ -412,7 +413,7 @@
             // 
             this.comboBoxYear.Enabled = false;
             this.comboBoxYear.FormattingEnabled = true;
-            this.comboBoxYear.Location = new System.Drawing.Point(321, 36);
+            this.comboBoxYear.Location = new System.Drawing.Point(308, 36);
             this.comboBoxYear.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxYear.Name = "comboBoxYear";
             this.comboBoxYear.Size = new System.Drawing.Size(132, 21);
@@ -423,7 +424,7 @@
             // 
             this.comboBoxYearMonth.Enabled = false;
             this.comboBoxYearMonth.FormattingEnabled = true;
-            this.comboBoxYearMonth.Location = new System.Drawing.Point(321, 63);
+            this.comboBoxYearMonth.Location = new System.Drawing.Point(308, 63);
             this.comboBoxYearMonth.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxYearMonth.Name = "comboBoxYearMonth";
             this.comboBoxYearMonth.Size = new System.Drawing.Size(132, 21);
@@ -433,7 +434,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(222, 43);
+            this.label1.Location = new System.Drawing.Point(209, 43);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 13);
@@ -443,18 +444,29 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(222, 69);
+            this.label2.Location = new System.Drawing.Point(209, 69);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(95, 13);
             this.label2.TabIndex = 15;
             this.label2.Text = "Выберите месяц:";
             // 
+            // buttonSaveAs
+            // 
+            this.buttonSaveAs.Location = new System.Drawing.Point(460, 6);
+            this.buttonSaveAs.Name = "buttonSaveAs";
+            this.buttonSaveAs.Size = new System.Drawing.Size(111, 50);
+            this.buttonSaveAs.TabIndex = 16;
+            this.buttonSaveAs.Text = "Соранить результаты в файл";
+            this.buttonSaveAs.UseVisualStyleBackColor = true;
+            this.buttonSaveAs.Click += new System.EventHandler(this.buttonSaveAs_Click);
+            // 
             // FormEnergyInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(579, 641);
+            this.Controls.Add(this.buttonSaveAs);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -512,5 +524,6 @@
         private System.Windows.Forms.ComboBox comboBoxYearMonth;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonSaveAs;
     }
 }

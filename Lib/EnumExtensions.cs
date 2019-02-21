@@ -38,9 +38,9 @@ namespace WindEnergy
         /// получить все значений Enum для вывода в выпадающий список
         /// </summary>
         /// <returns></returns>
-        public static List<object> GetItems(this Enum element)
+        public static List<string> GetItems(this Enum element)
         {
-            List<object> res = new List<object>();
+            List<string> res = new List<string>();
             foreach (Enum en in Enum.GetValues(element.GetType()))
                 res.Add(en.Description());
             return res;
@@ -50,9 +50,9 @@ namespace WindEnergy
         /// получить все значений Enum для вывода в выпадающий список
         /// </summary>
         /// <returns></returns>
-        public static List<object> GetEnumItems(this Enum element)
+        public static List<Enum> GetEnumItems(this Enum element)
         {
-            List<object> res = new List<object>();
+            List<Enum> res = new List<Enum>();
             foreach (Enum en in Enum.GetValues(element.GetType()))
                 res.Add(en);
             return res;
