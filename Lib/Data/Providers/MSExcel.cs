@@ -91,13 +91,6 @@ namespace WindEnergy.Lib.Data.Providers
             sw.WriteLine(nline);
             foreach (SinglePeriodInfo spi in years.Years)
             {
-                //labelAverageSpeed.Text = "Средняя скорость: " + years.RecomendedYear.AverageSpeed.ToString("0.0") + " м/с";
-                //labelCompletness.Text = "Полнота ряда: " + years.RecomendedYear.Completness.ToString("0.00") + " %";
-                //labelExpectDeviation.Text = "Отклонение повторяемости скорости: " + years.RecomendedYear.ExpectancyDeviation.ToString("0.00") + "";
-                //labelInterval.Text = "Δt: " + years.RecomendedYear.Interval.Description() + "";
-                //labelMaxSpeed.Text = "Максимальная скорость: " + years.RecomendedYear.Vmax.ToString("0.0") + " м/с";
-                //labelSpeedDeviation.Text = "Отклонение скорости от многолетней: " + years.RecomendedYear.SpeedDeviation.ToString("0.00") + " м/с";
-
                 nline = string.Format("{0};{1:f2};{2};{3:f2};{4:f2};{5:f2};{6:f1}", spi.Year, spi.Completness, spi.Interval.Description(), spi.SpeedDeviation, spi.ExpectancyDeviation, spi.AverageSpeed, spi.Vmax);
                 sw.WriteLine(nline);
             }

@@ -63,6 +63,7 @@
     <Compile Include="Classes\Generic\PropertyComparer.cs" />
     <Compile Include="Classes\Generic\SortableBindingList.cs" />
     <Compile Include="Classes\Structures\RangeInterval.cs" />
+    <Compile Include="Data\FileConverter.cs" />
     <Compile Include="Data\Providers\ArcGis.cs" />
     <Compile Include="Data\Providers\BaseConnection.cs" />
     <Compile Include="Data\Providers\FileSystemCache.cs" />

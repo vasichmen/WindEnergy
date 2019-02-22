@@ -399,7 +399,7 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int i = (int)StandartIntervals.M10;
+            FileConverter.ConvertFromAdressToCoordinatesLimitsFile("input.txt", "staticRegionLimits.txt");
         }
 
     }
