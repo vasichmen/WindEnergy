@@ -38,12 +38,14 @@ namespace WindEnergy.UI.Ext
             this.ToolTipText = string.IsNullOrWhiteSpace(range.FilePath) ? "" : range.FilePath;
             this.Text = text;
             DataGridViewExt ndgv = new DataGridViewExt();
+            ndgv.ColumnAdded += Program.winMain.dataGridView_ColumnAdded;
             ndgv.Dock = DockStyle.Fill;
             ndgv.Parent = this;
             ndgv.DataSource = range;
             HasNotSavedChanges = false;
             DataGrid = ndgv;
         }
+
 
         /// <summary>
         /// добавление пустого места после названия вкладки, чтоб поместилась кнопка закрытия вкладки

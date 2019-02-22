@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Generic\DateTimeComparer.cs" />
     <Compile Include="Classes\MapMarker.cs" />
     <Compile Include="Classes\Structures\Diapason.cs" />
     <Compile Include="Classes\Structures\Options\Options.cs" />
@@ -86,12 +87,16 @@
     <Compile Include="Operations\Limits\ILimitsProvider.cs" />
     <Compile Include="Operations\Limits\ManualLimits.cs" />
     <Compile Include="Operations\Limits\StaticRegionLimits.cs" />
+    <Compile Include="Operations\Structures\CalculateYearInfo.cs" />
+    <Compile Include="Operations\Structures\SinglePeriodInfo.cs" />
     <Compile Include="Statistic\Calculations\Qualifier.cs" />
     <Compile Include="Operations\Restorer.cs" />
     <Compile Include="Operations\Structures\CheckerParameters.cs" />
     <Compile Include="Operations\Structures\QualityInfo.cs" />
     <Compile Include="Operations\Structures\RestorerParameters.cs" />
     <Compile Include="Statistic\Calculations\StatisticEngine.cs" />
+    <Compile Include="Statistic\Calculations\YearCalculator.cs" />
+    <Compile Include="Statistic\Structures\DeviationsInfo.cs" />
     <Compile Include="Statistic\Structures\GradationInfo.cs" />
     <Compile Include="Statistic\Structures\GradationItem.cs" />
     <Compile Include="Statistic\Structures\EnergyInfo.cs" />

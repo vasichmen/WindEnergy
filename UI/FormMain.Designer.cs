@@ -55,13 +55,14 @@
             this.saveAlltoolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.contextMenuStripRangeIntervals = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripStatusLabelRangeCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelCompletness = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelInterval = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
-            this.contextMenuStripRangeIntervals = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
+            this.ToolStripMenuItemCalcYear = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -177,6 +178,7 @@
             this.операцииToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.equalizeRangesToolStripMenuItem,
             this.calculateEnergyInfoToolStripMenuItem,
+            this.ToolStripMenuItemCalcYear,
             this.toolStripSeparator1,
             this.optionsToolStripMenuItem});
             this.операцииToolStripMenuItem.Name = "операцииToolStripMenuItem";
@@ -294,6 +296,11 @@
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // contextMenuStripRangeIntervals
+            // 
+            this.contextMenuStripRangeIntervals.Name = "contextMenuStripRangeIntervals";
+            this.contextMenuStripRangeIntervals.Size = new System.Drawing.Size(61, 4);
+            // 
             // toolStripStatusLabelRangeCount
             // 
             this.toolStripStatusLabelRangeCount.Name = "toolStripStatusLabelRangeCount";
@@ -340,11 +347,6 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // contextMenuStripRangeIntervals
-            // 
-            this.contextMenuStripRangeIntervals.Name = "contextMenuStripRangeIntervals";
-            this.contextMenuStripRangeIntervals.Size = new System.Drawing.Size(61, 4);
-            // 
             // mainTabControl
             // 
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -358,6 +360,13 @@
             this.mainTabControl.Size = new System.Drawing.Size(1151, 495);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.mainTabControl_Selected);
+            // 
+            // ToolStripMenuItemCalcYear
+            // 
+            this.ToolStripMenuItemCalcYear.Name = "ToolStripMenuItemCalcYear";
+            this.ToolStripMenuItemCalcYear.Size = new System.Drawing.Size(266, 22);
+            this.ToolStripMenuItemCalcYear.Text = "Выбор расчётного года";
+            this.ToolStripMenuItemCalcYear.Click += new System.EventHandler(this.ToolStripMenuItemCalcYear_Click);
             // 
             // FormMain
             // 
@@ -421,6 +430,7 @@
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelCompletness;
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInterval;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripRangeIntervals;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCalcYear;
     }
 }
 

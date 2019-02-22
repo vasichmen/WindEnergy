@@ -54,6 +54,9 @@ namespace WindEnergy.UI.Ext
                 case "WindDirections":
                     items =  WindDirections.Undefined.GetItems().ConvertAll<object>((s)=>(object)s); // получение списка элементов перечисления
                     break;
+                case "StandartIntervals":
+                    items = StandartIntervals.H1.GetItems().ConvertAll<object>((s) => (object)s); // получение списка элементов перечисления
+                    break;
 
                 default: throw new Exception("Конвертер типов для этого перечисления не реализован");
 

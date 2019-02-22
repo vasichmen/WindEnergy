@@ -48,9 +48,9 @@ namespace WindEnergy.Lib.Statistic.Structures
         public double EnergyDensity { get; set; }
 
         /// <summary>
-        /// среднеквадратическое отклонение
+        /// среднеквадратическое отклонение скорости
         /// </summary>
-        public double StandardDeviation { get;  set; }
+        public double StandardDeviationSpeed { get;  set; }
 
         /// <summary>
         /// максимальная скорость за период времени

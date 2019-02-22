@@ -32,15 +32,14 @@ namespace WindEnergy.Lib.Statistic.Calculations
             res.ToDate = tempr[tempr.Count - 1].Date;
             res.PowerDensity = getAveragePower(tempr);
             res.V0 = getAverageSpeed(tempr);
-            res.StandardDeviation = getSigm(res.V0, tempr);
+            res.StandardDeviationSpeed = getSigmV(res.V0, tempr);
             res.Vmax = getMaxSpeed(tempr);
             res.EnergyDensity = res.PowerDensity * 8760d;
-            res.Cv = res.StandardDeviation / res.V0;
+            res.Cv = res.StandardDeviationSpeed / res.V0;
             return res;
         }
 
         #region служебные
-
 
 
         /// <summary>
@@ -72,13 +71,14 @@ namespace WindEnergy.Lib.Statistic.Calculations
             return sum / (input.Count);
         }
 
+
         /// <summary>
         /// среднеквадратичное отклонение
         /// </summary>
         /// <param name="average"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        private static double getSigm(double average, RawRange input)
+        private static double getSigmV(double average, RawRange input)
         {
             double sum = 0;
             foreach (var l in input)
@@ -147,9 +147,27 @@ namespace WindEnergy.Lib.Statistic.Calculations
             double sigm = Math.Sqrt((grads.Zip(expect, (g, e) => Math.Pow((g.Average - V0), 2) * e)).Aggregate((x, y) => x + (double.IsNaN(y) ? 0 : y)));
 
             //Cv
-            double Cv = sigm/V0 ;
+            double Cv = sigm / V0;
 
-            return new EnergyInfo() { Cv = Cv, EnergyDensity = EDensity, PowerDensity = PDensity, StandardDeviation = sigm, V0 = V0 };
+            return new EnergyInfo() { Cv = Cv, EnergyDensity = EDensity, PowerDensity = PDensity, StandardDeviationSpeed = sigm, V0 = V0 };
+        }
+
+        /// <summary>
+        /// расчёт отклонений от заданных многолетних значений
+        /// </summary>
+        /// <param name="r">ряд за небольшой промежуток (год)</param>
+        /// <param name="averSpeed">среднемноголетняя скорость</param>
+        /// <param name="exp">многолетняя повторяемость скорости ветра</param>
+        /// <returns></returns>
+        internal static DeviationsInfo ProcessRangeDeviations(RawRange r, double averSpeed, StatisticalRange<GradationItem> exp)
+        {
+            DeviationsInfo res = new DeviationsInfo();
+            
+            res.SpeedDeviation = Math.Abs(r.Average((t) => t.Speed) - averSpeed);
+                                 
+            StatisticalRange<GradationItem> th = GetSpeedExpectancy(r, GradationInfo<GradationItem>.VoeykowGradations);
+            res.ExpDeviation = Math.Sqrt(exp.Values.Zip(th.Values, (a, b) => Math.Pow(a - b, 2)).Aggregate((x, y) => x + y)); //корень из суммы квадратов разностей повторяемостей многолетней и этого промежутка
+            return res;
         }
 
         /// <summary>
@@ -158,7 +176,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// <param name="tempr"></param>
         /// <param name="voeykowGradations"></param>
         /// <returns></returns>
-        public static StatisticalRange<GradationItem> GetSpeedExpectancy(RawRange tempr, GradationInfo<GradationItem> voeykowGradations)
+        public static StatisticalRange<GradationItem> GetSpeedExpectancy(IList<RawItem> tempr, GradationInfo<GradationItem> voeykowGradations)
         {
             List<double> spds = new List<double>(from t in tempr select t.Speed);
             StatisticalRange<GradationItem> r = new StatisticalRange<GradationItem>(spds, voeykowGradations);

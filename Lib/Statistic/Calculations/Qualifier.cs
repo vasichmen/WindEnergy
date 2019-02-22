@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Generic;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Operations.Structures;
 
@@ -14,16 +15,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
     /// </summary>
     public class Qualifier
     {
-        /// <summary>
-        /// компаратор DataItem для упорядочивания по возрастанию дат ряда
-        /// </summary>
-        private class DTComparer : IComparer<RawItem>
-        {
-            public int Compare(RawItem x, RawItem y)
-            {
-                return x.Date.CompareTo(y.Date);
-            }
-        }
+      
 
         /// <summary>
         /// длина отрезка при разбиении на промежутки для поиска разделов интервалов
@@ -52,7 +44,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
             //иначе границей раздела интервалов берётся гранича разделов отрезков с разными интервалами
 
             List<RawItem> range = new List<RawItem>(Range);
-            range.Sort(new DTComparer());
+            range.Sort(new DateTimeComparer());
 
             //делим ряд по 10 измерений и для каждого отрезка находим минимальный интервал
             List<Diapason<int>> diapasons = new List<Diapason<int>>();

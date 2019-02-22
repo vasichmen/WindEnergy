@@ -50,7 +50,7 @@ namespace WindEnergy.UI.Tools
             comboBoxInterpolateMethod.Items.Clear();
             comboBoxInterpolateMethod.Items.AddRange(InterpolateMathods.Linear.GetItems().ToArray());
             comboBoxRepairInterval.Items.Clear();
-            comboBoxRepairInterval.Items.AddRange(StandartIntervals.H1.GetItems().ToArray());
+            comboBoxRepairInterval.Items.AddRange(StandartIntervals.H1.GetItems().Skip(1).ToArray());
             comboBoxLimitsProvider.Items.Clear();
             comboBoxLimitsProvider.Items.AddRange(LimitsProviders.None.GetItems().ToArray());
             this.range = range;

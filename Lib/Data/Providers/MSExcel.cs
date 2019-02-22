@@ -30,7 +30,7 @@ namespace WindEnergy.Lib.Data.Providers
             sw.WriteLine("Энергетические характеристики, расчитанные по ряду наблюдений");
             string nline = "Среднемноголетняя скорость, м/с;Среднее отклонение;Cv;Nуд.ср, Вт/м^2;Эуд, Вт*ч/м^2;Максимальная скорость, м/с";
             sw.WriteLine(nline);
-            nline = string.Format("{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2}", range_info.V0, range_info.StandardDeviation, range_info.Cv, range_info.PowerDensity, range_info.EnergyDensity, range_info.Vmax);
+            nline = string.Format("{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2}", range_info.V0, range_info.StandardDeviationSpeed, range_info.Cv, range_info.PowerDensity, range_info.EnergyDensity, range_info.Vmax);
             sw.WriteLine(nline);
 
 
@@ -39,7 +39,7 @@ namespace WindEnergy.Lib.Data.Providers
             sw.WriteLine("Энергетические характеристики, расчитанные по повторяемости ветра");
             nline = "Среднемноголетняя скорость, м/с;Среднее отклонение;Cv;Nуд.ср, Вт/м^2;Эуд, Вт*ч/м^2";
             sw.WriteLine(nline);
-            nline = string.Format("{0:f2};{1:f2};{2:f2};{3:f2};{4:f2}", ext_info.V0, ext_info.StandardDeviation, ext_info.Cv, ext_info.PowerDensity, ext_info.EnergyDensity);
+            nline = string.Format("{0:f2};{1:f2};{2:f2};{3:f2};{4:f2}", ext_info.V0, ext_info.StandardDeviationSpeed, ext_info.Cv, ext_info.PowerDensity, ext_info.EnergyDensity);
             sw.WriteLine(nline);
 
 

@@ -49,7 +49,7 @@ namespace WindEnergy.Lib.Operations
             //метки времени для нового ряда
             List<double> newRangeX = new List<double>();
             for (double i = range[range.Count - 1].DateArgument; i <= range[0].DateArgument; i += newInterval)
-                newRangeX.Add(i); //TODO: проверить количество новых элементов ряда
+                newRangeX.Add(i); 
 
             //создание интерполяторов функций скорости, направления, температуры, влажности
             IInterpolateMethod methodSpeeds, methodDirects, methodWet, methodTemp;

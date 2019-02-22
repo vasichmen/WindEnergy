@@ -57,6 +57,7 @@ namespace WindEnergy.UI
             saveAsToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             checkRepairRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             calculateEnergyInfoToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
+            ToolStripMenuItemCalcYear.Enabled = mainTabControl.SelectedTab != null;
         }
 
         #region Файл
@@ -239,6 +240,18 @@ namespace WindEnergy.UI
         }
 
         /// <summary>
+        /// выбор расчетного года
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripMenuItemCalcYear_Click(object sender, EventArgs e)
+        {
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            FormCalcYear fei = new FormCalcYear(rang);
+            fei.Show(this);
+        }
+
+        /// <summary>
         /// настройки
         /// </summary>
         /// <param name="sender"></param>
@@ -267,6 +280,7 @@ namespace WindEnergy.UI
         }
 
         #endregion
+
 
 
         /// <summary>
@@ -299,6 +313,52 @@ namespace WindEnergy.UI
             mainHelper.RefreshStatusBar();
         }
 
+
+        /// <summary>
+        /// изменение типа столбцов при добавлении
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void dataGridView_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
+        {
+            switch (e.Column.Name.ToLower())
+            {
+                case "date":
+                    e.Column.HeaderText = "Дата наблюдения";
+                    e.Column.Width = 130;
+                    e.Column.CellTemplate = new DataGridViewCalendarCell();
+                    break;
+                case "direction":
+                    e.Column.HeaderText = "Направление, °";
+                    e.Column.DefaultCellStyle.Format = "n2";
+                    break;
+                case "directionrhumb":
+                    e.Column.HeaderText = "Румб";
+                    e.Column.Width = 55;
+                    e.Column.CellTemplate = new DataGridViewComboboxCell<WindDirections>();
+                    break;
+                case "speed":
+                    e.Column.HeaderText = "Скорость, м/с";
+                    e.Column.DefaultCellStyle.Format = "n1";
+                    break;
+                case "temperature":
+                    e.Column.HeaderText = "Температура, °С";
+                    e.Column.DefaultCellStyle.Format = "n1";
+                    break;
+                case "wetness":
+                    e.Column.HeaderText = "Влажность, %";
+                    e.Column.DefaultCellStyle.Format = "n1";
+                    break;
+
+                //удаляемые колонки пишем тут:
+                case "dateargument":
+                    e.Column.DataGridView.Columns.Remove(e.Column);
+                    break;
+                default: throw new Exception("Для этой колонки нет названия");
+            }
+        }
+
+
         /// <summary>
         /// обновление информации в статусной строке при изменении выбранной вкладки
         /// </summary>
@@ -308,12 +368,11 @@ namespace WindEnergy.UI
         {
             mainHelper.RefreshStatusBar();
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            int i = (int)StandartIntervals.M10;
-        }
-
+        /// <summary>
+        /// открытие списка интерваолв измерений в статусной строке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripStatusLabelInterval_MouseEnter(object sender, EventArgs e)
         {
             if (mainTabControl.SelectedTab == null)
@@ -326,9 +385,21 @@ namespace WindEnergy.UI
             contextMenuStripRangeIntervals.Show(MousePosition);
         }
 
+        /// <summary>
+        /// закрытие списка интервалов в статусной строке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripStatusLabelInterval_MouseLeave(object sender, EventArgs e)
         {
             contextMenuStripRangeIntervals.Close();
+        }
+
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int i = (int)StandartIntervals.M10;
         }
 
     }

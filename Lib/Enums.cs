@@ -228,6 +228,12 @@ namespace WindEnergy
     public enum StandartIntervals
     {
         /// <summary>
+        /// переменный интервал (ряд не однородный)
+        /// </summary>
+        [Description("Неоднородный ряд")]
+        Variable = -1,
+
+        /// <summary>
         /// 10 минут
         /// </summary>
         [Description("10 минут")]
@@ -268,6 +274,7 @@ namespace WindEnergy
         /// </summary>
         [Description("1 день")]
         D1 = 24 * 60
+
     }
 
     /// <summary>

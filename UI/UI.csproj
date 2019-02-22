@@ -94,6 +94,12 @@
     <Compile Include="Ext\TabPageExt.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Tools\FormCalcYear.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FormCalcYear.Designer.cs">
+      <DependentUpon>FormCalcYear.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\FormCheckRepairRange.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FormSelectMapPointDialog.resx">
       <DependentUpon>FormSelectMapPointDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FormCalcYear.resx">
+      <DependentUpon>FormCalcYear.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormCheckRepairRange.resx">
       <DependentUpon>FormCheckRepairRange.cs</DependentUpon>
