@@ -67,6 +67,8 @@ namespace WindEnergy.Lib.Operations
                     methodTemp = new StepwiseInterpolateMethod(tempFunc);
                     methodWet = new StepwiseInterpolateMethod(wetFunc);
                     break;
+                case InterpolateMathods.NearestMeteostation:
+                    throw new NotImplementedException();
                 default: throw new Exception("Этот метод не реализован");
             }
 

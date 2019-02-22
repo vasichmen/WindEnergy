@@ -81,9 +81,10 @@
     <Compile Include="Geomodel\EarthModel.cs" />
     <Compile Include="Geomodel\SphereCalculations.cs" />
     <Compile Include="Operations\Checker.cs" />
-    <Compile Include="Operations\Interpolation\IInterpolateMathod.cs" />
+    <Compile Include="Operations\Interpolation\IInterpolateMethod.cs" />
     <Compile Include="Operations\Interpolation\LagrangeInterpolateMethod.cs" />
     <Compile Include="Operations\Interpolation\LinearInterpolateMethod.cs" />
+    <Compile Include="Operations\Interpolation\NearestMSInterpolateMethod.cs" />
     <Compile Include="Operations\Interpolation\StepwiseInterpolateMethod.cs" />
     <Compile Include="Operations\Limits\ILimitsProvider.cs" />
     <Compile Include="Operations\Limits\ManualLimits.cs" />

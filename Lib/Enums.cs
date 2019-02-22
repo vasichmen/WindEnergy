@@ -218,7 +218,13 @@ namespace WindEnergy
         /// ступенчатая
         /// </summary>
         [Description("Ступенчатое восстановление")]
-        Stepwise
+        Stepwise,
+
+        /// <summary>
+        /// линейная корреляция с ближайшей метеостанцией
+        /// </summary>
+        [Description("Линейная корреляция с ближайшей метеостанцией")]
+        NearestMeteostation
     }
 
     /// <summary>

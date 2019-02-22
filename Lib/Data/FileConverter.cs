@@ -11,6 +11,9 @@ using WindEnergy.Lib.Data.Providers;
 
 namespace WindEnergy.Lib.Data
 {
+    /// <summary>
+    /// преобразования служебных форматов друг в друга, импорт данных итд
+    /// </summary>
     public static class FileConverter
     {
         /// <summary>

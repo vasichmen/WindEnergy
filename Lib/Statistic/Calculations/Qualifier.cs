@@ -15,7 +15,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
     /// </summary>
     public class Qualifier
     {
-      
+
 
         /// <summary>
         /// длина отрезка при разбиении на промежутки для поиска разделов интервалов
@@ -25,7 +25,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// <summary>
         /// минимальное количество дней измерений с одинаковым интервалом, чтоб это можно было считать новым дипазоном измерений
         /// </summary>
-        private const int DAYS_TO_NEW_INTERVAL = 30;
+        private const int DAYS_TO_NEW_INTERVAL = 30 * 3;
 
         /// <summary>
         /// обработать ряд и получить сведения о полноте, интервалах, количестве ошибок
@@ -56,11 +56,11 @@ namespace WindEnergy.Lib.Statistic.Calculations
                 TimeSpan minSpan = TimeSpan.MaxValue;
                 for (int j = i; j < i + SECTION_LENGTH; j++)
                 {
-                   // k++;
+                    // k++;
                     TimeSpan nsp = range[j].Date > range[j + 1].Date ? range[j].Date - range[j + 1].Date : range[j + 1].Date - range[j].Date;
                     if (nsp.TotalMinutes == 0)
                         continue;
-                    if (nsp < minSpan)
+                    if (nsp < minSpan && Enum.IsDefined(typeof(StandartIntervals), (int)nsp.TotalMinutes))
                         minSpan = nsp;
                 }
                 int minutes = (int)minSpan.TotalMinutes;
@@ -69,32 +69,49 @@ namespace WindEnergy.Lib.Statistic.Calculations
                 intervals.Add(interval);
             }
 
-            //исправление ошибок
-            for (int i = 1; i < intervals.Count - 1; i++)
-            {
-                //если у диапазона соседи с одинаковыми, но другими интервалами, то это ошибка, исправляем
-                if (intervals[i - 1] != intervals[i] && intervals[i + 1] != intervals[i] && intervals[i + 1] == intervals[i - 1])
-                    intervals[i] = intervals[i - 1];
-            }
+            //исправление ошибок - удаление всех диапазонов, которые меньше заданного DAYS_TO_NEW_INTERVAL
+
+
 
             //поиск изменений в интервалах
             List<RangeInterval> rangeIntervals = new List<RangeInterval>();
-            DateTime start = range[0].Date;
-            DateTime end;
+            int s1 = 0, s2 = 0;
             for (int i = 0; i < intervals.Count - 1; i++)
                 if (intervals[i] != intervals[i + 1])
                 {
-                    end = range[diapasons[i].To].Date; //конец диапазона
-                    if (end - start > TimeSpan.FromDays(DAYS_TO_NEW_INTERVAL)) //если диапазон получается больше месяца, то добавляем
-                    {
-                        rangeIntervals.Add(new RangeInterval() { Diapason = new Diapason<DateTime>(start, end), Interval = intervals[i] }); // добавление диапазона
-                        start = end;
+                    if ((int)intervals[i] * (s2 - s1) > DAYS_TO_NEW_INTERVAL * 24 * 60) //если второй интервал больше минимального
+                    { //добавление первого интервала (от s1 до s2)
+                        DateTime sd = range[diapasons[s1].From].Date;
+                        DateTime ed = range[diapasons[s2].To].Date;
+                        bool f = intervals[s1] == intervals[s2];
+                        rangeIntervals.Add(new RangeInterval() { Diapason = new Diapason<DateTime>(sd, ed), Interval = intervals[s1] });
+                        s1 = s2;
                     }
-                    else {
+                    else //если второй интервал меньше минимального, то переставляем начало второго интервала
+                        s2 = i + 1;
 
-                    }
+                    //end = range[diapasons[i].To].Date; //конец диапазона
+                    //if (end - start > TimeSpan.FromDays(DAYS_TO_NEW_INTERVAL)) //если диапазон получается больше заданной длины, то добавляем
+                    //{
+                    //    lasR = new RangeInterval() { Diapason = new Diapason<DateTime>(start, end), Interval = intervals[i] };
+                    //    rangeIntervals.Add(lasR); // добавление диапазона
+                    //    start = end;
+                    //}
+                    //else
+                    //{
+
+                    //}
                 }
-            end = range[range.Count - 1].Date; //конец диапазона
+
+
+
+            //добавление последнего
+            DateTime end = range[range.Count - 1].Date; //конец диапазона
+            DateTime start;
+            if (rangeIntervals.Count > 0)
+                start = rangeIntervals.Last().Diapason.To;
+            else
+                start = range[0].Date;
             rangeIntervals.Add(new RangeInterval() { Diapason = new Diapason<DateTime>(start, end), Interval = intervals[intervals.Count - 1] }); // добавление диапазона
 
 
