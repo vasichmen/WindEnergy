@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.Lib.Statistic.Calculations;
 using WindEnergy.UI.Ext;
@@ -65,9 +67,22 @@ namespace WindEnergy.UI.Tools
 
         }
 
+        /// <summary>
+        /// сохранение всех результатов в файл
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSaveResults_Click(object sender, EventArgs e)
         {
-            //TODO: сохранение всех результатов в файл
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.InitialDirectory = Vars.Options.LastDirectory;
+            sf.Filter = "Файл MS Excel с разделителями-запятыми *.csv | *.csv";
+            sf.AddExtension = true;
+            if (sf.ShowDialog(this) == DialogResult.OK)
+            {
+                MSExcel.SaveCalcYearInfoCSV(sf.FileName,years);
+                Process.Start(sf.FileName);
+            }
         }
 
         /// <summary>

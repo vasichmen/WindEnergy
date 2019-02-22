@@ -36,8 +36,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
             range.Sort(new DateTimeComparer());
             if (range[range.Count - 1].Date - range[0].Date < TimeSpan.FromDays(366))
                 throw new ArgumentException("Ряд должен быть длиной больше одного года");
-
-            //TODO: реализация поиска расчётного года
+            
 
             //среднемноголетняя скорость
             double averSpeed = range.Average((i) => i.Speed);

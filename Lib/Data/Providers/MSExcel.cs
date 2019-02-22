@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.Lib.Statistic.Collections;
 using WindEnergy.Lib.Statistic.Structures;
 
@@ -73,7 +74,34 @@ namespace WindEnergy.Lib.Data.Providers
                 nline = string.Format("{0};{1};{2:f2}", rhumb.Description(), j * 22.5d, stat_directions.Values[index] * 100);
                 sw.WriteLine(nline);
             }
-            sw.Close();           
+            sw.Close();
+        }
+
+        /// <summary>
+        /// сохранение информации о расчетном годе в файл
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="years"></param>
+        public static void SaveCalcYearInfoCSV(string fileName, CalculateYearInfo years)
+        {
+            StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8);
+            if (years.RecomendedYear != null)
+                sw.WriteLine("Рекомендуется принять в качестве расчетного " + years.RecomendedYear.Year + " год");
+            string nline = "Год;Полнота ряда, %;Интервал;Отклонение от среднемноголетней скорости, м/с;Отклонение повторяемости скорости;Средняя скорость, м/с;Максимальная скорость, м/с";
+            sw.WriteLine(nline);
+            foreach (SinglePeriodInfo spi in years.Years)
+            {
+                //labelAverageSpeed.Text = "Средняя скорость: " + years.RecomendedYear.AverageSpeed.ToString("0.0") + " м/с";
+                //labelCompletness.Text = "Полнота ряда: " + years.RecomendedYear.Completness.ToString("0.00") + " %";
+                //labelExpectDeviation.Text = "Отклонение повторяемости скорости: " + years.RecomendedYear.ExpectancyDeviation.ToString("0.00") + "";
+                //labelInterval.Text = "Δt: " + years.RecomendedYear.Interval.Description() + "";
+                //labelMaxSpeed.Text = "Максимальная скорость: " + years.RecomendedYear.Vmax.ToString("0.0") + " м/с";
+                //labelSpeedDeviation.Text = "Отклонение скорости от многолетней: " + years.RecomendedYear.SpeedDeviation.ToString("0.00") + " м/с";
+
+                nline = string.Format("{0};{1:f2};{2};{3:f2};{4:f2};{5:f2};{6:f1}", spi.Year, spi.Completness, spi.Interval.Description(), spi.SpeedDeviation, spi.ExpectancyDeviation, spi.AverageSpeed, spi.Vmax);
+                sw.WriteLine(nline);
+            }
+            sw.Close();
         }
     }
 }
