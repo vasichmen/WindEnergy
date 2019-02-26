@@ -59,6 +59,7 @@
     <Compile Include="Classes\Generic\DateTimeComparer.cs" />
     <Compile Include="Classes\MapMarker.cs" />
     <Compile Include="Classes\Structures\Diapason.cs" />
+    <Compile Include="Classes\Structures\MeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Options\Options.cs" />
     <Compile Include="Classes\Generic\PropertyComparer.cs" />
     <Compile Include="Classes\Generic\SortableBindingList.cs" />

@@ -5,11 +5,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
+using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Operations;
 using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.UI.Dialogs;
@@ -48,7 +50,7 @@ namespace WindEnergy.UI.Tools
         {
             InitializeComponent();
             comboBoxInterpolateMethod.Items.Clear();
-            comboBoxInterpolateMethod.Items.AddRange(InterpolateMathods.Linear.GetItems().ToArray());
+            comboBoxInterpolateMethod.Items.AddRange(InterpolateMethods.Linear.GetItems().ToArray());
             comboBoxRepairInterval.Items.Clear();
             comboBoxRepairInterval.Items.AddRange(StandartIntervals.H1.GetItems().Skip(1).ToArray());
             comboBoxLimitsProvider.Items.Clear();
@@ -68,14 +70,44 @@ namespace WindEnergy.UI.Tools
             try
             {
                 Cursor = Cursors.WaitCursor;
-                InterpolateMathods method = (InterpolateMathods)(new EnumTypeConverter<InterpolateMathods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem));
+                InterpolateMethods method = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem));
                 StandartIntervals interval = (StandartIntervals)(new EnumTypeConverter<StandartIntervals>().ConvertFrom(comboBoxRepairInterval.SelectedItem));
-                range = Restorer.ProcessRange(range, new RestorerParameters() { Interval = interval, Method = method });
+
+                PointLatLng point = PointLatLng.Empty;
+                RawRange baseRange = null;
+                if (method == InterpolateMethods.NearestMeteostation)
+                {
+                    if (radioButtonSelPoint.Checked)
+                    {
+                        FormSelectMapPointDialog fsp = new FormSelectMapPointDialog("Выбор точки восстановления ряда " + range.Name, PointLatLng.Empty);
+                        if (fsp.ShowDialog(this) == DialogResult.OK)
+                            point = fsp.Result;
+                        else
+                            return;
+                    }
+                    else
+                    {
+                        OpenFileDialog of = new OpenFileDialog();
+                        of.InitialDirectory = Vars.Options.LastDirectory;
+                        of.Filter = "Файл csv|*.csv";
+                        if (of.ShowDialog(this) == DialogResult.OK)
+                            baseRange = RP5ru.LoadCSV(of.FileName);
+                        else
+                            return;
+                    }
+                }
+
+                range = Restorer.ProcessRange(range, new RestorerParameters() { Interval = interval, Method = method, Coordinates = point, BaseRange = baseRange });
                 range.Name = "Восстановленный ряд до " + interval.Description();
             }
-            catch (ApplicationException exc)
+            catch (WebException exc)
             {
                 MessageBox.Show(this, exc.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            catch (ApplicationException exc)
+            {
+                MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {
@@ -217,7 +249,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void formCheckRepairRange_Shown(object sender, EventArgs e)
         {
-            comboBoxInterpolateMethod.SelectedItem = InterpolateMathods.Linear.Description();
+            comboBoxInterpolateMethod.SelectedItem = InterpolateMethods.Linear.Description();
             comboBoxRepairInterval.SelectedItem = StandartIntervals.H1.Description();
             comboBoxLimitsProvider.SelectedItem = LimitsProviders.StaticLimits.Description();
 
@@ -255,6 +287,11 @@ namespace WindEnergy.UI.Tools
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void comboBoxInterpolateMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            groupBox3.Visible = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem)) == InterpolateMethods.NearestMeteostation;
         }
     }
 }

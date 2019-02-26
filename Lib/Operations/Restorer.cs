@@ -15,7 +15,7 @@ namespace WindEnergy.Lib.Operations
     /// </summary>
     public static class Restorer
     {
-      
+
         /// <summary>
         /// восстановить ряд до нужного интревала наблюдений
         /// </summary>
@@ -24,6 +24,9 @@ namespace WindEnergy.Lib.Operations
         /// <returns></returns>
         public static RawRange ProcessRange(RawRange range, RestorerParameters param)
         {
+            if (param.Method == InterpolateMethods.NearestMeteostation && param.Coordinates.IsEmpty)
+                throw new Exception("Для этого метода интерполяции необходимо указать расчетную точку на карте");
+
             Dictionary<double, double>
                 speedFunc = new Dictionary<double, double>(), //функция скорости
                 directsFunc = new Dictionary<double, double>(), //функция направления
@@ -49,26 +52,33 @@ namespace WindEnergy.Lib.Operations
             //метки времени для нового ряда
             List<double> newRangeX = new List<double>();
             for (double i = range[range.Count - 1].DateArgument; i <= range[0].DateArgument; i += newInterval)
-                newRangeX.Add(i); 
+                newRangeX.Add(i);
 
             //создание интерполяторов функций скорости, направления, температуры, влажности
             IInterpolateMethod methodSpeeds, methodDirects, methodWet, methodTemp;
             switch (param.Method)
             {
-                case InterpolateMathods.Linear:
+                case InterpolateMethods.Linear:
                     methodSpeeds = new LinearInterpolateMethod(speedFunc);
                     methodDirects = new LinearInterpolateMethod(directsFunc);
                     methodTemp = new LinearInterpolateMethod(tempFunc);
                     methodWet = new LinearInterpolateMethod(wetFunc);
                     break;
-                case InterpolateMathods.Stepwise:
+                case InterpolateMethods.Stepwise:
                     methodSpeeds = new StepwiseInterpolateMethod(speedFunc);
                     methodDirects = new StepwiseInterpolateMethod(directsFunc);
                     methodTemp = new StepwiseInterpolateMethod(tempFunc);
                     methodWet = new StepwiseInterpolateMethod(wetFunc);
                     break;
-                case InterpolateMathods.NearestMeteostation:
-                    throw new NotImplementedException();
+                case InterpolateMethods.NearestMeteostation:
+                    if (param.Coordinates.IsEmpty)
+                        methodSpeeds = new NearestMSInterpolateMethod(speedFunc, param.BaseRange, MeteorologyParameters.Speed);
+                    else
+                        methodSpeeds = new NearestMSInterpolateMethod(speedFunc, param.Coordinates, MeteorologyParameters.Speed);
+                    methodDirects = new NearestMSInterpolateMethod(directsFunc, (NearestMSInterpolateMethod)methodSpeeds, MeteorologyParameters.Direction);
+                    methodTemp = new NearestMSInterpolateMethod(tempFunc, (NearestMSInterpolateMethod)methodSpeeds, MeteorologyParameters.Temperature);
+                    methodWet = new NearestMSInterpolateMethod(wetFunc, (NearestMSInterpolateMethod)methodSpeeds, MeteorologyParameters.Wetness);
+                    break;
                 default: throw new Exception("Этот метод не реализован");
             }
 
@@ -81,7 +91,7 @@ namespace WindEnergy.Lib.Operations
                 double direct = methodDirects.GetValue(p);
                 double temp = methodTemp.GetValue(p);
                 double wet = methodWet.GetValue(p);
-                res.Add(new RawItem(p,speed,direct,temp,wet));
+                res.Add(new RawItem(p, speed, direct, temp, wet));
             }
             res.EndChange();
             return res;

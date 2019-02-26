@@ -330,7 +330,7 @@ namespace WindEnergy.Lib.Data.Providers
         }
 
         /// <summary>
-        /// отправка POST запроса
+        /// отправка POST запроса. Бросает ApplicationException при ошибке 500 (внутренняя ошибка сервера)
         /// </summary>
         /// <param name="url">адрес</param>
         /// <param name="data">данные</param>
@@ -383,7 +383,10 @@ namespace WindEnergy.Lib.Data.Providers
                 }
                 return Out;
             }
-            catch (WebException we) { throw new WebException("Ошибка подключения.\r\n" + url, we); }
+            catch (WebException we) {
+                if ((we.Response as HttpWebResponse).StatusCode == HttpStatusCode.InternalServerError)
+                    throw new ApplicationException("Внутрення ошибка сервера", we);
+                throw new WebException("Ошибка подключения.\r\n" + url, we); }
         }
     }
 }

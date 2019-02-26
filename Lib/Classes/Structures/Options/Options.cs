@@ -25,6 +25,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             CacheFolder = Application.StartupPath+"\\cache";
             MapProvider = MapProviders.YandexMap;
             StaticRegionLimitsSourceFile = Application.StartupPath + "\\staticRegionLimits.txt";
+            StaticMeteostationCoordinatesSourceFile = Application.StartupPath + "\\staticMeteostationCoordinates.txt";
         }
 
         /// <summary>
@@ -56,6 +57,11 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// адрес файла с данными об ограничениях скоростей ветра по регионам
         /// </summary>
         public string StaticRegionLimitsSourceFile { get;}
+
+        /// <summary>
+        /// адрес файла списка метеостанций и координат
+        /// </summary>
+        public string StaticMeteostationCoordinatesSourceFile { get;  set; }
 
         /// <summary>
         /// сохранение настроек в файл

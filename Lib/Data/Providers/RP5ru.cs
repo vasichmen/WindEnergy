@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using GMap.NET;
+using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -50,56 +51,6 @@ namespace WindEnergy.Lib.Data.Providers
             }
         }
 
-        /// <summary>
-        /// информация о метеостанции с архивом погоды
-        /// </summary>
-        public class PointInfo
-        {
-            /// <summary>
-            /// id метеостанции для загрузки архива
-            /// </summary>
-            public string id { get; set; }
-
-            /// <summary>
-            /// информация о точке с погодой, для которой подобрана эта метеостанция
-            /// </summary>
-            public WmoInfo ParentWmo { get; set; }
-
-            /// <summary>
-            /// является ли родительска точка этой метеостанцией
-            /// </summary>
-            public bool IsOwner { get { return OwnerDistance == 0; } }
-
-            /// <summary>
-            /// расстояние от метеостанции до точки в км
-            /// </summary>
-            public double OwnerDistance { get; set; }
-
-            /// <summary>
-            /// Название
-            /// </summary>
-            public string Name { get; set; }
-
-            /// <summary>
-            /// строка ссылки
-            /// </summary>
-            public string altName { get; set; }
-
-            /// <summary>
-            /// дата начала наблюдений
-            /// </summary>
-            public DateTime MonitoringFrom { get; set; }
-
-            /// <summary>
-            /// источник данных архива
-            /// </summary>
-            public MeteoSourceType MeteoSourceType { get; set; }
-
-            /// <summary>
-            /// ссылка на страницу
-            /// </summary>
-            public string Link { get { return @"https://rp5.ru/" + altName; } set { altName = value.Replace(@"https://rp5.ru/", "").Replace(@"http://rp5.ru/", ""); } }
-        }
 
 
         public override TimeSpan MinQueryInterval { get { return TimeSpan.FromSeconds(1); } }
@@ -121,7 +72,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// <returns></returns>
         public RawRange GetRange(DateTime fromDate, DateTime toDate, object point_info)
         {
-            PointInfo info = point_info as PointInfo;
+            MeteostationInfo info = point_info as MeteostationInfo;
 
             //получение ссылки на файл
             string data, link;
@@ -139,7 +90,7 @@ namespace WindEnergy.Lib.Data.Providers
             }
 
             data = string.Format(data,
-                info.id, //id
+                info.ID, //id
                 fromDate.Date.ToString("dd.MM.yyyy"), //from
                 toDate.Date.ToString("dd.MM.yyyy"), //to
                 DateTime.Now.Month, //f_ed3 - только месяц
@@ -172,7 +123,6 @@ namespace WindEnergy.Lib.Data.Providers
 
             //открытие файла
             RawRange res = RawRangeSerializer.DeserializeFile(tmp_unpack_file);
-            res.Name = info.Name + " " + info.ParentWmo.name;
             return res;
         }
 
@@ -181,7 +131,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// </summary>
         /// <param name="wmoInfo">информация о точке с погодой</param>
         /// <returns></returns>
-        public List<PointInfo> GetNearestMeteostations(WmoInfo wmoInfo)
+        public List<MeteostationInfo> GetNearestMeteostations(WmoInfo wmoInfo)
         {
             //страница погоды в заданной точке
             HtmlDocument point_page = SendHtmlGetRequest(wmoInfo.Link, out HttpStatusCode code);
@@ -196,19 +146,19 @@ namespace WindEnergy.Lib.Data.Providers
                 point_page.GetElementbyId("wug_link"), //на неофициальной метеостанции
             };
 
-            List<PointInfo> res = new List<PointInfo>();
+            List<MeteostationInfo> res = new List<MeteostationInfo>();
             foreach (HtmlNode some_link in archives)
                 if (some_link != null)
                 {
-                    PointInfo nm = new PointInfo();
-                    nm.ParentWmo = wmoInfo; //искомая точка
+                    MeteostationInfo nm = new MeteostationInfo();
+                    nm.Name = wmoInfo.name; //искомая точка
                     nm.Link = some_link.Attributes["href"].Value; //ссылка на страницу
 
                     //название
                     int s1 = some_link.InnerText.IndexOf(" (");
                     string onmouseover = some_link.Attributes["onmouseover"].Value; //значение атрибута вывода подсказки
                     string nmm = onmouseover.Replace("tooltip(this, '", "").Replace("' , 'hint')", "");
-                    nm.Name = some_link.InnerText.Substring(0, s1) +" ("+nmm+")";
+                    nm.Name = some_link.InnerText.Substring(0, s1) + " (" + nmm + ")";
 
                     //расстояние до точки
                     string content = some_link.InnerText;
@@ -239,17 +189,19 @@ namespace WindEnergy.Lib.Data.Providers
                             break;
                         default: throw new Exception("Этот тип метеостанции не реализован");
                     }
-                    getMeteostationExtInfo(ref nm); //запись информации об id метеостанции, дате начала наблюдений
-                    res.Add(nm);
+                    GetMeteostationExtInfo(ref nm); //запись информации об id метеостанции, дате начала наблюдений
+                    if (nm != null)
+                        res.Add(nm);
                 }
             return res;
         }
+       
         /// <summary>
         /// получить из страницы архива погоды id метеостанции, дату начала наблюдений. Двнные запишутся в структуру info, где уже должна быть записана ссылка на страницу
         /// </summary>
         /// <param name="page_link">ссылка на страницу архива</param>
         /// <returns></returns>
-        private void getMeteostationExtInfo(ref PointInfo info)
+        public void GetMeteostationExtInfo(ref MeteostationInfo info)
         {
             if (info == null)
                 throw new ArgumentException("info");
@@ -266,7 +218,7 @@ namespace WindEnergy.Lib.Data.Providers
             //получение ID
             if (wmo != null) //метеостанция
             {
-                info.id = wmo.Attributes["value"].Value;
+                info.ID = wmo.Attributes["value"].Value;
                 info.MeteoSourceType = MeteoSourceType.Meteostation;
             }
             else if (metar != null) //аэропорт
@@ -278,12 +230,14 @@ namespace WindEnergy.Lib.Data.Providers
                     throw new Exception("Что-то не так");
                 start += +"fFileMetarGet(1317900300".Length;
                 string id = pg.Substring(start + 1, end - 1 - start);
-                info.id = id;
+                info.ID = id;
                 info.MeteoSourceType = MeteoSourceType.Airport;
             }
             else //неофициальная метеостанция
-                throw new Exception("Для неофициальных метеостанций эта информация недоступна =(");
-
+            {
+                info = null;
+                return;
+            }
             //получение даты начала наблюдений
             {
                 string pg = page.Text;

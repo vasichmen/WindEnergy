@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.UI.Dialogs;
@@ -23,7 +24,7 @@ namespace WindEnergy.UI.Tools
         /// <summary>
         /// список ближайших метеостанций к выбранной точке погоды
         /// </summary>
-        private RP5ru.PointInfo selectedMeteostation = null;
+        private MeteostationInfo selectedMeteostation = null;
         private RP5ru engine;
 
         public FormLoadFromRP5()
@@ -70,9 +71,15 @@ namespace WindEnergy.UI.Tools
             }
             catch (WebException ex)
             {
-                MessageBox.Show(this, ex.Message+"\r\n"+ex.InnerException!=null?ex.InnerException.Message:"", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message + "\r\n" + ex.InnerException != null ? ex.InnerException.Message : "", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            catch (ApplicationException ae)
+            {
+                MessageBox.Show(this, ae.Message + "\r\n" + (ae.InnerException != null ? ae.InnerException.Message : "\r\n")+"\r\nПопробуйте выбрать меньший интервал времени", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
         }
 
         /// <summary>
@@ -111,9 +118,9 @@ namespace WindEnergy.UI.Tools
 
             try
             {
-                List<RP5ru.PointInfo> meteost = engine.GetNearestMeteostations(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
+                List<MeteostationInfo> meteost = engine.GetNearestMeteostations(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
                 //выбор метеостанции
-                RP5ru.PointInfo meteostation;
+                MeteostationInfo meteostation;
                 if (meteost.Count == 1)
                     meteostation = meteost[0];
                 else

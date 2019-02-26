@@ -205,8 +205,8 @@ namespace WindEnergy
     /// <summary>
     /// методы интерполяции
     /// </summary>
-    [TypeConverter(typeof(EnumTypeConverter<InterpolateMathods>))]
-    public enum InterpolateMathods
+    [TypeConverter(typeof(EnumTypeConverter<InterpolateMethods>))]
+    public enum InterpolateMethods
     {
         /// <summary>
         /// линейная интерполяция
@@ -337,5 +337,24 @@ namespace WindEnergy
         November = 11,
         [Description("Декабрь")]
         December = 12,
+    }
+
+    /// <summary>
+    /// метеорологические параметры, хранящиеся в рядах наблюдений
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<MeteorologyParameters>))]
+    public enum MeteorologyParameters
+    {
+        [Description("Направление")]
+        Direction,
+
+        [Description("Скорость")]
+        Speed,
+
+        [Description("Температура")]
+        Temperature,
+
+        [Description("Влажность")]
+        Wetness
     }
 }

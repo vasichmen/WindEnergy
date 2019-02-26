@@ -1,8 +1,10 @@
-﻿using System;
+﻿using GMap.NET;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindEnergy.Lib.Classes.Collections;
 
 namespace WindEnergy.Lib.Operations.Structures
 {
@@ -17,7 +19,7 @@ namespace WindEnergy.Lib.Operations.Structures
         public RestorerParameters()
         {
             Interval = StandartIntervals.H1;
-            Method = InterpolateMathods.Stepwise;
+            Method = InterpolateMethods.Stepwise;
         }
 
         /// <summary>
@@ -28,7 +30,17 @@ namespace WindEnergy.Lib.Operations.Structures
         /// <summary>
         /// метод интерполяции
         /// </summary>
-        public InterpolateMathods Method { get; set; }
+        public InterpolateMethods Method { get; set; }
+
+        /// <summary>
+        /// координаты точки для которой происходит восстановление ряда
+        /// </summary>
+        public PointLatLng Coordinates { get; set; }
+
+        /// <summary>
+        /// базовый ряд, на основе которого будет происходить восстановление
+        /// </summary>
+        public RawRange BaseRange { get; set; }
     }
 
 }

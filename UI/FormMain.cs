@@ -399,7 +399,9 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            FileConverter.ConvertFromAdressToCoordinatesLimitsFile("input.txt", "staticRegionLimits.txt");
+            new RP5ru(Vars.Options.CacheFolder + "\\rp5.ru").GetRange(DateTime.Now, DateTime.Now, new MeteostationInfo() { ID = "27612", MeteoSourceType = MeteoSourceType.Meteostation });
+            //FileConverter.ConvertFromAdressToCoordinatesLimitsFile("input.txt", "staticRegionLimits.txt");
+            FileConverter.ConvertJSONMeteostationCoordinatesList("input_MS_coordinates.json", "staticMeteostationCoordinates.txt");
         }
 
     }

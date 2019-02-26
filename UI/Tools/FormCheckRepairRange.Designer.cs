@@ -50,16 +50,20 @@
             this.comboBoxInterpolateMethod = new System.Windows.Forms.ComboBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radioButtonSelPoint = new System.Windows.Forms.RadioButton();
+            this.radioButtonOpenFile = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxRepairInterval
             // 
             this.comboBoxRepairInterval.FormattingEnabled = true;
-            this.comboBoxRepairInterval.Location = new System.Drawing.Point(50, 38);
+            this.comboBoxRepairInterval.Location = new System.Drawing.Point(9, 38);
             this.comboBoxRepairInterval.Name = "comboBoxRepairInterval";
-            this.comboBoxRepairInterval.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxRepairInterval.Size = new System.Drawing.Size(210, 21);
             this.comboBoxRepairInterval.TabIndex = 0;
             // 
             // buttonCheckRange
@@ -198,6 +202,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.comboBoxInterpolateMethod);
@@ -214,7 +219,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(47, 74);
+            this.label2.Location = new System.Drawing.Point(6, 74);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(113, 13);
             this.label2.TabIndex = 4;
@@ -223,7 +228,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(47, 22);
+            this.label1.Location = new System.Drawing.Point(6, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(136, 13);
             this.label1.TabIndex = 3;
@@ -232,10 +237,11 @@
             // comboBoxInterpolateMethod
             // 
             this.comboBoxInterpolateMethod.FormattingEnabled = true;
-            this.comboBoxInterpolateMethod.Location = new System.Drawing.Point(50, 90);
+            this.comboBoxInterpolateMethod.Location = new System.Drawing.Point(9, 90);
             this.comboBoxInterpolateMethod.Name = "comboBoxInterpolateMethod";
-            this.comboBoxInterpolateMethod.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxInterpolateMethod.Size = new System.Drawing.Size(210, 21);
             this.comboBoxInterpolateMethod.TabIndex = 2;
+            this.comboBoxInterpolateMethod.SelectedIndexChanged += new System.EventHandler(this.comboBoxInterpolateMethod_SelectedIndexChanged);
             // 
             // buttonSave
             // 
@@ -258,6 +264,42 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.radioButtonOpenFile);
+            this.groupBox3.Controls.Add(this.radioButtonSelPoint);
+            this.groupBox3.Location = new System.Drawing.Point(9, 117);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(210, 82);
+            this.groupBox3.TabIndex = 5;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Выбор источника ряда";
+            // 
+            // radioButtonSelPoint
+            // 
+            this.radioButtonSelPoint.AutoSize = true;
+            this.radioButtonSelPoint.Checked = true;
+            this.radioButtonSelPoint.Location = new System.Drawing.Point(6, 19);
+            this.radioButtonSelPoint.Name = "radioButtonSelPoint";
+            this.radioButtonSelPoint.Size = new System.Drawing.Size(146, 17);
+            this.radioButtonSelPoint.TabIndex = 0;
+            this.radioButtonSelPoint.TabStop = true;
+            this.radioButtonSelPoint.Text = "Выбрать точку на карте";
+            this.toolTip1.SetToolTip(this.radioButtonSelPoint, "Выбор точки, для которой будет произведён поиск ближайшей метеостанции для востта" +
+        "новления данных");
+            this.radioButtonSelPoint.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonOpenFile
+            // 
+            this.radioButtonOpenFile.AutoSize = true;
+            this.radioButtonOpenFile.Location = new System.Drawing.Point(6, 39);
+            this.radioButtonOpenFile.Name = "radioButtonOpenFile";
+            this.radioButtonOpenFile.Size = new System.Drawing.Size(125, 17);
+            this.radioButtonOpenFile.TabIndex = 1;
+            this.radioButtonOpenFile.Text = "Выбрать файл ряда";
+            this.toolTip1.SetToolTip(this.radioButtonOpenFile, "Выбрать файл ряда наблюдений для восстановления исходного ряда");
+            this.radioButtonOpenFile.UseVisualStyleBackColor = true;
+            // 
             // FormCheckRepairRange
             // 
             this.AcceptButton = this.buttonSave;
@@ -277,6 +319,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -303,5 +347,8 @@
         private System.Windows.Forms.Label labelspeedDiap;
         private System.Windows.Forms.Button buttonEnterDirectionDiapason;
         private System.Windows.Forms.Button buttonEnterSpeedDiapason;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton radioButtonOpenFile;
+        private System.Windows.Forms.RadioButton radioButtonSelPoint;
     }
 }
