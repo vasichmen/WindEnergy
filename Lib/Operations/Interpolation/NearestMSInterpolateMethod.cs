@@ -32,7 +32,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
 
 
         /// <summary>
-        /// создание нового интерполятора с заданными значениями на основе существующего ряда наблюдения (в том случае, если для этой точки уже был создан интерполятор)
+        /// создание нового интерполятора с заданными значениями на основе существующего интерполятора (в том случае, если для этой точки уже был создан интерполятор)
         /// </summary>
         /// <param name="func">известные значения функции</param>
         /// <param name="baseInterpolator"></param>
@@ -40,7 +40,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
         public NearestMSInterpolateMethod(Dictionary<double, double> func, NearestMSInterpolateMethod baseInterpolator, MeteorologyParameters parameterType) : this(func, baseInterpolator.nearestRange, parameterType) { }
 
         /// <summary>
-        /// 
+        /// создание нового интерполятора с заданными значениями на основе существующего базового ряда наблюдения
         /// </summary>
         /// <param name="func">известные значения функции в заданной точке</param>
         /// <param name="baseRange">базовый ряд (с ближайшей МС), на основе которого будет происходить восстановление</param>

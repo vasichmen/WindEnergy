@@ -15,18 +15,6 @@ namespace WindEnergy.Lib.Statistic.Calculations
     /// </summary>
     public class Qualifier
     {
-
-
-        /// <summary>
-        /// длина отрезка при разбиении на промежутки для поиска разделов интервалов
-        /// </summary>
-        private const int SECTION_LENGTH = 10;
-
-        /// <summary>
-        /// минимальное количество дней измерений с одинаковым интервалом, чтоб это можно было считать новым дипазоном измерений
-        /// </summary>
-        private const int DAYS_TO_NEW_INTERVAL = 30 * 3;
-
         /// <summary>
         /// обработать ряд и получить сведения о полноте, интервалах, количестве ошибок
         /// </summary>
@@ -34,7 +22,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// <returns></returns>
         public static QualityInfo ProcessRange(RawRange Range)
         {
-            if (Range.Count < SECTION_LENGTH + SECTION_LENGTH * 0.5)
+            if (Range.Count < Vars.Options.QualifierSectionLength * 1.5)
                 return null;
 
             //поиск всех интервалов измерений
@@ -50,11 +38,11 @@ namespace WindEnergy.Lib.Statistic.Calculations
             List<Diapason<int>> diapasons = new List<Diapason<int>>();
             List<StandartIntervals> intervals = new List<StandartIntervals>();
             //int k = 0;
-            for (int i = 0; i < range.Count - SECTION_LENGTH; i += SECTION_LENGTH)
+            for (int i = 0; i < range.Count - Vars.Options.QualifierSectionLength; i += Vars.Options.QualifierSectionLength)
             {
-                Diapason<int> d = new Diapason<int>(i, i + SECTION_LENGTH);
+                Diapason<int> d = new Diapason<int>(i, i + Vars.Options.QualifierSectionLength);
                 TimeSpan minSpan = TimeSpan.MaxValue;
-                for (int j = i; j < i + SECTION_LENGTH; j++)
+                for (int j = i; j < i + Vars.Options.QualifierSectionLength; j++)
                 {
                     // k++;
                     TimeSpan nsp = range[j].Date > range[j + 1].Date ? range[j].Date - range[j + 1].Date : range[j + 1].Date - range[j].Date;
@@ -79,7 +67,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
             for (int i = 0; i < intervals.Count - 1; i++)
                 if (intervals[i] != intervals[i + 1])
                 {
-                    if ((int)intervals[i] * (s2 - s1) > DAYS_TO_NEW_INTERVAL * 24 * 60) //если второй интервал больше минимального
+                    if ((int)intervals[i] * (s2 - s1) > Vars.Options.QualifierDaysToNewInterval * 24 * 60) //если второй интервал больше минимального
                     { //добавление первого интервала (от s1 до s2)
                         DateTime sd = range[diapasons[s1].From].Date;
                         DateTime ed = range[diapasons[s2].To].Date;
@@ -89,21 +77,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
                     }
                     else //если второй интервал меньше минимального, то переставляем начало второго интервала
                         s2 = i + 1;
-
-                    //end = range[diapasons[i].To].Date; //конец диапазона
-                    //if (end - start > TimeSpan.FromDays(DAYS_TO_NEW_INTERVAL)) //если диапазон получается больше заданной длины, то добавляем
-                    //{
-                    //    lasR = new RangeInterval() { Diapason = new Diapason<DateTime>(start, end), Interval = intervals[i] };
-                    //    rangeIntervals.Add(lasR); // добавление диапазона
-                    //    start = end;
-                    //}
-                    //else
-                    //{
-
-                    //}
                 }
-
-
 
             //добавление последнего
             DateTime end = range[range.Count - 1].Date; //конец диапазона
@@ -113,8 +87,6 @@ namespace WindEnergy.Lib.Statistic.Calculations
             else
                 start = range[0].Date;
             rangeIntervals.Add(new RangeInterval() { Diapason = new Diapason<DateTime>(start, end), Interval = intervals[intervals.Count - 1] }); // добавление диапазона
-
-
 
             QualityInfo res = new QualityInfo(rangeIntervals, range.Count);
             return res;

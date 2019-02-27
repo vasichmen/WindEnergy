@@ -23,7 +23,7 @@ namespace WindEnergy.UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Vars.Options = Options.Load(Application.StartupPath);
+            Vars.Options = Options.Load(Application.StartupPath+ "\\options.xml");
             Vars.LocalFileSystem = new LocalFileSystem();
 
             winMain = new FormMain();

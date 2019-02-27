@@ -18,12 +18,6 @@ namespace WindEnergy.Lib.Statistic.Calculations
     public static class YearCalculator
     {
         /// <summary>
-        /// минимальная разница отклонений скоростей при которой они считаются равными
-        /// </summary>
-        private const double MINIMAL_SPEED_DEVIATION = 0.2d;
-
-
-        /// <summary>
         /// обработка ряда и получение расчётного года
         /// </summary>
         /// <param name="range"></param>
@@ -92,7 +86,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
             //проверка по отклонению скорости
             var ac = accepts.OrderBy((t) => t.SpeedDeviation); //в начале ряда остаются минимальные отклонения скорости
             double startsDev = ac.ToList()[0].SpeedDeviation; //запоминаем сааамое мальнкое отклонение (с ним сравниваем остальные, чтоб найти похожие)
-            var ac2 = accepts.TakeWhile((e) => Math.Abs(e.SpeedDeviation - startsDev) < MINIMAL_SPEED_DEVIATION); //остаются только ряды с очень похожим отклонением скоростей
+            var ac2 = accepts.TakeWhile((e) => Math.Abs(e.SpeedDeviation - startsDev) < Vars.Options.MinimalSpeedDeviation); //остаются только ряды с очень похожим отклонением скоростей
 
 
             if (ac2.Count() == 1) //если остался только один, то его оставляем

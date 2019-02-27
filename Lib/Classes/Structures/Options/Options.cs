@@ -20,12 +20,16 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// </summary>
         public Options()
         {
-            TempFolder = Application.StartupPath+"\\tmp";
+            TempFolder = Application.StartupPath + "\\tmp";
             LastDirectory = Application.StartupPath;
-            CacheFolder = Application.StartupPath+"\\cache";
+            CacheFolder = Application.StartupPath + "\\cache";
             MapProvider = MapProviders.YandexMap;
             StaticRegionLimitsSourceFile = Application.StartupPath + "\\staticRegionLimits.txt";
             StaticMeteostationCoordinatesSourceFile = Application.StartupPath + "\\staticMeteostationCoordinates.txt";
+            QualifierSectionLength = 10; //10 измерений
+            QualifierDaysToNewInterval = 90; //3 месяца
+            AirDensity = 1.226;
+            MinimalSpeedDeviation = 0.2d;
         }
 
         /// <summary>
@@ -56,12 +60,33 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// <summary>
         /// адрес файла с данными об ограничениях скоростей ветра по регионам
         /// </summary>
-        public string StaticRegionLimitsSourceFile { get;}
+        public string StaticRegionLimitsSourceFile { get; }
 
         /// <summary>
         /// адрес файла списка метеостанций и координат
         /// </summary>
-        public string StaticMeteostationCoordinatesSourceFile { get;  set; }
+        public string StaticMeteostationCoordinatesSourceFile { get; set; }
+
+        /// <summary>
+        /// длина отрезка (количество измерений) при разбиении на промежутки для поиска разделов интервалов наблюдений
+        /// </summary>
+        public int QualifierSectionLength { get; set; }
+
+        /// <summary>
+        /// минимальное количество дней измерений с одинаковым интервалом, чтоб это можно было считать новым дипазоном измерений
+        /// </summary>
+        public int QualifierDaysToNewInterval { get; set; }
+
+
+        /// <summary>
+        /// минимальная разница отклонений скоростей м/с при которой они считаются равными
+        /// </summary>
+        public double MinimalSpeedDeviation { get; set; }
+
+        /// <summary>
+        /// плотность воздуха кг/м3
+        /// </summary>
+        public double AirDensity { get; set; }
 
         /// <summary>
         /// сохранение настроек в файл

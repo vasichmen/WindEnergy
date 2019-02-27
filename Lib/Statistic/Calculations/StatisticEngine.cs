@@ -15,10 +15,6 @@ namespace WindEnergy.Lib.Statistic.Calculations
     /// </summary>
     public static class StatisticEngine
     {
-        /// <summary>
-        /// плотность воздуха кг/м3
-        /// </summary>
-        private const double AIR_DENSITY = 1.226;
 
         /// <summary>
         /// обработать ряд и получить характеристики по всему ряду
@@ -66,7 +62,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
             double sum = 0;
             foreach (var l in input)
             {
-                sum += 0.5d * AIR_DENSITY * Math.Pow(l.Speed, 3);
+                sum += 0.5d * Vars.Options.AirDensity * Math.Pow(l.Speed, 3);
             }
             return sum / (input.Count);
         }
@@ -138,7 +134,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
             double V0 = en.Aggregate(0d, (x, y) => x + (double.IsNaN(y) ? 0 : y));
 
             //удельная энергия
-            double EDensity = (grads.Zip(expect, (g, e) => Math.Pow(g.Average, 3) * 0.5 * e * 8760 * AIR_DENSITY)).Aggregate((x, y) => x + (double.IsNaN(y) ? 0 : y));
+            double EDensity = (grads.Zip(expect, (g, e) => Math.Pow(g.Average, 3) * 0.5 * e * 8760 * Vars.Options.AirDensity)).Aggregate((x, y) => x + (double.IsNaN(y) ? 0 : y));
 
             //удельная мощность
             double PDensity = EDensity / 8760d;
