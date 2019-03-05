@@ -14,7 +14,7 @@ using WindEnergy.Lib.Data.Interfaces;
 namespace WindEnergy.Lib.Data.Providers
 {
     /// <summary>
-    /// взаимодействие с БД NASA
+    /// взаимодействие с БД NASA https://power.larc.nasa.gov/docs/v1/
     /// </summary>
     public class NASA : BaseConnection, IRangeProvider
     {
@@ -42,9 +42,9 @@ namespace WindEnergy.Lib.Data.Providers
         /// <param name="toDate"></param>
         /// <param name="point_info"></param>
         /// <returns></returns>
-        public RawRange GetRange(DateTime fromDate, DateTime toDate, object point_info)
+        public RawRange GetRange(DateTime fromDate, DateTime toDate, MeteostationInfo point_info)
         {
-            PointInfo info = point_info as PointInfo;
+            PointLatLng coord = point_info.Coordinates;
 
             //выбранные поля для загрузки https://power.larc.nasa.gov/docs/v1/#box
             //скорость на 10м,направление,температура,влажность
@@ -58,8 +58,8 @@ namespace WindEnergy.Lib.Data.Providers
                 fields,
                 fromDate.ToString("yyyyMMdd"),
                 toDate.ToString("yyyyMMdd"),
-                info.Position.Lat.ToString("00.00").Replace(Vars.DecimalSeparator, '.'),
-                info.Position.Lng.ToString("00.00").Replace(Vars.DecimalSeparator, '.'));
+                coord.Lat.ToString("00.00").Replace(Vars.DecimalSeparator, '.'),
+                coord.Lng.ToString("00.00").Replace(Vars.DecimalSeparator, '.'));
 
             JToken ans = SendJsonGetRequest(url, false);
 
@@ -95,6 +95,7 @@ namespace WindEnergy.Lib.Data.Providers
                     Temperature = T10M == -999 ? double.NaN : T10M,
                     Wetness = RH2M == -999 ? double.NaN : RH2M });
             }
+            res.Position = point_info.Coordinates;
             return res;
         }
     }

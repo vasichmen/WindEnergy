@@ -1,5 +1,6 @@
 ﻿using System;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Structures;
 
 namespace WindEnergy.Lib.Data.Interfaces
 {
@@ -15,6 +16,6 @@ namespace WindEnergy.Lib.Data.Interfaces
         /// <param name="toDate">конец</param>
         /// <param name="point_info">информация о точке (объект класса PointInfo конкретного класса)</param>
         /// <returns></returns>
-        RawRange GetRange(DateTime fromDate, DateTime toDate, object point_info);
+        RawRange GetRange(DateTime fromDate, DateTime toDate, MeteostationInfo point_info);
     }
 }

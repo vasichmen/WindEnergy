@@ -70,10 +70,8 @@ namespace WindEnergy.Lib.Data.Providers
         /// <param name="toDate">до какой даты</param>
         /// <param name="point_info">объект MeteostationInfo - информация о метеостанции</param>
         /// <returns></returns>
-        public RawRange GetRange(DateTime fromDate, DateTime toDate, object point_info)
+        public RawRange GetRange(DateTime fromDate, DateTime toDate, MeteostationInfo info)
         {
-            MeteostationInfo info = point_info as MeteostationInfo;
-
             //получение ссылки на файл
             string data, link;
             switch (info.MeteoSourceType)
@@ -123,6 +121,19 @@ namespace WindEnergy.Lib.Data.Providers
 
             //открытие файла
             RawRange res = RawRangeSerializer.DeserializeFile(tmp_unpack_file);
+
+            //получение кооординат станции 
+            if (info.MeteoSourceType == MeteoSourceType.Airport)
+                res.Position = PointLatLng.Empty;
+            else
+            {
+                List<MeteostationInfo> list = Vars.LocalFileSystem.LoadMeteostationList(Vars.Options.StaticMeteostationCoordinatesSourceFile);
+                var p = from m in list where m.ID == info.ID select m.Coordinates;
+                if (p.Count() == 0)
+                    res.Position = PointLatLng.Empty;
+                else
+                    res.Position = p.ToList()[0];
+            }
             return res;
         }
 
@@ -195,7 +206,7 @@ namespace WindEnergy.Lib.Data.Providers
                 }
             return res;
         }
-       
+
         /// <summary>
         /// получить из страницы архива погоды id метеостанции, дату начала наблюдений. Двнные запишутся в структуру info, где уже должна быть записана ссылка на страницу
         /// </summary>
@@ -423,7 +434,7 @@ namespace WindEnergy.Lib.Data.Providers
                         double spd = double.Parse(elems[7].Replace('.', Vars.DecimalSeparator));
                         double wet = elems[5] == "" ? double.NaN : double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
                         string dirs = elems[6];
-                        WindDirections direct = RP5ru.GetWindDirectionFromString(dirs);
+                        WindDirections direct = GetWindDirectionFromString(dirs);
                         res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet });
                     }
                     res.FileFormat = FileFormats.RP5WmoCSV;

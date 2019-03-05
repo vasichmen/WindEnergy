@@ -57,19 +57,24 @@ namespace WindEnergy.Lib.Classes.Collections
         /// </summary>
         public FileFormats FileFormat { get; set; }
 
+        /// <summary>
+        /// координаты точки радa
+        /// </summary>
+        public PointLatLng Position { get;  set; }
 
         public RawRange()
         {
             FilePath = null;
             ListChanged += rawRange_ListChanged;
             _locked = false;
+            Position = PointLatLng.Empty;
         }
 
         /// <summary>
         /// создаёт ряд с указанными элементами внутри
         /// </summary>
         /// <param name="list"></param>
-        public RawRange(List<RawItem> list)
+        public RawRange(List<RawItem> list):this()
         {
             BeginChange();
             foreach (var t in list)

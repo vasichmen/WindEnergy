@@ -73,17 +73,19 @@ namespace WindEnergy.UI.Tools
                 InterpolateMethods method = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem));
                 StandartIntervals interval = (StandartIntervals)(new EnumTypeConverter<StandartIntervals>().ConvertFrom(comboBoxRepairInterval.SelectedItem));
 
-                PointLatLng point = PointLatLng.Empty;
                 RawRange baseRange = null;
                 if (method == InterpolateMethods.NearestMeteostation)
                 {
                     if (radioButtonSelPoint.Checked)
                     {
-                        FormSelectMapPointDialog fsp = new FormSelectMapPointDialog("Выбор точки восстановления ряда " + range.Name, PointLatLng.Empty);
-                        if (fsp.ShowDialog(this) == DialogResult.OK)
-                            point = fsp.Result;
-                        else
-                            return;
+                        if (range.Position.IsEmpty)
+                        {
+                            FormSelectMapPointDialog fsp = new FormSelectMapPointDialog("Выберите координаты ряда " + range.Name, PointLatLng.Empty);
+                            if (fsp.ShowDialog(this) == DialogResult.OK)
+                                range.Position = fsp.Result;
+                            else
+                                return;
+                        }
                     }
                     else
                     {
@@ -97,8 +99,8 @@ namespace WindEnergy.UI.Tools
                     }
                 }
 
-                range = Restorer.ProcessRange(range, new RestorerParameters() { Interval = interval, Method = method, Coordinates = point, BaseRange = baseRange });
-                range.Name = "Восстановленный ряд до " + interval.Description();
+                range = Restorer.ProcessRange(range, new RestorerParameters() { Interval = interval, Method = method, Coordinates = range.Position, BaseRange = baseRange });
+                range.Name = "Восстановленный ряд до интервала" + interval.Description();
             }
             catch (WebException exc)
             {

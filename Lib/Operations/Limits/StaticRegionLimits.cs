@@ -23,32 +23,10 @@ namespace WindEnergy.Lib.Operations.Limits
         /// <param name="sourceFile"></param>
         public StaticRegionLimits(string sourceFile)
         {
-            loadDictionary(sourceFile);
+           limits= Vars.LocalFileSystem.LoadStaticSpeedLimits(sourceFile);
         }
 
-        /// <summary>
-        /// загрузка словаря огрничений из файла
-        /// </summary>
-        /// <param name="sourceFile">адрес файла</param>
-        /// <returns></returns>
-        private void loadDictionary(string sourceFile)
-        {
-            limits = new Dictionary<PointLatLng, ManualLimits>();
-            StreamReader sr = new StreamReader(sourceFile);
-            sr.ReadLine();//пропускаем первую строку-заголовок
-            while (!sr.EndOfStream)
-            {
-                string line = sr.ReadLine();
-                string[] arr = line.Split(';'); //название;широта;долгота;минимальная скорость;максимальная скорость
-                if (arr.Length < 5)
-                    continue;
-                Diapason<double> d = new Diapason<double>(double.Parse(arr[3].Replace('.', Vars.DecimalSeparator)), double.Parse(arr[4].Replace('.', Vars.DecimalSeparator)));
-                PointLatLng p = new PointLatLng(double.Parse(arr[1].Replace('.', Vars.DecimalSeparator)), double.Parse(arr[2].Replace('.', Vars.DecimalSeparator)));
-                ManualLimits ml = new ManualLimits(new List<Diapason<double>>(), new List<Diapason<double>>() { d }) { Position = p, Name = arr[0] };
-                limits.Add(p, ml);
-            }
-            sr.Close();
-        }
+      
 
         /// <summary>
         /// возвращает истину, если значение допустимо в этой точке

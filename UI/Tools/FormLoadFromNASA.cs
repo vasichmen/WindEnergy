@@ -14,6 +14,7 @@ using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Data.Interfaces;
 using WindEnergy.UI.Dialogs;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Structures;
 
 namespace WindEnergy.UI.Tools
 {
@@ -25,7 +26,7 @@ namespace WindEnergy.UI.Tools
         public RawRange Result = null;
         private NASA engineNASA;
         private IGeocoderProvider geocoder;
-        private NASA.PointInfo spoint;
+        private MeteostationInfo spoint;
 
         public FormLoadFromNASA()
         {
@@ -45,9 +46,9 @@ namespace WindEnergy.UI.Tools
             FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty);
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
-                spoint = new NASA.PointInfo();
-                spoint.Position = spt.Result;
-                labelPointCoordinates.Text = spoint.Position.ToString();
+                spoint = new MeteostationInfo();
+                spoint.Coordinates = spt.Result;
+                labelPointCoordinates.Text = spoint.Coordinates.ToString();
 
                 buttonDownload.Enabled = true;
                 dateTimePickerFromDate.Enabled = true;
@@ -70,7 +71,7 @@ namespace WindEnergy.UI.Tools
             try
             {
                 RawRange res = engineNASA.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, spoint);
-                res.Name = geocoder.GetAddress(spoint.Position);
+                res.Name = geocoder.GetAddress(spoint.Coordinates);
                 Result = res;
                 DialogResult = DialogResult.OK;
                 Close();

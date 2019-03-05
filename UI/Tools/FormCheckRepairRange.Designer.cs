@@ -44,15 +44,15 @@
             this.comboBoxLimitsProvider = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.buttonRepairRange = new System.Windows.Forms.Button();
+            this.radioButtonSelPoint = new System.Windows.Forms.RadioButton();
+            this.radioButtonOpenFile = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxInterpolateMethod = new System.Windows.Forms.ComboBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.radioButtonSelPoint = new System.Windows.Forms.RadioButton();
-            this.radioButtonOpenFile = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -200,6 +200,30 @@
             this.buttonRepairRange.UseVisualStyleBackColor = true;
             this.buttonRepairRange.Click += new System.EventHandler(this.buttonRepairRange_Click);
             // 
+            // radioButtonSelPoint
+            // 
+            this.radioButtonSelPoint.AutoSize = true;
+            this.radioButtonSelPoint.Checked = true;
+            this.radioButtonSelPoint.Location = new System.Drawing.Point(6, 19);
+            this.radioButtonSelPoint.Name = "radioButtonSelPoint";
+            this.radioButtonSelPoint.Size = new System.Drawing.Size(117, 17);
+            this.radioButtonSelPoint.TabIndex = 0;
+            this.radioButtonSelPoint.TabStop = true;
+            this.radioButtonSelPoint.Text = "По точке на карте";
+            this.toolTip1.SetToolTip(this.radioButtonSelPoint, "Найти ближайшую к заданной точке метеостанцию");
+            this.radioButtonSelPoint.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonOpenFile
+            // 
+            this.radioButtonOpenFile.AutoSize = true;
+            this.radioButtonOpenFile.Location = new System.Drawing.Point(6, 39);
+            this.radioButtonOpenFile.Name = "radioButtonOpenFile";
+            this.radioButtonOpenFile.Size = new System.Drawing.Size(125, 17);
+            this.radioButtonOpenFile.TabIndex = 1;
+            this.radioButtonOpenFile.Text = "Выбрать файл ряда";
+            this.toolTip1.SetToolTip(this.radioButtonOpenFile, "Выбрать файл ряда наблюдений для восстановления исходного ряда");
+            this.radioButtonOpenFile.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.groupBox3);
@@ -215,6 +239,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Восстановление ряда";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.radioButtonOpenFile);
+            this.groupBox3.Controls.Add(this.radioButtonSelPoint);
+            this.groupBox3.Location = new System.Drawing.Point(9, 117);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(210, 82);
+            this.groupBox3.TabIndex = 5;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Выбор источника ряда";
             // 
             // label2
             // 
@@ -263,42 +298,6 @@
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.radioButtonOpenFile);
-            this.groupBox3.Controls.Add(this.radioButtonSelPoint);
-            this.groupBox3.Location = new System.Drawing.Point(9, 117);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(210, 82);
-            this.groupBox3.TabIndex = 5;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Выбор источника ряда";
-            // 
-            // radioButtonSelPoint
-            // 
-            this.radioButtonSelPoint.AutoSize = true;
-            this.radioButtonSelPoint.Checked = true;
-            this.radioButtonSelPoint.Location = new System.Drawing.Point(6, 19);
-            this.radioButtonSelPoint.Name = "radioButtonSelPoint";
-            this.radioButtonSelPoint.Size = new System.Drawing.Size(146, 17);
-            this.radioButtonSelPoint.TabIndex = 0;
-            this.radioButtonSelPoint.TabStop = true;
-            this.radioButtonSelPoint.Text = "Выбрать точку на карте";
-            this.toolTip1.SetToolTip(this.radioButtonSelPoint, "Выбор точки, для которой будет произведён поиск ближайшей метеостанции для востта" +
-        "новления данных");
-            this.radioButtonSelPoint.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonOpenFile
-            // 
-            this.radioButtonOpenFile.AutoSize = true;
-            this.radioButtonOpenFile.Location = new System.Drawing.Point(6, 39);
-            this.radioButtonOpenFile.Name = "radioButtonOpenFile";
-            this.radioButtonOpenFile.Size = new System.Drawing.Size(125, 17);
-            this.radioButtonOpenFile.TabIndex = 1;
-            this.radioButtonOpenFile.Text = "Выбрать файл ряда";
-            this.toolTip1.SetToolTip(this.radioButtonOpenFile, "Выбрать файл ряда наблюдений для восстановления исходного ряда");
-            this.radioButtonOpenFile.UseVisualStyleBackColor = true;
             // 
             // FormCheckRepairRange
             // 

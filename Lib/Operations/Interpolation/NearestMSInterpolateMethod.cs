@@ -17,10 +17,10 @@ namespace WindEnergy.Lib.Operations.Interpolation
     /// </summary>
     public class NearestMSInterpolateMethod : IInterpolateMethod
     {
-        private Dictionary<double, double> func;
-        private MeteorologyParameters parameterType;
+        private readonly Dictionary<double, double> func;
+        private readonly MeteorologyParameters parameterType;
         private RawRange nearestRange;
-        private Func<double, double> getRes=null;
+        private readonly Func<double, double> getRes=null;
 
         /// <summary>
         /// создаёт новый интерполятор для заданной точки с заданной функций и типом расчетного параметра
@@ -101,7 +101,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
         {
             RawRange res = null;
             List<MeteostationInfo> meteostations;
-            meteostations = loadMeteostations(Vars.Options.StaticMeteostationCoordinatesSourceFile);
+            meteostations = Vars.LocalFileSystem.LoadMeteostationList(Vars.Options.StaticMeteostationCoordinatesSourceFile);
             MeteostationInfo nearestMS = getNearestMS(coordinates, meteostations);
 
             RP5ru provider = new RP5ru(Vars.Options.CacheFolder + "\\rp5.ru");
@@ -119,30 +119,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
             return res;
         }
 
-        /// <summary>
-        /// загрузка списка метеостанций
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns></returns>
-        private static List<MeteostationInfo> loadMeteostations(string filename)
-        {
-            StreamReader sr = new StreamReader(filename);
-            sr.ReadLine(); //пропуск заголовка
-
-            List<MeteostationInfo> res = new List<MeteostationInfo>();
-            while (!sr.EndOfStream)
-            {
-                string[] arr = sr.ReadLine().Split(';');
-                string wmo = arr[0];
-                string name = arr[1];
-                double lat = double.Parse(arr[2].Replace('.', Vars.DecimalSeparator));
-                double lon = double.Parse(arr[3].Replace('.', Vars.DecimalSeparator));
-                res.Add(new MeteostationInfo() { ID = wmo, Coordinates = new PointLatLng(lat, lon), Name = name });
-            }
-
-            sr.Close();
-            return res;
-        }
+        
 
         #endregion
     }
