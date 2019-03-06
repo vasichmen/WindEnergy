@@ -99,6 +99,34 @@ namespace WindEnergy.Lib.Classes.Collections
             rawRange_ListChanged(this, null);
         }
 
+        /// <summary>
+        /// возвращает функцию заданного параметра от времени
+        /// </summary>
+        /// <param name="parameterType"></param>
+        /// <returns></returns>
+        public Dictionary<double, double> GetFunction(MeteorologyParameters parameterType)
+        {
+            Dictionary<double, double> res = new Dictionary<double, double>();
+            foreach(var f in this)
+                switch(parameterType)
+                {
+                    case MeteorologyParameters.Direction:
+                        res.Add(f.DateArgument, f.Direction);
+                        break;
+                    case MeteorologyParameters.Speed:
+                        res.Add(f.DateArgument, f.Speed);
+                        break;
+                    case MeteorologyParameters.Temperature:
+                        res.Add(f.DateArgument, f.Temperature);
+                        break;
+                    case MeteorologyParameters.Wetness:
+                        res.Add(f.DateArgument, f.Wetness);
+                        break;
+                    default: throw new Exception("Этот параметр не реализован");
+                }
+            return res;
+        }
+
 
         /// <summary>
         /// принудительное обновление статистики ряда

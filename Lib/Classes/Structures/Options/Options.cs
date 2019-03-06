@@ -30,6 +30,9 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             QualifierDaysToNewInterval = 90; //3 месяца
             AirDensity = 1.226;
             MinimalSpeedDeviation = 0.2d;
+            MinimalCorrelationCoeff = 0.7;
+            MinimalCorrelationControlParametres = new List<MeteorologyParameters>() { MeteorologyParameters.Speed };
+            NearestMSRadius = 50e3;//50 km
         }
 
         /// <summary>
@@ -60,7 +63,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// <summary>
         /// адрес файла с данными об ограничениях скоростей ветра по регионам
         /// </summary>
-        public string StaticRegionLimitsSourceFile { get; }
+        public string StaticRegionLimitsSourceFile { get; set; }
 
         /// <summary>
         /// адрес файла списка метеостанций и координат
@@ -87,6 +90,21 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// плотность воздуха кг/м3
         /// </summary>
         public double AirDensity { get; set; }
+
+        /// <summary>
+        /// максимальное расстоние в метрах для поиска ближайших МС
+        /// </summary>
+        public double NearestMSRadius { get;  set; }
+
+        /// <summary>
+        /// минимальный коэффициент корреляции для достаточной точности предсказания
+        /// </summary>
+        public double MinimalCorrelationCoeff { get;  set; }
+
+        /// <summary>
+        /// список параметров, для которых будет проверяться MinimalCorrelationCoeff
+        /// </summary>
+        public List<MeteorologyParameters> MinimalCorrelationControlParametres { get;  set; }
 
         /// <summary>
         /// сохранение настроек в файл

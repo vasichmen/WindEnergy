@@ -34,23 +34,31 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.comboBoxMapProvider = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxDaysToNewInterval = new System.Windows.Forms.TextBox();
+            this.textBoxSectionLength = new System.Windows.Forms.TextBox();
+            this.textBoxMinimalSpeedDeviation = new System.Windows.Forms.TextBox();
+            this.textBoxAirDensity = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.textBoxAirDensity = new System.Windows.Forms.TextBox();
-            this.textBoxMinimalSpeedDeviation = new System.Windows.Forms.TextBox();
-            this.textBoxSectionLength = new System.Windows.Forms.TextBox();
-            this.textBoxDaysToNewInterval = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBoxNearestMSRadius = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBoxMinimalCoeffCorrel = new System.Windows.Forms.TextBox();
+            this.checkBoxMinCorrSpeed = new System.Windows.Forms.CheckBox();
+            this.checkBoxMinCorrDirection = new System.Windows.Forms.CheckBox();
+            this.checkBoxMinCorrTemp = new System.Windows.Forms.CheckBox();
+            this.checkBoxMinCorrWet = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -61,7 +69,7 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -75,7 +83,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(2, 2);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(484, 335);
@@ -87,9 +95,9 @@
             this.tabPage1.Controls.Add(this.comboBoxMapProvider);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage1.Size = new System.Drawing.Size(476, 309);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные";
@@ -99,7 +107,7 @@
             // 
             this.comboBoxMapProvider.FormattingEnabled = true;
             this.comboBoxMapProvider.Location = new System.Drawing.Point(7, 19);
-            this.comboBoxMapProvider.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxMapProvider.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxMapProvider.Name = "comboBoxMapProvider";
             this.comboBoxMapProvider.Size = new System.Drawing.Size(134, 21);
             this.comboBoxMapProvider.TabIndex = 1;
@@ -114,6 +122,96 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Тип карты:";
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.checkBoxMinCorrWet);
+            this.tabPage2.Controls.Add(this.checkBoxMinCorrTemp);
+            this.tabPage2.Controls.Add(this.checkBoxMinCorrDirection);
+            this.tabPage2.Controls.Add(this.checkBoxMinCorrSpeed);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.textBoxMinimalCoeffCorrel);
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.textBoxNearestMSRadius);
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.label3);
+            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.textBoxDaysToNewInterval);
+            this.tabPage2.Controls.Add(this.textBoxSectionLength);
+            this.tabPage2.Controls.Add(this.textBoxMinimalSpeedDeviation);
+            this.tabPage2.Controls.Add(this.textBoxAirDensity);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(476, 309);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Расчёты";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 96);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(174, 13);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Минимальный диапазон Δt, дней";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 70);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(139, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Шаг дискретизации Δt, шт";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 44);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(143, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Отклонение скорости, м/с";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(146, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Плотность воздуха, кг/м^3";
+            // 
+            // textBoxDaysToNewInterval
+            // 
+            this.textBoxDaysToNewInterval.Location = new System.Drawing.Point(195, 93);
+            this.textBoxDaysToNewInterval.Name = "textBoxDaysToNewInterval";
+            this.textBoxDaysToNewInterval.Size = new System.Drawing.Size(100, 20);
+            this.textBoxDaysToNewInterval.TabIndex = 3;
+            // 
+            // textBoxSectionLength
+            // 
+            this.textBoxSectionLength.Location = new System.Drawing.Point(195, 67);
+            this.textBoxSectionLength.Name = "textBoxSectionLength";
+            this.textBoxSectionLength.Size = new System.Drawing.Size(100, 20);
+            this.textBoxSectionLength.TabIndex = 2;
+            // 
+            // textBoxMinimalSpeedDeviation
+            // 
+            this.textBoxMinimalSpeedDeviation.Location = new System.Drawing.Point(195, 41);
+            this.textBoxMinimalSpeedDeviation.Name = "textBoxMinimalSpeedDeviation";
+            this.textBoxMinimalSpeedDeviation.Size = new System.Drawing.Size(100, 20);
+            this.textBoxMinimalSpeedDeviation.TabIndex = 1;
+            // 
+            // textBoxAirDensity
+            // 
+            this.textBoxAirDensity.Location = new System.Drawing.Point(195, 15);
+            this.textBoxAirDensity.Name = "textBoxAirDensity";
+            this.textBoxAirDensity.Size = new System.Drawing.Size(100, 20);
+            this.textBoxAirDensity.TabIndex = 0;
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
@@ -123,7 +221,7 @@
             this.tableLayoutPanel2.Controls.Add(this.buttonSave, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 341);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -155,87 +253,77 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // tabPage2
+            // label6
             // 
-            this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.textBoxDaysToNewInterval);
-            this.tabPage2.Controls.Add(this.textBoxSectionLength);
-            this.tabPage2.Controls.Add(this.textBoxMinimalSpeedDeviation);
-            this.tabPage2.Controls.Add(this.textBoxAirDensity);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(476, 309);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Расчёты";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 122);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(180, 13);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Максимальное расстояние до МС";
             // 
-            // textBoxAirDensity
+            // textBoxNearestMSRadius
             // 
-            this.textBoxAirDensity.Location = new System.Drawing.Point(186, 15);
-            this.textBoxAirDensity.Name = "textBoxAirDensity";
-            this.textBoxAirDensity.Size = new System.Drawing.Size(100, 20);
-            this.textBoxAirDensity.TabIndex = 0;
+            this.textBoxNearestMSRadius.Location = new System.Drawing.Point(195, 119);
+            this.textBoxNearestMSRadius.Name = "textBoxNearestMSRadius";
+            this.textBoxNearestMSRadius.Size = new System.Drawing.Size(100, 20);
+            this.textBoxNearestMSRadius.TabIndex = 8;
             // 
-            // textBoxMinimalSpeedDeviation
+            // label7
             // 
-            this.textBoxMinimalSpeedDeviation.Location = new System.Drawing.Point(186, 41);
-            this.textBoxMinimalSpeedDeviation.Name = "textBoxMinimalSpeedDeviation";
-            this.textBoxMinimalSpeedDeviation.Size = new System.Drawing.Size(100, 20);
-            this.textBoxMinimalSpeedDeviation.TabIndex = 1;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 148);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(183, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Минимальный коэфф. корреляции";
             // 
-            // textBoxSectionLength
+            // textBoxMinimalCoeffCorrel
             // 
-            this.textBoxSectionLength.Location = new System.Drawing.Point(186, 67);
-            this.textBoxSectionLength.Name = "textBoxSectionLength";
-            this.textBoxSectionLength.Size = new System.Drawing.Size(100, 20);
-            this.textBoxSectionLength.TabIndex = 2;
+            this.textBoxMinimalCoeffCorrel.Location = new System.Drawing.Point(195, 145);
+            this.textBoxMinimalCoeffCorrel.Name = "textBoxMinimalCoeffCorrel";
+            this.textBoxMinimalCoeffCorrel.Size = new System.Drawing.Size(100, 20);
+            this.textBoxMinimalCoeffCorrel.TabIndex = 10;
             // 
-            // textBoxDaysToNewInterval
+            // checkBoxMinCorrSpeed
             // 
-            this.textBoxDaysToNewInterval.Location = new System.Drawing.Point(186, 93);
-            this.textBoxDaysToNewInterval.Name = "textBoxDaysToNewInterval";
-            this.textBoxDaysToNewInterval.Size = new System.Drawing.Size(100, 20);
-            this.textBoxDaysToNewInterval.TabIndex = 3;
+            this.checkBoxMinCorrSpeed.AutoSize = true;
+            this.checkBoxMinCorrSpeed.Location = new System.Drawing.Point(23, 171);
+            this.checkBoxMinCorrSpeed.Name = "checkBoxMinCorrSpeed";
+            this.checkBoxMinCorrSpeed.Size = new System.Drawing.Size(74, 17);
+            this.checkBoxMinCorrSpeed.TabIndex = 12;
+            this.checkBoxMinCorrSpeed.Text = "Скорость";
+            this.checkBoxMinCorrSpeed.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // checkBoxMinCorrDirection
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(146, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Плотность воздуха, кг/м^3";
+            this.checkBoxMinCorrDirection.AutoSize = true;
+            this.checkBoxMinCorrDirection.Location = new System.Drawing.Point(95, 171);
+            this.checkBoxMinCorrDirection.Name = "checkBoxMinCorrDirection";
+            this.checkBoxMinCorrDirection.Size = new System.Drawing.Size(94, 17);
+            this.checkBoxMinCorrDirection.TabIndex = 13;
+            this.checkBoxMinCorrDirection.Text = "Направление";
+            this.checkBoxMinCorrDirection.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // checkBoxMinCorrTemp
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 44);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(143, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Отклонение скорости, м/с";
+            this.checkBoxMinCorrTemp.AutoSize = true;
+            this.checkBoxMinCorrTemp.Location = new System.Drawing.Point(188, 171);
+            this.checkBoxMinCorrTemp.Name = "checkBoxMinCorrTemp";
+            this.checkBoxMinCorrTemp.Size = new System.Drawing.Size(93, 17);
+            this.checkBoxMinCorrTemp.TabIndex = 14;
+            this.checkBoxMinCorrTemp.Text = "Температура";
+            this.checkBoxMinCorrTemp.UseVisualStyleBackColor = true;
             // 
-            // label4
+            // checkBoxMinCorrWet
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 70);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(139, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Шаг дискретизации Δt, шт";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 96);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(174, 13);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Минимальный диапазон Δt, дней";
+            this.checkBoxMinCorrWet.AutoSize = true;
+            this.checkBoxMinCorrWet.Location = new System.Drawing.Point(287, 171);
+            this.checkBoxMinCorrWet.Name = "checkBoxMinCorrWet";
+            this.checkBoxMinCorrWet.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxMinCorrWet.TabIndex = 15;
+            this.checkBoxMinCorrWet.Text = "Влажность";
+            this.checkBoxMinCorrWet.UseVisualStyleBackColor = true;
             // 
             // FormOptions
             // 
@@ -246,7 +334,7 @@
             this.ClientSize = new System.Drawing.Size(488, 367);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormOptions";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Настройки";
@@ -255,9 +343,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -281,5 +369,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxDaysToNewInterval;
+        private System.Windows.Forms.CheckBox checkBoxMinCorrWet;
+        private System.Windows.Forms.CheckBox checkBoxMinCorrTemp;
+        private System.Windows.Forms.CheckBox checkBoxMinCorrDirection;
+        private System.Windows.Forms.CheckBox checkBoxMinCorrSpeed;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox textBoxMinimalCoeffCorrel;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBoxNearestMSRadius;
     }
 }
