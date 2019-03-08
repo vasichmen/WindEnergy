@@ -206,9 +206,6 @@
     <Content Include="staticRegionLimits.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="input_MS_coordinates.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="License-LGPL.txt" />
     <None Include="Resources\marker.ico" />
     <None Include="Resources\page_close_button.png" />

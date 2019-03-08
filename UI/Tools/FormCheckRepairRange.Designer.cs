@@ -53,6 +53,7 @@
             this.comboBoxInterpolateMethod = new System.Windows.Forms.ComboBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.labelPointAddress = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -84,6 +85,7 @@
             this.groupBox1.Controls.Add(this.labelspeedDiap);
             this.groupBox1.Controls.Add(this.buttonEnterDirectionDiapason);
             this.groupBox1.Controls.Add(this.buttonEnterSpeedDiapason);
+            this.groupBox1.Controls.Add(this.labelPointAddress);
             this.groupBox1.Controls.Add(this.labelPointCoordinates);
             this.groupBox1.Controls.Add(this.buttonSelectPoint);
             this.groupBox1.Controls.Add(this.radioButtonEnterLimits);
@@ -140,7 +142,7 @@
             // labelPointCoordinates
             // 
             this.labelPointCoordinates.AutoSize = true;
-            this.labelPointCoordinates.Location = new System.Drawing.Point(111, 75);
+            this.labelPointCoordinates.Location = new System.Drawing.Point(111, 70);
             this.labelPointCoordinates.Name = "labelPointCoordinates";
             this.labelPointCoordinates.Size = new System.Drawing.Size(99, 13);
             this.labelPointCoordinates.TabIndex = 8;
@@ -150,7 +152,7 @@
             // 
             this.buttonSelectPoint.Location = new System.Drawing.Point(9, 70);
             this.buttonSelectPoint.Name = "buttonSelectPoint";
-            this.buttonSelectPoint.Size = new System.Drawing.Size(96, 23);
+            this.buttonSelectPoint.Size = new System.Drawing.Size(96, 33);
             this.buttonSelectPoint.TabIndex = 7;
             this.buttonSelectPoint.Text = "Выбрать точку";
             this.buttonSelectPoint.UseVisualStyleBackColor = true;
@@ -299,6 +301,15 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // labelPointAddress
+            // 
+            this.labelPointAddress.AutoSize = true;
+            this.labelPointAddress.Location = new System.Drawing.Point(111, 90);
+            this.labelPointAddress.Name = "labelPointAddress";
+            this.labelPointAddress.Size = new System.Drawing.Size(99, 13);
+            this.labelPointAddress.TabIndex = 8;
+            this.labelPointAddress.Text = "Точка не выбрана";
+            // 
             // FormCheckRepairRange
             // 
             this.AcceptButton = this.buttonSave;
@@ -349,5 +360,6 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RadioButton radioButtonOpenFile;
         private System.Windows.Forms.RadioButton radioButtonSelPoint;
+        private System.Windows.Forms.Label labelPointAddress;
     }
 }

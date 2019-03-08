@@ -48,7 +48,8 @@ namespace WindEnergy.UI.Tools
             {
                 spoint = new MeteostationInfo();
                 spoint.Coordinates = spt.Result;
-                labelPointCoordinates.Text = spoint.Coordinates.ToString();
+                labelPointCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";
+                labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(spt.Result);
 
                 buttonDownload.Enabled = true;
                 dateTimePickerFromDate.Enabled = true;

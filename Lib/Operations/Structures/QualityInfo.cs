@@ -58,10 +58,13 @@ namespace WindEnergy.Lib.Operations.Structures
                 int intervalMinutes = (int)ri.Interval; 
                 expectAm += (int)( span.TotalMinutes / intervalMinutes); //проверить деление
             }
+            expectAm++;
 
             ExpectAmount = expectAm; //ожидаемое число измерений
             PassAmount = expectAm - measures; //количество пропусков в ряде
             Completeness = (double)((double)measures / (double)expectAm); //полнота ряда
+            if (Completeness > 1)
+                Completeness = 100;
             MeasureAmount = measures; //фактическое количество измерений
         }
     }

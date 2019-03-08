@@ -150,7 +150,8 @@ namespace WindEnergy.UI.Tools
                         MessageBox.Show(this, "Необходимо выбрать точку на карте", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint));
+                    range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats );
+                    MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nДругих ошибок: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     range.Name = "Исправленный ряд";
                     return;
                 }
@@ -168,8 +169,9 @@ namespace WindEnergy.UI.Tools
                         MessageBox.Show(this, "Необходимо ввести ограничения для направлений ветра", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    range = Checker.ProcessRange(range, new CheckerParameters(speedDiapasons, directionDiapasons));
+                    range = Checker.ProcessRange(range, new CheckerParameters(speedDiapasons, directionDiapasons), out CheckerInfo stats );
                     range.Name = "Исправленный ряд";
+                    MessageBox.Show(this,$"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nДругих ошибок: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}","Проверка ряда",MessageBoxButtons.OK,MessageBoxIcon.Information);
                     return;
                 }
             }
@@ -206,7 +208,9 @@ namespace WindEnergy.UI.Tools
             FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty);
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
-                labelPointCoordinates.Text = spt.Result.ToString();
+                labelPointCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";
+                labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(spt.Result);
+                toolTip1.SetToolTip(labelPointAddress, labelPointAddress.Text);
                 checkPoint = spt.Result;
             }
         }
@@ -254,7 +258,8 @@ namespace WindEnergy.UI.Tools
             comboBoxInterpolateMethod.SelectedItem = InterpolateMethods.Linear.Description();
             comboBoxRepairInterval.SelectedItem = StandartIntervals.H1.Description();
             comboBoxLimitsProvider.SelectedItem = LimitsProviders.StaticLimits.Description();
-
+            checkPoint = range.Position;
+            labelPointCoordinates.Text = checkPoint.ToString();
             radioButtonSelectLimitsProvider.Checked = true;
         }
 

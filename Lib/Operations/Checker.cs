@@ -22,11 +22,9 @@ namespace WindEnergy.Lib.Operations
         /// <param name="range">ряд</param>
         /// <param name="param">параметры обработки ошибок</param>
         /// <returns></returns>
-        public static RawRange ProcessRange(RawRange range, CheckerParameters param)
+        public static RawRange ProcessRange(RawRange range, CheckerParameters param, out CheckerInfo info)
         {
             ILimitsProvider provider;
-
-
             switch (param.LimitsProvider)
             {
                 case LimitsProviders.Manual:
@@ -43,18 +41,26 @@ namespace WindEnergy.Lib.Operations
             }
 
             RawRange res = new RawRange();
+            res.Position = range.Position;
             res.BeginChange();
             List<DateTime> dates = new List<DateTime>();
+            int lims = 0, repeats = 0, other = 0;
             foreach (RawItem item in range)
             {
                 bool accept = provider.CheckItem(item, param.Coordinates); //проверка по диапазону
+                if (!accept) lims++;
 
                 if (accept) //если всё ещё подходит, то проверяем дату
+                {
                     accept &= !dates.Contains(item.Date); //проверка повтора даты
-
+                    if (!accept) repeats++;
+                }
                 if (accept)//если всё ещё подходит, то проверем значения скорости и направления (если не штиль, не переменное направление и не неопределённое и скорость равна 0 то не подходит)
                     if (item.DirectionRhumb != WindDirections.Undefined && item.DirectionRhumb != WindDirections.Variable && item.DirectionRhumb != WindDirections.Calm && item.Speed == 0)
+                    {
                         accept = false;
+                        other++;
+                    }
 
                 if (accept)
                 {
@@ -63,6 +69,7 @@ namespace WindEnergy.Lib.Operations
                 }
             }
             res.EndChange();
+            info = new CheckerInfo() { DateRepeats = repeats, OtherErrors = other, OverLimits = lims, Remain = res.Count, Total = range.Count };
             return res;
         }
 

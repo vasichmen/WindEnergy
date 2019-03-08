@@ -498,7 +498,7 @@ namespace WindEnergy.Lib.Data.Providers
                         if (item.Direction == double.NaN || item.Speed == double.NaN || item.DirectionRhumb == WindDirections.Undefined)
                             continue;
                         sw.WriteLine(fm,
-                            item.Date.ToString(),
+                            item.Date.ToString("dd.MM.yyyy HH:mm"),
                             item.Temperature,
                             item.Wetness,
                             GetStringFromWindDirection(item.DirectionRhumb),
@@ -518,7 +518,7 @@ namespace WindEnergy.Lib.Data.Providers
                         if (item.Direction == double.NaN || item.Speed == double.NaN || item.DirectionRhumb == WindDirections.Undefined)
                             continue;
                         sw.WriteLine(fm1,
-                            item.Date.ToString(),
+                            item.Date.ToString("dd.MM.yyyy HH:mm"),
                             item.Temperature,
                             item.Wetness,
                             GetStringFromWindDirection(item.DirectionRhumb),

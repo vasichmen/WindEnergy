@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Generic;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Operations.Interpolation;
 using WindEnergy.Lib.Operations.Structures;
@@ -15,14 +16,13 @@ namespace WindEnergy.Lib.Operations
     /// </summary>
     public static class Restorer
     {
-
         /// <summary>
         /// восстановить ряд до нужного интревала наблюдений
         /// </summary>
         /// <param name="range"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static RawRange ProcessRange(RawRange range, RestorerParameters param)
+        public static RawRange ProcessRange(RawRange Range, RestorerParameters param)
         {
             if (param.Method == InterpolateMethods.NearestMeteostation && param.Coordinates.IsEmpty)
                 throw new Exception("Для этого метода интерполяции необходимо указать расчетную точку на карте");
@@ -32,6 +32,9 @@ namespace WindEnergy.Lib.Operations
                 directsFunc = new Dictionary<double, double>(), //функция направления
                 wetFunc = new Dictionary<double, double>(), //функция влажности
                 tempFunc = new Dictionary<double, double>(); //функция температуры
+
+            List<RawItem> range = Range.ToList();
+            range.Sort(new DateTimeComparer());
 
             //заполнение известными значениями функции
             foreach (var item in range)
@@ -51,7 +54,7 @@ namespace WindEnergy.Lib.Operations
 
             //метки времени для нового ряда
             List<double> newRangeX = new List<double>();
-            for (double i = range[range.Count - 1].DateArgument; i <= range[0].DateArgument; i += newInterval)
+            for (double i = range[0].DateArgument; i <= range[range.Count - 1].DateArgument; i += newInterval)
                 newRangeX.Add(i);
 
             //создание интерполяторов функций скорости, направления, температуры, влажности
@@ -84,6 +87,7 @@ namespace WindEnergy.Lib.Operations
 
             //создание нового ряда
             RawRange res = new RawRange();
+            res.Position = Range.Position;
             res.BeginChange();
             foreach (var p in newRangeX)
             {

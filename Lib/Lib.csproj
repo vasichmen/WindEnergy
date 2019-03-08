@@ -91,6 +91,7 @@
     <Compile Include="Operations\Limits\ManualLimits.cs" />
     <Compile Include="Operations\Limits\StaticRegionLimits.cs" />
     <Compile Include="Operations\Structures\CalculateYearInfo.cs" />
+    <Compile Include="Operations\Structures\CheckerInfo.cs" />
     <Compile Include="Operations\Structures\SinglePeriodInfo.cs" />
     <Compile Include="Statistic\Calculations\Qualifier.cs" />
     <Compile Include="Operations\Restorer.cs" />
