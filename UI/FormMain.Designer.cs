@@ -366,7 +366,7 @@
             this.ToolStripMenuItemCalcYear.Name = "ToolStripMenuItemCalcYear";
             this.ToolStripMenuItemCalcYear.Size = new System.Drawing.Size(266, 22);
             this.ToolStripMenuItemCalcYear.Text = "Выбор расчётного года";
-            this.ToolStripMenuItemCalcYear.Click += new System.EventHandler(this.ToolStripMenuItemCalcYear_Click);
+            this.ToolStripMenuItemCalcYear.Click += new System.EventHandler(this.toolStripMenuItemCalcYear_Click);
             // 
             // FormMain
             // 

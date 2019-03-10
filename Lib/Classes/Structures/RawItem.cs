@@ -100,7 +100,7 @@ namespace WindEnergy.Lib.Classes.Structures
                         return WindDirections.NW;
                     case 15:
                         return WindDirections.NNW;
-                    default: throw new Exception("Что-то не так");
+                    default: throw new WindEnergyException("Что-то не так");
 
                 }
 

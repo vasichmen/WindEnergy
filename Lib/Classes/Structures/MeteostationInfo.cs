@@ -60,7 +60,7 @@ namespace WindEnergy.Lib.Classes.Structures
                     if (MeteoSourceType == MeteoSourceType.Meteostation)
                         return @"http://rp5.ru/archive.php?wmo_id=" + ID;
                     else
-                        throw new Exception("Невозможно получить ссылку");
+                        return null;
                 }
                 else
                     return @"https://rp5.ru/" + altName;

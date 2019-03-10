@@ -155,7 +155,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormLoadFromNASA";
             this.Text = "Загрузка ряда из СБД NASA";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormLoadFromNASA_FormClosed);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.formLoadFromNASA_FormClosed);
             this.Shown += new System.EventHandler(this.formLoadFromNASA_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

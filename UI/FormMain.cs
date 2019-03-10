@@ -244,7 +244,7 @@ namespace WindEnergy.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ToolStripMenuItemCalcYear_Click(object sender, EventArgs e)
+        private void toolStripMenuItemCalcYear_Click(object sender, EventArgs e)
         {
             RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
             FormCalcYear fei = new FormCalcYear(rang);
@@ -319,7 +319,7 @@ namespace WindEnergy.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void dataGridView_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
+        public void DataGridView_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
         {
             switch (e.Column.Name.ToLower())
             {

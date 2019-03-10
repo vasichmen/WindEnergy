@@ -9,12 +9,12 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindEnergy.Lib.Data;
-using WindEnergy.Lib.Data.Providers;
-using WindEnergy.Lib.Data.Interfaces;
-using WindEnergy.UI.Dialogs;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
+using WindEnergy.Lib.Data;
+using WindEnergy.Lib.Data.Interfaces;
+using WindEnergy.Lib.Data.Providers;
+using WindEnergy.UI.Dialogs;
 
 namespace WindEnergy.UI.Tools
 {
@@ -27,6 +27,7 @@ namespace WindEnergy.UI.Tools
         private NASA engineNASA;
         private IGeocoderProvider geocoder;
         private MeteostationInfo spoint;
+        private PointLatLng point = PointLatLng.Empty;
 
         public FormLoadFromNASA()
         {
@@ -43,11 +44,12 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void buttonSelectPoint_Click(object sender, EventArgs e)
         {
-            FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty);
+            FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", point);
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
                 spoint = new MeteostationInfo();
                 spoint.Coordinates = spt.Result;
+                point = spt.Result;
                 labelPointCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";
                 labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(spt.Result);
 
@@ -77,7 +79,7 @@ namespace WindEnergy.UI.Tools
                 DialogResult = DialogResult.OK;
                 Close();
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -105,7 +107,7 @@ namespace WindEnergy.UI.Tools
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FormLoadFromNASA_FormClosed(object sender, FormClosedEventArgs e)
+        private void formLoadFromNASA_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (DialogResult == DialogResult.None)
                 DialogResult = DialogResult.Cancel;

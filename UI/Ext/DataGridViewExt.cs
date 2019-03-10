@@ -49,7 +49,7 @@ namespace WindEnergy.UI.Ext
                 {
                     double.Parse(e.FormattedValue as string);
                 }
-                catch (Exception exx)
+                catch (Exception)
                 {
                     e.Cancel = true;
                     return;

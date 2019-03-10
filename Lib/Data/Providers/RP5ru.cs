@@ -198,8 +198,8 @@ namespace WindEnergy.Lib.Data.Providers
                             break;
                         case "wug_link":
                             continue; //для неофициальных метеостанций нельзя получить архив погоды =( 
-                            nm.MeteoSourceType = MeteoSourceType.UnofficialMeteostation;
-                            break;
+                            //nm.MeteoSourceType = MeteoSourceType.UnofficialMeteostation;
+                            //break;
                         default: throw new Exception("Этот тип метеостанции не реализован");
                     }
                     GetMeteostationExtInfo(ref nm); //запись информации об id метеостанции, дате начала наблюдений
@@ -497,7 +497,7 @@ namespace WindEnergy.Lib.Data.Providers
                     string fm = "\"{0}\";\"{1}\";\"\";\"\";\"{2}\";\"{3}\";\"{4}\";\"\";\"\";\"\";\"\";\"\";\"\";";
                     foreach (RawItem item in rang)
                     {
-                        if (item.Direction == double.NaN || item.Speed == double.NaN || item.DirectionRhumb == WindDirections.Undefined)
+                        if ( double.IsNaN(item.Direction) ||  double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections.Undefined)
                             continue;
                         sw.WriteLine(fm,
                             item.Date.ToString("dd.MM.yyyy HH:mm"),
@@ -517,7 +517,7 @@ namespace WindEnergy.Lib.Data.Providers
                     string fm1 = "\"{0}\";\"{1}\";\"\";\"\";\"\";\"{2}\";\"{3}\";\"{4}\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";";
                     foreach (RawItem item in rang)
                     {
-                        if (item.Direction == double.NaN || item.Speed == double.NaN || item.DirectionRhumb == WindDirections.Undefined)
+                        if (double.IsNaN(item.Direction) || double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections.Undefined)
                             continue;
                         sw.WriteLine(fm1,
                             item.Date.ToString("dd.MM.yyyy HH:mm"),

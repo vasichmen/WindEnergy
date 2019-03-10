@@ -25,12 +25,14 @@ namespace WindEnergy.UI.Dialogs
         public PointLatLng Result { get; set; }
         private PointLatLng cPoint;
         private GMapOverlay lay;
+        private PointLatLng initialPoint;
 
         public FormSelectMapPointDialog(string caption, PointLatLng initialPoint)
         {
             InitializeComponent();
             Text = caption;
             ConfigureGMapControl();
+            this.initialPoint = initialPoint;
             if (!initialPoint.IsEmpty)
                 gmapControlMap.Position = initialPoint;
             else
@@ -79,7 +81,8 @@ namespace WindEnergy.UI.Dialogs
 
 
             //поставщик карты
-            switch (Vars.Options.MapProvider) {
+            switch (Vars.Options.MapProvider)
+            {
                 case MapProviders.GoogleSatellite:
                     gmapControlMap.MapProvider = GMapProviders.GoogleSatelliteMap;
                     break;
@@ -120,10 +123,15 @@ namespace WindEnergy.UI.Dialogs
 
         private void gmapControlMap_MouseClick(object sender, MouseEventArgs e)
         {
+            PointLatLng cled = gmapControlMap.FromLocalToLatLng(e.X, e.Y);
+            ShowMarker(cled);
+        }
+
+        private void ShowMarker(PointLatLng cled)
+        {
             if (gmapControlMap.IsDragging)
                 return;
             lay.Clear();
-            PointLatLng cled = gmapControlMap.FromLocalToLatLng(e.X, e.Y);
             cPoint = cled;
             Point offsets = new Point(0, -16);
             MapMarker mar = new MapMarker(cled, Resources.marker, offsets);
@@ -131,6 +139,7 @@ namespace WindEnergy.UI.Dialogs
             mar.IsHitTestVisible = true;
 
             lay.Markers.Add(mar);
+
         }
 
         private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -155,6 +164,12 @@ namespace WindEnergy.UI.Dialogs
         {
             if (DialogResult == DialogResult.None)
                 DialogResult = DialogResult.Cancel;
+        }
+
+        private void FormSelectMapPointDialog_Shown(object sender, EventArgs e)
+        {
+            if (!initialPoint.IsEmpty)
+                ShowMarker(initialPoint);
         }
     }
 }

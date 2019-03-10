@@ -68,7 +68,7 @@ namespace WindEnergy.Lib.Operations
                         res.Add(arrMin);
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     continue;
                 }
@@ -100,7 +100,7 @@ namespace WindEnergy.Lib.Operations
                     if (ndt < dtMax)
                         return null;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     continue;
                 }

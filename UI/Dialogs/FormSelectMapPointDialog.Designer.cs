@@ -107,6 +107,7 @@
             this.ShowInTaskbar = false;
             this.Text = "FormSelectMapPointDialog";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormSelectMapPointDialog_FormClosed);
+            this.Shown += new System.EventHandler(this.FormSelectMapPointDialog_Shown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

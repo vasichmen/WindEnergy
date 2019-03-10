@@ -64,6 +64,7 @@
     <Compile Include="Classes\Generic\PropertyComparer.cs" />
     <Compile Include="Classes\Generic\SortableBindingList.cs" />
     <Compile Include="Classes\Structures\RangeInterval.cs" />
+    <Compile Include="Classes\WindEnergyException.cs" />
     <Compile Include="Data\FileConverter.cs" />
     <Compile Include="Data\Providers\ArcGis.cs" />
     <Compile Include="Data\Providers\BaseConnection.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="Geomodel\EarthModel.cs" />
     <Compile Include="Geomodel\SphereCalculations.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Operations\Checker.cs" />
     <Compile Include="Operations\Interpolation\IInterpolateMethod.cs" />
     <Compile Include="Operations\Interpolation\LagrangeInterpolateMethod.cs" />

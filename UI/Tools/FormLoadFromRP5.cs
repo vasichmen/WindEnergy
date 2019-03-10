@@ -100,7 +100,7 @@ namespace WindEnergy.UI.Tools
                 comboBoxPoint.Items.AddRange(results.ToArray());
                 comboBoxPoint.SelectionStart = comboBoxPoint.Text.Length;
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -146,7 +146,7 @@ namespace WindEnergy.UI.Tools
                 buttonDownload.Enabled = true;
 
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -161,7 +161,7 @@ namespace WindEnergy.UI.Tools
             Close();
         }
 
-        private void FormLoadFromRP5_FormClosed(object sender, FormClosedEventArgs e)
+        private void formLoadFromRP5_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (DialogResult == DialogResult.None)
                 DialogResult = DialogResult.Cancel;

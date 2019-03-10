@@ -13,7 +13,7 @@ namespace WindEnergy.Lib.Statistic.Structures
     {
         private readonly double _from;
         private readonly double _to;
-        private bool notEmpty;
+        private readonly bool notEmpty;
 
         public double From => _from;
         public double To => _to;

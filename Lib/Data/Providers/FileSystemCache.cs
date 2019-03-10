@@ -118,7 +118,7 @@ namespace WindEnergy.Lib.Data.Providers
                     else
                         return null;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return null;
                 }
@@ -233,7 +233,7 @@ namespace WindEnergy.Lib.Data.Providers
                     else
                         return null;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return null;
                 }
