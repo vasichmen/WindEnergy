@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Generic;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Geomodel;
@@ -21,6 +22,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
         private readonly MeteorologyParameters parameterType;
         private RawRange nearestRange;
         private readonly Func<double, double> getRes = null;
+        private readonly Diapason<double> interpolationDiapason;
 
         /// <summary>
         /// создаёт новый интерполятор для заданной точки с заданной функций и типом расчетного параметра
@@ -51,6 +53,12 @@ namespace WindEnergy.Lib.Operations.Interpolation
             this.func = func;
             this.nearestRange = baseRange;
 
+            //расчет диапазона сделанных измерений
+            List<RawItem> tr = baseRange.ToList();
+            tr.Sort(new DateTimeComparer());
+            interpolationDiapason.From = Math.Max(tr[0].DateArgument, func.Keys.Min()); //максимальную дату из начал каждой функции
+            interpolationDiapason.To = Math.Min(tr[tr.Count - 1].DateArgument, func.Keys.Max()); //минимальную дату из концов каждой функции
+
             double a = 0, b = 0, r = 0; //коэффициенты прямой  и коэффициент корреляции
             Dictionary<double, double> baseFunc = baseRange.GetFunction(parameterType); //функция базового ряда
             List<double>[] tableCoeff = calcTableCoeff(func, baseFunc); //таблица для расчёта коэффициентов a, b, r
@@ -75,12 +83,27 @@ namespace WindEnergy.Lib.Operations.Interpolation
             double s_dv2dv2 = tableCoeff[8][tableCoeff[8].Count - 1];
             r = s_dv1dv2 / (Math.Sqrt(s_dv1dv1 * s_dv2dv2));
 
+            //проверка попадания коэфф корреляции в допустимый диапазон (если для этого параметра надо проверять диапазон)
             if (r < Vars.Options.MinimalCorrelationCoeff && Vars.Options.MinimalCorrelationControlParametres.Contains(parameterType))
                 throw new Exception("Недостаточная точность");
 
-            getRes = new Func<double, double>((x) => { return a * x + b; });
+            getRes = new Func<double, double>((x) =>
+            {
+                ///Если в базовой функции нет измерения за этой время, то возвращаем NaN
+                ///иначе расчитываем скорость по полученной зависимости. 
+                if (!baseFunc.ContainsKey(x))
+                    return double.NaN;
+                else
+                    return a * baseFunc[x] + b;
+            });
         }
 
+        /// <summary>
+        /// расчет таблицы для получения коэффициентов a,b,r
+        /// </summary>
+        /// <param name="func">исходная функция</param>
+        /// <param name="baseFunc">функция ближайшей МС</param>
+        /// <returns></returns>
         private List<double>[] calcTableCoeff(Dictionary<double, double> func, Dictionary<double, double> baseFunc)
         {
             ///V1 - заданная функция
@@ -139,6 +162,9 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// <returns></returns>
         public double GetValue(double x)
         {
+            if (x > interpolationDiapason.To || x < interpolationDiapason.From) //если х выходит за границы диапазона функции, то ошибка
+                throw new ArgumentOutOfRangeException("Значение х должно быть внутри диапазона обеих функций");
+
             if (getRes != null)
                 return getRes(x);
             else

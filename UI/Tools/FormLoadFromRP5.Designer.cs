@@ -48,6 +48,7 @@
             this.dateTimePickerFromDate.Name = "dateTimePickerFromDate";
             this.dateTimePickerFromDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerFromDate.TabIndex = 0;
+            this.dateTimePickerFromDate.ValueChanged += new System.EventHandler(this.dateTimePickerDate_ValueChanged);
             // 
             // dateTimePickerToDate
             // 
@@ -58,6 +59,7 @@
             this.dateTimePickerToDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerToDate.TabIndex = 1;
             this.dateTimePickerToDate.Value = new System.DateTime(2019, 1, 26, 0, 26, 13, 0);
+            this.dateTimePickerToDate.ValueChanged += new System.EventHandler(this.dateTimePickerDate_ValueChanged);
             // 
             // buttonDownload
             // 

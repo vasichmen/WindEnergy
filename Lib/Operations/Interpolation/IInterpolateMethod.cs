@@ -8,7 +8,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
     public interface IInterpolateMethod
     {
         /// <summary>
-        /// получить значение функции по заданному парамтру
+        /// получить значение функции по заданному парамтру. При невозможности возвращает double.NaN
         /// </summary>
         /// <param name="x">параметр функции</param>
         /// <returns></returns>

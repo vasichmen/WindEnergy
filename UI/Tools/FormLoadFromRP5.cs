@@ -166,5 +166,11 @@ namespace WindEnergy.UI.Tools
             if (DialogResult == DialogResult.None)
                 DialogResult = DialogResult.Cancel;
         }
+
+        private void dateTimePickerDate_ValueChanged(object sender, EventArgs e)
+        {
+            dateTimePickerFromDate.MaxDate = dateTimePickerToDate.Value;
+            dateTimePickerToDate.MinDate = dateTimePickerFromDate.Value;
+        }
     }
 }

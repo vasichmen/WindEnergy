@@ -98,6 +98,7 @@
             this.dateTimePickerToDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerToDate.TabIndex = 10;
             this.dateTimePickerToDate.Value = new System.DateTime(2019, 1, 26, 0, 26, 13, 0);
+            this.dateTimePickerToDate.ValueChanged += new System.EventHandler(this.dateTimePickerDate_ValueChanged);
             // 
             // dateTimePickerFromDate
             // 
@@ -106,6 +107,7 @@
             this.dateTimePickerFromDate.Name = "dateTimePickerFromDate";
             this.dateTimePickerFromDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerFromDate.TabIndex = 9;
+            this.dateTimePickerFromDate.ValueChanged += new System.EventHandler(this.dateTimePickerDate_ValueChanged);
             // 
             // buttonSelectPoint
             // 
@@ -122,18 +124,18 @@
             this.labelPointCoordinates.AutoSize = true;
             this.labelPointCoordinates.Location = new System.Drawing.Point(122, 12);
             this.labelPointCoordinates.Name = "labelPointCoordinates";
-            this.labelPointCoordinates.Size = new System.Drawing.Size(99, 13);
+            this.labelPointCoordinates.Size = new System.Drawing.Size(168, 13);
             this.labelPointCoordinates.TabIndex = 17;
-            this.labelPointCoordinates.Text = "Точка не выбрана";
+            this.labelPointCoordinates.Text = "Координаты (точка не выбрана)";
             // 
             // labelPointAddress
             // 
             this.labelPointAddress.AutoSize = true;
             this.labelPointAddress.Location = new System.Drawing.Point(122, 30);
             this.labelPointAddress.Name = "labelPointAddress";
-            this.labelPointAddress.Size = new System.Drawing.Size(99, 13);
+            this.labelPointAddress.Size = new System.Drawing.Size(137, 13);
             this.labelPointAddress.TabIndex = 17;
-            this.labelPointAddress.Text = "Точка не выбрана";
+            this.labelPointAddress.Text = "Адрес (точка не выбрана)";
             // 
             // FormLoadFromNASA
             // 

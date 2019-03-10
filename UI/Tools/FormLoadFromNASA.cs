@@ -121,5 +121,11 @@ namespace WindEnergy.UI.Tools
             dateTimePickerFromDate.Value = DateTime.Now.AddDays(-4);
             dateTimePickerToDate.Value = DateTime.Now.AddDays(-1);
         }
+
+        private void dateTimePickerDate_ValueChanged(object sender, EventArgs e)
+        {
+            dateTimePickerFromDate.MaxDate = dateTimePickerToDate.Value;
+            dateTimePickerToDate.MinDate = dateTimePickerFromDate.Value;
+        }
     }
 }
