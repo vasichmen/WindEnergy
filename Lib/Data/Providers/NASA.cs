@@ -42,7 +42,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// <param name="toDate"></param>
         /// <param name="point_info"></param>
         /// <returns></returns>
-        public RawRange GetRange(DateTime fromDate, DateTime toDate, MeteostationInfo point_info)
+        public RawRange GetRange(DateTime fromDate, DateTime toDate, MeteostationInfo point_info, Action<double> onPercentChange = null)
         {
             PointLatLng coord = point_info.Coordinates;
 

@@ -38,13 +38,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.progressBarProgress = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // dateTimePickerFromDate
             // 
             this.dateTimePickerFromDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dateTimePickerFromDate.Enabled = false;
-            this.dateTimePickerFromDate.Location = new System.Drawing.Point(40, 86);
+            this.dateTimePickerFromDate.Location = new System.Drawing.Point(40, 76);
             this.dateTimePickerFromDate.Name = "dateTimePickerFromDate";
             this.dateTimePickerFromDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerFromDate.TabIndex = 0;
@@ -54,7 +55,7 @@
             // 
             this.dateTimePickerToDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.dateTimePickerToDate.Enabled = false;
-            this.dateTimePickerToDate.Location = new System.Drawing.Point(254, 86);
+            this.dateTimePickerToDate.Location = new System.Drawing.Point(254, 76);
             this.dateTimePickerToDate.Name = "dateTimePickerToDate";
             this.dateTimePickerToDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerToDate.TabIndex = 1;
@@ -65,7 +66,7 @@
             // 
             this.buttonDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonDownload.Enabled = false;
-            this.buttonDownload.Location = new System.Drawing.Point(12, 119);
+            this.buttonDownload.Location = new System.Drawing.Point(12, 109);
             this.buttonDownload.Name = "buttonDownload";
             this.buttonDownload.Size = new System.Drawing.Size(160, 23);
             this.buttonDownload.TabIndex = 2;
@@ -98,7 +99,7 @@
             // 
             this.labelDateRange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelDateRange.AutoSize = true;
-            this.labelDateRange.Location = new System.Drawing.Point(9, 61);
+            this.labelDateRange.Location = new System.Drawing.Point(9, 51);
             this.labelDateRange.Name = "labelDateRange";
             this.labelDateRange.Size = new System.Drawing.Size(81, 13);
             this.labelDateRange.TabIndex = 5;
@@ -108,7 +109,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 92);
+            this.label3.Location = new System.Drawing.Point(9, 66);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(25, 13);
             this.label3.TabIndex = 6;
@@ -118,7 +119,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(222, 92);
+            this.label4.Location = new System.Drawing.Point(222, 82);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(27, 13);
             this.label4.TabIndex = 7;
@@ -128,7 +129,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(311, 119);
+            this.buttonCancel.Location = new System.Drawing.Point(311, 109);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 8;
@@ -136,13 +137,23 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // progressBarProgress
+            // 
+            this.progressBarProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBarProgress.Location = new System.Drawing.Point(12, 138);
+            this.progressBarProgress.Name = "progressBarProgress";
+            this.progressBarProgress.Size = new System.Drawing.Size(374, 23);
+            this.progressBarProgress.TabIndex = 9;
+            // 
             // FormLoadFromRP5
             // 
             this.AcceptButton = this.buttonDownload;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(395, 154);
+            this.ClientSize = new System.Drawing.Size(395, 173);
+            this.Controls.Add(this.progressBarProgress);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -153,7 +164,7 @@
             this.Controls.Add(this.dateTimePickerToDate);
             this.Controls.Add(this.dateTimePickerFromDate);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(411, 193);
+            this.MinimumSize = new System.Drawing.Size(411, 212);
             this.Name = "FormLoadFromRP5";
             this.Text = "Загрузка ряда с Расписания погоды";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.formLoadFromRP5_FormClosed);
@@ -174,5 +185,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.ProgressBar progressBarProgress;
     }
 }

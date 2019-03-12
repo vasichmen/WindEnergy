@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Collections.Generic;
+using WindEnergy.Lib.Classes.Generic;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.Lib.Statistic.Calculations;
@@ -82,6 +83,19 @@ namespace WindEnergy.Lib.Classes.Collections
             EndChange();
         }
 
+
+        /// <summary>
+        /// добавление коллекции элементов в список
+        /// </summary>
+        /// <param name="r"></param>
+        internal void Add(IEnumerable<RawItem> r)
+        {
+            this.BeginChange();
+            foreach (var r1 in r)
+                this.Add(r1);
+            this.EndChange();
+        }
+
         /// <summary>
         /// Начало добавления большого числа элементов. Приостанавливает пересчёт всех параметров ряда
         /// </summary>
@@ -126,7 +140,7 @@ namespace WindEnergy.Lib.Classes.Collections
                 }
             return res;
         }
-
+        
 
         /// <summary>
         /// принудительное обновление статистики ряда
@@ -145,6 +159,18 @@ namespace WindEnergy.Lib.Classes.Collections
         {
             if (!_locked)
                 PerformRefreshQuality();
+        }
+
+        /// <summary>
+        /// сортировка списка 
+        /// </summary>
+        /// <param name="dateTimeComparer"></param>
+        internal void Sort(DateTimeComparer dateTimeComparer)
+        {
+            List<RawItem> tmp = this.ToList();
+            this.Clear();
+            tmp.Sort(dateTimeComparer);
+            this.Add(tmp);
         }
     }
 }

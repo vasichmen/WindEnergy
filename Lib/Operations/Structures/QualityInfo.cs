@@ -64,7 +64,7 @@ namespace WindEnergy.Lib.Operations.Structures
             PassAmount = expectAm - measures; //количество пропусков в ряде
             Completeness = (double)((double)measures / (double)expectAm); //полнота ряда
             if (Completeness > 1)
-                Completeness = 100;
+                Completeness = 1;
             MeasureAmount = measures; //фактическое количество измерений
         }
     }

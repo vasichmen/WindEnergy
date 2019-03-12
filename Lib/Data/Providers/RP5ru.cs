@@ -9,7 +9,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Generic;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data.Interfaces;
 
@@ -51,7 +53,10 @@ namespace WindEnergy.Lib.Data.Providers
             }
         }
 
-
+        /// <summary>
+        /// количество лет в одной загрузке данных 
+        /// </summary>
+        private const int LOAD_STEP_YEARS = 3;
 
         public override TimeSpan MinQueryInterval { get { return TimeSpan.FromSeconds(1); } }
         public override int MaxAttempts { get { return 5; } }
@@ -70,8 +75,36 @@ namespace WindEnergy.Lib.Data.Providers
         /// <param name="toDate">до какой даты</param>
         /// <param name="point_info">объект MeteostationInfo - информация о метеостанции</param>
         /// <returns></returns>
-        public RawRange GetRange(DateTime fromDate, DateTime toDate, MeteostationInfo info)
+        public RawRange GetRange(DateTime fromDate, DateTime toDate, MeteostationInfo info, Action<double> onPercentChange=null)
         {
+            if (toDate < fromDate)
+                throw new WindEnergyException("Даты указаны неверно");
+            if (toDate - fromDate > TimeSpan.FromDays(365 * LOAD_STEP_YEARS)) // если надо скачать больше трёх лет, то скачиваем по частям
+            {
+                TimeSpan span = toDate - fromDate;
+
+                RawRange res1 = new RawRange();
+                DateTime dt;
+                int i = 0;
+                int total =(int)(span.TotalDays / (365 * LOAD_STEP_YEARS));
+                for (dt = fromDate; dt <= toDate; dt += TimeSpan.FromDays(365 * LOAD_STEP_YEARS))
+                {
+                    if (onPercentChange != null)
+                    {
+                        double pc = (((double)i / (double)total) *100d);
+                        onPercentChange.Invoke(pc);
+                    }
+                    RawRange r = GetRange(dt, dt + TimeSpan.FromDays(365 * LOAD_STEP_YEARS), info);
+                    res1.Add(r);
+                    res1.Name = r.Name;
+                    res1.Position = r.Position;
+                    i++;
+                }
+                DateTime fr = dt - TimeSpan.FromDays(365 * LOAD_STEP_YEARS);
+                RawRange r1 = GetRange(fr, toDate, info);
+                return res1;
+            }
+
             //получение ссылки на файл
             string data, link;
             switch (info.MeteoSourceType)
@@ -136,6 +169,7 @@ namespace WindEnergy.Lib.Data.Providers
                 else
                     res.Position = p.ToList()[0];
             }
+            res.Sort(new DateTimeComparer());
             return res;
         }
 
@@ -153,11 +187,18 @@ namespace WindEnergy.Lib.Data.Providers
                 throw new Exception("При загрузке страницы произошла ошибка " + code.ToString());
 
             //поиск ссылок на метеостанции
-            List<HtmlNode> archives = new List<HtmlNode>() {
-                point_page.GetElementbyId("archive_link"), //архив погоды на метеостанции
-                point_page.GetElementbyId("metar_link"), //аэропорт
-                point_page.GetElementbyId("wug_link"), //на неофициальной метеостанции
+            List<HtmlNode> archives = new List<HtmlNode>();
+            string[] ids = new string[3] {
+                "archive_link",//архив погоды на метеостанции
+                "wug_link", //на неофициальной метеостанции
+                "metar_link" //аэропорт
             };
+            foreach (string i in ids)
+            {
+                var a = point_page.DocumentNode.SelectNodes($".//a[@id='{i}']");
+                if (a != null)
+                    archives.AddRange(a);
+            }
 
             List<MeteostationInfo> res = new List<MeteostationInfo>();
             foreach (HtmlNode some_link in archives)
@@ -198,8 +239,8 @@ namespace WindEnergy.Lib.Data.Providers
                             break;
                         case "wug_link":
                             continue; //для неофициальных метеостанций нельзя получить архив погоды =( 
-                            //nm.MeteoSourceType = MeteoSourceType.UnofficialMeteostation;
-                            //break;
+                                      //nm.MeteoSourceType = MeteoSourceType.UnofficialMeteostation;
+                                      //break;
                         default: throw new Exception("Этот тип метеостанции не реализован");
                     }
                     GetMeteostationExtInfo(ref nm); //запись информации об id метеостанции, дате начала наблюдений
@@ -497,7 +538,7 @@ namespace WindEnergy.Lib.Data.Providers
                     string fm = "\"{0}\";\"{1}\";\"\";\"\";\"{2}\";\"{3}\";\"{4}\";\"\";\"\";\"\";\"\";\"\";\"\";";
                     foreach (RawItem item in rang)
                     {
-                        if ( double.IsNaN(item.Direction) ||  double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections.Undefined)
+                        if (double.IsNaN(item.Direction) || double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections.Undefined)
                             continue;
                         sw.WriteLine(fm,
                             item.Date.ToString("dd.MM.yyyy HH:mm"),

@@ -64,10 +64,41 @@ namespace WindEnergy.UI.Tools
             }
             try
             {
-                RawRange res = engine.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation);
-                Result = res;
-                DialogResult = DialogResult.OK;
-                Close();
+                Action<double> pcChange = new Action<double>((pc) =>
+                {
+                    if (this.InvokeRequired)
+                    {
+                    this.Invoke(new Action(() => {
+                        progressBarProgress.Value = (int)pc;
+                        progressBarProgress.Refresh();
+                    }));
+                    }
+                    else
+                    {
+                        progressBarProgress.Value = (int)pc;
+                        progressBarProgress.Refresh();
+                    }
+                });
+
+                new Task(() =>
+                {
+                    RawRange res = engine.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation,pcChange);
+
+                    if (this.InvokeRequired)
+                        this.Invoke(new Action(() =>
+                        {
+                            Result = res;
+                            DialogResult = DialogResult.OK;
+                            Close();
+
+                        }));
+                    else
+                    {
+                        Result = res;
+                        DialogResult = DialogResult.OK;
+                        Close();
+                    }
+                }).Start();
             }
             catch (WebException ex)
             {
@@ -76,7 +107,7 @@ namespace WindEnergy.UI.Tools
             }
             catch (ApplicationException ae)
             {
-                MessageBox.Show(this, ae.Message + "\r\n" + (ae.InnerException != null ? ae.InnerException.Message : "\r\n")+"\r\nПопробуйте выбрать меньший интервал времени", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ae.Message + "\r\n" + (ae.InnerException != null ? ae.InnerException.Message : "\r\n") + "\r\nПопробуйте выбрать меньший интервал времени", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
