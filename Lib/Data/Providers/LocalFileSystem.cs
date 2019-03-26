@@ -14,6 +14,36 @@ namespace WindEnergy.Lib.Data.Providers
 {
     public class LocalFileSystem
     {
+        private List<MeteostationInfo> _meteostationList = null;
+        private Dictionary<PointLatLng, ManualLimits> _staticSpeedLimits = null;
+
+        /// <summary>
+        /// список метеостанций и координат
+        /// </summary>
+        public List<MeteostationInfo> MeteostationList
+        {
+            get
+            {
+                if (_meteostationList == null || _meteostationList.Count==0)
+                    _meteostationList = loadMeteostationList(Vars.Options.StaticMeteostationCoordinatesSourceFile);
+                return _meteostationList;
+            }
+        }
+
+        /// <summary>
+        /// список ограничений по регионам
+        /// </summary>
+        public Dictionary<PointLatLng, ManualLimits> StaticSpeedLimits
+        {
+            get
+            {
+                if (_staticSpeedLimits == null || _staticSpeedLimits.Count == 0)
+                    _staticSpeedLimits = loadStaticSpeedLimits(Vars.Options.StaticRegionLimitsSourceFile);
+                return _staticSpeedLimits;
+            }
+        }
+
+
         /// <summary>
         /// создание временного файла
         /// </summary>
@@ -92,7 +122,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// </summary>
         /// <param name="filename">адрес файла ограничения скоростей</param>
         /// <returns></returns>
-        public Dictionary<PointLatLng, ManualLimits> LoadStaticSpeedLimits(string filename)
+        private Dictionary<PointLatLng, ManualLimits> loadStaticSpeedLimits(string filename)
         {
             Dictionary<PointLatLng, ManualLimits> limits = new Dictionary<PointLatLng, ManualLimits>();
             StreamReader sr = new StreamReader(filename);
@@ -117,7 +147,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public  List<MeteostationInfo> LoadMeteostationList(string filename)
+        private List<MeteostationInfo> loadMeteostationList(string filename)
         {
             StreamReader sr = new StreamReader(filename);
             sr.ReadLine(); //пропуск заголовка

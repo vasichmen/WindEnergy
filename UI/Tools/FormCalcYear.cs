@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Operations.Structures;
@@ -41,30 +42,38 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void formCalcYear_Shown(object sender, EventArgs e)
         {
-            years = YearCalculator.ProcessRange(range);
-            dataGridViewExt1.DataSource = years.Years;
-            dataGridViewExt1.ReadOnly = true;
-
-            if (years.RecomendedYear != null) //если расчётный год найден
+            try
             {
-                labelRecomendedYear.Text = "Рекомендуется в качестве расчетного принять "+years.RecomendedYear.Year+" год:";
-                labelAverageSpeed.Text = "Средняя скорость: " + years.RecomendedYear.AverageSpeed.ToString("0.0") + " м/с";
-                labelCompletness.Text = "Полнота ряда: " + years.RecomendedYear.Completness.ToString("0.00") + " %";
-                labelExpectDeviation.Text = "Отклонение повторяемости скорости: " + years.RecomendedYear.ExpectancyDeviation.ToString("0.00") + "";
-                labelInterval.Text = "Δt: " + years.RecomendedYear.Interval.Description() + "";
-                labelMaxSpeed.Text = "Максимальная скорость: " + years.RecomendedYear.Vmax.ToString("0.0") + " м/с";
-                labelSpeedDeviation.Text = "Отклонение скорости от многолетней: " + years.RecomendedYear.SpeedDeviation.ToString("0.00") + " м/с";
+                years = YearCalculator.ProcessRange(range);
+                dataGridViewExt1.DataSource = years.Years;
+                dataGridViewExt1.ReadOnly = true;
+                
+                if (years.RecomendedYear != null) //если расчётный год найден
+                {
+                    labelRecomendedYear.Text = "Рекомендуется в качестве расчетного принять " + years.RecomendedYear.Year + " год:";
+                    labelAverageCalcYearSpeed.Text = "Средняя скорость: " + years.RecomendedYear.AverageSpeed.ToString("0.0") + " м/с";
+                    labelCompletness.Text = "Полнота ряда: " + years.RecomendedYear.Completness.ToString("0.00") + " %";
+                    labelExpectDeviation.Text = "Отклонение повторяемости скорости: " + years.RecomendedYear.ExpectancyDeviation.ToString("0.00") + "";
+                    labelInterval.Text = "Δt: " + years.RecomendedYear.Interval.Description() + "";
+                    labelMaxSpeed.Text = "Максимальная скорость: " + years.RecomendedYear.Vmax.ToString("0.0") + " м/с";
+                    labelSpeedDeviation.Text = "Отклонение скорости от многолетней: " + years.RecomendedYear.SpeedDeviation.ToString("0.00") + " м/с";
+                }
+                else //если расчётный год не найден
+                {
+                    labelAverageCalcYearSpeed.Text = "Средняя скорость: ";
+                    labelCompletness.Text = "Полнота ряда: ";
+                    labelExpectDeviation.Text = "Отклонение повторяемости скорости: ";
+                    labelInterval.Text = "Δt: ";
+                    labelMaxSpeed.Text = "Максимальная скорость: ";
+                    labelSpeedDeviation.Text = "Отклонение скорости от многолетней: ";
+                }
+                labelAverageYearsSpeed.Text = "Среднемноголетняя скорость: "+ years.AverageSpeed.ToString("0.0") + " м/с";
             }
-            else //если расчётный год не найден
+            catch (ArgumentException wex)
             {
-                labelAverageSpeed.Text = "Средняя скорость: ";
-                labelCompletness.Text = "Полнота ряда: ";
-                labelExpectDeviation.Text = "Отклонение повторяемости скорости: ";
-                labelInterval.Text = "Δt: ";
-                labelMaxSpeed.Text = "Максимальная скорость: ";
-                labelSpeedDeviation.Text = "Отклонение скорости от многолетней: ";
+                MessageBox.Show(this,wex.Message,"Выбор расчётного года",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                Close();                
             }
-
         }
 
         /// <summary>
@@ -119,16 +128,18 @@ namespace WindEnergy.UI.Tools
                     e.Column.Width = 80;
                     break;
                 case "vmax":
-                    e.Column.HeaderText = "Максимальная корость, м/с";
+                    e.Column.HeaderText = "Максимальная скорость, м/с";
                     e.Column.DefaultCellStyle.Format = "n1";
                     break;
                 case "speeddeviation":
-                    e.Column.HeaderText = "Отклонение скорости";
+                    e.Column.HeaderText = "Отклонение скорости, м/с";
                     e.Column.DefaultCellStyle.Format = "n2";
+                    e.Column.Width = 120;
                     break;
                 case "expectancydeviation":
-                    e.Column.HeaderText = "Отклонение повторяемости";
+                    e.Column.HeaderText = "Отклонение повторяемости, %";
                     e.Column.DefaultCellStyle.Format = "n2";
+                    e.Column.Width = 120;
                     break;
                 case "averagespeed":
                     e.Column.HeaderText = "Средняя скорость, м/с";

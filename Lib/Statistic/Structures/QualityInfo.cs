@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Structures;
 
-namespace WindEnergy.Lib.Operations.Structures
+namespace WindEnergy.Lib.Statistic.Structures
 {
     /// <summary>
     /// информация о качестве ряда

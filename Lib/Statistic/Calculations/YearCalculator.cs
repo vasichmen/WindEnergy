@@ -40,16 +40,17 @@ namespace WindEnergy.Lib.Statistic.Calculations
 
             //ОБРАБОТКА ВСЕХ РЯДОВ И ПОЛУЧЕНИЕ ИНФОРМАЦИИ
             CalculateYearInfo res = new CalculateYearInfo();
+            res.AverageSpeed = averSpeed;
             res.Range = Range;
             foreach (RawRange r in years)
             {
                 QualityInfo qinfo = Qualifier.ProcessRange(r);
-
+                
                 //если null, то ряд очень маленький или не удалось расчитать параметры
                 if (r == null || r[r.Count - 1].Date - r[0].Date < TimeSpan.FromDays(364))
                     continue;
 
-                StatisticalRange<GradationItem> exp = StatisticEngine.GetSpeedExpectancy(range, GradationInfo<GradationItem>.VoeykowGradations);
+                StatisticalRange<GradationItem> exp = StatisticEngine.GetExpectancy(range, GradationInfo<GradationItem>.VoeykowGradations);
                 DeviationsInfo dinfo = StatisticEngine.ProcessRangeDeviations(r, averSpeed, exp);
 
                 double aver = r.Average((t) => averSpeed);

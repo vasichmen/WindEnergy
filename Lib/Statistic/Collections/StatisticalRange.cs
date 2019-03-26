@@ -16,21 +16,43 @@ namespace WindEnergy.Lib.Statistic.Collections
     {
 
         /// <summary>
-        /// информация о градациях градации
+        /// информация о градациях статистического ряда
         /// </summary>
-        public GradationInfo<T> Gradation { get; set; }
+        public GradationInfo<T> Gradation { get;  }
 
         /// <summary>
-        /// возвращает значения вероятностей
+        /// возвращает значения вероятностей от 0 до 1
         /// </summary>
         public List<double> Values { get ;  }
+
+        /// <summary>
+        /// ключи - интервалы (GradationItem, WindDirections)
+        /// </summary>
         public List<object> Keys { get; }
 
+        /// <summary>
+        /// длина исходного ряда
+        /// </summary>
+        public int RangeCount { get; }
+
+        /// <summary>
+        /// получает элемент из массива Values с заданным ключом grad
+        /// </summary>
+        /// <param name="grad">ключ (интервал) для которого надо получить вероятность</param>
+        /// <returns></returns>
+        public double this[object grad] { get { return Values[Keys.IndexOf(grad)]; } }
+
+        /// <summary>
+        /// создаёт статистический ряд из ряда наблюдений по заданным интервалам (градациям)
+        /// </summary>
+        /// <param name="range"></param>
+        /// <param name="gradation"></param>
         public StatisticalRange(List<double> range, GradationInfo<T> gradation)
         {
             Gradation = gradation;
             Keys = new List<object>();
             Values = new List<double>();
+            RangeCount = range.Count;
             foreach (object g in gradation.Items)
             {
                 Keys.Add(g);

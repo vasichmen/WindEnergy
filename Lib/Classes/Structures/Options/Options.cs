@@ -33,6 +33,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             MinimalCorrelationCoeff = 0.7;
             MinimalCorrelationControlParametres = new List<MeteorologyParameters>() { MeteorologyParameters.Speed };
             NearestMSRadius = 50e3;//50 km
+            NormalLawPirsonCoefficientDiapason = new Diapason<double>(0, 5);
         }
 
         /// <summary>
@@ -107,6 +108,11 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         public List<MeteorologyParameters> MinimalCorrelationControlParametres { get;  set; }
 
         /// <summary>
+        /// диапазон попадания критерия Пирсона для нормального закона распределения
+        /// </summary>
+        public Diapason<double> NormalLawPirsonCoefficientDiapason { get;  set; }
+
+        /// <summary>
         /// сохранение настроек в файл
         /// </summary>
         /// <param name="Directory">адрес папки, куда сохранить файл</param>
@@ -114,7 +120,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         {
             if (File.Exists(filename))
                 File.Delete(filename);
-            XMLSerialize(filename);
+            xmlSerialize(filename);
         }
 
         /// <summary>
@@ -126,7 +132,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         {
             try
             {
-                return XMLDeserialize(filename);
+                return xmlDeserialize(filename);
             }
             catch (Exception) { return new Options(); }
         }
@@ -137,7 +143,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// сериализация в XML
         /// </summary>
         /// <param name="FilePath">путь к файлу</param>
-        private void XMLSerialize(string FilePath)
+        private void xmlSerialize(string FilePath)
         {
             File.Delete(FilePath);
             XmlSerializer se = new XmlSerializer(typeof(Options));
@@ -151,7 +157,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// </summary>
         /// <param name="FilePath">путь к файлу</param>
         /// <returns></returns>
-        private static Options XMLDeserialize(string FilePath)
+        private static Options xmlDeserialize(string FilePath)
         {
             if (!File.Exists(FilePath))
                 return new Options();

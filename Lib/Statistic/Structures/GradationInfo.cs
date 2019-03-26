@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Structures;
 
 namespace WindEnergy.Lib.Statistic.Structures
@@ -18,15 +19,20 @@ namespace WindEnergy.Lib.Statistic.Structures
         /// <summary>
         /// коллекция диапазонов-градаций
         /// </summary>
-        public List<object> Items=>items;
+        public List<object> Items => items;
 
         private List<object> items;
 
-        private GradationInfo() {
+        private GradationInfo()
+        {
+            items = new List<object>();
             if (typeof(T) == typeof(WindDirections))
             {
-                items = new List<object>();
-                items.AddRange(WindDirections.Calm.GetEnumItems());
+                var r = WindDirections.Calm.GetEnumItems();
+                var ad = from x in r
+                         where ((WindDirections)x) != WindDirections.Calm && ((WindDirections)x) != WindDirections.Undefined && ((WindDirections)x) != WindDirections.Variable
+                         select x;
+                items.AddRange(ad);
             }
         }
 
@@ -42,7 +48,7 @@ namespace WindEnergy.Lib.Statistic.Structures
                 throw new ArgumentOutOfRangeException("Диапазон градаций должен быть конечным числом");
 
             items = new List<object>();
-            for (double i = from; i < to - step; i += step)
+            for (double i = from; i < to; i += step)
                 items.Add(new GradationItem(i, i + step));
         }
 
@@ -93,20 +99,44 @@ namespace WindEnergy.Lib.Statistic.Structures
         /// <returns></returns>
         internal object GetItem(double val)
         {
+            if (double.IsNaN(val))
+                throw new ArgumentException("Заданное значение не является числом!");
             switch (typeof(T).Name)
             {
                 case "GradationItem":
                     foreach (var v in items)
-                        if (val >= (v as GradationItem).From && val <  (v as GradationItem).To)
+                        if (val >= (v as GradationItem).From && val <= (v as GradationItem).To)
                             return v;
                     return GradationItem.Empty;
                 case "WindDirections":
                     return new RawItem() { Direction = val }.DirectionRhumb;
 
-                default: throw new Exception("Этот тип перечисления не реализован");
+                default: throw new Exception("Этот тип не реализован");
             }
-            throw new Exception("элемент не подходит ни к одной градации");
+            return null;
         }
-        
+
+        /// <summary>
+        /// преобразование градаций этого типа в GradationItem
+        /// </summary>
+        /// <returns></returns>
+        internal GradationInfo<GradationItem> ToGradationItem()
+        {
+            if (typeof(T) == typeof(GradationItem))
+                return this as GradationInfo<GradationItem>;
+            if (typeof(T) == typeof(WindDirections))
+            {
+                double d = 22.5d/2d;
+                GradationInfo<GradationItem> res = new GradationInfo<GradationItem>();
+                foreach (WindDirections item in this.items)
+                {
+                    double dir = RawItem.GetDirection(item);
+                    GradationItem gr = new GradationItem(dir - d, dir + d);
+                    res.items.Add(gr);
+                }
+                return res;
+            }
+            throw new WindEnergyException("Невозможно преобразовать этот тип градаций в GradationItem");
+        }
     }
 }

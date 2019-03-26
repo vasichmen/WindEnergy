@@ -32,5 +32,9 @@ namespace WindEnergy.Lib.Operations.Structures
         /// </summary>
         public SortableBindingList<SinglePeriodInfo> Years { get; set; }
 
+        /// <summary>
+        /// среднемноголетняя скорость
+        /// </summary>
+        public double AverageSpeed { get; set; }
     }
 }

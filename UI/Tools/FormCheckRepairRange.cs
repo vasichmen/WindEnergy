@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data.Providers;
@@ -106,7 +107,10 @@ namespace WindEnergy.UI.Tools
             {
                 MessageBox.Show(this, exc.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
+            catch (WindEnergyException wex)
+            {
+                MessageBox.Show(this, wex.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             catch (ApplicationException exc)
             {
                 MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -150,7 +154,7 @@ namespace WindEnergy.UI.Tools
                         MessageBox.Show(this, "Необходимо выбрать точку на карте", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats );
+                    range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats);
                     MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nДругих ошибок: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     range.Name = "Исправленный ряд";
                     return;
@@ -169,9 +173,9 @@ namespace WindEnergy.UI.Tools
                         MessageBox.Show(this, "Необходимо ввести ограничения для направлений ветра", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    range = Checker.ProcessRange(range, new CheckerParameters(speedDiapasons, directionDiapasons), out CheckerInfo stats );
+                    range = Checker.ProcessRange(range, new CheckerParameters(speedDiapasons, directionDiapasons), out CheckerInfo stats);
                     range.Name = "Исправленный ряд";
-                    MessageBox.Show(this,$"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nДругих ошибок: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}","Проверка ряда",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nДругих ошибок: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
             }
@@ -259,7 +263,10 @@ namespace WindEnergy.UI.Tools
             comboBoxRepairInterval.SelectedItem = StandartIntervals.H1.Description();
             comboBoxLimitsProvider.SelectedItem = LimitsProviders.StaticLimits.Description();
             checkPoint = range.Position;
-            labelPointCoordinates.Text = checkPoint.ToString();
+            labelPointCoordinates.Text = $"Широта: {checkPoint.Lat.ToString("0.000")} Долгота: {checkPoint.Lng.ToString("0.000")}";
+            try
+            { labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(checkPoint); }
+            catch (Exception) { }
             radioButtonSelectLimitsProvider.Checked = true;
         }
 

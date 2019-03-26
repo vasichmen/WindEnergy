@@ -18,116 +18,116 @@ namespace WindEnergy
         /// нет данных
         /// </summary>
         [Description("Нет данных")]
-        Undefined,
+        Undefined=-1,
 
         /// <summary>
         /// ветер с севера
         /// </summary>
         [Description("С")]
-        N,
+        N = 0,
 
         /// <summary>
         /// ветер с северо северо востока
         /// </summary>
         [Description("ССВ")]
-        NNE,
+        NNE = 1,
 
         /// <summary>
         /// ветер с северо  востока
         /// </summary>
         [Description("СВ")]
-        NE,
+        NE = 2,
 
         /// <summary>
         /// ветер с северо востока востока
         /// </summary>
         [Description("СВВ")]
-        NEE,
+        NEE = 3,
 
         /// <summary>
         /// ветер с востока
         /// </summary>
         [Description("В")]
-        E,
+        E = 4,
 
         /// <summary>
         /// ветер с юго востока востока
         /// </summary>
         [Description("ЮВВ")]
-        SEE,
+        SEE = 5,
 
         /// <summary>
         /// ветер с юго востока 
         /// </summary>
         [Description("ЮВ")]
-        SE,
+        SE = 6,
 
         /// <summary>
         /// ветер с  юго юго востока
         /// </summary>
         /// 
         [Description("ЮЮВ")]
-        SSE,
+        SSE = 7,
 
         /// <summary>
         /// ветер с юга
         /// </summary>
         [Description("Ю")]
-        S,
+        S = 8,
 
         /// <summary>
         /// ветер с юго юго запада
         /// </summary>
         [Description("ЮЮЗ")]
-        SSW,
+        SSW = 9,
 
         /// <summary>
         /// ветер с юго  запада
         /// </summary>
         [Description("ЮЗ")]
-        SW,
+        SW = 10,
 
         /// <summary>
         /// ветер с  юго запада запада
         /// </summary>
         [Description("ЮЗЗ")]
-        SWW,
+        SWW = 11,
 
         /// <summary>
         /// ветер с запада
         /// </summary>
         [Description("З")]
-        W,
+        W = 12,
 
         /// <summary>
         /// ветер с северо запада запада
         /// </summary>
         [Description("СЗЗ")]
-        NWW,
+        NWW = 13,
 
         /// <summary>
         /// ветер с северо запада 
         /// </summary>
         [Description("СЗ")]
-        NW,
+        NW = 14,
 
         /// <summary>
         /// ветер с северо северо запада
         /// </summary>
         [Description("ССЗ")]
-        NNW,
+        NNW = 15,
 
         /// <summary>
         /// Переменное направление
         /// </summary>
         [Description("Переменное направление")]
-        Variable,
+        Variable=-2,
 
         /// <summary>
         /// штиль
         /// </summary>
         [Description("Штиль")]
-        Calm
+        Calm=-3
     }
 
     /// <summary>

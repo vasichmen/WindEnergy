@@ -98,7 +98,7 @@
     <Compile Include="Statistic\Calculations\Qualifier.cs" />
     <Compile Include="Operations\Restorer.cs" />
     <Compile Include="Operations\Structures\CheckerParameters.cs" />
-    <Compile Include="Operations\Structures\QualityInfo.cs" />
+    <Compile Include="Statistic\Structures\QualityInfo.cs" />
     <Compile Include="Operations\Structures\RestorerParameters.cs" />
     <Compile Include="Statistic\Calculations\StatisticEngine.cs" />
     <Compile Include="Statistic\Calculations\YearCalculator.cs" />

@@ -23,7 +23,7 @@ namespace WindEnergy.Lib.Operations.Limits
         /// <param name="sourceFile"></param>
         public StaticRegionLimits(string sourceFile)
         {
-           limits= Vars.LocalFileSystem.LoadStaticSpeedLimits(sourceFile);
+           limits= Vars.LocalFileSystem.StaticSpeedLimits;
         }
 
       

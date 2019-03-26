@@ -8,6 +8,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
@@ -75,7 +76,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// <param name="toDate">до какой даты</param>
         /// <param name="point_info">объект MeteostationInfo - информация о метеостанции</param>
         /// <returns></returns>
-        public RawRange GetRange(DateTime fromDate, DateTime toDate, MeteostationInfo info, Action<double> onPercentChange=null)
+        public RawRange GetRange(DateTime fromDate, DateTime toDate, MeteostationInfo info, Action<double> onPercentChange = null)
         {
             if (toDate < fromDate)
                 throw new WindEnergyException("Даты указаны неверно");
@@ -86,12 +87,12 @@ namespace WindEnergy.Lib.Data.Providers
                 RawRange res1 = new RawRange();
                 DateTime dt;
                 int i = 0;
-                int total =(int)(span.TotalDays / (365 * LOAD_STEP_YEARS));
+                int total = (int)(span.TotalDays / (365 * LOAD_STEP_YEARS));
                 for (dt = fromDate; dt <= toDate; dt += TimeSpan.FromDays(365 * LOAD_STEP_YEARS))
                 {
                     if (onPercentChange != null)
                     {
-                        double pc = (((double)i / (double)total) *100d);
+                        double pc = ((i / (double)total) * 100d);
                         onPercentChange.Invoke(pc);
                     }
                     RawRange r = GetRange(dt, dt + TimeSpan.FromDays(365 * LOAD_STEP_YEARS), info);
@@ -162,7 +163,7 @@ namespace WindEnergy.Lib.Data.Providers
                 res.Position = PointLatLng.Empty;
             else
             {
-                List<MeteostationInfo> list = Vars.LocalFileSystem.LoadMeteostationList(Vars.Options.StaticMeteostationCoordinatesSourceFile);
+                List<MeteostationInfo> list = Vars.LocalFileSystem.MeteostationList;
                 var p = from m in list where m.ID == info.ID select m.Coordinates;
                 if (p.Count() == 0)
                     res.Position = PointLatLng.Empty;
@@ -452,12 +453,29 @@ namespace WindEnergy.Lib.Data.Providers
                 type = MeteoSourceType.Airport;
             else throw new Exception("Неизвестный формат файла");
 
+            //пропуск пустых строк (одна уже пропущена при чтении заголовка)
+            for (int i = 0; i < 5; i++)
+                sr.ReadLine();
+
+            //чтение координат файла
+            string str = sr.ReadLine();
+            string regex = @"^\d+[\.\,].\d*\s+\d+[\.\,].\d*$";
+            bool isMatch = new Regex(regex).IsMatch(str);
+            PointLatLng coord;
+            if (isMatch)
+            {
+                string[] s = str.Split(' ');
+                double lat = double.Parse(s[0].Trim().Replace('.', Vars.DecimalSeparator));
+                double lon = double.Parse(s[1].Trim().Replace('.', Vars.DecimalSeparator));
+                coord = new PointLatLng(lat, lon);
+            }
+            else
+                coord = PointLatLng.Empty;
+            res.Position = coord;
+
             switch (type)
             {
                 case MeteoSourceType.Meteostation: //загрузка архива с метеостанции
-                    //пропуск пустых строк (одна уже пропущена при чтении заголовка)
-                    for (int i = 0; i < 6; i++)
-                        sr.ReadLine();
 
                     string data = sr.ReadToEnd();
                     sr.Close();
@@ -483,9 +501,6 @@ namespace WindEnergy.Lib.Data.Providers
                     res.FileFormat = FileFormats.RP5WmoCSV;
                     break;
                 case MeteoSourceType.Airport: //загрузка архива с аэропорта
-                    //пропуск пустых строк (одна уже пропущена при чтении заголовка)
-                    for (int i = 0; i < 6; i++)
-                        sr.ReadLine();
 
                     string data2 = sr.ReadToEnd();
                     sr.Close();
@@ -526,15 +541,16 @@ namespace WindEnergy.Lib.Data.Providers
         public static void ExportCSV(RawRange rang, string filename, FileFormats format)
         {
             StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
-
+            string coordinates = rang.Position.Lat.ToString("0.000000") + " " + rang.Position.Lng.ToString("0.000000");
             switch (format)
             {
                 case FileFormats.RP5MetarCSV:
                     string caption = "\"Местное время\";\"T\";\"P0\";\"P\";\"U\";\"DD\";\"Ff\";\"ff10\";\"WW\";\"W'W'\";\"c\";\"VV\";\"Td\";";
                     string title = "METAR";
                     sw.WriteLine(title);
-                    for (int i = 0; i < 5; i++) sw.WriteLine("#");
+                    for (int i = 0; i < 4; i++) sw.WriteLine("#");
                     sw.WriteLine(caption);
+                    sw.WriteLine(coordinates);
                     string fm = "\"{0}\";\"{1}\";\"\";\"\";\"{2}\";\"{3}\";\"{4}\";\"\";\"\";\"\";\"\";\"\";\"\";";
                     foreach (RawItem item in rang)
                     {
@@ -553,8 +569,9 @@ namespace WindEnergy.Lib.Data.Providers
                     string caption1 = "\"Местное время\";\"T\";\"Po\";\"P\";\"Pa\";\"U\";\"DD\";\"Ff\";\"ff10\";\"ff3\";\"N\";\"WW\";\"W1\";\"W2\";\"Tn\";\"Tx\";\"Cl\";\"Nh\";\"H\";\"Cm\";\"Ch\";\"VV\";\"Td\";\"RRR\";\"tR\";\"E\";\"Tg\";\"E'\";\"sss\"";
                     string title1 = "WMO_ID";
                     sw.WriteLine(title1);
-                    for (int i = 0; i < 5; i++) sw.WriteLine("#");
+                    for (int i = 0; i < 4; i++) sw.WriteLine("#");
                     sw.WriteLine(caption1);
+                    sw.WriteLine(coordinates);
                     string fm1 = "\"{0}\";\"{1}\";\"\";\"\";\"\";\"{2}\";\"{3}\";\"{4}\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";";
                     foreach (RawItem item in rang)
                     {

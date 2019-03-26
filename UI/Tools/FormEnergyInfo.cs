@@ -232,19 +232,34 @@ namespace WindEnergy.UI.Tools
                 throw new Exception("что-то совсем не так!!");
 
             //расчет параметров
-            range_info = StatisticEngine.ProcessRange(tempr);
-            stat_speeds = StatisticEngine.GetSpeedExpectancy(tempr, GradationInfo<GradationItem>.VoeykowGradations);
-            stat_directions = StatisticEngine.GetDirectionExpectancy(tempr, GradationInfo<WindDirections>.Rhumb16Gradations);
-            exp_info = StatisticEngine.ProcessRange(stat_speeds);
+            try
+            {
+
+                range_info = StatisticEngine.ProcessRange(tempr);
+                stat_speeds = StatisticEngine.GetExpectancy(tempr, GradationInfo<GradationItem>.VoeykowGradations);
+                stat_directions = StatisticEngine.GetDirectionExpectancy(tempr, GradationInfo<WindDirections>.Rhumb16Gradations);
+                exp_info = StatisticEngine.ProcessRange(stat_speeds);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Расчёт энергетических характеристик", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (range_info == null || exp_info == null)
+            {
+                MessageBox.Show(this, "Для заданного ряда невозможно рассчитать характеристики на выбранном интервале", "Расчёт энергетических характеристик", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             //вывод параметров
-            labelEnergyDensity.Text = range_info.EnergyDensity.ToString("0.00") + " Вт*ч/м^2";
+            labelEnergyDensity.Text = (range_info.EnergyDensity / 1000).ToString("0.00") + " кВт*ч/м^2";
             labelPowerDensity.Text = range_info.PowerDensity.ToString("0.00") + " Вт/м^2";
             labelCv.Text = range_info.Cv.ToString("0.000");
             labelV0.Text = range_info.V0.ToString("0.0") + " м/с";
             labelVmax.Text = range_info.Vmax.ToString("0.0") + " м/с";
 
-            labelEnergyDensityTV.Text = exp_info.EnergyDensity.ToString("0.00") + " Вт*ч/м^2";
+            labelEnergyDensityTV.Text = (exp_info.EnergyDensity / 1000).ToString("0.00") + " кВт*ч/м^2";
             labelPowerDensityTV.Text = exp_info.PowerDensity.ToString("0.00") + " Вт/м^2";
             labelCvTV.Text = exp_info.Cv.ToString("0.000");
             labelV0TV.Text = exp_info.V0.ToString("0.0") + " м/с";
@@ -281,22 +296,19 @@ namespace WindEnergy.UI.Tools
             dpane.CurveList.Clear();
             dpane.GraphObjList.Clear();
             dlist.Clockwise = true;
-            for (int i = 1; i <= 16; i++)
+            for (int i = 0; i < 16; i++)
             {
                 double r = stat_directions.Values[i] * 100;
                 dlist.Add(r, 1);
                 string txt = ((WindDirections)stat_directions.Keys[i]).Description();
-                double x = r * Math.Sin(((i - 1) * 22.5d) * Math.PI / 180d);
-                double y = r * Math.Cos(((i - 1) * 22.5d) * Math.PI / 180d);
+                double x = r * Math.Sin(((i) * 22.5d) * Math.PI / 180d);
+                double y = r * Math.Cos(((i) * 22.5d) * Math.PI / 180d);
                 TextObj t = new TextObj(txt, x, y);
                 dpane.GraphObjList.Add(t);
             }
             dpane.AddCurve("t(DD)", dlist, Color.Blue);
             zedGraphControlDirection.AxisChange();
             zedGraphControlDirection.Invalidate();
-
         }
-
-
     }
 }

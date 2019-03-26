@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Statistic.Collections;
@@ -23,6 +24,8 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// <returns></returns>
         public static EnergyInfo ProcessRange(RawRange tempr)
         {
+            if (tempr.Count == 0)
+                return null;
             EnergyInfo res = new EnergyInfo();
             res.FromDate = tempr[0].Date;
             res.ToDate = tempr[tempr.Count - 1].Date;
@@ -158,10 +161,10 @@ namespace WindEnergy.Lib.Statistic.Calculations
         internal static DeviationsInfo ProcessRangeDeviations(RawRange r, double averSpeed, StatisticalRange<GradationItem> exp)
         {
             DeviationsInfo res = new DeviationsInfo();
-            
+
             res.SpeedDeviation = Math.Abs(r.Average((t) => t.Speed) - averSpeed);
-                                 
-            StatisticalRange<GradationItem> th = GetSpeedExpectancy(r, GradationInfo<GradationItem>.VoeykowGradations);
+
+            StatisticalRange<GradationItem> th = GetExpectancy(r, GradationInfo<GradationItem>.VoeykowGradations);
             res.ExpDeviation = Math.Sqrt(exp.Values.Zip(th.Values, (a, b) => Math.Pow(a - b, 2)).Aggregate((x, y) => x + y)); //корень из суммы квадратов разностей повторяемостей многолетней и этого промежутка
             return res;
         }
@@ -169,13 +172,29 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// <summary>
         /// получить статистический ряд по заданным значениям и заданным градациям
         /// </summary>
-        /// <param name="tempr"></param>
-        /// <param name="voeykowGradations"></param>
+        /// <param name="range"></param>
+        /// <param name="gradations"></param>
         /// <returns></returns>
-        public static StatisticalRange<GradationItem> GetSpeedExpectancy(IList<RawItem> tempr, GradationInfo<GradationItem> voeykowGradations)
+        public static StatisticalRange<GradationItem> GetExpectancy(IList<RawItem> range, GradationInfo<GradationItem> gradations, MeteorologyParameters parameter = MeteorologyParameters.Speed)
         {
-            List<double> spds = new List<double>(from t in tempr select t.Speed);
-            StatisticalRange<GradationItem> r = new StatisticalRange<GradationItem>(spds, voeykowGradations);
+            List<double> rang;
+            switch (parameter)
+            {
+                case MeteorologyParameters.Speed:
+                    rang = new List<double>(from t in range select t.Speed);
+                    break;
+                case MeteorologyParameters.Direction:
+                    rang = new List<double>(from t in range select t.Direction);
+                    break;
+                case MeteorologyParameters.Temperature:
+                    rang = new List<double>(from t in range select t.Temperature);
+                    break;
+                case MeteorologyParameters.Wetness:
+                    rang = new List<double>(from t in range select t.Wetness);
+                    break;
+                default: throw new WindEnergyException("Этот параметр не реализован");
+            }
+            StatisticalRange<GradationItem> r = new StatisticalRange<GradationItem>(rang, gradations);
             return r;
         }
 

@@ -12,6 +12,7 @@ using WindEnergy.Lib.Classes.Generic;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.Lib.Statistic.Calculations;
+using WindEnergy.Lib.Statistic.Structures;
 
 namespace WindEnergy.Lib.Classes.Collections
 {

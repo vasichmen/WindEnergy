@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib;
@@ -399,7 +400,12 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string str = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+            string str = "45.222222 22,3452345235";
+            string regex = @"^\d+[\.\,].\d*\s+\d+[\.\,].\d*$";
+            bool isMatch = new Regex(regex).IsMatch(str);
+            if (isMatch)
+            {
+            }
         }
 
     }

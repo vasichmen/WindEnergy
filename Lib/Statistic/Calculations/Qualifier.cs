@@ -7,6 +7,7 @@ using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Generic;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Operations.Structures;
+using WindEnergy.Lib.Statistic.Structures;
 
 namespace WindEnergy.Lib.Statistic.Calculations
 {
@@ -57,36 +58,35 @@ namespace WindEnergy.Lib.Statistic.Calculations
                 intervals.Add(interval);
             }
 
-            //исправление ошибок - удаление всех диапазонов, которые меньше заданного DAYS_TO_NEW_INTERVAL
 
-
-
+            //все диапазоны дат, которые меньше Vars.Options.QualifierDaysToNewInterval присоединяются к левой части ряда
             //поиск изменений в интервалах
             List<RangeInterval> rangeIntervals = new List<RangeInterval>();
-            int s1 = 0, s2 = 0;
+            int s1 = 0, s2 = 0; //указатели на элементы в массиве intervals[] (начала первого и второго отрезка)
             for (int i = 0; i < intervals.Count - 1; i++)
                 if (intervals[i] != intervals[i + 1])
                 {
-                    if ((int)intervals[i] * (s2 - s1) > Vars.Options.QualifierDaysToNewInterval * 24 * 60) //если второй интервал больше минимального
-                    { //добавление первого интервала (от s1 до s2)
+                    if ((int)intervals[i] * (s2 - s1) > Vars.Options.QualifierDaysToNewInterval * 24 * 60) //если второй отрезок больше минимального
+                    { 
+                        //добавление первого отрезка (от s1 до s2)
                         DateTime sd = range[diapasons[s1].From].Date;
                         DateTime ed = range[diapasons[s2].To].Date;
-                        bool f = intervals[s1] == intervals[s2];
+                        //bool f = intervals[s1] == intervals[s2];
                         rangeIntervals.Add(new RangeInterval() { Diapason = new Diapason<DateTime>(sd, ed), Interval = intervals[s1] });
                         s1 = s2;
                     }
-                    else //если второй интервал меньше минимального, то переставляем начало второго интервала
+                    else //если второй отрезок меньше минимального, то переставляем начало второго отрезка (присоединяем второй отрезок к первому)
                         s2 = i + 1;
                 }
 
             //добавление последнего
-            DateTime end = range[range.Count - 1].Date; //конец диапазона
+            DateTime end = range.Last().Date; //конец диапазона
             DateTime start;
             if (rangeIntervals.Count > 0)
                 start = rangeIntervals.Last().Diapason.To;
             else
                 start = range[0].Date;
-            rangeIntervals.Add(new RangeInterval() { Diapason = new Diapason<DateTime>(start, end), Interval = intervals[intervals.Count - 1] }); // добавление диапазона
+            rangeIntervals.Add(new RangeInterval() { Diapason = new Diapason<DateTime>(start, end), Interval = intervals.Last() }); // добавление диапазона
 
             QualityInfo res = new QualityInfo(rangeIntervals, range.Count);
             return res;

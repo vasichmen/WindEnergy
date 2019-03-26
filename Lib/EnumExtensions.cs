@@ -35,7 +35,7 @@ namespace WindEnergy
         }
 
         /// <summary>
-        /// получить все значений Enum для вывода в выпадающий список
+        /// получить все описания значений Enum для вывода в выпадающий список
         /// </summary>
         /// <returns></returns>
         public static List<string> GetItems(this Enum element)
@@ -47,7 +47,7 @@ namespace WindEnergy
         }
         
         /// <summary>
-        /// получить все значений Enum для вывода в выпадающий список
+        /// получить все значения Enum
         /// </summary>
         /// <returns></returns>
         public static List<Enum> GetEnumItems(this Enum element)
