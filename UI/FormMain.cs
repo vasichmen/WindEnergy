@@ -56,7 +56,8 @@ namespace WindEnergy.UI
         {
             saveToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             saveAsToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
-            checkRepairRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
+            checkRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
+            repairRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             calculateEnergyInfoToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             ToolStripMenuItemCalcYear.Enabled = mainTabControl.SelectedTab != null;
         }
@@ -128,12 +129,20 @@ namespace WindEnergy.UI
             {
                 foreach (string file in of.FileNames)
                 {
-                    string ext = Path.GetExtension(file).ToLower();
-                    RawRange rang = RawRangeSerializer.DeserializeFile(file, null);
-                    rang.FilePath = file;
-                    rang.Name = Path.GetFileNameWithoutExtension(file);
-                    TabPageExt tab = mainTabControl.OpenNewTab(rang, rang.FileName);
-                    tab.HasNotSavedChanges = false;
+                    try
+                    {
+                        string ext = Path.GetExtension(file).ToLower();
+                        RawRange rang = RawRangeSerializer.DeserializeFile(file, null);
+                        rang.FilePath = file;
+                        rang.Name = Path.GetFileNameWithoutExtension(file);
+                        TabPageExt tab = mainTabControl.OpenNewTab(rang, rang.FileName);
+                        tab.HasNotSavedChanges = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(this, ex.Message, "Открытие файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
             }
         }
@@ -176,19 +185,34 @@ namespace WindEnergy.UI
         #region Правка
 
         /// <summary>
-        /// проверить и восстановить ряд
+        /// проверить 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void checkRepairRangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
-            FormCheckRepairRange frm = new FormCheckRepairRange(rang);
+            FormCheckRange frm = new FormCheckRange(rang);
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
             }
 
+        }
+
+        /// <summary>
+        /// восстановить ряд
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void repairRangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            FormRepairRange frm = new FormRepairRange(rang);
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
+            }
         }
 
         #endregion
@@ -369,6 +393,7 @@ namespace WindEnergy.UI
         {
             mainHelper.RefreshStatusBar();
         }
+
         /// <summary>
         /// открытие списка интерваолв измерений в статусной строке
         /// </summary>

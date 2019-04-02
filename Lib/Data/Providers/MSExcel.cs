@@ -92,7 +92,7 @@ namespace WindEnergy.Lib.Data.Providers
             sr.Close();
             if (title.Contains("WMO_ID") || title.Contains("METAR"))
                 return RP5ru.LoadCSV(fileName);
-            else throw new Exception("Неизвестный формат файла");
+            else throw new Exception("Файл повреждён или имеет неподдерживаемый формат");
         }
 
         /// <summary>

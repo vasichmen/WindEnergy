@@ -24,7 +24,7 @@ namespace WindEnergy.UI.Tools
     /// <summary>
     /// окно исправлений и восстановления ряда наблюдений
     /// </summary>
-    public partial class FormCheckRepairRange : Form
+    public partial class FormCheckRange : Form
     {
         private RawRange range = null;
 
@@ -48,86 +48,13 @@ namespace WindEnergy.UI.Tools
         /// открыть окно с заданным рядом
         /// </summary>
         /// <param name="range"></param>
-        public FormCheckRepairRange(RawRange range)
+        public FormCheckRange(RawRange range)
         {
             InitializeComponent();
-            comboBoxInterpolateMethod.Items.Clear();
-            comboBoxInterpolateMethod.Items.AddRange(InterpolateMethods.Linear.GetItems().ToArray());
-            comboBoxRepairInterval.Items.Clear();
-            comboBoxRepairInterval.Items.AddRange(StandartIntervals.H1.GetItems().Skip(1).ToArray());
-           // comboBoxLimitsProvider.Items.Clear();
-           // comboBoxLimitsProvider.Items.AddRange(LimitsProviders.None.GetItems().ToArray());
             this.range = range;
         }
 
-        #region восстановление ряда
-
-        /// <summary>
-        /// кнопка восстановить ряд
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonRepairRange_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Cursor = Cursors.WaitCursor;
-                InterpolateMethods method = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem));
-                StandartIntervals interval = (StandartIntervals)(new EnumTypeConverter<StandartIntervals>().ConvertFrom(comboBoxRepairInterval.SelectedItem));
-
-                RawRange baseRange = null;
-                if (method == InterpolateMethods.NearestMeteostation)
-                {
-                    if (radioButtonSelPoint.Checked)
-                    {
-                        if (range.Position.IsEmpty)
-                        {
-                            FormSelectMapPointDialog fsp = new FormSelectMapPointDialog("Выберите координаты ряда " + range.Name, PointLatLng.Empty);
-                            if (fsp.ShowDialog(this) == DialogResult.OK)
-                                range.Position = fsp.Result;
-                            else
-                                return;
-                        }
-                    }
-                    else
-                    {
-                        OpenFileDialog of = new OpenFileDialog();
-                        of.InitialDirectory = Vars.Options.LastDirectory;
-                        of.Filter = "Файл csv|*.csv";
-                        if (of.ShowDialog(this) == DialogResult.OK)
-                        {
-                            Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
-                            baseRange = MSExcel.LoadCSV(of.FileName);
-                        }
-                        else
-                            return;
-                    }
-                }
-
-                range = Restorer.ProcessRange(range, new RestorerParameters() { Interval = interval, Method = method, Coordinates = range.Position, BaseRange = baseRange });
-                range.Name = "Восстановленный ряд до интервала" + interval.Description();
-                MessageBox.Show(this, $"Ряд восстановлен до интервала {interval.Description()}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            catch (WebException exc)
-            {
-                MessageBox.Show(this, exc.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            catch (WindEnergyException wex)
-            {
-                MessageBox.Show(this, wex.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            catch (ApplicationException exc)
-            {
-                MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            finally
-            {
-                Cursor = Cursors.Arrow;
-            }
-        }
-
-        #endregion
+    
 
         #region проверка ряда
 
@@ -163,7 +90,6 @@ namespace WindEnergy.UI.Tools
                     range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats);
                     MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nДругих ошибок: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     range.Name = "Исправленный ряд";
-                    return;
                 }
 
                 //если выбран способ вручную вводить ограничения
@@ -182,7 +108,6 @@ namespace WindEnergy.UI.Tools
                     range = Checker.ProcessRange(range, new CheckerParameters(speedDiapasons, directionDiapasons), out CheckerInfo stats);
                     range.Name = "Исправленный ряд";
                     MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nДругих ошибок: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
                 }
             }
             catch (ApplicationException exc)
@@ -193,6 +118,15 @@ namespace WindEnergy.UI.Tools
             {
                 Cursor = Cursors.Arrow;
             }
+
+            if (range == null)
+                DialogResult = DialogResult.Cancel;
+            else
+            {
+                DialogResult = DialogResult.OK;
+                Result = range;
+            }
+            Close();
         }
 
         /// <summary>
@@ -265,8 +199,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void formCheckRepairRange_Shown(object sender, EventArgs e)
         {
-            comboBoxInterpolateMethod.SelectedItem = InterpolateMethods.Linear.Description();
-            comboBoxRepairInterval.SelectedItem = StandartIntervals.H1.Description();
+          
             //comboBoxLimitsProvider.SelectedItem = LimitsProviders.StaticLimits.Description();
             checkPoint = range.Position;
             labelPointCoordinates.Text = $"Широта: {checkPoint.Lat.ToString("0.000")} Долгота: {checkPoint.Lng.ToString("0.000")}";
@@ -276,42 +209,6 @@ namespace WindEnergy.UI.Tools
             radioButtonSelectLimitsProvider.Checked = true;
         }
 
-        /// <summary>
-        /// сохранение изменений и закрытие окна
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonSave_Click(object sender, EventArgs e)
-        {
-            if (range == null)
-                DialogResult = DialogResult.Cancel;
-            else
-            {
-                DialogResult = DialogResult.OK;
-                Result = range;
-            }
-            Close();
-        }
 
-        /// <summary>
-        /// отмена
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBoxInterpolateMethod_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            groupBox3.Visible = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem)) == InterpolateMethods.NearestMeteostation;
-        }
     }
 }

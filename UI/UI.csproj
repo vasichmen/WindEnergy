@@ -100,11 +100,11 @@
     <Compile Include="Tools\FormCalcYear.Designer.cs">
       <DependentUpon>FormCalcYear.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tools\FormCheckRepairRange.cs">
+    <Compile Include="Tools\FormCheckRange.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tools\FormCheckRepairRange.Designer.cs">
-      <DependentUpon>FormCheckRepairRange.cs</DependentUpon>
+    <Compile Include="Tools\FormCheckRange.Designer.cs">
+      <DependentUpon>FormCheckRange.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools\FormEnergyInfo.cs">
       <SubType>Form</SubType>
@@ -139,6 +139,12 @@
     <Compile Include="Tools\FormOptions.Designer.cs">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\FormRepairRange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FormRepairRange.Designer.cs">
+      <DependentUpon>FormRepairRange.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Dialogs\FormChooseMeteostAirportDialog.resx">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,8 +157,8 @@
     <EmbeddedResource Include="Tools\FormCalcYear.resx">
       <DependentUpon>FormCalcYear.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FormCheckRepairRange.resx">
-      <DependentUpon>FormCheckRepairRange.cs</DependentUpon>
+    <EmbeddedResource Include="Tools\FormCheckRange.resx">
+      <DependentUpon>FormCheckRange.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormEnergyInfo.resx">
       <DependentUpon>FormEnergyInfo.cs</DependentUpon>
@@ -178,6 +184,9 @@
     </Compile>
     <EmbeddedResource Include="Tools\FormOptions.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FormRepairRange.resx">
+      <DependentUpon>FormRepairRange.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

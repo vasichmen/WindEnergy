@@ -41,7 +41,7 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkRepairRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.операцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calculateEnergyInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,8 +61,9 @@
             this.toolStripStatusLabelCompletness = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelInterval = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
+            this.button1 = new System.Windows.Forms.Button();
+            this.repairRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -159,19 +160,19 @@
             // правкаToolStripMenuItem
             // 
             this.правкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.checkRepairRangeToolStripMenuItem});
+            this.checkRangeToolStripMenuItem,
+            this.repairRangeToolStripMenuItem});
             this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
             this.правкаToolStripMenuItem.Size = new System.Drawing.Size(64, 21);
             this.правкаToolStripMenuItem.Text = "Правка";
             // 
-            // checkRepairRangeToolStripMenuItem
+            // checkRangeToolStripMenuItem
             // 
-            this.checkRepairRangeToolStripMenuItem.Name = "checkRepairRangeToolStripMenuItem";
-            this.checkRepairRangeToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
-            this.checkRepairRangeToolStripMenuItem.Text = "Проверить и восстановить ряд";
-            this.checkRepairRangeToolStripMenuItem.ToolTipText = "Проверка ряда на наличие пропусков и некорректных данных, восстановление ряда до " +
-    "заданного интервала наблюдений";
-            this.checkRepairRangeToolStripMenuItem.Click += new System.EventHandler(this.checkRepairRangeToolStripMenuItem_Click);
+            this.checkRangeToolStripMenuItem.Name = "checkRangeToolStripMenuItem";
+            this.checkRangeToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.checkRangeToolStripMenuItem.Text = "Проверить ряд";
+            this.checkRangeToolStripMenuItem.ToolTipText = "Проверка ряда на наличие пропусков и некорректных данных";
+            this.checkRangeToolStripMenuItem.Click += new System.EventHandler(this.checkRepairRangeToolStripMenuItem_Click);
             // 
             // операцииToolStripMenuItem
             // 
@@ -342,18 +343,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1157, 501);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(251, 26);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(56, 19);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // mainTabControl
             // 
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -368,6 +357,26 @@
             this.mainTabControl.Size = new System.Drawing.Size(1151, 495);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.mainTabControl_Selected);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(251, 26);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(56, 19);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // repairRangeToolStripMenuItem
+            // 
+            this.repairRangeToolStripMenuItem.Name = "repairRangeToolStripMenuItem";
+            this.repairRangeToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.repairRangeToolStripMenuItem.Text = "Восстановить ряд";
+            this.repairRangeToolStripMenuItem.ToolTipText = "Восстановление ряда до заданного интервала наблюдений";
+            this.repairRangeToolStripMenuItem.Click += new System.EventHandler(this.repairRangeToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -423,7 +432,7 @@
         private System.Windows.Forms.ToolStripButton saveAlltoolStripButton;
         private System.Windows.Forms.ToolStripMenuItem downloadNASAToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem checkRepairRangeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkRangeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem calculateEnergyInfoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         public System.Windows.Forms.StatusStrip statusStrip1;
@@ -432,6 +441,7 @@
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInterval;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripRangeIntervals;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCalcYear;
+        private System.Windows.Forms.ToolStripMenuItem repairRangeToolStripMenuItem;
     }
 }
 

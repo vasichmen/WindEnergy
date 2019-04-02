@@ -1,6 +1,6 @@
 ﻿namespace WindEnergy.UI.Tools
 {
-    partial class FormCheckRepairRange
+    partial class FormCheckRange
     {
         /// <summary>
         /// Required designer variable.
@@ -29,8 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCheckRepairRange));
-            this.comboBoxRepairInterval = new System.Windows.Forms.ComboBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCheckRange));
             this.buttonCheckRange = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.labeldirectDiap = new System.Windows.Forms.Label();
@@ -43,33 +42,13 @@
             this.radioButtonEnterLimits = new System.Windows.Forms.RadioButton();
             this.radioButtonSelectLimitsProvider = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.buttonRepairRange = new System.Windows.Forms.Button();
-            this.radioButtonSelPoint = new System.Windows.Forms.RadioButton();
-            this.radioButtonOpenFile = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.comboBoxInterpolateMethod = new System.Windows.Forms.ComboBox();
-            this.buttonSave = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // comboBoxRepairInterval
-            // 
-            this.comboBoxRepairInterval.FormattingEnabled = true;
-            this.comboBoxRepairInterval.Location = new System.Drawing.Point(9, 38);
-            this.comboBoxRepairInterval.Name = "comboBoxRepairInterval";
-            this.comboBoxRepairInterval.Size = new System.Drawing.Size(210, 21);
-            this.comboBoxRepairInterval.TabIndex = 0;
             // 
             // buttonCheckRange
             // 
             this.buttonCheckRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCheckRange.Location = new System.Drawing.Point(84, 205);
+            this.buttonCheckRange.Location = new System.Drawing.Point(83, 192);
             this.buttonCheckRange.Name = "buttonCheckRange";
             this.buttonCheckRange.Size = new System.Drawing.Size(135, 23);
             this.buttonCheckRange.TabIndex = 1;
@@ -92,7 +71,7 @@
             this.groupBox1.Controls.Add(this.buttonCheckRange);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(314, 248);
+            this.groupBox1.Size = new System.Drawing.Size(314, 224);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Проверка ряда";
@@ -189,166 +168,34 @@
             this.radioButtonSelectLimitsProvider.UseVisualStyleBackColor = true;
             this.radioButtonSelectLimitsProvider.CheckedChanged += new System.EventHandler(this.radioButtonLimits_CheckedChanged);
             // 
-            // buttonRepairRange
+            // FormCheckRange
             // 
-            this.buttonRepairRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRepairRange.Location = new System.Drawing.Point(50, 205);
-            this.buttonRepairRange.Name = "buttonRepairRange";
-            this.buttonRepairRange.Size = new System.Drawing.Size(133, 23);
-            this.buttonRepairRange.TabIndex = 1;
-            this.buttonRepairRange.Text = "Восстановить ряд";
-            this.toolTip1.SetToolTip(this.buttonRepairRange, "Дополнение ряда до указанного интервала измерений");
-            this.buttonRepairRange.UseVisualStyleBackColor = true;
-            this.buttonRepairRange.Click += new System.EventHandler(this.buttonRepairRange_Click);
-            // 
-            // radioButtonSelPoint
-            // 
-            this.radioButtonSelPoint.AutoSize = true;
-            this.radioButtonSelPoint.Checked = true;
-            this.radioButtonSelPoint.Location = new System.Drawing.Point(6, 19);
-            this.radioButtonSelPoint.Name = "radioButtonSelPoint";
-            this.radioButtonSelPoint.Size = new System.Drawing.Size(117, 17);
-            this.radioButtonSelPoint.TabIndex = 0;
-            this.radioButtonSelPoint.TabStop = true;
-            this.radioButtonSelPoint.Text = "По точке на карте";
-            this.toolTip1.SetToolTip(this.radioButtonSelPoint, "Найти ближайшую к заданной точке метеостанцию");
-            this.radioButtonSelPoint.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonOpenFile
-            // 
-            this.radioButtonOpenFile.AutoSize = true;
-            this.radioButtonOpenFile.Location = new System.Drawing.Point(6, 39);
-            this.radioButtonOpenFile.Name = "radioButtonOpenFile";
-            this.radioButtonOpenFile.Size = new System.Drawing.Size(125, 17);
-            this.radioButtonOpenFile.TabIndex = 1;
-            this.radioButtonOpenFile.Text = "Выбрать файл ряда";
-            this.toolTip1.SetToolTip(this.radioButtonOpenFile, "Выбрать файл ряда наблюдений для восстановления исходного ряда");
-            this.radioButtonOpenFile.UseVisualStyleBackColor = true;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.comboBoxInterpolateMethod);
-            this.groupBox2.Controls.Add(this.buttonRepairRange);
-            this.groupBox2.Controls.Add(this.comboBoxRepairInterval);
-            this.groupBox2.Location = new System.Drawing.Point(332, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(225, 248);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Восстановление ряда";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.radioButtonOpenFile);
-            this.groupBox3.Controls.Add(this.radioButtonSelPoint);
-            this.groupBox3.Location = new System.Drawing.Point(9, 117);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(210, 82);
-            this.groupBox3.TabIndex = 5;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Выбор источника ряда";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 74);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Метод интерполяции";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Длительность интервала";
-            // 
-            // comboBoxInterpolateMethod
-            // 
-            this.comboBoxInterpolateMethod.FormattingEnabled = true;
-            this.comboBoxInterpolateMethod.Location = new System.Drawing.Point(9, 90);
-            this.comboBoxInterpolateMethod.Name = "comboBoxInterpolateMethod";
-            this.comboBoxInterpolateMethod.Size = new System.Drawing.Size(210, 21);
-            this.comboBoxInterpolateMethod.TabIndex = 2;
-            this.comboBoxInterpolateMethod.SelectedIndexChanged += new System.EventHandler(this.comboBoxInterpolateMethod_SelectedIndexChanged);
-            // 
-            // buttonSave
-            // 
-            this.buttonSave.Location = new System.Drawing.Point(382, 266);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(133, 23);
-            this.buttonSave.TabIndex = 4;
-            this.buttonSave.Text = "Сохранить";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // buttonCancel
-            // 
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(103, 266);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(128, 23);
-            this.buttonCancel.TabIndex = 5;
-            this.buttonCancel.Text = "Отмена";
-            this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
-            // FormCheckRepairRange
-            // 
-            this.AcceptButton = this.buttonSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(566, 296);
-            this.Controls.Add(this.buttonCancel);
-            this.Controls.Add(this.buttonSave);
-            this.Controls.Add(this.groupBox2);
+            this.ClientSize = new System.Drawing.Size(336, 241);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FormCheckRepairRange";
-            this.Text = "Проверить и восстановить ряд";
+            this.Name = "FormCheckRange";
+            this.Text = "Проверить  ряд";
             this.Shown += new System.EventHandler(this.formCheckRepairRange_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox comboBoxRepairInterval;
         private System.Windows.Forms.Button buttonCheckRange;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBoxInterpolateMethod;
-        private System.Windows.Forms.Button buttonRepairRange;
         private System.Windows.Forms.Label labelPointCoordinates;
         private System.Windows.Forms.Button buttonSelectPoint;
         private System.Windows.Forms.RadioButton radioButtonEnterLimits;
         private System.Windows.Forms.RadioButton radioButtonSelectLimitsProvider;
-        private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labeldirectDiap;
         private System.Windows.Forms.Label labelspeedDiap;
         private System.Windows.Forms.Button buttonEnterDirectionDiapason;
         private System.Windows.Forms.Button buttonEnterSpeedDiapason;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton radioButtonOpenFile;
-        private System.Windows.Forms.RadioButton radioButtonSelPoint;
         private System.Windows.Forms.Label labelPointAddress;
     }
 }
