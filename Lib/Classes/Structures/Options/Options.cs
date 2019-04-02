@@ -29,7 +29,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             QualifierSectionLength = 10; //10 измерений
             QualifierDaysToNewInterval = 90; //3 месяца
             AirDensity = 1.226;
-            MinimalSpeedDeviation = 0.2d;
+            MinimalSpeedDeviation = 0.1d;
             MinimalCorrelationCoeff = 0.7;
             MinimalCorrelationControlParametres = new List<MeteorologyParameters>() { MeteorologyParameters.Speed };
             NearestMSRadius = 50e3;//50 km

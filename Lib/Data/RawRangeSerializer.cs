@@ -26,7 +26,7 @@ namespace WindEnergy.Lib.Data
             switch (ext)
             {
                 case ".csv":
-                    RawRange rang = RP5ru.LoadCSV(FileName);
+                    RawRange rang = MSExcel.LoadCSV(FileName);
                     return rang;
                 default: throw new Exception("Открытие этого типа файлов не реализовано");
             }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,12 @@ namespace WindEnergy.UI.Tools
         /// <summary>
         /// исходный ряд, для которого ведётся расчёт
         /// </summary>
-        private RawRange range;
+        private readonly RawRange range;
+
+        /// <summary>
+        /// список лет в загруженном ряду
+        /// </summary>
+        private List<object> years;
 
         /// <summary>
         /// повторяемости скоростей
@@ -107,7 +113,7 @@ namespace WindEnergy.UI.Tools
             dateTimePickerFrom.Value = min;
             dateTimePickerTo.Value = max;
 
-            List<object> years = new List<object>();
+            years = new List<object>();
             foreach (RawItem item in range)
             {
                 if (!years.Contains(item.Date.Year))
@@ -117,8 +123,8 @@ namespace WindEnergy.UI.Tools
             comboBoxYear.Items.AddRange(years.ToArray());
             comboBoxYear.SelectedItem = "Все";
 
-            comboBoxYearMonth.Items.AddRange(Months.January.GetItems().ToArray());
-            comboBoxYearMonth.SelectedItem = Months.All.Description();
+            comboBoxMonth.Items.AddRange(Months.January.GetItems().ToArray());
+            comboBoxMonth.SelectedItem = Months.All.Description();
 
             refreshInfo();
             drawGraphs();
@@ -133,7 +139,7 @@ namespace WindEnergy.UI.Tools
         private void radioButtonSelect_CheckedChanged(object sender, EventArgs e)
         {
             comboBoxYear.Enabled = radioButtonSelectYearMonth.Checked;
-            comboBoxYearMonth.Enabled = radioButtonSelectYearMonth.Checked;
+            comboBoxMonth.Enabled = radioButtonSelectYearMonth.Checked;
             dateTimePickerFrom.Enabled = radioButtonSelectPeriod.Checked;
             dateTimePickerTo.Enabled = radioButtonSelectPeriod.Checked;
         }
@@ -145,10 +151,18 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void comboBoxYear_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if (!ready)
+            try
+            {
+                if (!ready)
+                    return;
+                refreshInfo();
+                drawGraphs();
+            }
+            catch (Exception exx)
+            {
+                MessageBox.Show(this, exx.Message, "Расчёт энергетических характеристик", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            refreshInfo();
-            drawGraphs();
+            }
         }
 
         /// <summary>
@@ -164,7 +178,32 @@ namespace WindEnergy.UI.Tools
             sf.AddExtension = true;
             if (sf.ShowDialog(this) == DialogResult.OK)
             {
-                MSExcel.SaveEnergyInfoCSV(sf.FileName, range_info, exp_info, stat_directions, stat_speeds);
+                Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
+                //формирование заголовка
+                string cap = "Год;Месяц;кол-во изм";
+                foreach (GradationItem grad in GradationInfo<GradationItem>.VoeykowGradations.Items)
+                    cap += ";" + grad.Average.ToString("0.00");
+                cap += ";Vmin;Vmax;Vср.год;Cv(V);Nвал уд.;Эвал уд.";
+                foreach (WindDirections wd in WindDirections.Calm.GetEnumItems().GetRange(0, 17))
+                    cap += ";" + wd.Description();
+
+                //запись в файл
+                MSExcel.SaveEnergyInfoCSV(sf.FileName, null, null, null, null, cap, "", "", 0, false); //запись заголовка
+                foreach (int year in years) //фикл по годам
+                {
+                    for (int mt = 0; mt <= 12; mt++)//по месяцам, начиная со всех
+                    {
+                        Months month = (Months)mt;
+                        RawRange rn = getRange(false, true, DateTime.Now, DateTime.Now, year, month.Description());
+                        if (rn == null || rn.Count == 0)
+                            continue;
+                        EnergyInfo ri = StatisticEngine.ProcessRange(rn);
+                        StatisticalRange<WindDirections> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections>.Rhumb16Gradations);
+                        StatisticalRange<GradationItem> ss = StatisticEngine.GetExpectancy(rn, GradationInfo<GradationItem>.VoeykowGradations);
+                        EnergyInfo ei = StatisticEngine.ProcessRange(ss);
+                        MSExcel.SaveEnergyInfoCSV(sf.FileName, ri, ei, sd, ss, null, year.ToString(), month.Description(), rn.Count, true);
+                    }
+                }
                 Process.Start(sf.FileName);
             }
         }
@@ -174,67 +213,21 @@ namespace WindEnergy.UI.Tools
         /// </summary>
         private void refreshInfo()
         {
-            RawRange tempr = null;
+            RawRange tempr = getRange(
+                radioButtonSelectPeriod.Checked,
+                radioButtonSelectYearMonth.Checked,
+                dateTimePickerFrom.Value,
+                dateTimePickerTo.Value,
+                comboBoxYear.SelectedItem,
+                comboBoxMonth.SelectedItem
+                );
 
-            //для выбранного периода времени
-            if (radioButtonSelectPeriod.Checked)
-            {
-                DateTime fr = dateTimePickerFrom.Value;
-                DateTime too = dateTimePickerTo.Value;
-
-                tempr = new RawRange((from ttt in range
-                                      where ttt.Date > fr && ttt.Date < too
-                                      orderby ttt.Date
-                                      select ttt).ToList());
-            }
-            else
-            {
-                //для выбранного года или месяцев
-                if (radioButtonSelectYearMonth.Checked)
-                {
-                    Months mt = (Months)(new EnumTypeConverter<Months>().ConvertFrom(comboBoxYearMonth.SelectedItem));
-                    int month = (int)mt;
-
-                    if (month == 0) //любой месяц
-                    {
-                        if (comboBoxYear.SelectedItem.GetType() == typeof(string) && (string)comboBoxYear.SelectedItem == "Все") //любой год, любой месяц
-                            tempr = new RawRange((from ttt in range
-                                                  orderby ttt.Date
-                                                  select ttt).ToList());
-                        else //любой месяц, заданный год
-                        {
-                            int yr = (int)comboBoxYear.SelectedItem;
-                            tempr = new RawRange((from ttt in range
-                                                  where ttt.Date.Year == yr
-                                                  orderby ttt.Date
-                                                  select ttt).ToList());
-                        }
-                    }
-                    else //заданный месяц
-                    {
-                        if (comboBoxYear.SelectedItem.GetType() == typeof(string) && (string)comboBoxYear.SelectedItem == "Все") //любой год, заданный месяц
-                            tempr = new RawRange((from ttt in range
-                                                  where ttt.Date.Month == month
-                                                  orderby ttt.Date
-                                                  select ttt).ToList());
-                        else //заданный месяц, заданный год
-                        {
-                            int yr = (int)comboBoxYear.SelectedItem;
-                            tempr = new RawRange((from ttt in range
-                                                  where ttt.Date.Year == yr && ttt.Date.Month == month
-                                                  orderby ttt.Date
-                                                  select ttt).ToList());
-                        }
-                    }
-                }
-            }
             if (tempr == null)
                 throw new Exception("что-то совсем не так!!");
 
             //расчет параметров
             try
             {
-
                 range_info = StatisticEngine.ProcessRange(tempr);
                 stat_speeds = StatisticEngine.GetExpectancy(tempr, GradationInfo<GradationItem>.VoeykowGradations);
                 stat_directions = StatisticEngine.GetDirectionExpectancy(tempr, GradationInfo<WindDirections>.Rhumb16Gradations);
@@ -265,11 +258,83 @@ namespace WindEnergy.UI.Tools
             labelV0TV.Text = exp_info.V0.ToString("0.0") + " м/с";
         }
 
+
+        /// <summary>
+        /// выбор ряда из исходного по заданной фильтрации
+        /// </summary>
+        /// <param name="isPeriod">истина, если надо выбрать период от fromDate до toDate</param>
+        /// <param name="isYearMonth">истина, если надо выбрать по месяцу и году</param>
+        /// <param name="fromDate">начальная дата</param>
+        /// <param name="toDate">конечная дата</param>
+        /// <param name="Year">значение selectedItem в combobox года(СТРОКА)</param>
+        /// <param name="Month">значение selectedItem в combobox месяца(СТРОКА)</param>
+        /// <returns></returns>
+        private RawRange getRange(bool isPeriod, bool isYearMonth, DateTime fromDate, DateTime toDate, object Year, object Month)
+        {
+            if (isPeriod != !isYearMonth)
+                return null;
+
+            RawRange res = null;
+
+            //для выбранного периода времени
+            if (isPeriod)
+            {
+                res = new RawRange((from ttt in range
+                                    where ttt.Date > fromDate && ttt.Date < toDate
+                                    orderby ttt.Date
+                                    select ttt).ToList());
+            }
+            else
+            {
+                //для выбранного года или месяцев
+                if (isYearMonth)
+                {
+                    Months mt = (Months)(new EnumTypeConverter<Months>().ConvertFrom(Month));
+                    int month = (int)mt;
+
+                    if (month == 0) //любой месяц
+                    {
+                        if (Year.GetType() == typeof(string) && (string)Year == "Все") //любой год, любой месяц
+                            res = new RawRange((from ttt in range
+                                                orderby ttt.Date
+                                                select ttt).ToList());
+                        else //любой месяц, заданный год
+                        {
+                            int yr = (int)Year;
+                            res = new RawRange((from ttt in range
+                                                where ttt.Date.Year == yr
+                                                orderby ttt.Date
+                                                select ttt).ToList());
+                        }
+                    }
+                    else //заданный месяц
+                    {
+                        if (Year.GetType() == typeof(string) && (string)Year == "Все") //любой год, заданный месяц
+                            res = new RawRange((from ttt in range
+                                                where ttt.Date.Month == month
+                                                orderby ttt.Date
+                                                select ttt).ToList());
+                        else //заданный месяц, заданный год
+                        {
+                            int yr = (int)Year;
+                            res = new RawRange((from ttt in range
+                                                where ttt.Date.Year == yr && ttt.Date.Month == month
+                                                orderby ttt.Date
+                                                select ttt).ToList());
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+
         /// <summary>
         /// обновление графиков на основе заданных stat_speeds и stat_directions
         /// </summary>
         private void drawGraphs()
         {
+            if (stat_directions == null || stat_speeds == null)
+                return;
             //РАСПРЕДЕЛНИЕ СКОРОСТЕЙ ВЕТРА
             GraphPane spane = zedGraphControlSpeed.GraphPane;
             spane.Title.Text = "t(V), %";

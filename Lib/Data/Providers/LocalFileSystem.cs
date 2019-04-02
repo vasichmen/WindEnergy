@@ -24,7 +24,7 @@ namespace WindEnergy.Lib.Data.Providers
         {
             get
             {
-                if (_meteostationList == null || _meteostationList.Count==0)
+                if (_meteostationList == null || _meteostationList.Count == 0)
                     _meteostationList = loadMeteostationList(Vars.Options.StaticMeteostationCoordinatesSourceFile);
                 return _meteostationList;
             }
@@ -118,6 +118,38 @@ namespace WindEnergy.Lib.Data.Providers
         }
 
         /// <summary>
+        /// пробует загрузить файл координат метеостанций и возвращает true, если  загрузка удалась
+        /// </summary>
+        /// <param name="fileName">адрес файла</param>
+        /// <returns></returns>
+        public bool CheckMSCoordinatesFile(string fileName)
+        {
+            try
+            {
+                loadMeteostationList(fileName);
+                return true;
+            }
+            catch (Exception)
+            { return false; }
+        }
+
+        /// <summary>
+        /// пробует загрузить файл ограничений и возвращает true, если  загрузка удалась
+        /// </summary>
+        /// <param name="fileName">адрес файла</param>
+        /// <returns></returns>
+        public bool CheckRegionLimitsFile(string fileName)
+        {
+            try
+            {
+                loadStaticSpeedLimits(fileName);
+                return true;
+            }
+            catch (Exception)
+            { return false; }
+        }
+
+        /// <summary>
         /// загрузить список ограничений скоростей по точкам
         /// </summary>
         /// <param name="filename">адрес файла ограничения скоростей</param>
@@ -166,6 +198,7 @@ namespace WindEnergy.Lib.Data.Providers
             sr.Close();
             return res;
         }
+
     }
 }
 

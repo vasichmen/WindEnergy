@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindEnergy.Lib.Classes.Structures;
 
 namespace WindEnergy.UI.Tools
 {
@@ -15,6 +17,9 @@ namespace WindEnergy.UI.Tools
     /// </summary>
     public partial class FormOptions : Form
     {
+        private string coordinateMSFile;
+        private string regionLimitsFile;
+
         public FormOptions()
         {
             InitializeComponent();
@@ -22,6 +27,8 @@ namespace WindEnergy.UI.Tools
 
             //ОСНОВНЫЕ
             comboBoxMapProvider.Items.AddRange(MapProviders.GoogleSatellite.GetItems().ToArray());
+            labelCoordinatesMSFile.Text = Path.GetFileName(Vars.Options.StaticMeteostationCoordinatesSourceFile);
+            labelRegionLimitsFile.Text = Path.GetFileName(Vars.Options.StaticRegionLimitsSourceFile);
 
             //РАСЧЁТ
             textBoxAirDensity.Text = Vars.Options.AirDensity.ToString();
@@ -34,6 +41,8 @@ namespace WindEnergy.UI.Tools
             checkBoxMinCorrTemp.Checked = Vars.Options.MinimalCorrelationControlParametres.Contains(MeteorologyParameters.Temperature);
             checkBoxMinCorrSpeed.Checked = Vars.Options.MinimalCorrelationControlParametres.Contains(MeteorologyParameters.Speed);
             checkBoxMinCorrWet.Checked = Vars.Options.MinimalCorrelationControlParametres.Contains(MeteorologyParameters.Wetness);
+            numericUpDownNormalLawFrom.Value = (decimal)Vars.Options.NormalLawPirsonCoefficientDiapason.From;
+            numericUpDownNormalLawTo.Value = (decimal)Vars.Options.NormalLawPirsonCoefficientDiapason.To;
 
         }
 
@@ -46,6 +55,8 @@ namespace WindEnergy.UI.Tools
         {
             //ОСНОВНЫЕ
             Vars.Options.MapProvider = (MapProviders)(new EnumTypeConverter<MapProviders>().ConvertFrom(comboBoxMapProvider.SelectedItem));
+            Vars.Options.StaticMeteostationCoordinatesSourceFile = coordinateMSFile;
+            Vars.Options.StaticRegionLimitsSourceFile = regionLimitsFile;
 
             //РАСЧЁТ
             try
@@ -56,6 +67,11 @@ namespace WindEnergy.UI.Tools
                 Vars.Options.QualifierSectionLength = int.Parse(textBoxSectionLength.Text);
                 Vars.Options.MinimalCorrelationCoeff = double.Parse(textBoxMinimalCoeffCorrel.Text.Replace('.', Vars.DecimalSeparator));
                 Vars.Options.NearestMSRadius = double.Parse(textBoxNearestMSRadius.Text.Replace('.', Vars.DecimalSeparator));
+
+                //диапазон критерия Пирсона
+                double fr = (double)numericUpDownNormalLawFrom.Value;
+                double to = (double)numericUpDownNormalLawTo.Value;
+                Vars.Options.NormalLawPirsonCoefficientDiapason = new Diapason<double>(fr, to);
 
                 Vars.Options.MinimalCorrelationControlParametres.Clear();
                 if (checkBoxMinCorrDirection.Checked)
@@ -91,11 +107,55 @@ namespace WindEnergy.UI.Tools
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FormOptions_Shown(object sender, EventArgs e)
+        private void formOptions_Shown(object sender, EventArgs e)
         {
             //загрузка настроек
 
             comboBoxMapProvider.SelectedItem = Vars.Options.MapProvider.Description();
+        }
+
+        /// <summary>
+        /// выбор файла координат метеостанций
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSelectCoordinatesMSFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Текстовые файлы *.txt|*.txt";
+            if (of.ShowDialog(this) == DialogResult.OK)
+            {
+                bool f = Vars.LocalFileSystem.CheckMSCoordinatesFile(of.FileName);
+                if (!f)
+                {
+                    MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла координат метеостанций", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.coordinateMSFile = of.FileName;
+                labelCoordinatesMSFile.Text = Path.GetFileName(coordinateMSFile);
+            }
+        }
+
+        /// <summary>
+        /// выбор файла ограничений
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSelectRegionLimitsFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Текстовые файлы *.txt|*.txt";
+            if (of.ShowDialog(this) == DialogResult.OK)
+            {
+                bool f = Vars.LocalFileSystem.CheckRegionLimitsFile(of.FileName);
+                if (!f)
+                {
+                    MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла ограничений скоростей", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.regionLimitsFile = of.FileName;
+                labelRegionLimitsFile.Text = Path.GetFileName(regionLimitsFile);
+            }
         }
     }
 }

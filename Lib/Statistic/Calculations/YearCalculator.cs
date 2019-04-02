@@ -85,14 +85,14 @@ namespace WindEnergy.Lib.Statistic.Calculations
             }
 
             //проверка по отклонению скорости
-            var ac = accepts.OrderBy((t) => t.SpeedDeviation); //в начале ряда остаются минимальные отклонения скорости
-            double startsDev = ac.ToList()[0].SpeedDeviation; //запоминаем сааамое мальнкое отклонение (с ним сравниваем остальные, чтоб найти похожие)
-            var ac2 = accepts.TakeWhile((e) => Math.Abs(e.SpeedDeviation - startsDev) < Vars.Options.MinimalSpeedDeviation); //остаются только ряды с очень похожим отклонением скоростей
+            var ac = accepts.OrderBy((t) => t.SpeedDeviation).ToList(); //в начале ряда остаются минимальные отклонения скорости
+            double startsDev = ac[0].SpeedDeviation; //запоминаем сааамое мальнкое отклонение (с ним сравниваем остальные, чтоб найти похожие)
+            var ac2 = ac.TakeWhile(e => e.SpeedDeviation - startsDev < Vars.Options.MinimalSpeedDeviation).ToList(); //остаются только ряды с очень похожим отклонением скоростей
 
 
-            if (ac2.Count() == 1) //если остался только один, то его оставляем
+            if (ac2.Count == 1) //если остался только один, то его оставляем
             {
-                res.RecomendedYear = ac2.ToList()[0];
+                res.RecomendedYear = ac2[0];
                 return res;
             }
 

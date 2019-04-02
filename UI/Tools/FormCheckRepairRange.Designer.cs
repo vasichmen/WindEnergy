@@ -37,11 +37,11 @@
             this.labelspeedDiap = new System.Windows.Forms.Label();
             this.buttonEnterDirectionDiapason = new System.Windows.Forms.Button();
             this.buttonEnterSpeedDiapason = new System.Windows.Forms.Button();
+            this.labelPointAddress = new System.Windows.Forms.Label();
             this.labelPointCoordinates = new System.Windows.Forms.Label();
             this.buttonSelectPoint = new System.Windows.Forms.Button();
             this.radioButtonEnterLimits = new System.Windows.Forms.RadioButton();
             this.radioButtonSelectLimitsProvider = new System.Windows.Forms.RadioButton();
-            this.comboBoxLimitsProvider = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.buttonRepairRange = new System.Windows.Forms.Button();
             this.radioButtonSelPoint = new System.Windows.Forms.RadioButton();
@@ -53,7 +53,6 @@
             this.comboBoxInterpolateMethod = new System.Windows.Forms.ComboBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.labelPointAddress = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -90,7 +89,6 @@
             this.groupBox1.Controls.Add(this.buttonSelectPoint);
             this.groupBox1.Controls.Add(this.radioButtonEnterLimits);
             this.groupBox1.Controls.Add(this.radioButtonSelectLimitsProvider);
-            this.groupBox1.Controls.Add(this.comboBoxLimitsProvider);
             this.groupBox1.Controls.Add(this.buttonCheckRange);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
@@ -102,7 +100,7 @@
             // labeldirectDiap
             // 
             this.labeldirectDiap.AutoSize = true;
-            this.labeldirectDiap.Location = new System.Drawing.Point(159, 176);
+            this.labeldirectDiap.Location = new System.Drawing.Point(159, 158);
             this.labeldirectDiap.Name = "labeldirectDiap";
             this.labeldirectDiap.Size = new System.Drawing.Size(130, 13);
             this.labeldirectDiap.TabIndex = 12;
@@ -111,7 +109,7 @@
             // labelspeedDiap
             // 
             this.labelspeedDiap.AutoSize = true;
-            this.labelspeedDiap.Location = new System.Drawing.Point(6, 176);
+            this.labelspeedDiap.Location = new System.Drawing.Point(6, 158);
             this.labelspeedDiap.Name = "labelspeedDiap";
             this.labelspeedDiap.Size = new System.Drawing.Size(130, 13);
             this.labelspeedDiap.TabIndex = 11;
@@ -120,7 +118,7 @@
             // buttonEnterDirectionDiapason
             // 
             this.buttonEnterDirectionDiapason.Enabled = false;
-            this.buttonEnterDirectionDiapason.Location = new System.Drawing.Point(162, 137);
+            this.buttonEnterDirectionDiapason.Location = new System.Drawing.Point(162, 119);
             this.buttonEnterDirectionDiapason.Name = "buttonEnterDirectionDiapason";
             this.buttonEnterDirectionDiapason.Size = new System.Drawing.Size(137, 36);
             this.buttonEnterDirectionDiapason.TabIndex = 10;
@@ -131,7 +129,7 @@
             // buttonEnterSpeedDiapason
             // 
             this.buttonEnterSpeedDiapason.Enabled = false;
-            this.buttonEnterSpeedDiapason.Location = new System.Drawing.Point(9, 137);
+            this.buttonEnterSpeedDiapason.Location = new System.Drawing.Point(9, 119);
             this.buttonEnterSpeedDiapason.Name = "buttonEnterSpeedDiapason";
             this.buttonEnterSpeedDiapason.Size = new System.Drawing.Size(137, 36);
             this.buttonEnterSpeedDiapason.TabIndex = 9;
@@ -139,10 +137,19 @@
             this.buttonEnterSpeedDiapason.UseVisualStyleBackColor = true;
             this.buttonEnterSpeedDiapason.Click += new System.EventHandler(this.buttonEnterSpeedDiapason_Click);
             // 
+            // labelPointAddress
+            // 
+            this.labelPointAddress.AutoSize = true;
+            this.labelPointAddress.Location = new System.Drawing.Point(111, 63);
+            this.labelPointAddress.Name = "labelPointAddress";
+            this.labelPointAddress.Size = new System.Drawing.Size(99, 13);
+            this.labelPointAddress.TabIndex = 8;
+            this.labelPointAddress.Text = "Точка не выбрана";
+            // 
             // labelPointCoordinates
             // 
             this.labelPointCoordinates.AutoSize = true;
-            this.labelPointCoordinates.Location = new System.Drawing.Point(111, 70);
+            this.labelPointCoordinates.Location = new System.Drawing.Point(111, 43);
             this.labelPointCoordinates.Name = "labelPointCoordinates";
             this.labelPointCoordinates.Size = new System.Drawing.Size(99, 13);
             this.labelPointCoordinates.TabIndex = 8;
@@ -150,7 +157,7 @@
             // 
             // buttonSelectPoint
             // 
-            this.buttonSelectPoint.Location = new System.Drawing.Point(9, 70);
+            this.buttonSelectPoint.Location = new System.Drawing.Point(9, 43);
             this.buttonSelectPoint.Name = "buttonSelectPoint";
             this.buttonSelectPoint.Size = new System.Drawing.Size(96, 33);
             this.buttonSelectPoint.TabIndex = 7;
@@ -161,7 +168,7 @@
             // radioButtonEnterLimits
             // 
             this.radioButtonEnterLimits.AutoSize = true;
-            this.radioButtonEnterLimits.Location = new System.Drawing.Point(9, 114);
+            this.radioButtonEnterLimits.Location = new System.Drawing.Point(9, 96);
             this.radioButtonEnterLimits.Name = "radioButtonEnterLimits";
             this.radioButtonEnterLimits.Size = new System.Drawing.Size(172, 17);
             this.radioButtonEnterLimits.TabIndex = 6;
@@ -175,20 +182,12 @@
             this.radioButtonSelectLimitsProvider.Checked = true;
             this.radioButtonSelectLimitsProvider.Location = new System.Drawing.Point(9, 20);
             this.radioButtonSelectLimitsProvider.Name = "radioButtonSelectLimitsProvider";
-            this.radioButtonSelectLimitsProvider.Size = new System.Drawing.Size(185, 17);
+            this.radioButtonSelectLimitsProvider.Size = new System.Drawing.Size(209, 17);
             this.radioButtonSelectLimitsProvider.TabIndex = 5;
             this.radioButtonSelectLimitsProvider.TabStop = true;
-            this.radioButtonSelectLimitsProvider.Text = "Выбрать источник ограничений";
+            this.radioButtonSelectLimitsProvider.Text = "Автоматический поиск ограничений";
             this.radioButtonSelectLimitsProvider.UseVisualStyleBackColor = true;
             this.radioButtonSelectLimitsProvider.CheckedChanged += new System.EventHandler(this.radioButtonLimits_CheckedChanged);
-            // 
-            // comboBoxLimitsProvider
-            // 
-            this.comboBoxLimitsProvider.FormattingEnabled = true;
-            this.comboBoxLimitsProvider.Location = new System.Drawing.Point(9, 43);
-            this.comboBoxLimitsProvider.Name = "comboBoxLimitsProvider";
-            this.comboBoxLimitsProvider.Size = new System.Drawing.Size(210, 21);
-            this.comboBoxLimitsProvider.TabIndex = 2;
             // 
             // buttonRepairRange
             // 
@@ -301,15 +300,6 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // labelPointAddress
-            // 
-            this.labelPointAddress.AutoSize = true;
-            this.labelPointAddress.Location = new System.Drawing.Point(111, 90);
-            this.labelPointAddress.Name = "labelPointAddress";
-            this.labelPointAddress.Size = new System.Drawing.Size(99, 13);
-            this.labelPointAddress.TabIndex = 8;
-            this.labelPointAddress.Text = "Точка не выбрана";
-            // 
             // FormCheckRepairRange
             // 
             this.AcceptButton = this.buttonSave;
@@ -346,7 +336,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxInterpolateMethod;
         private System.Windows.Forms.Button buttonRepairRange;
-        private System.Windows.Forms.ComboBox comboBoxLimitsProvider;
         private System.Windows.Forms.Label labelPointCoordinates;
         private System.Windows.Forms.Button buttonSelectPoint;
         private System.Windows.Forms.RadioButton radioButtonEnterLimits;

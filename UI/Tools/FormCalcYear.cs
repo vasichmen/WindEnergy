@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,6 +90,7 @@ namespace WindEnergy.UI.Tools
             sf.AddExtension = true;
             if (sf.ShowDialog(this) == DialogResult.OK)
             {
+                Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
                 MSExcel.SaveCalcYearInfoCSV(sf.FileName,years);
                 Process.Start(sf.FileName);
             }

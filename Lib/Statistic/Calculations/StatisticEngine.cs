@@ -33,10 +33,12 @@ namespace WindEnergy.Lib.Statistic.Calculations
             res.V0 = getAverageSpeed(tempr);
             res.StandardDeviationSpeed = getSigmV(res.V0, tempr);
             res.Vmax = getMaxSpeed(tempr);
+            res.Vmin = getMinSpeed(tempr);
             res.EnergyDensity = res.PowerDensity * 8760d;
             res.Cv = res.StandardDeviationSpeed / res.V0;
             return res;
         }
+
 
         #region служебные
 
@@ -51,6 +53,20 @@ namespace WindEnergy.Lib.Statistic.Calculations
             double res = int.MinValue;
             foreach (var l in input)
                 if (l.Speed > res)
+                    res = l.Speed;
+            return res;
+        }
+
+        /// <summary>
+        /// получить минимальную скорость
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static double getMinSpeed(RawRange input)
+        {
+            double res = int.MaxValue;
+            foreach (var l in input)
+                if (l.Speed < res)
                     res = l.Speed;
             return res;
         }

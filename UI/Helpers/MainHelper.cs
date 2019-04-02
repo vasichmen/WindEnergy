@@ -40,6 +40,7 @@ namespace WindEnergy.UI.Helpers
 
             if (sf.ShowDialog(f) == DialogResult.OK)
             {
+                Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
                 FileFormats format;
                 switch (sf.FilterIndex)
                 {

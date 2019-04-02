@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -54,8 +55,8 @@ namespace WindEnergy.UI.Tools
             comboBoxInterpolateMethod.Items.AddRange(InterpolateMethods.Linear.GetItems().ToArray());
             comboBoxRepairInterval.Items.Clear();
             comboBoxRepairInterval.Items.AddRange(StandartIntervals.H1.GetItems().Skip(1).ToArray());
-            comboBoxLimitsProvider.Items.Clear();
-            comboBoxLimitsProvider.Items.AddRange(LimitsProviders.None.GetItems().ToArray());
+           // comboBoxLimitsProvider.Items.Clear();
+           // comboBoxLimitsProvider.Items.AddRange(LimitsProviders.None.GetItems().ToArray());
             this.range = range;
         }
 
@@ -94,7 +95,10 @@ namespace WindEnergy.UI.Tools
                         of.InitialDirectory = Vars.Options.LastDirectory;
                         of.Filter = "Файл csv|*.csv";
                         if (of.ShowDialog(this) == DialogResult.OK)
-                            baseRange = RP5ru.LoadCSV(of.FileName);
+                        {
+                            Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
+                            baseRange = MSExcel.LoadCSV(of.FileName);
+                        }
                         else
                             return;
                     }
@@ -102,6 +106,8 @@ namespace WindEnergy.UI.Tools
 
                 range = Restorer.ProcessRange(range, new RestorerParameters() { Interval = interval, Method = method, Coordinates = range.Position, BaseRange = baseRange });
                 range.Name = "Восстановленный ряд до интервала" + interval.Description();
+                MessageBox.Show(this, $"Ряд восстановлен до интервала {interval.Description()}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
             catch (WebException exc)
             {
@@ -138,7 +144,7 @@ namespace WindEnergy.UI.Tools
                 //если выбран способ с помощью выбранных истоников ограничений
                 if (radioButtonSelectLimitsProvider.Checked)
                 {
-                    LimitsProviders provider = (LimitsProviders)(new EnumTypeConverter<LimitsProviders>().ConvertFrom(comboBoxLimitsProvider.SelectedItem));
+                    LimitsProviders provider = radioButtonSelectLimitsProvider.Checked ? LimitsProviders.StaticLimits : LimitsProviders.Manual;
                     if (provider == LimitsProviders.None)
                     {
                         MessageBox.Show(this, "Необходимо выбрать истоник ограничений", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -197,7 +203,7 @@ namespace WindEnergy.UI.Tools
         private void radioButtonLimits_CheckedChanged(object sender, EventArgs e)
         {
             buttonSelectPoint.Enabled = radioButtonSelectLimitsProvider.Checked;
-            comboBoxLimitsProvider.Enabled = radioButtonSelectLimitsProvider.Checked;
+           // comboBoxLimitsProvider.Enabled = radioButtonSelectLimitsProvider.Checked;
             buttonEnterDirectionDiapason.Enabled = radioButtonEnterLimits.Checked;
             buttonEnterSpeedDiapason.Enabled = radioButtonEnterLimits.Checked;
         }
@@ -261,7 +267,7 @@ namespace WindEnergy.UI.Tools
         {
             comboBoxInterpolateMethod.SelectedItem = InterpolateMethods.Linear.Description();
             comboBoxRepairInterval.SelectedItem = StandartIntervals.H1.Description();
-            comboBoxLimitsProvider.SelectedItem = LimitsProviders.StaticLimits.Description();
+            //comboBoxLimitsProvider.SelectedItem = LimitsProviders.StaticLimits.Description();
             checkPoint = range.Position;
             labelPointCoordinates.Text = $"Широта: {checkPoint.Lat.ToString("0.000")} Долгота: {checkPoint.Lng.ToString("0.000")}";
             try

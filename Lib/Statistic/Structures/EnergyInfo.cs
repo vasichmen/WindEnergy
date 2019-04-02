@@ -56,5 +56,10 @@ namespace WindEnergy.Lib.Statistic.Structures
         /// максимальная скорость за период времени
         /// </summary>
         public double Vmax { get; set; }
+
+        /// <summary>
+        /// минимальная скорость
+        /// </summary>
+        public double Vmin { get;  set; }
     }
 }

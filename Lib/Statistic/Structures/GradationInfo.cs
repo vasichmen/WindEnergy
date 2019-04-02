@@ -107,7 +107,14 @@ namespace WindEnergy.Lib.Statistic.Structures
                     foreach (var v in items)
                         if (val >= (v as GradationItem).From && val <= (v as GradationItem).To)
                             return v;
-                    return GradationItem.Empty;
+                    var max = double.MinValue;
+                    GradationItem mgi = null;
+                    foreach (GradationItem gi in items)
+                        if (gi.To > max) { max = gi.To; mgi = gi; }
+                    if (mgi != null)
+                        return mgi;
+                    else
+                        return GradationItem.Empty;
                 case "WindDirections":
                     return new RawItem() { Direction = val }.DirectionRhumb;
 
@@ -126,7 +133,7 @@ namespace WindEnergy.Lib.Statistic.Structures
                 return this as GradationInfo<GradationItem>;
             if (typeof(T) == typeof(WindDirections))
             {
-                double d = 22.5d/2d;
+                double d = 22.5d / 2d;
                 GradationInfo<GradationItem> res = new GradationInfo<GradationItem>();
                 foreach (WindDirections item in this.items)
                 {

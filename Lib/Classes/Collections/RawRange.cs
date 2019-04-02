@@ -84,6 +84,12 @@ namespace WindEnergy.Lib.Classes.Collections
             EndChange();
         }
 
+        /// <summary>
+        /// создаёт ряд с указанными элементами внутри
+        /// </summary>
+        /// <param name="list"></param>
+        public RawRange(IEnumerable<RawItem> list) : this(list.ToList()) { }
+
 
         /// <summary>
         /// добавление коллекции элементов в список

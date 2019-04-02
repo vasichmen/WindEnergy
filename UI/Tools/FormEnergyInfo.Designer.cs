@@ -61,7 +61,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.radioButtonSelectYearMonth = new System.Windows.Forms.RadioButton();
             this.comboBoxYear = new System.Windows.Forms.ComboBox();
-            this.comboBoxYearMonth = new System.Windows.Forms.ComboBox();
+            this.comboBoxMonth = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonSaveAs = new System.Windows.Forms.Button();
@@ -384,7 +384,7 @@
             // 
             this.groupBox3.Controls.Add(this.radioButtonSelectYearMonth);
             this.groupBox3.Controls.Add(this.comboBoxYear);
-            this.groupBox3.Controls.Add(this.comboBoxYearMonth);
+            this.groupBox3.Controls.Add(this.comboBoxMonth);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.radioButtonSelectPeriod);
@@ -420,16 +420,16 @@
             this.comboBoxYear.TabIndex = 12;
             this.comboBoxYear.SelectionChangeCommitted += new System.EventHandler(this.comboBoxYear_SelectionChangeCommitted);
             // 
-            // comboBoxYearMonth
+            // comboBoxMonth
             // 
-            this.comboBoxYearMonth.Enabled = false;
-            this.comboBoxYearMonth.FormattingEnabled = true;
-            this.comboBoxYearMonth.Location = new System.Drawing.Point(308, 63);
-            this.comboBoxYearMonth.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxYearMonth.Name = "comboBoxYearMonth";
-            this.comboBoxYearMonth.Size = new System.Drawing.Size(132, 21);
-            this.comboBoxYearMonth.TabIndex = 13;
-            this.comboBoxYearMonth.SelectionChangeCommitted += new System.EventHandler(this.comboBoxYear_SelectionChangeCommitted);
+            this.comboBoxMonth.Enabled = false;
+            this.comboBoxMonth.FormattingEnabled = true;
+            this.comboBoxMonth.Location = new System.Drawing.Point(308, 63);
+            this.comboBoxMonth.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxMonth.Name = "comboBoxMonth";
+            this.comboBoxMonth.Size = new System.Drawing.Size(132, 21);
+            this.comboBoxMonth.TabIndex = 13;
+            this.comboBoxMonth.SelectionChangeCommitted += new System.EventHandler(this.comboBoxYear_SelectionChangeCommitted);
             // 
             // label1
             // 
@@ -521,7 +521,7 @@
         private ZedGraph.ZedGraphControl zedGraphControlSpeed;
         private System.Windows.Forms.RadioButton radioButtonSelectYearMonth;
         private System.Windows.Forms.ComboBox comboBoxYear;
-        private System.Windows.Forms.ComboBox comboBoxYearMonth;
+        private System.Windows.Forms.ComboBox comboBoxMonth;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonSaveAs;

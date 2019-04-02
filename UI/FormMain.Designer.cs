@@ -45,6 +45,7 @@
             this.операцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calculateEnergyInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemCalcYear = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,7 +63,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
-            this.ToolStripMenuItemCalcYear = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -201,6 +201,13 @@
             this.calculateEnergyInfoToolStripMenuItem.Text = "Энергетические характеристики";
             this.calculateEnergyInfoToolStripMenuItem.ToolTipText = "Рассчитать основные энергетические характеристике ветра";
             this.calculateEnergyInfoToolStripMenuItem.Click += new System.EventHandler(this.calculateEnergyInfoToolStripMenuItem_Click);
+            // 
+            // ToolStripMenuItemCalcYear
+            // 
+            this.ToolStripMenuItemCalcYear.Name = "ToolStripMenuItemCalcYear";
+            this.ToolStripMenuItemCalcYear.Size = new System.Drawing.Size(266, 22);
+            this.ToolStripMenuItemCalcYear.Text = "Выбор расчётного года";
+            this.ToolStripMenuItemCalcYear.Click += new System.EventHandler(this.toolStripMenuItemCalcYear_Click);
             // 
             // toolStripSeparator1
             // 
@@ -352,6 +359,7 @@
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.mainTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mainTabControl.HotTrack = true;
             this.mainTabControl.ItemSize = new System.Drawing.Size(70, 20);
             this.mainTabControl.Location = new System.Drawing.Point(3, 3);
             this.mainTabControl.Name = "mainTabControl";
@@ -360,13 +368,6 @@
             this.mainTabControl.Size = new System.Drawing.Size(1151, 495);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.mainTabControl_Selected);
-            // 
-            // ToolStripMenuItemCalcYear
-            // 
-            this.ToolStripMenuItemCalcYear.Name = "ToolStripMenuItemCalcYear";
-            this.ToolStripMenuItemCalcYear.Size = new System.Drawing.Size(266, 22);
-            this.ToolStripMenuItemCalcYear.Text = "Выбор расчётного года";
-            this.ToolStripMenuItemCalcYear.Click += new System.EventHandler(this.toolStripMenuItemCalcYear_Click);
             // 
             // FormMain
             // 
