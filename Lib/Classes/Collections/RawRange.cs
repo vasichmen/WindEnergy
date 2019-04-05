@@ -62,7 +62,22 @@ namespace WindEnergy.Lib.Classes.Collections
         /// <summary>
         /// координаты точки радa
         /// </summary>
-        public PointLatLng Position { get;  set; }
+        public PointLatLng Position { get; set; }
+
+        /// <summary>
+        /// длина ряда
+        /// </summary>
+        public TimeSpan Length
+        {
+            get
+            {
+                if (length == TimeSpan.MinValue)
+                    length = this.Max((r) => r.Date).Date - this.Min((r) => r.Date).Date;
+                return length;
+            }
+        }
+        private TimeSpan length = TimeSpan.MinValue;
+
 
         public RawRange()
         {
@@ -76,7 +91,7 @@ namespace WindEnergy.Lib.Classes.Collections
         /// создаёт ряд с указанными элементами внутри
         /// </summary>
         /// <param name="list"></param>
-        public RawRange(List<RawItem> list):this()
+        public RawRange(List<RawItem> list) : this()
         {
             BeginChange();
             foreach (var t in list)
@@ -128,8 +143,8 @@ namespace WindEnergy.Lib.Classes.Collections
         public Dictionary<double, double> GetFunction(MeteorologyParameters parameterType)
         {
             Dictionary<double, double> res = new Dictionary<double, double>();
-            foreach(var f in this)
-                switch(parameterType)
+            foreach (var f in this)
+                switch (parameterType)
                 {
                     case MeteorologyParameters.Direction:
                         res.Add(f.DateArgument, f.Direction);
@@ -147,14 +162,15 @@ namespace WindEnergy.Lib.Classes.Collections
                 }
             return res;
         }
-        
+
 
         /// <summary>
         /// принудительное обновление статистики ряда
         /// </summary>
         public void PerformRefreshQuality()
         {
-            _quality = Qualifier.ProcessRange(this);
+            _quality = null;
+            length = TimeSpan.MinValue;
         }
 
         /// <summary>

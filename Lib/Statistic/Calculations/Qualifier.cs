@@ -26,6 +26,16 @@ namespace WindEnergy.Lib.Statistic.Calculations
             if (Range.Count < Vars.Options.QualifierSectionLength * 1.5)
                 return null;
 
+            TimeSpan maxemptyspace = TimeSpan.MinValue;
+            TimeSpan tmp;
+            //поиск наибольшего пустого пропуска
+            for (int i = 1; i < Range.Count; i++)
+            {
+                tmp = Range[i].Date - Range[i - 1].Date;
+                if (tmp > maxemptyspace)
+                    maxemptyspace = tmp;
+            }
+
             //поиск всех интервалов измерений
             //весь ряд делится на отрезки по 10 измерений.
             //на каждом отрезке ищется минимальный интервал, он принимается основным для этого отрезка
@@ -88,7 +98,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
                 start = range[0].Date;
             rangeIntervals.Add(new RangeInterval() { Diapason = new Diapason<DateTime>(start, end), Interval = intervals.Last() }); // добавление диапазона
 
-            QualityInfo res = new QualityInfo(rangeIntervals, range.Count);
+            QualityInfo res = new QualityInfo(rangeIntervals, maxemptyspace, range.Count);
             return res;
         }
     }

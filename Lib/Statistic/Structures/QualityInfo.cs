@@ -28,7 +28,7 @@ namespace WindEnergy.Lib.Statistic.Structures
         public int ExpectAmount { get; }
 
         /// <summary>
-        /// полнота ряда
+        /// полнота ряда в долях
         /// </summary>
         public double Completeness { get; }
 
@@ -38,11 +38,16 @@ namespace WindEnergy.Lib.Statistic.Structures
         public List<RangeInterval> Intervals { get; }
 
         /// <summary>
+        /// максимальный перерыв в измерениях
+        /// </summary>
+        public TimeSpan MaxEmptySpace { get;  }
+
+        /// <summary>
         /// создает новую структуру информации о качестве ряда с указанными значениями
         /// </summary>
         /// <param name="intervals">диапазоны наблюдений с разными значениями интервалов</param>
         /// <param name="measures">общее количество измерений в ряде</param>
-        public QualityInfo(List<RangeInterval> intervals, int measures)
+        public QualityInfo(List<RangeInterval> intervals, TimeSpan maxEmptySpace,int measures)
         {
             if (intervals == null || intervals.Count == 0)
                 throw new ArgumentNullException("должны быть заданы интервалы наблюдений");
@@ -60,6 +65,7 @@ namespace WindEnergy.Lib.Statistic.Structures
             }
             expectAm++;
 
+            MaxEmptySpace = maxEmptySpace;
             ExpectAmount = expectAm; //ожидаемое число измерений
             PassAmount = expectAm - measures; //количество пропусков в ряде
             Completeness = (double)((double)measures / (double)expectAm); //полнота ряда
