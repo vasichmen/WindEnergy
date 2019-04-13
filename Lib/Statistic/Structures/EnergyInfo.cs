@@ -61,5 +61,15 @@ namespace WindEnergy.Lib.Statistic.Structures
         /// минимальная скорость
         /// </summary>
         public double Vmin { get;  set; }
+
+        /// <summary>
+        /// параметр распределения вейбулла гамма
+        /// </summary>
+        public double VeybullGamma { get; set; }
+
+        /// <summary>
+        /// параметр распределения вейбулла бета
+        /// </summary>
+        public double VeybullBeta { get; set; }
     }
 }

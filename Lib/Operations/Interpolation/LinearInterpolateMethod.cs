@@ -17,8 +17,12 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// <param name="funct"></param>
         public LinearInterpolateMethod(Dictionary<double, double> funct)
         {
-            this.values = funct;
-            sortedX = funct.Keys.ToList();
+            this.values = new Dictionary<double, double>();
+            foreach (var kv in funct)
+                if (!double.IsNaN(kv.Value))
+                    values.Add(kv.Key, kv.Value);
+            
+            sortedX = values.Keys.ToList();
             sortedX.Sort();
         }
 
@@ -29,17 +33,19 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// <returns></returns>
         public double GetValue(double x)
         {
+            double res = double.NaN;
             if (values.ContainsKey(x))
-                return values[x];
+                res= values[x];
 
             if (x > sortedX[sortedX.Count - 1] || x < sortedX[0]) //если х выходит за границы диапазона функции, то ошибка
                 throw new ArgumentOutOfRangeException("Значение х должно быть внутри диапазона функции");
             for (int i = 1; i < sortedX.Count; i++)
                 if (sortedX[i] > x)
-                    return linInterpolate(sortedX[i - 1], sortedX[i], x);
-
-
-            throw new Exception("ошибка при поиске аргумента");
+                {
+                    res = linInterpolate(sortedX[i - 1], sortedX[i], x);
+                    break;
+                }
+            return res;
         }
 
         /// <summary>

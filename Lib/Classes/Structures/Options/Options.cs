@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using WindEnergy.Lib.Statistic.Structures;
 
 namespace WindEnergy.Lib.Classes.Structures.Options
 {
@@ -34,6 +35,10 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             MinimalCorrelationControlParametres = new List<MeteorologyParameters>() { MeteorologyParameters.Speed };
             NearestMSRadius = 50e3;//50 km
             NormalLawPirsonCoefficientDiapason = new Diapason<double>(0, 5);
+            CurrentSpeedGradationType = GradationTypes.Voeykow;
+            UserSpeedGradation = new UserGradation();
+            CalculateAirDensity = false;
+            ETOPO2Folder = Application.StartupPath + "\\Data\\ETOPO";
         }
 
         /// <summary>
@@ -95,22 +100,76 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// <summary>
         /// максимальное расстоние в метрах для поиска ближайших МС
         /// </summary>
-        public double NearestMSRadius { get;  set; }
+        public double NearestMSRadius { get; set; }
 
         /// <summary>
         /// минимальный коэффициент корреляции для достаточной точности предсказания
         /// </summary>
-        public double MinimalCorrelationCoeff { get;  set; }
+        public double MinimalCorrelationCoeff { get; set; }
 
         /// <summary>
         /// список параметров, для которых будет проверяться MinimalCorrelationCoeff
         /// </summary>
-        public List<MeteorologyParameters> MinimalCorrelationControlParametres { get;  set; }
+        public List<MeteorologyParameters> MinimalCorrelationControlParametres { get; set; }
 
         /// <summary>
         /// диапазон попадания критерия Пирсона для нормального закона распределения
         /// </summary>
-        public Diapason<double> NormalLawPirsonCoefficientDiapason { get;  set; }
+        public Diapason<double> NormalLawPirsonCoefficientDiapason { get; set; }
+
+        /// <summary>
+        /// тип градаций скорости при расчётах
+        /// </summary>
+        public GradationTypes CurrentSpeedGradationType { get; set; }
+
+        /// <summary>
+        /// возвращает  градации скорости в соответствии с текущими настройками
+        /// </summary>
+        public GradationInfo<GradationItem> CurrentSpeedGradation
+        {
+            get
+            {
+                switch (CurrentSpeedGradationType)
+                {
+                    case GradationTypes.NASA:
+                        return GradationInfo<GradationItem>.NASAGradations;
+                    case GradationTypes.Bofort:
+                        return GradationInfo<GradationItem>.BofortGradations;
+                    case GradationTypes.Voeykow:
+                        return GradationInfo<GradationItem>.VoeykowGradations;
+                    case GradationTypes.User:
+                        return UserSpeedGradationInfo;
+                    default: throw new WindEnergyException("Этот тип градаций не реализован");
+                }
+            }
+        }
+
+        /// <summary>
+        /// пользовательские градации скоростей
+        /// </summary>
+        public GradationInfo<GradationItem> UserSpeedGradationInfo
+        {
+            get
+            {
+                return new GradationInfo<GradationItem>(UserSpeedGradation.From, UserSpeedGradation.Step, UserSpeedGradation.To);
+            }
+        }
+
+        /// <summary>
+        /// настройки пользовательских градаций скорости
+        /// </summary>
+        public UserGradation UserSpeedGradation { get; set; }
+
+        /// <summary>
+        /// если истина, то в расчётах плотность воздуха будет рассчитываться по параметрам ряда и высоте над у. м.
+        /// </summary>
+        public bool CalculateAirDensity { get; set; }
+
+        /// <summary>
+        /// папка с базой данных ETOPO2
+        /// </summary>
+        public string ETOPO2Folder { get;  set; }
+
 
         /// <summary>
         /// сохранение настроек в файл

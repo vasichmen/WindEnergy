@@ -106,33 +106,39 @@ namespace WindEnergy.UI.Tools
                 range = Restorer.ProcessRange(range, new RestorerParameters() { Interval = interval, Method = method, Coordinates = range.Position, BaseRange = baseRange });
                 range.Name = "Восстановленный ряд до интервала" + interval.Description();
                 MessageBox.Show(this, $"Ряд восстановлен до интервала {interval.Description()}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+
+                if (range == null)
+                    DialogResult = DialogResult.Cancel;
+                else
+                {
+                    DialogResult = DialogResult.OK;
+                    Result = range;
+                }
+                Result = range;
+                Close();
             }
             catch (WebException exc)
             {
+                Cursor = Cursors.Arrow;
                 MessageBox.Show(this, exc.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult = DialogResult.Cancel;
             }
             catch (WindEnergyException wex)
             {
+                Cursor = Cursors.Arrow;
                 MessageBox.Show(this, wex.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult = DialogResult.Cancel;
             }
             catch (ApplicationException exc)
             {
+                Cursor = Cursors.Arrow;
                 MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult = DialogResult.Cancel;
             }
             finally
             {
                 Cursor = Cursors.Arrow;
             }
-
-            if (range == null)
-                DialogResult = DialogResult.Cancel;
-            else
-            {
-                DialogResult = DialogResult.OK;
-                Result = range;
-            }
-            Close();
         }
 
         #endregion

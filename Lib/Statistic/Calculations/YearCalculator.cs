@@ -50,7 +50,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
                 if (r == null || r[r.Count - 1].Date - r[0].Date < TimeSpan.FromDays(364))
                     continue;
 
-                StatisticalRange<GradationItem> exp = StatisticEngine.GetExpectancy(range, GradationInfo<GradationItem>.VoeykowGradations);
+                StatisticalRange<GradationItem> exp = StatisticEngine.GetExpectancy(range, Vars.Options.CurrentSpeedGradation);
                 DeviationsInfo dinfo = StatisticEngine.ProcessRangeDeviations(r, averSpeed, exp);
 
                 double aver = r.Average((t) => averSpeed);

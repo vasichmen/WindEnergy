@@ -7,6 +7,28 @@ using System.Threading.Tasks;
 
 namespace WindEnergy
 {
+
+    /// <summary>
+    /// тип базы данных ETOPO
+    /// </summary>
+    public enum ETOPODBType
+    {
+        /// <summary>
+        /// Float 
+        /// </summary>
+        Float,
+
+        /// <summary>
+        /// Int16
+        /// </summary>
+        Int16,
+
+        /// <summary>
+        /// SQLite
+        /// </summary>
+        SQLite
+    }
+
     /// <summary>
     /// направления ветра по 16 румбам
     /// </summary>
@@ -18,7 +40,7 @@ namespace WindEnergy
         /// нет данных
         /// </summary>
         [Description("Нет данных")]
-        Undefined=-1,
+        Undefined = -1,
 
         /// <summary>
         /// ветер с севера
@@ -121,13 +143,13 @@ namespace WindEnergy
         /// Переменное направление
         /// </summary>
         [Description("Переменное направление")]
-        Variable=-2,
+        Variable = -2,
 
         /// <summary>
         /// штиль
         /// </summary>
         [Description("Штиль")]
-        Calm=-3
+        Calm = -3
     }
 
     /// <summary>
@@ -356,5 +378,24 @@ namespace WindEnergy
 
         [Description("Влажность")]
         Wetness
+    }
+
+    /// <summary>
+    /// типы градаций для повторяемости скорости ветра
+    /// </summary>
+    public enum GradationTypes
+    {
+        [Description("NASA")]
+        NASA,
+
+        [Description("ГГО им. А.И. Воейкова")]
+        Voeykow,
+
+        [Description("Шкала Бофорта")]
+        Bofort,
+
+        [Description("Пользовательский шаг градации")]
+        User
+
     }
 }

@@ -33,9 +33,20 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.labelRegionLimitsFile = new System.Windows.Forms.Label();
+            this.labelCoordinatesMSFile = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.buttonSelectRegionLimitsFile = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.buttonSelectCoordinatesMSFile = new System.Windows.Forms.Button();
             this.comboBoxMapProvider = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numericUpDownNormalLawTo = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownNormalLawFrom = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
             this.checkBoxMinCorrWet = new System.Windows.Forms.CheckBox();
             this.checkBoxMinCorrTemp = new System.Windows.Forms.CheckBox();
             this.checkBoxMinCorrDirection = new System.Windows.Forms.CheckBox();
@@ -52,28 +63,32 @@
             this.textBoxSectionLength = new System.Windows.Forms.TextBox();
             this.textBoxMinimalSpeedDeviation = new System.Windows.Forms.TextBox();
             this.textBoxAirDensity = new System.Windows.Forms.TextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.labelGradStep = new System.Windows.Forms.Label();
+            this.labelGradTo = new System.Windows.Forms.Label();
+            this.labelGradFrom = new System.Windows.Forms.Label();
+            this.numericUpDownGradStep = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownGradTo = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownGradFrom = new System.Windows.Forms.NumericUpDown();
+            this.label13 = new System.Windows.Forms.Label();
+            this.comboBoxSpeedGradations = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label8 = new System.Windows.Forms.Label();
-            this.numericUpDownNormalLawFrom = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownNormalLawTo = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.buttonSelectCoordinatesMSFile = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.buttonSelectRegionLimitsFile = new System.Windows.Forms.Button();
-            this.labelCoordinatesMSFile = new System.Windows.Forms.Label();
-            this.labelRegionLimitsFile = new System.Windows.Forms.Label();
+            this.checkBoxCalculateAirDensity = new System.Windows.Forms.CheckBox();
+            this.buttonAccept = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNormalLawFrom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNormalLawTo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNormalLawFrom)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradStep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradTo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradFrom)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -96,6 +111,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(2, 2);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
@@ -124,6 +140,62 @@
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // labelRegionLimitsFile
+            // 
+            this.labelRegionLimitsFile.AutoSize = true;
+            this.labelRegionLimitsFile.Location = new System.Drawing.Point(88, 115);
+            this.labelRegionLimitsFile.Name = "labelRegionLimitsFile";
+            this.labelRegionLimitsFile.Size = new System.Drawing.Size(92, 13);
+            this.labelRegionLimitsFile.TabIndex = 7;
+            this.labelRegionLimitsFile.Text = "Файл не выбран";
+            // 
+            // labelCoordinatesMSFile
+            // 
+            this.labelCoordinatesMSFile.AutoSize = true;
+            this.labelCoordinatesMSFile.Location = new System.Drawing.Point(88, 73);
+            this.labelCoordinatesMSFile.Name = "labelCoordinatesMSFile";
+            this.labelCoordinatesMSFile.Size = new System.Drawing.Size(92, 13);
+            this.labelCoordinatesMSFile.TabIndex = 6;
+            this.labelCoordinatesMSFile.Text = "Файл на выбран";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 94);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(203, 13);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "Выбрать файл ограничений скоростей";
+            // 
+            // buttonSelectRegionLimitsFile
+            // 
+            this.buttonSelectRegionLimitsFile.Location = new System.Drawing.Point(7, 110);
+            this.buttonSelectRegionLimitsFile.Name = "buttonSelectRegionLimitsFile";
+            this.buttonSelectRegionLimitsFile.Size = new System.Drawing.Size(75, 23);
+            this.buttonSelectRegionLimitsFile.TabIndex = 4;
+            this.buttonSelectRegionLimitsFile.Text = "Обзор";
+            this.buttonSelectRegionLimitsFile.UseVisualStyleBackColor = true;
+            this.buttonSelectRegionLimitsFile.Click += new System.EventHandler(this.buttonSelectRegionLimitsFile_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(4, 52);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(211, 13);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "Выбрать файл координат метеостанций";
+            // 
+            // buttonSelectCoordinatesMSFile
+            // 
+            this.buttonSelectCoordinatesMSFile.Location = new System.Drawing.Point(7, 68);
+            this.buttonSelectCoordinatesMSFile.Name = "buttonSelectCoordinatesMSFile";
+            this.buttonSelectCoordinatesMSFile.Size = new System.Drawing.Size(75, 23);
+            this.buttonSelectCoordinatesMSFile.TabIndex = 2;
+            this.buttonSelectCoordinatesMSFile.Text = "Обзор";
+            this.buttonSelectCoordinatesMSFile.UseVisualStyleBackColor = true;
+            this.buttonSelectCoordinatesMSFile.Click += new System.EventHandler(this.buttonSelectCoordinatesMSFile_Click);
+            // 
             // comboBoxMapProvider
             // 
             this.comboBoxMapProvider.FormattingEnabled = true;
@@ -145,6 +217,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.checkBoxCalculateAirDensity);
             this.tabPage2.Controls.Add(this.label10);
             this.tabPage2.Controls.Add(this.label9);
             this.tabPage2.Controls.Add(this.numericUpDownNormalLawTo);
@@ -173,6 +246,79 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Расчёты";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(282, 145);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(27, 13);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "ДО:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(203, 145);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(25, 13);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "ОТ:";
+            // 
+            // numericUpDownNormalLawTo
+            // 
+            this.numericUpDownNormalLawTo.DecimalPlaces = 2;
+            this.numericUpDownNormalLawTo.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDownNormalLawTo.Location = new System.Drawing.Point(313, 143);
+            this.numericUpDownNormalLawTo.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownNormalLawTo.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownNormalLawTo.Name = "numericUpDownNormalLawTo";
+            this.numericUpDownNormalLawTo.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownNormalLawTo.TabIndex = 18;
+            // 
+            // numericUpDownNormalLawFrom
+            // 
+            this.numericUpDownNormalLawFrom.DecimalPlaces = 2;
+            this.numericUpDownNormalLawFrom.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDownNormalLawFrom.Location = new System.Drawing.Point(234, 143);
+            this.numericUpDownNormalLawFrom.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownNormalLawFrom.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownNormalLawFrom.Name = "numericUpDownNormalLawFrom";
+            this.numericUpDownNormalLawFrom.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownNormalLawFrom.TabIndex = 17;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 145);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(155, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Диапазон критерия Пирсона";
             // 
             // checkBoxMinCorrWet
             // 
@@ -309,24 +455,159 @@
             // 
             // textBoxAirDensity
             // 
+            this.textBoxAirDensity.Enabled = false;
             this.textBoxAirDensity.Location = new System.Drawing.Point(206, 15);
             this.textBoxAirDensity.Name = "textBoxAirDensity";
             this.textBoxAirDensity.Size = new System.Drawing.Size(100, 20);
             this.textBoxAirDensity.TabIndex = 0;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.labelGradStep);
+            this.tabPage3.Controls.Add(this.labelGradTo);
+            this.tabPage3.Controls.Add(this.labelGradFrom);
+            this.tabPage3.Controls.Add(this.numericUpDownGradStep);
+            this.tabPage3.Controls.Add(this.numericUpDownGradTo);
+            this.tabPage3.Controls.Add(this.numericUpDownGradFrom);
+            this.tabPage3.Controls.Add(this.label13);
+            this.tabPage3.Controls.Add(this.comboBoxSpeedGradations);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(476, 309);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Градации";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // labelGradStep
+            // 
+            this.labelGradStep.AutoSize = true;
+            this.labelGradStep.Location = new System.Drawing.Point(223, 38);
+            this.labelGradStep.Name = "labelGradStep";
+            this.labelGradStep.Size = new System.Drawing.Size(30, 13);
+            this.labelGradStep.TabIndex = 8;
+            this.labelGradStep.Text = "Шаг:";
+            // 
+            // labelGradTo
+            // 
+            this.labelGradTo.AutoSize = true;
+            this.labelGradTo.Location = new System.Drawing.Point(111, 38);
+            this.labelGradTo.Name = "labelGradTo";
+            this.labelGradTo.Size = new System.Drawing.Size(27, 13);
+            this.labelGradTo.TabIndex = 7;
+            this.labelGradTo.Text = "ДО:";
+            // 
+            // labelGradFrom
+            // 
+            this.labelGradFrom.AutoSize = true;
+            this.labelGradFrom.Location = new System.Drawing.Point(6, 38);
+            this.labelGradFrom.Name = "labelGradFrom";
+            this.labelGradFrom.Size = new System.Drawing.Size(25, 13);
+            this.labelGradFrom.TabIndex = 6;
+            this.labelGradFrom.Text = "ОТ:";
+            // 
+            // numericUpDownGradStep
+            // 
+            this.numericUpDownGradStep.DecimalPlaces = 2;
+            this.numericUpDownGradStep.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDownGradStep.Location = new System.Drawing.Point(259, 36);
+            this.numericUpDownGradStep.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownGradStep.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownGradStep.Name = "numericUpDownGradStep";
+            this.numericUpDownGradStep.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDownGradStep.TabIndex = 5;
+            // 
+            // numericUpDownGradTo
+            // 
+            this.numericUpDownGradTo.DecimalPlaces = 2;
+            this.numericUpDownGradTo.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDownGradTo.Location = new System.Drawing.Point(142, 36);
+            this.numericUpDownGradTo.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownGradTo.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownGradTo.Name = "numericUpDownGradTo";
+            this.numericUpDownGradTo.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDownGradTo.TabIndex = 5;
+            // 
+            // numericUpDownGradFrom
+            // 
+            this.numericUpDownGradFrom.DecimalPlaces = 2;
+            this.numericUpDownGradFrom.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numericUpDownGradFrom.Location = new System.Drawing.Point(37, 36);
+            this.numericUpDownGradFrom.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownGradFrom.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownGradFrom.Name = "numericUpDownGradFrom";
+            this.numericUpDownGradFrom.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDownGradFrom.TabIndex = 5;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(3, 12);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(143, 13);
+            this.label13.TabIndex = 2;
+            this.label13.Text = "Градации скоростей ветра";
+            // 
+            // comboBoxSpeedGradations
+            // 
+            this.comboBoxSpeedGradations.FormattingEnabled = true;
+            this.comboBoxSpeedGradations.Location = new System.Drawing.Point(152, 9);
+            this.comboBoxSpeedGradations.Name = "comboBoxSpeedGradations";
+            this.comboBoxSpeedGradations.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxSpeedGradations.TabIndex = 1;
+            this.comboBoxSpeedGradations.SelectedValueChanged += new System.EventHandler(this.comboBoxSpeedGradations_SelectedValueChanged);
+            // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.buttonCancel, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.buttonSave, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.buttonAccept, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 341);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(484, 24);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
@@ -355,134 +636,28 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // label8
+            // checkBoxCalculateAirDensity
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 145);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(155, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Диапазон критерия Пирсона";
+            this.checkBoxCalculateAirDensity.AutoSize = true;
+            this.checkBoxCalculateAirDensity.Location = new System.Drawing.Point(313, 17);
+            this.checkBoxCalculateAirDensity.Name = "checkBoxCalculateAirDensity";
+            this.checkBoxCalculateAirDensity.Size = new System.Drawing.Size(84, 17);
+            this.checkBoxCalculateAirDensity.TabIndex = 21;
+            this.checkBoxCalculateAirDensity.Text = "Авторасчёт";
+            this.checkBoxCalculateAirDensity.UseVisualStyleBackColor = true;
+            this.checkBoxCalculateAirDensity.CheckedChanged += new System.EventHandler(this.checkBoxCalculateAirDensity_CheckedChanged);
             // 
-            // numericUpDownNormalLawFrom
+            // buttonAccept
             // 
-            this.numericUpDownNormalLawFrom.DecimalPlaces = 2;
-            this.numericUpDownNormalLawFrom.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.numericUpDownNormalLawFrom.Location = new System.Drawing.Point(234, 143);
-            this.numericUpDownNormalLawFrom.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numericUpDownNormalLawFrom.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDownNormalLawFrom.Name = "numericUpDownNormalLawFrom";
-            this.numericUpDownNormalLawFrom.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownNormalLawFrom.TabIndex = 17;
-            // 
-            // numericUpDownNormalLawTo
-            // 
-            this.numericUpDownNormalLawTo.DecimalPlaces = 2;
-            this.numericUpDownNormalLawTo.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.numericUpDownNormalLawTo.Location = new System.Drawing.Point(313, 143);
-            this.numericUpDownNormalLawTo.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numericUpDownNormalLawTo.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDownNormalLawTo.Name = "numericUpDownNormalLawTo";
-            this.numericUpDownNormalLawTo.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownNormalLawTo.TabIndex = 18;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(203, 145);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(25, 13);
-            this.label9.TabIndex = 19;
-            this.label9.Text = "ОТ:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(282, 145);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(27, 13);
-            this.label10.TabIndex = 20;
-            this.label10.Text = "ДО:";
-            // 
-            // buttonSelectCoordinatesMSFile
-            // 
-            this.buttonSelectCoordinatesMSFile.Location = new System.Drawing.Point(7, 68);
-            this.buttonSelectCoordinatesMSFile.Name = "buttonSelectCoordinatesMSFile";
-            this.buttonSelectCoordinatesMSFile.Size = new System.Drawing.Size(75, 23);
-            this.buttonSelectCoordinatesMSFile.TabIndex = 2;
-            this.buttonSelectCoordinatesMSFile.Text = "Обзор";
-            this.buttonSelectCoordinatesMSFile.UseVisualStyleBackColor = true;
-            this.buttonSelectCoordinatesMSFile.Click += new System.EventHandler(this.buttonSelectCoordinatesMSFile_Click);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(4, 52);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(211, 13);
-            this.label11.TabIndex = 3;
-            this.label11.Text = "Выбрать файл координат метеостанций";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 94);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(203, 13);
-            this.label12.TabIndex = 5;
-            this.label12.Text = "Выбрать файл ограничений скоростей";
-            // 
-            // buttonSelectRegionLimitsFile
-            // 
-            this.buttonSelectRegionLimitsFile.Location = new System.Drawing.Point(7, 110);
-            this.buttonSelectRegionLimitsFile.Name = "buttonSelectRegionLimitsFile";
-            this.buttonSelectRegionLimitsFile.Size = new System.Drawing.Size(75, 23);
-            this.buttonSelectRegionLimitsFile.TabIndex = 4;
-            this.buttonSelectRegionLimitsFile.Text = "Обзор";
-            this.buttonSelectRegionLimitsFile.UseVisualStyleBackColor = true;
-            this.buttonSelectRegionLimitsFile.Click += new System.EventHandler(this.buttonSelectRegionLimitsFile_Click);
-            // 
-            // labelCoordinatesMSFile
-            // 
-            this.labelCoordinatesMSFile.AutoSize = true;
-            this.labelCoordinatesMSFile.Location = new System.Drawing.Point(88, 73);
-            this.labelCoordinatesMSFile.Name = "labelCoordinatesMSFile";
-            this.labelCoordinatesMSFile.Size = new System.Drawing.Size(92, 13);
-            this.labelCoordinatesMSFile.TabIndex = 6;
-            this.labelCoordinatesMSFile.Text = "Файл на выбран";
-            // 
-            // labelRegionLimitsFile
-            // 
-            this.labelRegionLimitsFile.AutoSize = true;
-            this.labelRegionLimitsFile.Location = new System.Drawing.Point(88, 115);
-            this.labelRegionLimitsFile.Name = "labelRegionLimitsFile";
-            this.labelRegionLimitsFile.Size = new System.Drawing.Size(92, 13);
-            this.labelRegionLimitsFile.TabIndex = 7;
-            this.labelRegionLimitsFile.Text = "Файл не выбран";
+            this.buttonAccept.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAccept.Location = new System.Drawing.Point(204, 0);
+            this.buttonAccept.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.buttonAccept.Name = "buttonAccept";
+            this.buttonAccept.Size = new System.Drawing.Size(77, 24);
+            this.buttonAccept.TabIndex = 2;
+            this.buttonAccept.Text = "Применить";
+            this.buttonAccept.UseVisualStyleBackColor = true;
+            this.buttonAccept.Click += new System.EventHandler(this.buttonAccept_Click);
             // 
             // FormOptions
             // 
@@ -504,9 +679,14 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNormalLawFrom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNormalLawTo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNormalLawFrom)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradStep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradTo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradFrom)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -550,5 +730,16 @@
         private System.Windows.Forms.Button buttonSelectRegionLimitsFile;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button buttonSelectCoordinatesMSFile;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Label labelGradStep;
+        private System.Windows.Forms.Label labelGradTo;
+        private System.Windows.Forms.Label labelGradFrom;
+        private System.Windows.Forms.NumericUpDown numericUpDownGradStep;
+        private System.Windows.Forms.NumericUpDown numericUpDownGradTo;
+        private System.Windows.Forms.NumericUpDown numericUpDownGradFrom;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox comboBoxSpeedGradations;
+        private System.Windows.Forms.CheckBox checkBoxCalculateAirDensity;
+        private System.Windows.Forms.Button buttonAccept;
     }
 }

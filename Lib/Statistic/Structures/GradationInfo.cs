@@ -82,6 +82,57 @@ namespace WindEnergy.Lib.Statistic.Structures
         }
 
         /// <summary>
+        /// стандартные диапазоны скорости по NASA
+        /// </summary>
+        public static GradationInfo<GradationItem> BofortGradations
+        {
+            get
+            {
+                return new GradationInfo<GradationItem>()
+                {
+                    items = new List<object>() {
+                        new GradationItem(0, 0.2),
+                        new GradationItem(0.2, 1.5),
+                        new GradationItem(1.5, 3.3),
+                        new GradationItem(3.3, 5.4),
+                        new GradationItem(5.4, 7.9),
+                        new GradationItem(7.9, 10.7),
+                        new GradationItem(10.7, 13.8),
+                        new GradationItem(13.8, 17.1),
+                        new GradationItem(17.1, 20.7),
+                        new GradationItem(20.7, 24.4),
+                        new GradationItem(24.4, 28.4),
+                        new GradationItem(28.4, 32.6),
+                        new GradationItem(32.6, 32.7),
+                        new GradationItem(34.5, 36.75)
+                    }
+                };
+            }
+        }
+
+        /// <summary>
+        /// стандартные диапазоны скорости по NASA
+        /// </summary>
+        public static GradationInfo<GradationItem> NASAGradations
+        {
+            get
+            {
+                return new GradationInfo<GradationItem>()
+                {
+                    items = new List<object>() {
+                        new GradationItem(0, 2.5),
+                        new GradationItem(2.5, 6.5),
+                        new GradationItem(6.5, 10.5),
+                        new GradationItem(10.5, 14.5),
+                        new GradationItem(14.5, 18.5),
+                        new GradationItem(18.5, 35),
+                        new GradationItem(35, 60)
+                    }
+                };
+            }
+        }
+
+        /// <summary>
         /// градации по 16 румбам
         /// </summary>
         public static GradationInfo<WindDirections> Rhumb16Gradations

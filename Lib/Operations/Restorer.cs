@@ -44,12 +44,16 @@ namespace WindEnergy.Lib.Operations
                 double timeStamp = item.DateArgument;
                 if (speedFunc.ContainsKey(timeStamp))
                     throw new ApplicationException("В ряде наблюдений есть повторяющиеся даты. Восстановление невозможно, попробуйте проверить ряд на ошибки.");
-                speedFunc.Add(timeStamp, item.Speed);
-                directsFunc.Add(timeStamp, item.Direction);
-                wetFunc.Add(timeStamp, item.Wetness);
-                tempFunc.Add(timeStamp, item.Temperature);
+                if (!double.IsNaN(item.Speed))
+                    speedFunc.Add(timeStamp, item.Speed);
+                if (!double.IsNaN(item.Direction))
+                    directsFunc.Add(timeStamp, item.Direction);
+                if (!double.IsNaN(item.Wetness))
+                    wetFunc.Add(timeStamp, item.Wetness);
+                if (!double.IsNaN(item.Temperature))
+                    tempFunc.Add(timeStamp, item.Temperature);
             }
-                        
+
             //ПОДГОТОВКА ИНТЕРПОЛЯТОРОВ
             //создание интерполяторов функций скорости, направления, температуры, влажности
             IInterpolateMethod methodSpeeds, methodDirects, methodWet, methodTemp;
@@ -94,7 +98,12 @@ namespace WindEnergy.Lib.Operations
 
             //метки времени для нового ряда
             List<double> newRangeX = new List<double>();
-            for (double i = Range[0].DateArgument; i <= Range[Range.Count - 1].DateArgument; i += newInterval)
+            double start = double.MinValue;
+            double[] starts = new double[] { speedFunc.Keys.Min(), directsFunc.Keys.Min(), tempFunc.Keys.Min(), wetFunc.Keys.Min() };
+            foreach (double st in starts)
+                if (st > start)
+                    start = st;
+            for (double i = start; i <= Range[Range.Count - 1].DateArgument; i += newInterval)
                 newRangeX.Add(i);
 
             //расчет каждого значения

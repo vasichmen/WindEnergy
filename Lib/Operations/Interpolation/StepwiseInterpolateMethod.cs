@@ -20,8 +20,12 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// <param name="funct"></param>
         public StepwiseInterpolateMethod(Dictionary<double, double> funct)
         {
-            this.values = funct;
-            sortedX = funct.Keys.ToList();
+            this.values = new Dictionary<double, double>();
+            foreach (var kv in funct)
+                if (!double.IsNaN(kv.Value))
+                    values.Add(kv.Key, kv.Value);
+
+            sortedX = values.Keys.ToList();
             sortedX.Sort();
         }
 

@@ -20,27 +20,52 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// <summary>
         /// обработать ряд и получить характеристики по всему ряду
         /// </summary>
-        /// <param name="tempr"></param>
+        /// <param name="range"></param>
         /// <returns></returns>
-        public static EnergyInfo ProcessRange(RawRange tempr)
+        public static EnergyInfo ProcessRange(RawRange range)
         {
-            if (tempr.Count == 0)
+            double density = range.AirDensity;
+
+            if (range.Count == 0)
                 return null;
             EnergyInfo res = new EnergyInfo();
-            res.FromDate = tempr[0].Date;
-            res.ToDate = tempr[tempr.Count - 1].Date;
-            res.PowerDensity = getAveragePower(tempr);
-            res.V0 = getAverageSpeed(tempr);
-            res.StandardDeviationSpeed = getSigmV(res.V0, tempr);
-            res.Vmax = getMaxSpeed(tempr);
-            res.Vmin = getMinSpeed(tempr);
+            res.FromDate = range[0].Date;
+            res.ToDate = range[range.Count - 1].Date;
+            res.PowerDensity = getAveragePower(range,density);
+            res.V0 = getAverageSpeed(range);
+            res.StandardDeviationSpeed = getSigmV(res.V0, range);
+            res.Vmax = getMaxSpeed(range);
+            res.Vmin = getMinSpeed(range);
             res.EnergyDensity = res.PowerDensity * 8760d;
             res.Cv = res.StandardDeviationSpeed / res.V0;
+            res.VeybullGamma = getVeybullGamma(res.Cv);
+            res.VeybullBeta = getVeybullBeta(res.V0, res.VeybullGamma);
             return res;
         }
 
 
         #region служебные
+
+        /// <summary>
+        /// получиь параметр распределения вейбулла бета
+        /// </summary>
+        /// <returns></returns>
+        private static double getVeybullBeta(double V_average, double gamma)
+        {
+            double arg = 1d + 1d / gamma;
+            double G = SpecialFunction.gamma(arg);
+            return V_average / G;
+        }
+
+        /// <summary>
+        /// получиь параметр распределения вейбулла гамма
+        /// </summary>
+        /// <param name="cv"></param>
+        /// <returns></returns>
+        private static double getVeybullGamma(double cv)
+        {
+            return Math.Pow(cv, -1.069);
+        }
 
 
         /// <summary>
@@ -75,13 +100,14 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// удельная мощность
         /// </summary>
         /// <param name="input"></param>
+        /// <param name="density">плотность воздуха</param>
         /// <returns></returns>
-        private static double getAveragePower(RawRange input)
+        private static double getAveragePower(RawRange input, double density)
         {
             double sum = 0;
             foreach (var l in input)
             {
-                sum += 0.5d * Vars.Options.AirDensity * Math.Pow(l.Speed, 3);
+                sum += 0.5d * density * Math.Pow(l.Speed, 3);
             }
             return sum / (input.Count);
         }
@@ -164,7 +190,10 @@ namespace WindEnergy.Lib.Statistic.Calculations
             //Cv
             double Cv = sigm / V0;
 
-            return new EnergyInfo() { Cv = Cv, EnergyDensity = EDensity, PowerDensity = PDensity, StandardDeviationSpeed = sigm, V0 = V0 };
+            double VeyGamma= getVeybullGamma(Cv);
+            double VeyBeta = getVeybullBeta(V0, VeyGamma);
+
+            return new EnergyInfo() { Cv = Cv, EnergyDensity = EDensity, PowerDensity = PDensity, StandardDeviationSpeed = sigm, V0 = V0, VeybullBeta=VeyBeta, VeybullGamma=VeyGamma };
         }
 
         /// <summary>
@@ -180,7 +209,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
 
             res.SpeedDeviation = Math.Abs(r.Average((t) => t.Speed) - averSpeed);
 
-            StatisticalRange<GradationItem> th = GetExpectancy(r, GradationInfo<GradationItem>.VoeykowGradations);
+            StatisticalRange<GradationItem> th = GetExpectancy(r, Vars.Options.CurrentSpeedGradation);
             res.ExpDeviation = Math.Sqrt(exp.Values.Zip(th.Values, (a, b) => Math.Pow(a - b, 2)).Aggregate((x, y) => x + y)); //корень из суммы квадратов разностей повторяемостей многолетней и этого промежутка
             return res;
         }

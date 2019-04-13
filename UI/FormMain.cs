@@ -122,7 +122,7 @@ namespace WindEnergy.UI
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
-            of.InitialDirectory = Application.StartupPath;
+            of.InitialDirectory = Vars.Options.LastDirectory;
             of.Multiselect = true;
 
             if (of.ShowDialog(this) == DialogResult.OK)
@@ -137,6 +137,7 @@ namespace WindEnergy.UI
                         rang.Name = Path.GetFileNameWithoutExtension(file);
                         TabPageExt tab = mainTabControl.OpenNewTab(rang, rang.FileName);
                         tab.HasNotSavedChanges = false;
+                        Vars.Options.LastDirectory = Path.GetDirectoryName(file);
                     }
                     catch (Exception ex)
                     {

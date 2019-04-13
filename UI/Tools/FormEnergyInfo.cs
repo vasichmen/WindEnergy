@@ -181,7 +181,7 @@ namespace WindEnergy.UI.Tools
                 Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
                 //формирование заголовка
                 string cap = "Год;Месяц;кол-во изм";
-                foreach (GradationItem grad in GradationInfo<GradationItem>.VoeykowGradations.Items)
+                foreach (GradationItem grad in Vars.Options.CurrentSpeedGradation.Items)
                     cap += ";" + grad.Average.ToString("0.00");
                 cap += ";Vmin;Vmax;Vср.год;Cv(V);Nвал уд.;Эвал уд.";
                 foreach (WindDirections wd in WindDirections.Calm.GetEnumItems().GetRange(0, 17))
@@ -199,7 +199,7 @@ namespace WindEnergy.UI.Tools
                             continue;
                         EnergyInfo ri = StatisticEngine.ProcessRange(rn);
                         StatisticalRange<WindDirections> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections>.Rhumb16Gradations);
-                        StatisticalRange<GradationItem> ss = StatisticEngine.GetExpectancy(rn, GradationInfo<GradationItem>.VoeykowGradations);
+                        StatisticalRange<GradationItem> ss = StatisticEngine.GetExpectancy(rn, Vars.Options.CurrentSpeedGradation);
                         EnergyInfo ei = StatisticEngine.ProcessRange(ss);
                         MSExcel.SaveEnergyInfoCSV(sf.FileName, ri, ei, sd, ss, null, year.ToString(), month.Description(), rn.Count, true);
                     }
@@ -221,7 +221,8 @@ namespace WindEnergy.UI.Tools
                 comboBoxYear.SelectedItem,
                 comboBoxMonth.SelectedItem
                 );
-
+            tempr.Position = range.Position;
+            tempr.Name = range.Name;
             if (tempr == null)
                 throw new Exception("что-то совсем не так!!");
 
@@ -229,7 +230,7 @@ namespace WindEnergy.UI.Tools
             try
             {
                 range_info = StatisticEngine.ProcessRange(tempr);
-                stat_speeds = StatisticEngine.GetExpectancy(tempr, GradationInfo<GradationItem>.VoeykowGradations);
+                stat_speeds = StatisticEngine.GetExpectancy(tempr, Vars.Options.CurrentSpeedGradation);
                 stat_directions = StatisticEngine.GetDirectionExpectancy(tempr, GradationInfo<WindDirections>.Rhumb16Gradations);
                 exp_info = StatisticEngine.ProcessRange(stat_speeds);
             }
@@ -251,11 +252,17 @@ namespace WindEnergy.UI.Tools
             labelCv.Text = range_info.Cv.ToString("0.000");
             labelV0.Text = range_info.V0.ToString("0.0") + " м/с";
             labelVmax.Text = range_info.Vmax.ToString("0.0") + " м/с";
+            labelVmin.Text = range_info.Vmin.ToString("0.0") + " м/с";
+            labelGamma.Text = range_info.VeybullGamma.ToString("0.000");
+            labelBeta.Text = range_info.VeybullBeta.ToString("0.000") + " м/с";
+            labelAirDensity.Text = tempr.AirDensity.ToString("0.000") + " кг/м^3" + (Vars.Options.CalculateAirDensity ? " (рассчёт)" : "");
 
             labelEnergyDensityTV.Text = (exp_info.EnergyDensity / 1000).ToString("0.00") + " кВт*ч/м^2";
             labelPowerDensityTV.Text = exp_info.PowerDensity.ToString("0.00") + " Вт/м^2";
             labelCvTV.Text = exp_info.Cv.ToString("0.000");
             labelV0TV.Text = exp_info.V0.ToString("0.0") + " м/с";
+            labelGammaTV.Text = exp_info.VeybullGamma.ToString("0.000");
+            labelBetaTV.Text = exp_info.VeybullBeta.ToString("0.000") + " м/с";
         }
 
 

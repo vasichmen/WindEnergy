@@ -54,7 +54,7 @@ namespace WindEnergy.UI.Tools
             this.range = range;
         }
 
-    
+
 
         #region проверка ряда
 
@@ -88,8 +88,8 @@ namespace WindEnergy.UI.Tools
                         return;
                     }
                     range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats);
-                    MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nДругих ошибок: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     range.Name = "Исправленный ряд";
+                    MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nНулевая скорость с направлением: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 //если выбран способ вручную вводить ограничения
@@ -107,26 +107,27 @@ namespace WindEnergy.UI.Tools
                     }
                     range = Checker.ProcessRange(range, new CheckerParameters(speedDiapasons, directionDiapasons), out CheckerInfo stats);
                     range.Name = "Исправленный ряд";
-                    MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nДругих ошибок: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nНулевая скорость с направлением: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                if (range == null)
+                    DialogResult = DialogResult.Cancel;
+                else
+                {
+                    DialogResult = DialogResult.OK;
+                    Result = range;
+                }
+                Close();
             }
             catch (ApplicationException exc)
             {
+                Cursor = Cursors.Arrow;
                 MessageBox.Show(this, exc.Message, "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult = DialogResult.Cancel;
             }
             finally
             {
                 Cursor = Cursors.Arrow;
             }
-
-            if (range == null)
-                DialogResult = DialogResult.Cancel;
-            else
-            {
-                DialogResult = DialogResult.OK;
-                Result = range;
-            }
-            Close();
         }
 
         /// <summary>
@@ -137,7 +138,7 @@ namespace WindEnergy.UI.Tools
         private void radioButtonLimits_CheckedChanged(object sender, EventArgs e)
         {
             buttonSelectPoint.Enabled = radioButtonSelectLimitsProvider.Checked;
-           // comboBoxLimitsProvider.Enabled = radioButtonSelectLimitsProvider.Checked;
+            // comboBoxLimitsProvider.Enabled = radioButtonSelectLimitsProvider.Checked;
             buttonEnterDirectionDiapason.Enabled = radioButtonEnterLimits.Checked;
             buttonEnterSpeedDiapason.Enabled = radioButtonEnterLimits.Checked;
         }
@@ -199,7 +200,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void formCheckRepairRange_Shown(object sender, EventArgs e)
         {
-          
+
             //comboBoxLimitsProvider.SelectedItem = LimitsProviders.StaticLimits.Description();
             checkPoint = range.Position;
             labelPointCoordinates.Text = $"Широта: {checkPoint.Lat.ToString("0.000")} Долгота: {checkPoint.Lng.ToString("0.000")}";

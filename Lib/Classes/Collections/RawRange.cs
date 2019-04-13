@@ -78,6 +78,24 @@ namespace WindEnergy.Lib.Classes.Collections
         }
         private TimeSpan length = TimeSpan.MinValue;
 
+        /// <summary>
+        /// плотность воздуха в кг/м3, рассчитанная  в зависимости от настроек
+        /// </summary>
+        public double AirDensity
+        {
+            get
+            {
+                if (double.IsNaN(airDensity))
+                    //получаем плотность воздуха в зависимости от настроек
+                    if (Vars.Options.CalculateAirDensity)
+                        airDensity = PowerFunctions.GetAirDensity(this);
+                    else
+                        airDensity = Vars.Options.AirDensity;
+                return airDensity;
+            }
+        }
+        private double airDensity=double.NaN;
+
 
         public RawRange()
         {
@@ -182,6 +200,8 @@ namespace WindEnergy.Lib.Classes.Collections
         {
             if (!_locked)
                 PerformRefreshQuality();
+            airDensity = double.NaN;
+            length = TimeSpan.MinValue;
         }
 
         /// <summary>
