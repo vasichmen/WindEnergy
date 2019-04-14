@@ -59,10 +59,10 @@ namespace WindEnergy.UI.Tools
                 InterpolateMethods method = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem));
                 StandartIntervals interval = (StandartIntervals)(new EnumTypeConverter<StandartIntervals>().ConvertFrom(comboBoxRepairInterval.SelectedItem));
 
-                //если выбрана ступенчатый метод или линейная интерполяция и в ряде есть пропуски больше, чем 3 интервала, то надо уточнить у пользователя
-                if ((method == InterpolateMethods.Linear || method == InterpolateMethods.Stepwise) && rangeQuality.MaxEmptySpace.TotalMinutes > ((int)interval) * 3)
+                //если выбрана ступенчатый метод или линейная интерполяция и в ряде есть пропуски больше, чем 1 интервал, то надо уточнить у пользователя
+                if ((method == InterpolateMethods.Linear || method == InterpolateMethods.Stepwise) && rangeQuality.MaxEmptySpace.TotalMinutes > ((int)interval) )
                 {
-                    if (MessageBox.Show(this, "Ряд содержит пропуски данных больше, чем три интервала. Вы уверены, что хотите продолжить восстановление?", "Восстановление ряда", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    if (MessageBox.Show(this, "Ряд содержит пропуски данных больше, чем один выбранный интервал наблюдений.\r\nВ таком случае не рекомендуется использовать линейную интерполяцию и ступенчатое восстановление.\r\nВы уверены, что хотите продолжить восстановление?", "Восстановление ряда", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                         return;
                 }
 

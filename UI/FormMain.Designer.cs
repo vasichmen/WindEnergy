@@ -42,6 +42,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.repairRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.операцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calculateEnergyInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,7 +64,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.button1 = new System.Windows.Forms.Button();
-            this.repairRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rangePropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -161,7 +162,8 @@
             // 
             this.правкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.checkRangeToolStripMenuItem,
-            this.repairRangeToolStripMenuItem});
+            this.repairRangeToolStripMenuItem,
+            this.rangePropertiesToolStripMenuItem});
             this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
             this.правкаToolStripMenuItem.Size = new System.Drawing.Size(64, 21);
             this.правкаToolStripMenuItem.Text = "Правка";
@@ -173,6 +175,14 @@
             this.checkRangeToolStripMenuItem.Text = "Проверить ряд";
             this.checkRangeToolStripMenuItem.ToolTipText = "Проверка ряда на наличие пропусков и некорректных данных";
             this.checkRangeToolStripMenuItem.Click += new System.EventHandler(this.checkRepairRangeToolStripMenuItem_Click);
+            // 
+            // repairRangeToolStripMenuItem
+            // 
+            this.repairRangeToolStripMenuItem.Name = "repairRangeToolStripMenuItem";
+            this.repairRangeToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.repairRangeToolStripMenuItem.Text = "Восстановить ряд";
+            this.repairRangeToolStripMenuItem.ToolTipText = "Восстановление ряда до заданного интервала наблюдений";
+            this.repairRangeToolStripMenuItem.Click += new System.EventHandler(this.repairRangeToolStripMenuItem_Click);
             // 
             // операцииToolStripMenuItem
             // 
@@ -370,13 +380,12 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // repairRangeToolStripMenuItem
+            // rangePropertiesToolStripMenuItem
             // 
-            this.repairRangeToolStripMenuItem.Name = "repairRangeToolStripMenuItem";
-            this.repairRangeToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.repairRangeToolStripMenuItem.Text = "Восстановить ряд";
-            this.repairRangeToolStripMenuItem.ToolTipText = "Восстановление ряда до заданного интервала наблюдений";
-            this.repairRangeToolStripMenuItem.Click += new System.EventHandler(this.repairRangeToolStripMenuItem_Click);
+            this.rangePropertiesToolStripMenuItem.Name = "rangePropertiesToolStripMenuItem";
+            this.rangePropertiesToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.rangePropertiesToolStripMenuItem.Text = "Свойства ряда";
+            this.rangePropertiesToolStripMenuItem.Click += new System.EventHandler(this.rangePropertiesToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -442,6 +451,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripRangeIntervals;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCalcYear;
         private System.Windows.Forms.ToolStripMenuItem repairRangeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rangePropertiesToolStripMenuItem;
     }
 }
 

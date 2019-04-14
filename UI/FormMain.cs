@@ -58,6 +58,7 @@ namespace WindEnergy.UI
             saveAsToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             checkRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             repairRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
+            rangePropertiesToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             calculateEnergyInfoToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             ToolStripMenuItemCalcYear.Enabled = mainTabControl.SelectedTab != null;
         }
@@ -214,6 +215,14 @@ namespace WindEnergy.UI
             {
                 mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
             }
+        }
+
+
+        private void rangePropertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            FormRangeProperties frm = new FormRangeProperties(rang);
+            frm.ShowDialog(this);
         }
 
         #endregion

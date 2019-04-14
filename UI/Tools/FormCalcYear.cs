@@ -61,6 +61,7 @@ namespace WindEnergy.UI.Tools
                 }
                 else //если расчётный год не найден
                 {
+                    MessageBox.Show(this,"Не удалось найти расчётный год.\r\nРяд очень маленький или не содержит года необходимого качества");
                     labelAverageCalcYearSpeed.Text = "Средняя скорость: ";
                     labelCompletness.Text = "Полнота ряда: ";
                     labelExpectDeviation.Text = "Отклонение повторяемости скорости: ";
