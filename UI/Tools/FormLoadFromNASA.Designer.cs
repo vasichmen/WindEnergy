@@ -127,6 +127,7 @@
             this.labelPointCoordinates.Size = new System.Drawing.Size(168, 13);
             this.labelPointCoordinates.TabIndex = 17;
             this.labelPointCoordinates.Text = "Координаты (точка не выбрана)";
+            this.labelPointCoordinates.TextChanged += new System.EventHandler(this.labelPointAddress_TextChanged);
             // 
             // labelPointAddress
             // 
@@ -136,6 +137,7 @@
             this.labelPointAddress.Size = new System.Drawing.Size(137, 13);
             this.labelPointAddress.TabIndex = 17;
             this.labelPointAddress.Text = "Адрес (точка не выбрана)";
+            this.labelPointAddress.TextChanged += new System.EventHandler(this.labelPointAddress_TextChanged);
             // 
             // FormLoadFromNASA
             // 

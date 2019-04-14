@@ -129,5 +129,11 @@ namespace WindEnergy.UI.Tools
             dateTimePickerFromDate.MaxDate = dateTimePickerToDate.Value;
             dateTimePickerToDate.MinDate = dateTimePickerFromDate.Value;
         }
+
+        private void labelPointAddress_TextChanged(object sender, EventArgs e)
+        {
+            string n = ((Label)sender).Text;
+            new ToolTip().SetToolTip(sender as Label, n);
+        }
     }
 }

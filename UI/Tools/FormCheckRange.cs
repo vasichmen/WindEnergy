@@ -210,6 +210,10 @@ namespace WindEnergy.UI.Tools
             radioButtonSelectLimitsProvider.Checked = true;
         }
 
-
+        private void labelPointCoordinates_TextChanged(object sender, EventArgs e)
+        {
+            string n = ((Label)sender).Text;
+            new ToolTip().SetToolTip(sender as Label, n);
+        }
     }
 }

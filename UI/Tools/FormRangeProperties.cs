@@ -14,6 +14,9 @@ using WindEnergy.UI.Dialogs;
 
 namespace WindEnergy.UI.Tools
 {
+    /// <summary>
+    /// Окно редактирования свойств ряда
+    /// </summary>
     public partial class FormRangeProperties : Form
     {
         private PointLatLng point;

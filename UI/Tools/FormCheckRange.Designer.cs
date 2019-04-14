@@ -124,6 +124,7 @@
             this.labelPointAddress.Size = new System.Drawing.Size(99, 13);
             this.labelPointAddress.TabIndex = 8;
             this.labelPointAddress.Text = "Точка не выбрана";
+            this.labelPointAddress.TextChanged += new System.EventHandler(this.labelPointCoordinates_TextChanged);
             // 
             // labelPointCoordinates
             // 
@@ -133,6 +134,7 @@
             this.labelPointCoordinates.Size = new System.Drawing.Size(99, 13);
             this.labelPointCoordinates.TabIndex = 8;
             this.labelPointCoordinates.Text = "Точка не выбрана";
+            this.labelPointCoordinates.TextChanged += new System.EventHandler(this.labelPointCoordinates_TextChanged);
             // 
             // buttonSelectPoint
             // 
