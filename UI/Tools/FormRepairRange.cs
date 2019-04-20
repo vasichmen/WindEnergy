@@ -26,6 +26,7 @@ namespace WindEnergy.UI.Tools
     {
         private RawRange range = null;
         private QualityInfo rangeQuality;
+        private List<InterpolateMethods> availableMethods;
 
         /// <summary>
         /// результат работы диалогового окна (новый ряд данных)
@@ -33,14 +34,22 @@ namespace WindEnergy.UI.Tools
         public RawRange Result { get; private set; }
 
 
-        public FormRepairRange(RawRange range)
+        public FormRepairRange(RawRange range, List<InterpolateMethods> methods, string caption)
         {
             InitializeComponent();
             this.range = range;
+            this.availableMethods = methods;
+            this.Text = caption;
+            this.groupBoxMain.Text = caption;
+
             comboBoxInterpolateMethod.Items.Clear();
-            comboBoxInterpolateMethod.Items.AddRange(InterpolateMethods.Linear.GetItems().ToArray());
+            foreach (var item in availableMethods)
+                comboBoxInterpolateMethod.Items.Add(item.Description());
+
             comboBoxRepairInterval.Items.Clear();
-            comboBoxRepairInterval.Items.AddRange(StandartIntervals.H1.GetItems().Skip(1).ToArray());
+            foreach (var item in StandartIntervals.H1.GetEnumItems())
+                if ((StandartIntervals)item != StandartIntervals.Variable)
+                    comboBoxRepairInterval.Items.Add(item.Description());
         }
 
 
@@ -60,7 +69,7 @@ namespace WindEnergy.UI.Tools
                 StandartIntervals interval = (StandartIntervals)(new EnumTypeConverter<StandartIntervals>().ConvertFrom(comboBoxRepairInterval.SelectedItem));
 
                 //если выбрана ступенчатый метод или линейная интерполяция и в ряде есть пропуски больше, чем 1 интервал, то надо уточнить у пользователя
-                if ((method == InterpolateMethods.Linear || method == InterpolateMethods.Stepwise) && rangeQuality.MaxEmptySpace.TotalMinutes > ((int)interval) )
+                if ((method == InterpolateMethods.Linear || method == InterpolateMethods.Stepwise) && rangeQuality.MaxEmptySpace.TotalMinutes > ((int)interval))
                 {
                     if (MessageBox.Show(this, "Ряд содержит пропуски данных больше, чем один выбранный интервал наблюдений.\r\nВ таком случае не рекомендуется использовать линейную интерполяцию и ступенчатое восстановление.\r\nВы уверены, что хотите продолжить восстановление?", "Восстановление ряда", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                         return;
@@ -145,8 +154,8 @@ namespace WindEnergy.UI.Tools
 
         private void formRepairRange_Shown(object sender, EventArgs e)
         {
-            comboBoxInterpolateMethod.SelectedItem = InterpolateMethods.Linear.Description();
-            comboBoxRepairInterval.SelectedItem = StandartIntervals.H1.Description();
+            comboBoxInterpolateMethod.SelectedIndex = 0;
+            comboBoxRepairInterval.SelectedIndex = 0;
 
             rangeQuality = Qualifier.ProcessRange(range);
 

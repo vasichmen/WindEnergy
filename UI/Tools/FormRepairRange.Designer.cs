@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRepairRange));
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBoxMain = new System.Windows.Forms.GroupBox();
             this.labelInterval = new System.Windows.Forms.Label();
             this.labelRangeLength = new System.Windows.Forms.Label();
             this.labelMaxEmptySpace = new System.Windows.Forms.Label();
@@ -44,29 +44,29 @@
             this.buttonRepairRange = new System.Windows.Forms.Button();
             this.comboBoxRepairInterval = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox2.SuspendLayout();
+            this.groupBoxMain.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox2
+            // groupBoxMain
             // 
-            this.groupBox2.Controls.Add(this.labelInterval);
-            this.groupBox2.Controls.Add(this.labelRangeLength);
-            this.groupBox2.Controls.Add(this.labelMaxEmptySpace);
-            this.groupBox2.Controls.Add(this.labelCompletness);
-            this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.comboBoxInterpolateMethod);
-            this.groupBox2.Controls.Add(this.buttonRepairRange);
-            this.groupBox2.Controls.Add(this.comboBoxRepairInterval);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(0, 0);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(308, 321);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Восстановление ряда";
+            this.groupBoxMain.Controls.Add(this.labelInterval);
+            this.groupBoxMain.Controls.Add(this.labelRangeLength);
+            this.groupBoxMain.Controls.Add(this.labelMaxEmptySpace);
+            this.groupBoxMain.Controls.Add(this.labelCompletness);
+            this.groupBoxMain.Controls.Add(this.groupBox3);
+            this.groupBoxMain.Controls.Add(this.label2);
+            this.groupBoxMain.Controls.Add(this.label1);
+            this.groupBoxMain.Controls.Add(this.comboBoxInterpolateMethod);
+            this.groupBoxMain.Controls.Add(this.buttonRepairRange);
+            this.groupBoxMain.Controls.Add(this.comboBoxRepairInterval);
+            this.groupBoxMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxMain.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxMain.Name = "groupBoxMain";
+            this.groupBoxMain.Size = new System.Drawing.Size(308, 321);
+            this.groupBoxMain.TabIndex = 4;
+            this.groupBoxMain.TabStop = false;
+            this.groupBoxMain.Text = "Восстановление ряда";
             // 
             // labelInterval
             // 
@@ -199,15 +199,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(308, 321);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBoxMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(10000, 360);
             this.MinimumSize = new System.Drawing.Size(324, 360);
             this.Name = "FormRepairRange";
             this.Text = "Восстановление ряда";
             this.Shown += new System.EventHandler(this.formRepairRange_Shown);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.groupBoxMain.ResumeLayout(false);
+            this.groupBoxMain.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
@@ -216,7 +216,7 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBoxMain;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RadioButton radioButtonOpenFile;
         private System.Windows.Forms.RadioButton radioButtonSelPoint;

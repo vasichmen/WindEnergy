@@ -43,6 +43,8 @@
             this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.repairRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modelRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rangePropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.операцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calculateEnergyInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,9 +64,8 @@
             this.toolStripStatusLabelCompletness = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelInterval = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.button1 = new System.Windows.Forms.Button();
-            this.rangePropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -163,6 +164,7 @@
             this.правкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.checkRangeToolStripMenuItem,
             this.repairRangeToolStripMenuItem,
+            this.modelRangeToolStripMenuItem,
             this.rangePropertiesToolStripMenuItem});
             this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
             this.правкаToolStripMenuItem.Size = new System.Drawing.Size(64, 21);
@@ -171,7 +173,7 @@
             // checkRangeToolStripMenuItem
             // 
             this.checkRangeToolStripMenuItem.Name = "checkRangeToolStripMenuItem";
-            this.checkRangeToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.checkRangeToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.checkRangeToolStripMenuItem.Text = "Проверить ряд";
             this.checkRangeToolStripMenuItem.ToolTipText = "Проверка ряда на наличие пропусков и некорректных данных";
             this.checkRangeToolStripMenuItem.Click += new System.EventHandler(this.checkRepairRangeToolStripMenuItem_Click);
@@ -179,10 +181,24 @@
             // repairRangeToolStripMenuItem
             // 
             this.repairRangeToolStripMenuItem.Name = "repairRangeToolStripMenuItem";
-            this.repairRangeToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.repairRangeToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.repairRangeToolStripMenuItem.Text = "Восстановить ряд";
-            this.repairRangeToolStripMenuItem.ToolTipText = "Восстановление ряда до заданного интервала наблюдений";
             this.repairRangeToolStripMenuItem.Click += new System.EventHandler(this.repairRangeToolStripMenuItem_Click);
+            // 
+            // modelRangeToolStripMenuItem
+            // 
+            this.modelRangeToolStripMenuItem.Name = "modelRangeToolStripMenuItem";
+            this.modelRangeToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.modelRangeToolStripMenuItem.Text = "Моделировать ряд";
+            this.modelRangeToolStripMenuItem.ToolTipText = "Восстановление ряда до заданного интервала наблюдений";
+            this.modelRangeToolStripMenuItem.Click += new System.EventHandler(this.modelRangeToolStripMenuItem_Click);
+            // 
+            // rangePropertiesToolStripMenuItem
+            // 
+            this.rangePropertiesToolStripMenuItem.Name = "rangePropertiesToolStripMenuItem";
+            this.rangePropertiesToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.rangePropertiesToolStripMenuItem.Text = "Свойства ряда";
+            this.rangePropertiesToolStripMenuItem.Click += new System.EventHandler(this.rangePropertiesToolStripMenuItem_Click);
             // 
             // операцииToolStripMenuItem
             // 
@@ -353,6 +369,18 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1157, 501);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(251, 26);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(56, 19);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // mainTabControl
             // 
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -367,25 +395,6 @@
             this.mainTabControl.Size = new System.Drawing.Size(1151, 495);
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.mainTabControl_Selected);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(251, 26);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(56, 19);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // rangePropertiesToolStripMenuItem
-            // 
-            this.rangePropertiesToolStripMenuItem.Name = "rangePropertiesToolStripMenuItem";
-            this.rangePropertiesToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.rangePropertiesToolStripMenuItem.Text = "Свойства ряда";
-            this.rangePropertiesToolStripMenuItem.Click += new System.EventHandler(this.rangePropertiesToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -450,8 +459,9 @@
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInterval;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripRangeIntervals;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCalcYear;
-        private System.Windows.Forms.ToolStripMenuItem repairRangeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modelRangeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rangePropertiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem repairRangeToolStripMenuItem;
     }
 }
 

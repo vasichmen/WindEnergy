@@ -57,6 +57,7 @@ namespace WindEnergy.UI
             saveToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             saveAsToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             checkRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
+            modelRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             repairRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             rangePropertiesToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             calculateEnergyInfoToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
@@ -203,21 +204,40 @@ namespace WindEnergy.UI
         }
 
         /// <summary>
-        /// восстановить ряд
+        /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void repairRangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
-            FormRepairRange frm = new FormRepairRange(rang);
+            FormRepairRange frm = new FormRepairRange(rang, new List<InterpolateMethods>() { InterpolateMethods.NearestMeteostation }, "Восстановление ряда");
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
             }
         }
 
+        /// <summary>
+        /// восстановить ряд
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void modelRangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            FormRepairRange frm = new FormRepairRange(rang, new List<InterpolateMethods>() { InterpolateMethods.Linear, InterpolateMethods.Stepwise }, "Моделирование ряда");
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
+            }
+        }
 
+        /// <summary>
+        /// просмотр и редатирование свойств ряда
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rangePropertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
