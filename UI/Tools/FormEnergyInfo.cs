@@ -183,12 +183,20 @@ namespace WindEnergy.UI.Tools
                 string cap = "Год;Месяц;кол-во изм";
                 foreach (GradationItem grad in Vars.Options.CurrentSpeedGradation.Items)
                     cap += ";" + grad.Average.ToString("0.00");
-                cap += ";Vmin;Vmax;Vср.год;Cv(V);Nвал уд.;Эвал уд.";
+                cap += ";Vmin;Vmax;Vср;Cv(V);параметр γ;параметр β;Nвал уд.;Эвал уд.";
                 foreach (WindDirections wd in WindDirections.Calm.GetEnumItems().GetRange(0, 17))
                     cap += ";" + wd.Description();
 
                 //запись в файл
                 MSExcel.SaveEnergyInfoCSV(sf.FileName, null, null, null, null, cap, "", "", 0, false); //запись заголовка
+
+                //запись данных обо всём периоде
+                EnergyInfo ri1 = StatisticEngine.ProcessRange(range);
+                StatisticalRange<WindDirections> sd1 = StatisticEngine.GetDirectionExpectancy(range, GradationInfo<WindDirections>.Rhumb16Gradations);
+                StatisticalRange<GradationItem> ss1 = StatisticEngine.GetExpectancy(range, Vars.Options.CurrentSpeedGradation);
+                EnergyInfo ei1 = StatisticEngine.ProcessRange(ss1);
+                MSExcel.SaveEnergyInfoCSV(sf.FileName, ri1, ei1, sd1, ss1, null, "Все года","Все месяцы", range.Count, true);
+
                 foreach (int year in years) //фикл по годам
                 {
                     for (int mt = 0; mt <= 12; mt++)//по месяцам, начиная со всех

@@ -160,7 +160,7 @@ namespace WindEnergy.UI.Tools
             rangeQuality = Qualifier.ProcessRange(range);
 
             labelCompletness.Text = "Полнота ряда: " + (rangeQuality.Completeness * 100).ToString("0.00") + "%";
-            labelMaxEmptySpace.Text = "Максимальный перерыв в измерениях: " + rangeQuality.MaxEmptySpace.TotalDays + " дней";
+            labelMaxEmptySpace.Text = "Максимальный перерыв в измерениях: " + rangeQuality.MaxEmptySpace.TotalDays.ToString("0.000") + " дней";
             labelRangeLength.Text = "Длительность ряда: " + range.Length.ToText();
 
             string dt;

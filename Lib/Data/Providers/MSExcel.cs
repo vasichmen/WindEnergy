@@ -62,7 +62,7 @@ namespace WindEnergy.Lib.Data.Providers
                 line+= ";" +(stat_speeds.Values[j] * 100).ToString("0.00");
 
             //по ряду наблюдений
-            line+= string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2}", range_info.Vmin, range_info.Vmax, range_info.V0, range_info.Cv, range_info.PowerDensity, range_info.EnergyDensity);
+            line+= string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f2}", range_info.Vmin, range_info.Vmax, range_info.V0, range_info.Cv,range_info.VeybullGamma,range_info.VeybullBeta, range_info.PowerDensity, range_info.EnergyDensity);
 
             //повторяемости направлений ветра
             List<Enum> rs = WindDirections.Calm.GetEnumItems().GetRange(0, 17);

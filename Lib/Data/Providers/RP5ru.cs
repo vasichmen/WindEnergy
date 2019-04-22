@@ -496,7 +496,12 @@ namespace WindEnergy.Lib.Data.Providers
                         double wet = elems[5] == "" ? double.NaN : double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
                         string dirs = elems[6];
                         WindDirections direct = GetWindDirectionFromString(dirs);
-                        res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet });
+                        try
+                        {
+                            res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet });
+                        }
+                        catch (Exception)
+                        { continue; }
                     }
                     res.FileFormat = FileFormats.RP5WmoCSV;
                     break;
