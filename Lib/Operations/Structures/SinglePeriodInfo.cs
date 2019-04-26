@@ -31,16 +31,6 @@ namespace WindEnergy.Lib.Operations.Structures
         public double Completness { get; set; }
 
         /// <summary>
-        /// отклонение средней скорости от среднемноголетней скорости
-        /// </summary>
-        public double SpeedDeviation { get; set; }
-
-        /// <summary>
-        /// отклонение повторяемости скорости ветра
-        /// </summary>
-        public double ExpectancyDeviation { get; set; }
-
-        /// <summary>
         /// интервал наблюдений
         /// </summary>
         public StandartIntervals Interval { get; set; }
@@ -51,10 +41,25 @@ namespace WindEnergy.Lib.Operations.Structures
         public double AverageSpeed { get; set; }
 
         /// <summary>
+        /// отклонение средней скорости от среднемноголетней скорости
+        /// </summary>
+        public double SpeedDeviation { get; set; }
+
+        /// <summary>
+        /// отклонение средней скорости от среднемноголетней в процентах
+        /// </summary>
+        public double SpeedDeviationPercent { get;  set; }
+
+        /// <summary>
+        /// отклонение повторяемости скорости ветра в долях
+        /// </summary>
+        public double ExpectancyDeviation { get; set; }
+
+
+        /// <summary>
         /// максимальная скорость за период
         /// </summary>
         public double Vmax { get; set; }
-
 
     }
 }

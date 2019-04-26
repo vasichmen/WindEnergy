@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -39,6 +40,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             UserSpeedGradation = new UserGradation();
             CalculateAirDensity = false;
             ETOPO2Folder = Application.StartupPath + "\\Data\\ETOPO";
+            SiteAddress = "http://velomapa.ru";
         }
 
         /// <summary>
@@ -145,6 +147,31 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         }
 
         /// <summary>
+        /// GUID экземпляра программы
+        /// </summary>
+        public string ApplicationGuid
+        {
+            get
+            {
+#if (DEBUG)
+                return "debug";
+#else
+                RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\WindEnergy");
+                object guido = key.GetValue("Guid");
+                string guid;
+                if (guido == null)
+                {
+                    guid = Guid.NewGuid().ToString();
+                    key.SetValue("Guid", guid);
+                }
+                else
+                    guid = (string)guido;
+                return guid;
+#endif
+            }
+        }
+
+        /// <summary>
         /// пользовательские градации скоростей
         /// </summary>
         public GradationInfo<GradationItem> UserSpeedGradationInfo
@@ -169,6 +196,11 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// папка с базой данных ETOPO2
         /// </summary>
         public string ETOPO2Folder { get;  set; }
+
+        /// <summary>
+        /// адрес сайта
+        /// </summary>
+        public string SiteAddress { get; set; }
 
 
         /// <summary>

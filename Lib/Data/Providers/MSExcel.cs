@@ -109,7 +109,7 @@ namespace WindEnergy.Lib.Data.Providers
             sw.WriteLine(nline);
             foreach (SinglePeriodInfo spi in years.Years)
             {
-                nline = string.Format("{0};{1:f2};{2};{3:f2};{4:f2};{5:f2};{6:f1}", spi.Year, spi.Completness, spi.Interval.Description(), spi.SpeedDeviation, spi.ExpectancyDeviation, spi.AverageSpeed, spi.Vmax);
+                nline = string.Format("{0};{1:f2};{2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f1}", spi.Year, spi.Completness, spi.Interval.Description(), spi.SpeedDeviation,spi.SpeedDeviationPercent, spi.AverageSpeed, spi.ExpectancyDeviation, spi.Vmax);
                 sw.WriteLine(nline);
             }
             sw.Close();

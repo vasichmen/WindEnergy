@@ -142,11 +142,15 @@ namespace WindEnergy.UI.Tools
                 case "expectancydeviation":
                     e.Column.HeaderText = "Отклонение повторяемости, %";
                     e.Column.DefaultCellStyle.Format = "n2";
-                    e.Column.Width = 120;
+                    e.Column.Width = 130;
                     break;
                 case "averagespeed":
                     e.Column.HeaderText = "Средняя скорость, м/с";
                     e.Column.DefaultCellStyle.Format = "n1";
+                    break;
+                case "speeddeviationpercent":
+                    e.Column.HeaderText = "Отклонение скорости, %";
+                    e.Column.DefaultCellStyle.Format = "n2";
                     break;
 
                 //удаляемые колонки пишем тут:

@@ -497,9 +497,7 @@ namespace WindEnergy.Lib.Data.Providers
                         string dirs = elems[6];
                         WindDirections direct = GetWindDirectionFromString(dirs);
                         try
-                        {
-                            res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet });
-                        }
+                        { res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet }); }
                         catch (Exception)
                         { continue; }
                     }

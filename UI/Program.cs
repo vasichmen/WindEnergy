@@ -32,6 +32,20 @@ namespace WindEnergy.UI
             //обработчик выхода из приложения
             Application.ApplicationExit += application_ApplicationExit;
 
+
+            #region запись статистики, проверка версии
+
+            new Task(new Action(() =>
+            {
+                Velomapa site = new Velomapa(); //связь с сайтом
+                site.SendStatisticAsync(); //статистика
+                              
+            })
+            ).Start();
+
+            #endregion
+
+
             Application.Run(winMain);
         }
 

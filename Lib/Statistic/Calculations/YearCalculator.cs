@@ -53,7 +53,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
                 StatisticalRange<GradationItem> exp = StatisticEngine.GetExpectancy(range, Vars.Options.CurrentSpeedGradation);
                 DeviationsInfo dinfo = StatisticEngine.ProcessRangeDeviations(r, averSpeed, exp);
 
-                double aver = r.Average((t) => averSpeed);
+                double aver = r.Average((t) => t.Speed);
                 SinglePeriodInfo spinf = new SinglePeriodInfo()
                 {
                     Interval = qinfo.Intervals.Count == 1 ? qinfo.Intervals[0].Interval : StandartIntervals.Variable,
@@ -64,7 +64,8 @@ namespace WindEnergy.Lib.Statistic.Calculations
                     To = r[r.Count - 1].Date,
                     SpeedDeviation = dinfo.SpeedDeviation,
                     ExpectancyDeviation = dinfo.ExpDeviation,
-                    AverageSpeed = aver
+                    AverageSpeed = aver,
+                    SpeedDeviationPercent = (dinfo.SpeedDeviation / averSpeed) * 100d
                 };
                 res.Years.Add(spinf);
             }

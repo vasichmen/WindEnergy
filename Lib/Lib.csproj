@@ -106,6 +106,7 @@
     <Compile Include="Data\Providers\NASA.cs" />
     <Compile Include="Data\Providers\RP5ru.cs" />
     <Compile Include="Classes\Structures\RawItem.cs" />
+    <Compile Include="Data\Providers\Velomapa.cs" />
     <Compile Include="Data\RawRangeSerializer.cs" />
     <Compile Include="Classes\Collections\RawRange.cs" />
     <Compile Include="Enums.cs" />
