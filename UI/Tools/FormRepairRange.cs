@@ -62,12 +62,39 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void buttonRepairRange_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
+            InterpolateMethods method = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem));
+            StandartIntervals interval = (StandartIntervals)(new EnumTypeConverter<StandartIntervals>().ConvertFrom(comboBoxRepairInterval.SelectedItem));
+            Action<int> action = new Action<int>((percent) =>
+            {
+                if (this.InvokeRequired)
+                    this.Invoke(new Action(() => { progressBar1.Value = percent; }));
+                else
+                    progressBar1.Value = percent;
+            });
+
+            Action<RawRange> actionAfter = new Action<RawRange>((rawRange) =>
+            {
+                this.Invoke(new Action(() =>
+                {
+                    rawRange.Name = "Восстановленный ряд до интервала" + interval.Description();
+                    MessageBox.Show(this, $"Ряд восстановлен до интервала {interval.Description()}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (rawRange == null)
+                        DialogResult = DialogResult.Cancel;
+                    else
+                    {
+                        DialogResult = DialogResult.OK;
+                        Result = rawRange;
+                    }
+                    Cursor = Cursors.Arrow;
+                    Result = rawRange;
+                    Close();
+                }));
+            });
+
             try
             {
-                Cursor = Cursors.WaitCursor;
-                InterpolateMethods method = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem));
-                StandartIntervals interval = (StandartIntervals)(new EnumTypeConverter<StandartIntervals>().ConvertFrom(comboBoxRepairInterval.SelectedItem));
-
                 //если выбрана ступенчатый метод или линейная интерполяция и в ряде есть пропуски больше, чем 1 интервал, то надо уточнить у пользователя
                 if ((method == InterpolateMethods.Linear || method == InterpolateMethods.Stepwise) && rangeQuality.MaxEmptySpace.TotalMinutes > ((int)interval))
                 {
@@ -111,20 +138,8 @@ namespace WindEnergy.UI.Tools
                             return;
                     }
                 }
+                Restorer.ProcessRange(range, new RestorerParameters() { Interval = interval, Method = method, Coordinates = range.Position, BaseRange = baseRange }, action, actionAfter);
 
-                range = Restorer.ProcessRange(range, new RestorerParameters() { Interval = interval, Method = method, Coordinates = range.Position, BaseRange = baseRange });
-                range.Name = "Восстановленный ряд до интервала" + interval.Description();
-                MessageBox.Show(this, $"Ряд восстановлен до интервала {interval.Description()}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                if (range == null)
-                    DialogResult = DialogResult.Cancel;
-                else
-                {
-                    DialogResult = DialogResult.OK;
-                    Result = range;
-                }
-                Result = range;
-                Close();
             }
             catch (WebException exc)
             {
@@ -144,10 +159,7 @@ namespace WindEnergy.UI.Tools
                 MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
-            finally
-            {
-                Cursor = Cursors.Arrow;
-            }
+
         }
 
         #endregion

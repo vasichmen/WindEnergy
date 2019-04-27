@@ -44,12 +44,14 @@
             this.buttonRepairRange = new System.Windows.Forms.Button();
             this.comboBoxRepairInterval = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBoxMain.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxMain
             // 
+            this.groupBoxMain.Controls.Add(this.progressBar1);
             this.groupBoxMain.Controls.Add(this.labelInterval);
             this.groupBoxMain.Controls.Add(this.labelRangeLength);
             this.groupBoxMain.Controls.Add(this.labelMaxEmptySpace);
@@ -63,7 +65,7 @@
             this.groupBoxMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxMain.Location = new System.Drawing.Point(0, 0);
             this.groupBoxMain.Name = "groupBoxMain";
-            this.groupBoxMain.Size = new System.Drawing.Size(308, 321);
+            this.groupBoxMain.Size = new System.Drawing.Size(308, 330);
             this.groupBoxMain.TabIndex = 4;
             this.groupBoxMain.TabStop = false;
             this.groupBoxMain.Text = "Восстановление ряда";
@@ -174,9 +176,9 @@
             // 
             // buttonRepairRange
             // 
-            this.buttonRepairRange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRepairRange.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonRepairRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRepairRange.Location = new System.Drawing.Point(77, 286);
+            this.buttonRepairRange.Location = new System.Drawing.Point(71, 271);
             this.buttonRepairRange.Name = "buttonRepairRange";
             this.buttonRepairRange.Size = new System.Drawing.Size(139, 23);
             this.buttonRepairRange.TabIndex = 1;
@@ -194,14 +196,22 @@
             this.comboBoxRepairInterval.Size = new System.Drawing.Size(293, 21);
             this.comboBoxRepairInterval.TabIndex = 0;
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(6, 300);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(293, 23);
+            this.progressBar1.TabIndex = 10;
+            // 
             // FormRepairRange
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(308, 321);
+            this.ClientSize = new System.Drawing.Size(308, 330);
             this.Controls.Add(this.groupBoxMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(10000, 360);
             this.MinimumSize = new System.Drawing.Size(324, 360);
             this.Name = "FormRepairRange";
             this.Text = "Восстановление ряда";
@@ -230,5 +240,6 @@
         private System.Windows.Forms.Label labelMaxEmptySpace;
         private System.Windows.Forms.Label labelCompletness;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }

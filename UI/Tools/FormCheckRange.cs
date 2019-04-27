@@ -67,66 +67,91 @@ namespace WindEnergy.UI.Tools
         {
             try
             {
-                Cursor = Cursors.WaitCursor;
-                //если выбран способ с помощью выбранных истоников ограничений
-                if (radioButtonSelectLimitsProvider.Checked)
+                Action<int> pcAction = new Action<int>((percent) =>
                 {
-                    LimitsProviders provider = radioButtonSelectLimitsProvider.Checked ? LimitsProviders.StaticLimits : LimitsProviders.Manual;
-                    if (provider == LimitsProviders.None)
-                    {
-                        MessageBox.Show(this, "Необходимо выбрать истоник ограничений", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    if (provider == LimitsProviders.Manual)
-                    {
-                        MessageBox.Show(this, "Для ручного ввода ограничений выберите соответствующий пункт", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    if (checkPoint.IsEmpty)
-                    {
-                        MessageBox.Show(this, "Необходимо выбрать точку на карте", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats);
-                    range.Name = "Исправленный ряд";
-                    MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nНулевая скорость с направлением: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                    if (this.InvokeRequired)
+                        this.Invoke(new Action(() => { progressBar1.Value = percent; }));
+                    else
+                        progressBar1.Value = percent;
+                });
 
-                //если выбран способ вручную вводить ограничения
-                if (radioButtonEnterLimits.Checked)
+                Cursor = Cursors.WaitCursor;
+                new Task(() =>
                 {
-                    if (speedDiapasons == null)
+                    //если выбран способ с помощью выбранных истоников ограничений
+                    if (radioButtonSelectLimitsProvider.Checked)
                     {
-                        MessageBox.Show(this, "Необходимо ввести ограничения для скоростей ветра", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
+                        LimitsProviders provider = radioButtonSelectLimitsProvider.Checked ? LimitsProviders.StaticLimits : LimitsProviders.Manual;
+                        if (provider == LimitsProviders.None)
+                        {
+                            MessageBox.Show(this, "Необходимо выбрать истоник ограничений", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        if (provider == LimitsProviders.Manual)
+                        {
+                            MessageBox.Show(this, "Для ручного ввода ограничений выберите соответствующий пункт", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        if (checkPoint.IsEmpty)
+                        {
+                            MessageBox.Show(this, "Необходимо выбрать точку на карте", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats, pcAction);
+                        range.Name = "Исправленный ряд";
+                        this.Invoke(new Action(() =>
+                         {
+                             MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nНулевая скорость с направлением: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                             if (range == null)
+                                 DialogResult = DialogResult.Cancel;
+                             else
+                             {
+                                 DialogResult = DialogResult.OK;
+                                 Result = range;
+                             }
+                             Cursor = Cursors.Arrow;
+                             Close();
+                         }));
                     }
-                    if (directionDiapasons == null)
+
+                    //если выбран способ вручную вводить ограничения
+                    if (radioButtonEnterLimits.Checked)
                     {
-                        MessageBox.Show(this, "Необходимо ввести ограничения для направлений ветра", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
+                        if (speedDiapasons == null)
+                        {
+                            MessageBox.Show(this, "Необходимо ввести ограничения для скоростей ветра", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        if (directionDiapasons == null)
+                        {
+                            MessageBox.Show(this, "Необходимо ввести ограничения для направлений ветра", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        range = Checker.ProcessRange(range, new CheckerParameters(speedDiapasons, directionDiapasons), out CheckerInfo stats, pcAction);
+                        range.Name = "Исправленный ряд";
+                        this.Invoke(new Action(() =>
+                        {
+                            MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nНулевая скорость с направлением: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            if (range == null)
+                                DialogResult = DialogResult.Cancel;
+                            else
+                            {
+                                DialogResult = DialogResult.OK;
+                                Result = range;
+                            }
+                            Cursor = Cursors.Arrow;
+                            Close();
+                        }));
                     }
-                    range = Checker.ProcessRange(range, new CheckerParameters(speedDiapasons, directionDiapasons), out CheckerInfo stats);
-                    range.Name = "Исправленный ряд";
-                    MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nНулевая скорость с направлением: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                if (range == null)
-                    DialogResult = DialogResult.Cancel;
-                else
-                {
-                    DialogResult = DialogResult.OK;
-                    Result = range;
-                }
-                Close();
+
+
+                }).Start();
             }
             catch (ApplicationException exc)
             {
                 Cursor = Cursors.Arrow;
                 MessageBox.Show(this, exc.Message, "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
-            }
-            finally
-            {
-                Cursor = Cursors.Arrow;
             }
         }
 

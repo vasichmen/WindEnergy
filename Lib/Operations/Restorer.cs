@@ -23,7 +23,7 @@ namespace WindEnergy.Lib.Operations
         /// <param name="range"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static RawRange ProcessRange(RawRange Range, RestorerParameters param)
+        public static void ProcessRange(RawRange Range, RestorerParameters param, Action<int> actionPercent, Action<RawRange> actionAfter)
         {
             if (param.Method == InterpolateMethods.NearestMeteostation && param.Coordinates.IsEmpty)
                 throw new Exception("Для этого метода интерполяции необходимо указать расчетную точку на карте");
@@ -110,21 +110,30 @@ namespace WindEnergy.Lib.Operations
             RawRange res = new RawRange();
             res.Position = Range.Position;
             res.BeginChange();
-            foreach (var p in newRangeX)
+            Task tsk = new Task(() =>
             {
-                double speed = methodSpeeds.GetValue(p);
-                double direct = methodDirects.GetValue(p);
-                double temp = methodTemp.GetValue(p);
-                double wet = methodWet.GetValue(p);
-                if (double.IsNaN(speed) ||
-                    double.IsNaN(direct) ||
-                    double.IsNaN(temp) ||
-                    double.IsNaN(wet))
-                    continue;
-                res.Add(new RawItem(p, speed, direct, temp, wet));
-            }
-            res.EndChange();
-            return res;
+                double c = 0;
+                foreach (var p in newRangeX)
+                {
+                    c++;
+                    if (Math.IEEERemainder(c, 100) == 0 && actionPercent != null)
+                        actionPercent.Invoke((int)((c / newRangeX.Count) * 100));
+                    double speed = methodSpeeds.GetValue(p);
+                    double direct = methodDirects.GetValue(p);
+                    double temp = methodTemp.GetValue(p);
+                    double wet = methodWet.GetValue(p);
+                    if (double.IsNaN(speed) ||
+                        double.IsNaN(direct) ||
+                        double.IsNaN(temp) ||
+                        double.IsNaN(wet))
+                        continue;
+                    res.Add(new RawItem(p, speed, direct, temp, wet));
+                }
+                res.EndChange();
+                actionAfter.Invoke(res);
+            });
+            tsk.Start();           
+            return;
         }
 
     }

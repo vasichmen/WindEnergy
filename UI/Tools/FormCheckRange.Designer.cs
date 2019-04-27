@@ -42,13 +42,16 @@
             this.radioButtonEnterLimits = new System.Windows.Forms.RadioButton();
             this.radioButtonSelectLimitsProvider = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonCheckRange
             // 
+            this.buttonCheckRange.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCheckRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCheckRange.Location = new System.Drawing.Point(83, 192);
+            this.buttonCheckRange.Location = new System.Drawing.Point(83, 189);
             this.buttonCheckRange.Name = "buttonCheckRange";
             this.buttonCheckRange.Size = new System.Drawing.Size(135, 23);
             this.buttonCheckRange.TabIndex = 1;
@@ -59,6 +62,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.progressBar1);
             this.groupBox1.Controls.Add(this.labeldirectDiap);
             this.groupBox1.Controls.Add(this.labelspeedDiap);
             this.groupBox1.Controls.Add(this.buttonEnterDirectionDiapason);
@@ -69,15 +73,17 @@
             this.groupBox1.Controls.Add(this.radioButtonEnterLimits);
             this.groupBox1.Controls.Add(this.radioButtonSelectLimitsProvider);
             this.groupBox1.Controls.Add(this.buttonCheckRange);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(314, 224);
+            this.groupBox1.Size = new System.Drawing.Size(306, 248);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Проверка ряда";
             // 
             // labeldirectDiap
             // 
+            this.labeldirectDiap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labeldirectDiap.AutoSize = true;
             this.labeldirectDiap.Location = new System.Drawing.Point(159, 158);
             this.labeldirectDiap.Name = "labeldirectDiap";
@@ -87,6 +93,7 @@
             // 
             // labelspeedDiap
             // 
+            this.labelspeedDiap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelspeedDiap.AutoSize = true;
             this.labelspeedDiap.Location = new System.Drawing.Point(6, 158);
             this.labelspeedDiap.Name = "labelspeedDiap";
@@ -96,6 +103,7 @@
             // 
             // buttonEnterDirectionDiapason
             // 
+            this.buttonEnterDirectionDiapason.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonEnterDirectionDiapason.Enabled = false;
             this.buttonEnterDirectionDiapason.Location = new System.Drawing.Point(162, 119);
             this.buttonEnterDirectionDiapason.Name = "buttonEnterDirectionDiapason";
@@ -107,6 +115,7 @@
             // 
             // buttonEnterSpeedDiapason
             // 
+            this.buttonEnterSpeedDiapason.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonEnterSpeedDiapason.Enabled = false;
             this.buttonEnterSpeedDiapason.Location = new System.Drawing.Point(9, 119);
             this.buttonEnterSpeedDiapason.Name = "buttonEnterSpeedDiapason";
@@ -148,6 +157,7 @@
             // 
             // radioButtonEnterLimits
             // 
+            this.radioButtonEnterLimits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.radioButtonEnterLimits.AutoSize = true;
             this.radioButtonEnterLimits.Location = new System.Drawing.Point(9, 96);
             this.radioButtonEnterLimits.Name = "radioButtonEnterLimits";
@@ -170,13 +180,23 @@
             this.radioButtonSelectLimitsProvider.UseVisualStyleBackColor = true;
             this.radioButtonSelectLimitsProvider.CheckedChanged += new System.EventHandler(this.radioButtonLimits_CheckedChanged);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(9, 218);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(290, 23);
+            this.progressBar1.TabIndex = 13;
+            // 
             // FormCheckRange
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(336, 241);
+            this.ClientSize = new System.Drawing.Size(306, 248);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(322, 287);
             this.Name = "FormCheckRange";
             this.Text = "Проверить  ряд";
             this.Shown += new System.EventHandler(this.formCheckRepairRange_Shown);
@@ -199,5 +219,6 @@
         private System.Windows.Forms.Button buttonEnterDirectionDiapason;
         private System.Windows.Forms.Button buttonEnterSpeedDiapason;
         private System.Windows.Forms.Label labelPointAddress;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }

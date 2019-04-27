@@ -22,7 +22,7 @@ namespace WindEnergy.Lib.Operations
         /// <param name="range">ряд</param>
         /// <param name="param">параметры обработки ошибок</param>
         /// <returns></returns>
-        public static RawRange ProcessRange(RawRange range, CheckerParameters param, out CheckerInfo info)
+        public static RawRange ProcessRange(RawRange range, CheckerParameters param, out CheckerInfo info, Action<int> action)
         {
             ILimitsProvider provider;
             switch (param.LimitsProvider)
@@ -45,8 +45,12 @@ namespace WindEnergy.Lib.Operations
             res.BeginChange();
             List<DateTime> dates = new List<DateTime>();
             int lims = 0, repeats = 0, other = 0;
+            double c = 0;
             foreach (RawItem item in range)
             {
+                c++;
+                if (Math.IEEERemainder(c, 100) == 0 && action != null)
+                    action.Invoke((int)((c / range.Count) * 100));
                 bool accept = provider.CheckItem(item, param.Coordinates); //проверка по диапазону
                 if (!accept) lims++;
 
