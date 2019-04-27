@@ -455,12 +455,7 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string str = "45.222222 22,3452345235";
-            string regex = @"^\d+[\.\,].\d*\s+\d+[\.\,].\d*$";
-            bool isMatch = new Regex(regex).IsMatch(str);
-            if (isMatch)
-            {
-            }
+            (mainTabControl.SelectedTab as TabPageExt).Range.PerformRefreshQuality();
         }
 
     }

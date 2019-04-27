@@ -256,6 +256,12 @@ namespace WindEnergy
     public enum StandartIntervals
     {
         /// <summary>
+        /// пропущенные данные
+        /// </summary>
+        [Description("Пропуск данных")]
+        Missing = -2,
+
+        /// <summary>
         /// переменный интервал (ряд не однородный)
         /// </summary>
         [Description("Неоднородный ряд")]
@@ -298,11 +304,16 @@ namespace WindEnergy
         H8 = 480,
 
         /// <summary>
+        /// 8 часов
+        /// </summary>
+        [Description("12 часов")]
+        H12 = 720,
+
+        /// <summary>
         /// 1 день
         /// </summary>
         [Description("1 день")]
-        D1 = 24 * 60
-
+        D1 = 24 * 60,
     }
 
     /// <summary>

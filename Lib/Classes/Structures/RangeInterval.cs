@@ -21,6 +21,18 @@ namespace WindEnergy.Lib.Classes.Structures
         /// </summary>
         public StandartIntervals Interval { get; set; }
 
+        /// <summary>
+        /// длина диапазона
+        /// </summary>
+        public TimeSpan Length { get { return this.Diapason.To - this.Diapason.From; } }
+
+        /// <summary>
+        /// длина диапазона в минутах
+        /// </summary>
+        public int LengthMinutes { get {
+                return (int)Length.TotalMinutes;
+            } }
+
         public override string ToString()
         {
             return Diapason.ToString() + "  " + Interval.Description();

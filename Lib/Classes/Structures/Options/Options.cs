@@ -28,7 +28,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             MapProvider = MapProviders.YandexMap;
             StaticRegionLimitsSourceFile = Application.StartupPath + "\\staticRegionLimits.txt";
             StaticMeteostationCoordinatesSourceFile = Application.StartupPath + "\\staticMeteostationCoordinates.txt";
-            QualifierSectionLength = 10; //10 измерений
+            QualifierSectionLength = 20; //20 измерений
             QualifierDaysToNewInterval = 90; //3 месяца
             AirDensity = 1.226;
             MinimalSpeedDeviation = 0.1d;

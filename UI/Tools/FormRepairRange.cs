@@ -48,7 +48,7 @@ namespace WindEnergy.UI.Tools
 
             comboBoxRepairInterval.Items.Clear();
             foreach (var item in StandartIntervals.H1.GetEnumItems())
-                if ((StandartIntervals)item != StandartIntervals.Variable)
+                if ((StandartIntervals)item != StandartIntervals.Variable && (StandartIntervals)item != StandartIntervals.Variable)
                     comboBoxRepairInterval.Items.Add(item.Description());
         }
 

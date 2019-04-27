@@ -72,7 +72,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
 
             //ВЫБОР РАСЧЕТНОГО ГОДА
             //получаем года с одинаковым интервалом и полнотой больше 95%
-            List<SinglePeriodInfo> accepts = (from t in res.Years where t.Interval != StandartIntervals.Variable && t.Completness > 95 select t).ToList();
+            List<SinglePeriodInfo> accepts = (from t in res.Years where t.Interval != StandartIntervals.Variable && t.Interval != StandartIntervals.Missing && t.Completness > 95 select t).ToList();
 
             //если даже таких годов не нашлось, то выходим
             if (accepts.Count == 0)
