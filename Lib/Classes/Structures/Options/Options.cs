@@ -29,7 +29,8 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             StaticRegionLimitsSourceFile = Application.StartupPath + "\\staticRegionLimits.txt";
             StaticMeteostationCoordinatesSourceFile = Application.StartupPath + "\\staticMeteostationCoordinates.txt";
             QualifierSectionLength = 20; //20 измерений
-            QualifierDaysToNewInterval = 90; //3 месяца
+            QualifierDaysToNewInterval = 60; //2 месяца
+            QualifierDaysToBeginMissing = 30; //1 месяца
             AirDensity = 1.226;
             MinimalSpeedDeviation = 0.1d;
             MinimalCorrelationCoeff = 0.7;
@@ -201,6 +202,11 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// адрес сайта
         /// </summary>
         public string SiteAddress { get; set; }
+
+        /// <summary>
+        /// минимальное количество дней, после которого считается пропуск данных как отдельный интервал
+        /// </summary>
+        public double QualifierDaysToBeginMissing { get; set; }
 
 
         /// <summary>

@@ -259,7 +259,7 @@ namespace WindEnergy
         /// пропущенные данные
         /// </summary>
         [Description("Пропуск данных")]
-        Missing = -2,
+        Missing = int.MaxValue,
 
         /// <summary>
         /// переменный интервал (ряд не однородный)

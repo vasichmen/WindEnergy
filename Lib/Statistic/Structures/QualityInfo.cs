@@ -61,7 +61,7 @@ namespace WindEnergy.Lib.Statistic.Structures
                 DateTime toi = ri.Diapason.To;
                 TimeSpan span = toi - fromi;
                 int intervalMinutes = (int)ri.Interval; 
-                expectAm += (int)( span.TotalMinutes / intervalMinutes); //проверить деление
+                expectAm += (int)( span.TotalMinutes / intervalMinutes); 
             }
             expectAm++;
 
