@@ -81,7 +81,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
             this.nearestRange = baseRange;
 
             //расчет диапазона сделанных измерений
-            baseRange.Sort(new DateTimeComparer());
+            baseRange = new RawRange(baseRange.OrderBy(x => x.Date).ToList());
             interpolationDiapason.From = Math.Max(baseRange[0].DateArgument, func.Keys.Min()); //максимальную дату из начал каждой функции
             interpolationDiapason.To = Math.Min(baseRange[baseRange.Count - 1].DateArgument, func.Keys.Max()); //минимальную дату из концов каждой функции
 

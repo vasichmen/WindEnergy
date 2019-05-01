@@ -142,6 +142,7 @@ namespace WindEnergy.Lib.Classes.Collections
         public void BeginChange()
         {
             _locked = true;
+            this.ListChanged -= rawRange_ListChanged;
         }
 
         /// <summary>
@@ -150,6 +151,7 @@ namespace WindEnergy.Lib.Classes.Collections
         public void EndChange()
         {
             _locked = false;
+            this.ListChanged += rawRange_ListChanged;
             rawRange_ListChanged(this, null);
         }
 
@@ -202,18 +204,6 @@ namespace WindEnergy.Lib.Classes.Collections
                 PerformRefreshQuality();
             airDensity = double.NaN;
             length = TimeSpan.MinValue;
-        }
-
-        /// <summary>
-        /// сортировка списка 
-        /// </summary>
-        /// <param name="dateTimeComparer"></param>
-        internal void Sort(DateTimeComparer dateTimeComparer)
-        {
-            List<RawItem> tmp = this.ToList();
-            this.Clear();
-            tmp.Sort(dateTimeComparer);
-            this.Add(tmp);
         }
     }
 }

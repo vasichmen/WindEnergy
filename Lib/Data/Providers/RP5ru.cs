@@ -170,7 +170,7 @@ namespace WindEnergy.Lib.Data.Providers
                 else
                     res.Position = p.ToList()[0];
             }
-            res.Sort(new DateTimeComparer());
+            res = new RawRange(res.OrderBy(x => x.Date).ToList());
             return res;
         }
 

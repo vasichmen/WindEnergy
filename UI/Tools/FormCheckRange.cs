@@ -86,21 +86,24 @@ namespace WindEnergy.UI.Tools
                     if (radioButtonSelectLimitsProvider.Checked)
                     {
                         LimitsProviders provider = radioButtonSelectLimitsProvider.Checked ? LimitsProviders.StaticLimits : LimitsProviders.Manual;
-                        if (provider == LimitsProviders.None)
+                        this.Invoke(new Action(() =>
                         {
-                            MessageBox.Show(this, "Необходимо выбрать истоник ограничений", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                        if (provider == LimitsProviders.Manual)
-                        {
-                            MessageBox.Show(this, "Для ручного ввода ограничений выберите соответствующий пункт", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                        if (checkPoint.IsEmpty)
-                        {
-                            MessageBox.Show(this, "Необходимо выбрать точку на карте", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
+                            if (provider == LimitsProviders.None)
+                            {
+                                MessageBox.Show(this, "Необходимо выбрать истоник ограничений", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            if (provider == LimitsProviders.Manual)
+                            {
+                                MessageBox.Show(this, "Для ручного ввода ограничений выберите соответствующий пункт", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            if (checkPoint.IsEmpty)
+                            {
+                                MessageBox.Show(this, "Необходимо выбрать точку на карте", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }));
                         range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats, pcAction);
                         range.Name = "Исправленный ряд";
                         this.Invoke(new Action(() =>
@@ -121,16 +124,19 @@ namespace WindEnergy.UI.Tools
                     //если выбран способ вручную вводить ограничения
                     if (radioButtonEnterLimits.Checked)
                     {
-                        if (speedDiapasons == null)
+                        this.Invoke(new Action(() =>
                         {
-                            MessageBox.Show(this, "Необходимо ввести ограничения для скоростей ветра", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                        if (directionDiapasons == null)
-                        {
-                            MessageBox.Show(this, "Необходимо ввести ограничения для направлений ветра", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
+                            if (speedDiapasons == null)
+                            {
+                                MessageBox.Show(this, "Необходимо ввести ограничения для скоростей ветра", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            if (directionDiapasons == null)
+                            {
+                                MessageBox.Show(this, "Необходимо ввести ограничения для направлений ветра", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }));
                         range = Checker.ProcessRange(range, new CheckerParameters(speedDiapasons, directionDiapasons), out CheckerInfo stats, pcAction);
                         range.Name = "Исправленный ряд";
                         this.Invoke(new Action(() =>

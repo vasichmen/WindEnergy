@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Collections.Generic;
 using WindEnergy.Lib.Classes.Generic;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Operations.Interpolation;
@@ -36,7 +37,7 @@ namespace WindEnergy.Lib.Operations
                 wetFunc = new Dictionary<double, double>(), //функция влажности
                 tempFunc = new Dictionary<double, double>(); //функция температуры
 
-            Range.Sort(new DateTimeComparer());
+            Range = new RawRange(Range.OrderBy(x => x.Date).ToList());
 
             //заполнение известными значениями функции
             foreach (var item in Range)
