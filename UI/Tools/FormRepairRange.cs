@@ -67,10 +67,14 @@ namespace WindEnergy.UI.Tools
             StandartIntervals interval = (StandartIntervals)(new EnumTypeConverter<StandartIntervals>().ConvertFrom(comboBoxRepairInterval.SelectedItem));
             Action<int> action = new Action<int>((percent) =>
             {
-                if (this.InvokeRequired)
-                    this.Invoke(new Action(() => { progressBar1.Value = percent; }));
-                else
-                    progressBar1.Value = percent;
+                try
+                {
+                    if (this.InvokeRequired)
+                        this.Invoke(new Action(() => { progressBar1.Value = percent; }));
+                    else
+                        progressBar1.Value = percent;
+                }
+                catch (Exception) { }
             });
 
             Action<RawRange> actionAfter = new Action<RawRange>((rawRange) =>

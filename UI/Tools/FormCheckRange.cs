@@ -69,10 +69,14 @@ namespace WindEnergy.UI.Tools
             {
                 Action<int> pcAction = new Action<int>((percent) =>
                 {
-                    if (this.InvokeRequired)
-                        this.Invoke(new Action(() => { progressBar1.Value = percent; }));
-                    else
-                        progressBar1.Value = percent;
+                    try
+                    {
+                        if (this.InvokeRequired)
+                            this.Invoke(new Action(() => { progressBar1.Value = percent; }));
+                        else
+                            progressBar1.Value = percent;
+                    }
+                    catch (Exception) { }
                 });
 
                 Cursor = Cursors.WaitCursor;

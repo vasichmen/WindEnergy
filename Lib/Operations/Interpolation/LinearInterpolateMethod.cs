@@ -35,17 +35,37 @@ namespace WindEnergy.Lib.Operations.Interpolation
         {
             double res = double.NaN;
             if (values.ContainsKey(x))
-                res= values[x];
+                res = values[x];
 
             if (x > sortedX[sortedX.Count - 1] || x < sortedX[0]) //если х выходит за границы диапазона функции, то ошибка
                 throw new ArgumentOutOfRangeException("Значение х должно быть внутри диапазона функции");
-            for (int i = 1; i < sortedX.Count; i++)
-                if (sortedX[i] > x)
-                {
-                    res = linInterpolate(sortedX[i - 1], sortedX[i], x);
-                    break;
-                }
+            int left = getLeftBound(x);
+            res = linInterpolate(sortedX[left], sortedX[left + 1], x);
             return res;
+        }
+
+        /// <summary>
+        /// поиск индекса левого края диапазона аргументов, в который попадает заданное значение аргумента х
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        private int getLeftBound(double x)
+        {
+            //поиск методом бисекций
+            int from_i = 0;
+            int to_i = sortedX.Count - 1;
+
+            while (to_i - from_i > 1) {
+                double from_x = sortedX[from_i];
+                double to_x = sortedX[to_i];
+                int c_i = (to_i + from_i) / 2;
+                double c_x = sortedX[c_i];
+                if (x > c_x) // если искомое значение справа
+                    from_i = c_i;
+                else //если искомое значение слева
+                    to_i = c_i;
+            }
+            return from_i;
         }
 
         /// <summary>
