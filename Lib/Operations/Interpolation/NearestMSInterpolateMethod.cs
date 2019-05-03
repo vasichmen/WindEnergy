@@ -177,6 +177,8 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// <returns></returns>
         internal static bool CheckNormalLaw(RawRange baseRange, Diapason<double> acceptDiapason)
         {
+            return true;
+
             double Xi_speed = checkNormalLaw(baseRange, MeteorologyParameters.Speed);
             double Xi_dir = checkNormalLaw(baseRange, MeteorologyParameters.Direction);
             double f = Math.Max(Xi_dir, Xi_speed); //максимально расхождение

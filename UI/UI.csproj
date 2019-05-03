@@ -152,6 +152,12 @@
     <Compile Include="Tools\FormRepairRange.Designer.cs">
       <DependentUpon>FormRepairRange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\FormShowMeteostationsMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FormShowMeteostationsMap.Designer.cs">
+      <DependentUpon>FormShowMeteostationsMap.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Dialogs\FormChooseMeteostAirportDialog.resx">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -197,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormRepairRange.resx">
       <DependentUpon>FormRepairRange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FormShowMeteostationsMap.resx">
+      <DependentUpon>FormShowMeteostationsMap.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Data\ETOPO\etopo2.sq3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -183,6 +183,16 @@ namespace WindEnergy.UI
             }
         }
 
+        /// <summary>
+        /// посмотреть доступные метеостанции на карте
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void showMeteostationsMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormShowMeteostationsMap().Show();
+        }
+
         #endregion
 
         #region Правка
