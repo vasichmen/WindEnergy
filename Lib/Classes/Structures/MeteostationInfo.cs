@@ -44,6 +44,11 @@ namespace WindEnergy.Lib.Classes.Structures
         public DateTime MonitoringFrom { get; set; }
 
         /// <summary>
+        /// высота над у. м. в метрах
+        /// </summary>
+        public double Altitude { get; set; }
+
+        /// <summary>
         /// источник данных архива
         /// </summary>
         public MeteoSourceType MeteoSourceType { get; set; }

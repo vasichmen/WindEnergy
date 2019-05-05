@@ -26,7 +26,7 @@ namespace WindEnergy
             if (range.Position.IsEmpty)
                 throw new WindEnergyException("Для вычисления плотности воздуха необходимы координаты точки");
 
-           IGeoInfoProvider provider  = new ETOPOProvider(Vars.Options.ETOPO2Folder);            
+            IGeoInfoProvider provider = Vars.ETOPOdatabase;           
             double alt = provider.GetElevation(range.Position);
             double pressure = 101.29 - 0.011837 * alt + 4.793e-7 * Math.Pow(alt, 2);
 

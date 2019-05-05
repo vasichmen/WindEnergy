@@ -58,6 +58,26 @@ namespace WindEnergy.Lib.Data
         }
 
         /// <summary>
+        /// экспортирует список метеостанций в указанный файл 
+        /// </summary>
+        /// <param name="list">список метеостанций</param>
+        /// <param name="filename">адрес файла, куда сохраняется списокЫ</param>
+        public static void ExportMeteostationList(List<MeteostationInfo> list, string filename)
+        {
+            //запись в файл
+            StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
+            sw.WriteLine("wmo_id;Название;Широта;Долгота;Высота, м;Дата начала наблюдений");
+            foreach (var ms in list)
+                sw.WriteLine(
+                    ms.ID + ";" +
+                    ms.Name + ";" +
+                    ms.Coordinates.Lat.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
+                    ms.Coordinates.Lng.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
+                    ms.Altitude.ToString("0.00").Replace(Vars.DecimalSeparator, ',') + ";" +
+                    ms.MonitoringFrom.ToString());
+            sw.Close();
+        }
+        /// <summary>
         /// преобразование файла из json формата, полученного по ссылке 
         /// http://xn--80afd3balrxz7a.xn--p1ai/maps/interactive/meteostantion/data/json_Meteostantionwithdata.js
         /// в формат файла списка координат метеостанций
@@ -108,11 +128,7 @@ namespace WindEnergy.Lib.Data
             }
 
             //запись в файл
-            StreamWriter sw = new StreamWriter(fileCoordList, false, Encoding.UTF8);
-            sw.WriteLine("wmo_id;Название;Широта;Долгота");
-            foreach (var ms in res)
-                sw.WriteLine(ms.ID + ";" + ms.Name + ";" + ms.Coordinates.Lat.ToString().Replace(Vars.DecimalSeparator, ',') + ";" + ms.Coordinates.Lng.ToString().Replace(Vars.DecimalSeparator, ','));
-            sw.Close();
+            ExportMeteostationList(res, fileCoordList);
         }
     }
 }

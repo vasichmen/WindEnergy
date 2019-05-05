@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using WindEnergy.Lib.Data.Providers;
+using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Structures.Options;
+using WindEnergy.Lib.Data.Interfaces;
+using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Providers.ETOPO;
 
 namespace WindEnergy
 {
@@ -36,6 +38,24 @@ namespace WindEnergy
                 if (decimalSeparator == char.MinValue)
                     decimalSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
                 return decimalSeparator;
+            }
+        }
+
+        /// <summary>
+        /// подключение к базе данных ETOPO
+        /// </summary>
+        private static ETOPOProvider _ETOPOdatabase = null;
+
+        /// <summary>
+        /// подключение к базе данных ETOPO
+        /// </summary>
+        public static ETOPOProvider ETOPOdatabase
+        {
+            get
+            {
+                if (_ETOPOdatabase == null)
+                    _ETOPOdatabase = new ETOPOProvider(Vars.Options.ETOPO2Folder);
+                return _ETOPOdatabase;
             }
         }
     }

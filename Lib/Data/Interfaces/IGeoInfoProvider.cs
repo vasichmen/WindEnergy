@@ -7,7 +7,7 @@ namespace WindEnergy.Lib.Data.Interfaces
     /// <summary>
     /// поставщик данных о высоте точек
     /// </summary>
-      interface IGeoInfoProvider
+     public  interface IGeoInfoProvider
     {
         /// <summary>
         /// если истина, то это локальный источник данных

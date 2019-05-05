@@ -86,7 +86,7 @@ namespace WindEnergy.Lib.Operations
                         baseRange = NearestMSInterpolateMethod.TryGetBaseRange(Range, param.Coordinates);
 
                     methodSpeeds = new NearestMSInterpolateMethod(speedFunc, baseRange, MeteorologyParameters.Speed);
-                    methodDirects = new NearestMSInterpolateMethod(directsFunc, baseRange, MeteorologyParameters.Direction);
+                    methodDirects = new LinearInterpolateMethod(directsFunc);
                     methodTemp = new LinearInterpolateMethod(tempFunc);
                     methodWet = new LinearInterpolateMethod(wetFunc);
                     break;

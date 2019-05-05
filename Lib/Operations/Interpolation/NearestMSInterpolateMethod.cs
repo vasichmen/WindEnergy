@@ -115,7 +115,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
         }
 
         /// <summary>
-        /// ищет наиболее подходящую к заданной точке МС и получает её ряд. Если ряд не найден, то ошибка
+        /// ищет наиболее подходящую к заданной точке МС и получает её ряд. Если ряд не найден, то возвращает null
         /// </summary>
         /// <param name="coordinates"></param>
         /// <param name="Range">ряд, для которого подбирается функция</param>
@@ -354,7 +354,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
         }
 
         /// <summary>
-        /// получить параметр b прямой 
+        /// получить коэффициент корреляции
         /// </summary>
         /// <param name="tableCoeff">таблица для расчета коэффициентов</param>
         /// <returns></returns>
