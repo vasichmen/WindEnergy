@@ -87,7 +87,7 @@
     <Compile Include="Classes\Structures\Options\UserGradation.cs" />
     <Compile Include="Classes\Structures\RangeInterval.cs" />
     <Compile Include="Classes\WindEnergyException.cs" />
-    <Compile Include="Data\FileConverter.cs" />
+    <Compile Include="FileConverter.cs" />
     <Compile Include="Data\Interfaces\IGeoInfoProvider.cs" />
     <Compile Include="Data\Providers\ArcGis.cs" />
     <Compile Include="Data\Providers\ETOPO\BaseConnection.cs" />
@@ -109,7 +109,7 @@
     <Compile Include="Data\Providers\Velomapa.cs" />
     <Compile Include="Data\RawRangeSerializer.cs" />
     <Compile Include="Classes\Collections\RawRange.cs" />
-    <Compile Include="Data\Scripts.cs" />
+    <Compile Include="Scripts.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="Geomodel\EarthModel.cs" />

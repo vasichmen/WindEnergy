@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Structures;
+using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Interfaces;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Data.Providers.ETOPO;
 
-namespace WindEnergy.Lib.Data
+namespace WindEnergy.Lib
 {
     /// <summary>
     /// вспомогательные скрипты (обработка данных, загрузка информации с сайтов)
@@ -28,13 +30,18 @@ namespace WindEnergy.Lib.Data
             double i = 0;
             foreach (var mt in mts)
             {
-                if (Math.IEEERemainder(i++, 50) == 0)
+                if (Math.IEEERemainder(i++, 50) == 0 && action != null)
                     action.Invoke((int)((i / mts.Count) * 100));
                 MeteostationInfo tmp = new MeteostationInfo();
                 tmp.Link = mt.Link;
-                provider.GetMeteostationExtInfo(ref tmp);
+                try
+                {
+                    provider.GetMeteostationExtInfo(ref tmp);
+                    mt.MonitoringFrom = tmp.MonitoringFrom;
+                }
+                catch (WindEnergyException wex)
+                { }
                 mt.Altitude = alts.GetElevation(mt.Coordinates);
-                mt.MonitoringFrom = tmp.MonitoringFrom;
             }
             FileConverter.ExportMeteostationList(mts, toFile);
         }

@@ -476,7 +476,7 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            (mainTabControl.SelectedTab as TabPageExt).Range.PerformRefreshQuality();
+           // (mainTabControl.SelectedTab as TabPageExt).Range.PerformRefreshQuality();
             Scripts.DownloadMeteostationExtInfo(Vars.LocalFileSystem.MeteostationList, Vars.Options.StaticMeteostationCoordinatesSourceFile, Vars.ETOPOdatabase);
 
         }

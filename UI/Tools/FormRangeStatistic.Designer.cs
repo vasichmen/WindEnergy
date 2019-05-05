@@ -34,10 +34,10 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.labelCompletness = new System.Windows.Forms.Label();
-            this.labelLength = new System.Windows.Forms.Label();
-            this.labelMaxEmpty = new System.Windows.Forms.Label();
             this.labelMeasureAmount = new System.Windows.Forms.Label();
             this.labelExpectAmount = new System.Windows.Forms.Label();
+            this.labelLength = new System.Windows.Forms.Label();
+            this.labelMaxEmpty = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExt1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -68,7 +68,7 @@
             this.dataGridViewExt1.Location = new System.Drawing.Point(3, 203);
             this.dataGridViewExt1.Name = "dataGridViewExt1";
             this.dataGridViewExt1.ReadOnly = true;
-            this.dataGridViewExt1.RowTemplate.Height = 24;
+            this.dataGridViewExt1.RowTemplate.Height = 55;
             this.dataGridViewExt1.Size = new System.Drawing.Size(791, 256);
             this.dataGridViewExt1.TabIndex = 0;
             this.dataGridViewExt1.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridViewExt1_ColumnAdded);
@@ -108,24 +108,6 @@
             this.labelCompletness.TabIndex = 1;
             this.labelCompletness.Text = "label2";
             // 
-            // labelLength
-            // 
-            this.labelLength.AutoSize = true;
-            this.labelLength.Location = new System.Drawing.Point(3, 71);
-            this.labelLength.Name = "labelLength";
-            this.labelLength.Size = new System.Drawing.Size(46, 17);
-            this.labelLength.TabIndex = 2;
-            this.labelLength.Text = "label2";
-            // 
-            // labelMaxEmpty
-            // 
-            this.labelMaxEmpty.AutoSize = true;
-            this.labelMaxEmpty.Location = new System.Drawing.Point(3, 88);
-            this.labelMaxEmpty.Name = "labelMaxEmpty";
-            this.labelMaxEmpty.Size = new System.Drawing.Size(46, 17);
-            this.labelMaxEmpty.TabIndex = 3;
-            this.labelMaxEmpty.Text = "label2";
-            // 
             // labelMeasureAmount
             // 
             this.labelMeasureAmount.AutoSize = true;
@@ -143,6 +125,24 @@
             this.labelExpectAmount.Size = new System.Drawing.Size(46, 17);
             this.labelExpectAmount.TabIndex = 5;
             this.labelExpectAmount.Text = "label2";
+            // 
+            // labelLength
+            // 
+            this.labelLength.AutoSize = true;
+            this.labelLength.Location = new System.Drawing.Point(3, 71);
+            this.labelLength.Name = "labelLength";
+            this.labelLength.Size = new System.Drawing.Size(46, 17);
+            this.labelLength.TabIndex = 2;
+            this.labelLength.Text = "label2";
+            // 
+            // labelMaxEmpty
+            // 
+            this.labelMaxEmpty.AutoSize = true;
+            this.labelMaxEmpty.Location = new System.Drawing.Point(3, 88);
+            this.labelMaxEmpty.Name = "labelMaxEmpty";
+            this.labelMaxEmpty.Size = new System.Drawing.Size(46, 17);
+            this.labelMaxEmpty.TabIndex = 3;
+            this.labelMaxEmpty.Text = "label2";
             // 
             // FormRangeStatistic
             // 

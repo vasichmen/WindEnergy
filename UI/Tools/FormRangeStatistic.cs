@@ -13,13 +13,22 @@ using WindEnergy.UI.Ext;
 
 namespace WindEnergy.UI.Tools
 {
+    /// <summary>
+    /// окно статистики наблюдений в ряде
+    /// </summary>
     public partial class FormRangeStatistic : Form
     {
         private RawRange range;
 
+        /// <summary>
+        /// создаёт новое окно с заданным рядом наблюдений
+        /// </summary>
+        /// <param name="rang"></param>
         public FormRangeStatistic(RawRange rang)
         {
             InitializeComponent();
+            dataGridViewExt1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dataGridViewExt1.
             Text = rang.Name + " - Статистика ряда";
             range = rang;
         }

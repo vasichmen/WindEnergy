@@ -66,7 +66,7 @@ namespace WindEnergy.Lib.Data
         {
             //запись в файл
             StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
-            sw.WriteLine("wmo_id;Название;Широта;Долгота;Высота, м;Дата начала наблюдений");
+            sw.WriteLine("ВМО ID;Название;Широта;Долгота;Высота над у. м., м;Дата начала наблюдений");
             foreach (var ms in list)
                 sw.WriteLine(
                     ms.ID + ";" +

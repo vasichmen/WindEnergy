@@ -288,11 +288,12 @@ namespace WindEnergy.Lib.Data.Providers
                 info.ID = id;
                 info.MeteoSourceType = MeteoSourceType.Airport;
             }
-            else //неофициальная метеостанция
+            else if (wug != null) //неофициальная метеостанция
             {
                 info = null;
                 return;
             }
+            else throw new WindEnergyException("Для этой метеостанции невозможно получить данные");
             //получение даты начала наблюдений
             {
                 string pg = page.Text;

@@ -188,11 +188,20 @@ namespace WindEnergy.Lib.Data.Providers
             while (!sr.EndOfStream)
             {
                 string[] arr = sr.ReadLine().Split(';');
+
                 string wmo = arr[0];
                 string name = arr[1];
-                double lat = double.Parse(arr[2].Replace('.', Vars.DecimalSeparator));
-                double lon = double.Parse(arr[3].Replace('.', Vars.DecimalSeparator));
-                res.Add(new MeteostationInfo() { ID = wmo, Coordinates = new PointLatLng(lat, lon), Name = name });
+                double lat = double.Parse(arr[2].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
+                double lon = double.Parse(arr[3].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
+
+                double alt = double.NaN;
+                DateTime mfrom = DateTime.MinValue;
+                if (arr.Length > 4)
+                {
+                    alt = double.Parse(arr[4].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
+                    mfrom = DateTime.Parse(arr[5]);
+                }
+                res.Add(new MeteostationInfo() { ID = wmo, Coordinates = new PointLatLng(lat, lon), Name = name, Altitude = alt, MonitoringFrom = mfrom });
             }
 
             sr.Close();
