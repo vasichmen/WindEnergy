@@ -39,6 +39,9 @@
             this.openFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.showMeteostationsMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,9 +69,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.button1 = new System.Windows.Forms.Button();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.showMeteostationsMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -158,6 +158,23 @@
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(368, 28);
             this.saveAsToolStripMenuItem.Text = "Сохранить как";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(365, 6);
+            // 
+            // showMeteostationsMapToolStripMenuItem
+            // 
+            this.showMeteostationsMapToolStripMenuItem.Name = "showMeteostationsMapToolStripMenuItem";
+            this.showMeteostationsMapToolStripMenuItem.Size = new System.Drawing.Size(368, 28);
+            this.showMeteostationsMapToolStripMenuItem.Text = "Посмотреть метеостанции на карте";
+            this.showMeteostationsMapToolStripMenuItem.Click += new System.EventHandler(this.showMeteostationsMapToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(365, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -362,6 +379,7 @@
             this.toolStripStatusLabelInterval.Name = "toolStripStatusLabelInterval";
             this.toolStripStatusLabelInterval.Size = new System.Drawing.Size(151, 20);
             this.toolStripStatusLabelInterval.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabelInterval.Click += new System.EventHandler(this.toolStripStatusLabelInterval_Click);
             this.toolStripStatusLabelInterval.MouseEnter += new System.EventHandler(this.toolStripStatusLabelInterval_MouseEnter);
             this.toolStripStatusLabelInterval.MouseLeave += new System.EventHandler(this.toolStripStatusLabelInterval_MouseLeave);
             // 
@@ -372,7 +390,7 @@
             this.tableLayoutPanel1.Controls.Add(this.mainTabControl, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 58);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -387,7 +405,7 @@
             this.mainTabControl.HotTrack = true;
             this.mainTabControl.ItemSize = new System.Drawing.Size(70, 20);
             this.mainTabControl.Location = new System.Drawing.Point(4, 4);
-            this.mainTabControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mainTabControl.Margin = new System.Windows.Forms.Padding(4);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
             this.mainTabControl.ShowToolTips = true;
@@ -407,23 +425,6 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(365, 6);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(365, 6);
-            // 
-            // showMeteostationsMapToolStripMenuItem
-            // 
-            this.showMeteostationsMapToolStripMenuItem.Name = "showMeteostationsMapToolStripMenuItem";
-            this.showMeteostationsMapToolStripMenuItem.Size = new System.Drawing.Size(368, 28);
-            this.showMeteostationsMapToolStripMenuItem.Text = "Посмотреть метеостанции на карте";
-            this.showMeteostationsMapToolStripMenuItem.Click += new System.EventHandler(this.showMeteostationsMapToolStripMenuItem_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -436,7 +437,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.Text = "Wind Energy";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMain_FormClosing);

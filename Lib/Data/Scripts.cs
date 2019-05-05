@@ -24,7 +24,7 @@ namespace WindEnergy.Lib.Data
         /// <param name="action">действие при изменении процента выполнения</param>
         public static void DownloadMeteostationExtInfo(List<MeteostationInfo> mts, string toFile, IGeoInfoProvider alts, Action<int> action = null)
         {
-            RP5ru provider = new RP5ru(Vars.Options.CacheFolder + "\\rp5");
+            RP5ru provider = new RP5ru(Vars.Options.CacheFolder + "\\rp5.ru");
             double i = 0;
             foreach (var mt in mts)
             {

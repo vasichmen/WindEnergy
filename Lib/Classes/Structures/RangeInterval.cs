@@ -27,6 +27,13 @@ namespace WindEnergy.Lib.Classes.Structures
         public TimeSpan Length { get { return this.Diapason.To - this.Diapason.From; } }
 
         /// <summary>
+        /// длительность диапазона для вывода в статистике
+        /// </summary>
+        public string LengthString { get {
+                return Length.ToText(true);
+            } }
+
+        /// <summary>
         /// длина диапазона в минутах
         /// </summary>
         public int LengthMinutes { get {

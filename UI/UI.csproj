@@ -146,6 +146,12 @@
     <Compile Include="Tools\FormRangeProperties.Designer.cs">
       <DependentUpon>FormRangeProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\FormRangeStatistic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FormRangeStatistic.Designer.cs">
+      <DependentUpon>FormRangeStatistic.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\FormRepairRange.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormRangeProperties.resx">
       <DependentUpon>FormRangeProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FormRangeStatistic.resx">
+      <DependentUpon>FormRangeStatistic.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormRepairRange.resx">
       <DependentUpon>FormRepairRange.cs</DependentUpon>

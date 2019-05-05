@@ -346,6 +346,47 @@ namespace WindEnergy.UI
 
         #endregion
 
+        #region строка состояния внизу экрана
+
+        /// <summary>
+        /// открытие списка интерваолв измерений в статусной строке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripStatusLabelInterval_MouseEnter(object sender, EventArgs e)
+        {
+            if (mainTabControl.SelectedTab == null)
+                return;
+            contextMenuStripRangeIntervals.Items.Clear();
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            foreach (RangeInterval intt in rang.Quality.Intervals)
+                contextMenuStripRangeIntervals.Items.Add(intt.ToString());
+
+            contextMenuStripRangeIntervals.Show(MousePosition);
+        }
+
+        /// <summary>
+        /// закрытие списка интервалов в статусной строке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripStatusLabelInterval_MouseLeave(object sender, EventArgs e)
+        {
+            contextMenuStripRangeIntervals.Close();
+        }
+
+        /// <summary>
+        /// нажатие на ссылку статистики ряда
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripStatusLabelInterval_Click(object sender, EventArgs e)
+        {
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            new FormRangeStatistic(rang).Show(this);
+        }
+
+        #endregion
 
 
         /// <summary>
@@ -423,7 +464,6 @@ namespace WindEnergy.UI
             }
         }
 
-
         /// <summary>
         /// обновление информации в статусной строке при изменении выбранной вкладки
         /// </summary>
@@ -433,35 +473,6 @@ namespace WindEnergy.UI
         {
             mainHelper.RefreshStatusBar();
         }
-
-        /// <summary>
-        /// открытие списка интерваолв измерений в статусной строке
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void toolStripStatusLabelInterval_MouseEnter(object sender, EventArgs e)
-        {
-            if (mainTabControl.SelectedTab == null)
-                return;
-            contextMenuStripRangeIntervals.Items.Clear();
-            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
-            foreach (RangeInterval intt in rang.Quality.Intervals)
-                contextMenuStripRangeIntervals.Items.Add(intt.ToString());
-
-            contextMenuStripRangeIntervals.Show(MousePosition);
-        }
-
-        /// <summary>
-        /// закрытие списка интервалов в статусной строке
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void toolStripStatusLabelInterval_MouseLeave(object sender, EventArgs e)
-        {
-            contextMenuStripRangeIntervals.Close();
-        }
-
-
 
         private void button1_Click(object sender, EventArgs e)
         {
