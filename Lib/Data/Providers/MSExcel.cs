@@ -59,10 +59,10 @@ namespace WindEnergy.Lib.Data.Providers
 
             //повторяемости скоростей ветра
             for (int j = 0; j < stat_speeds.Keys.Count; j++)
-                line+= ";" +(stat_speeds.Values[j] * 100).ToString("0.00");
+                line += ";" + (stat_speeds.Values[j] * 100).ToString("0.00");
 
             //по ряду наблюдений
-            line+= string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f2}", range_info.Vmin, range_info.Vmax, range_info.V0, range_info.Cv,range_info.VeybullGamma,range_info.VeybullBeta, range_info.PowerDensity, range_info.EnergyDensity);
+            line += string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f2}", range_info.Vmin, range_info.Vmax, range_info.V0, range_info.Cv, range_info.VeybullGamma, range_info.VeybullBeta, range_info.PowerDensity, range_info.EnergyDensity);
 
             //повторяемости направлений ветра
             List<Enum> rs = WindDirections.Calm.GetEnumItems().GetRange(0, 17);
@@ -72,7 +72,7 @@ namespace WindEnergy.Lib.Data.Providers
                 int index = stat_directions.Keys.IndexOf(rhumb);
                 if (index == -1)
                     continue;
-                line+= ";"+ (stat_directions.Values[index] * 100).ToString("0.00");
+                line += ";" + (stat_directions.Values[index] * 100).ToString("0.00");
             }
             sw.WriteLine(line);
             sw.Close();
@@ -96,6 +96,30 @@ namespace WindEnergy.Lib.Data.Providers
         }
 
         /// <summary>
+        /// сохранение статистики наблюдений в файл
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="qualityInfo"></param>
+        public static void SaveRangeQualityInfoCSV(string fileName, QualityInfo qualityInfo, TimeSpan rangeLength)
+        {
+            StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8);
+            sw.WriteLine("Полнота ряда, %;" + qualityInfo.Completeness * 100);
+            sw.WriteLine("Общее количество наблюдений;" + qualityInfo.MeasureAmount);
+            sw.WriteLine("Ожидаемое число измерений;" + qualityInfo.ExpectAmount);
+            sw.WriteLine("Длительность ряда наблюдений;" + rangeLength.ToText());
+            sw.WriteLine("Максимальная длительность пропуска данных;" + qualityInfo.MaxEmptySpace.ToText());
+            sw.WriteLine();
+            string nline = "Диапазон наблюдений;Интервал;Длительность диапазона";
+            sw.WriteLine(nline);
+            foreach (var spi in qualityInfo.Intervals)
+            {
+                nline = string.Format("{0};{1};{2}", spi.Diapason, spi.Interval.Description(), spi.Length.ToText());
+                sw.WriteLine(nline);
+            }
+            sw.Close();
+        }
+
+        /// <summary>
         /// сохранение информации о расчетном годе в файл
         /// </summary>
         /// <param name="fileName"></param>
@@ -109,7 +133,7 @@ namespace WindEnergy.Lib.Data.Providers
             sw.WriteLine(nline);
             foreach (SinglePeriodInfo spi in years.Years)
             {
-                nline = string.Format("{0};{1:f2};{2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f1}", spi.Year, spi.Completness, spi.Interval.Description(), spi.SpeedDeviation,spi.SpeedDeviationPercent, spi.AverageSpeed, spi.ExpectancyDeviation, spi.Vmax);
+                nline = string.Format("{0};{1:f2};{2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f1}", spi.Year, spi.Completness, spi.Interval.Description(), spi.SpeedDeviation, spi.SpeedDeviationPercent, spi.AverageSpeed, spi.ExpectancyDeviation, spi.Vmax);
                 sw.WriteLine(nline);
             }
             sw.Close();

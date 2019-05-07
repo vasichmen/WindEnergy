@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Statistic.Structures;
 using WindEnergy.UI.Ext;
 
@@ -19,6 +22,7 @@ namespace WindEnergy.UI.Tools
     public partial class FormRangeStatistic : Form
     {
         private RawRange range;
+        private QualityInfo qualityInfo;
 
         /// <summary>
         /// создаёт новое окно с заданным рядом наблюдений
@@ -28,7 +32,6 @@ namespace WindEnergy.UI.Tools
         {
             InitializeComponent();
             dataGridViewExt1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dataGridViewExt1.
             Text = rang.Name + " - Статистика ряда";
             range = rang;
         }
@@ -36,14 +39,14 @@ namespace WindEnergy.UI.Tools
         private void FormRangeStatistic_Shown(object sender, EventArgs e)
         {
             range.PerformRefreshQuality();
-            QualityInfo qi = range.Quality;
-            labelCompletness.Text = "Полнота ряда: " + (qi.Completeness * 100).ToString("0.0")+"%";
-            labelExpectAmount.Text = "Ожидаемое число измерений: " + qi.ExpectAmount.ToString()+ " штук";
+            qualityInfo = range.Quality;
+            labelCompletness.Text = "Полнота ряда: " + (qualityInfo.Completeness * 100).ToString("0.0")+"%";
+            labelExpectAmount.Text = "Ожидаемое число измерений: " + qualityInfo.ExpectAmount.ToString()+ " штук";
             labelLength.Text = "Длительность ряда наблюдений: " + range.Length.ToText();
-            labelMaxEmpty.Text = "Максимальная длительность пропуска данных: " + qi.MaxEmptySpace.ToText();
-            labelMeasureAmount.Text = "Общее количество наблюдений: " + qi.MeasureAmount.ToString()+" штук";
+            labelMaxEmpty.Text = "Максимальная длительность пропуска данных: " + qualityInfo.MaxEmptySpace.ToText();
+            labelMeasureAmount.Text = "Общее количество наблюдений: " + qualityInfo.MeasureAmount.ToString()+" штук";
             dataGridViewExt1.DataSource = null;
-            dataGridViewExt1.DataSource = qi.Intervals;
+            dataGridViewExt1.DataSource = qualityInfo.Intervals;
         }
 
         /// <summary>
@@ -76,5 +79,23 @@ namespace WindEnergy.UI.Tools
             }
         }
 
+        /// <summary>
+        /// сохранение статистики в файл
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSaveFile_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.InitialDirectory = Vars.Options.LastDirectory;
+            sf.Filter = "Файл MS Excel с разделителями-запятыми *.csv | *.csv";
+            sf.AddExtension = true;
+            if (sf.ShowDialog(this) == DialogResult.OK)
+            {
+                Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
+                MSExcel.SaveRangeQualityInfoCSV(sf.FileName, qualityInfo,range.Length);
+                Process.Start(sf.FileName);
+            }
+        }
     }
 }
