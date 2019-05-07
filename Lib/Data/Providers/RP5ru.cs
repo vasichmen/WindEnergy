@@ -156,21 +156,24 @@ namespace WindEnergy.Lib.Data.Providers
             //открытие файла
             RawRange res = RawRangeSerializer.DeserializeFile(tmp_unpack_file);
 
-            res.Name = info.Name;
+
 
             //получение кооординат станции 
+            PointLatLng pt;
             if (info.MeteoSourceType == MeteoSourceType.Airport)
-                res.Position = PointLatLng.Empty;
+                pt = PointLatLng.Empty;
             else
             {
                 List<MeteostationInfo> list = Vars.LocalFileSystem.MeteostationList;
                 var p = from m in list where m.ID == info.ID select m.Coordinates;
                 if (p.Count() == 0)
-                    res.Position = PointLatLng.Empty;
+                    pt = PointLatLng.Empty;
                 else
-                    res.Position = p.ToList()[0];
+                    pt = p.ToList()[0];
             }
             res = new RawRange(res.OrderBy(x => x.Date).ToList());
+            res.Name = info.Name;
+            res.Position = pt;
             return res;
         }
 
