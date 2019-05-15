@@ -22,7 +22,7 @@ namespace WindEnergy.Lib.Operations
         /// <param name="range">ряд</param>
         /// <param name="param">параметры обработки ошибок</param>
         /// <returns></returns>
-        public static RawRange ProcessRange(RawRange range, CheckerParameters param, out CheckerInfo info, Action<int> action)
+        public static RawRange ProcessRange(RawRange range, CheckerParameters param, out CheckerInfo info, Action<int> action = null)
         {
             ILimitsProvider provider;
             switch (param.LimitsProvider)

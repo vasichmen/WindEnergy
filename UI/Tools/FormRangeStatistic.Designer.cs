@@ -54,10 +54,10 @@
             this.tableLayoutPanel1.Controls.Add(this.buttonSaveFile, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 162F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 89F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(535, 406);
@@ -70,12 +70,12 @@
             this.dataGridViewExt1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tableLayoutPanel1.SetColumnSpan(this.dataGridViewExt1, 2);
             this.dataGridViewExt1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewExt1.Location = new System.Drawing.Point(2, 164);
-            this.dataGridViewExt1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridViewExt1.Location = new System.Drawing.Point(2, 91);
+            this.dataGridViewExt1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewExt1.Name = "dataGridViewExt1";
             this.dataGridViewExt1.ReadOnly = true;
             this.dataGridViewExt1.RowTemplate.Height = 55;
-            this.dataGridViewExt1.Size = new System.Drawing.Size(531, 240);
+            this.dataGridViewExt1.Size = new System.Drawing.Size(531, 313);
             this.dataGridViewExt1.TabIndex = 0;
             this.dataGridViewExt1.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridViewExt1_ColumnAdded);
             // 
@@ -90,9 +90,9 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(2, 2);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(391, 158);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(391, 85);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // label1
@@ -174,7 +174,7 @@
             this.ClientSize = new System.Drawing.Size(535, 406);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(551, 445);
             this.Name = "FormRangeStatistic";
             this.Text = "FormRangeStatistic";

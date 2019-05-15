@@ -82,8 +82,17 @@ namespace WindEnergy.Lib.Operations
                         else throw new WindEnergyException("Этот ряд не может быть использован так как он не подчиняется нормальному закону распределения");
                     }
                     else
+                    {
                         //ищем подходящую МС из ближайших и получаем её ряд. Если подходит, то ошибки нет
                         baseRange = NearestMSInterpolateMethod.TryGetBaseRange(Range, param.Coordinates);
+
+                        if (baseRange == null)
+                        {
+                            MeteostationInfo mi = NearestMSInterpolateMethod.GetNearestMS(param.Coordinates, Vars.LocalFileSystem.MeteostationList, false);
+                            double l = Geomodel.EarthModel.CalculateDistance(mi.Coordinates, param.Coordinates);
+                            throw new WindEnergyException($"Не удалось найти ряд соседней метеостанции для восстановления. Ближайшая метеостанция находится в {(l / 1000).ToString("0")} км от заданной точки. Максимальный радиус поиска соседних метеостанций {(Vars.Options.NearestMSRadius / 1000).ToString("0")} км");
+                        }
+                    }
 
                     methodSpeeds = new NearestMSInterpolateMethod(speedFunc, baseRange, MeteorologyParameters.Speed);
                     methodDirects = new LinearInterpolateMethod(directsFunc);
@@ -133,7 +142,7 @@ namespace WindEnergy.Lib.Operations
                 res.EndChange();
                 actionAfter.Invoke(res);
             });
-            tsk.Start();           
+            tsk.Start();
             return;
         }
 
