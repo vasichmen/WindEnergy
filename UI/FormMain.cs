@@ -221,7 +221,7 @@ namespace WindEnergy.UI
         private void repairRangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
-            FormRepairRange frm = new FormRepairRange(rang, new List<InterpolateMethods>() { InterpolateMethods.NearestMeteostation }, "Восстановление ряда");
+            FormRepairRange frm = new FormRepairRange(rang, new List<InterpolateMethods>() { InterpolateMethods.NearestMeteostation }, "Восстановление ряда", "Восстановить ряд");
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
@@ -236,7 +236,7 @@ namespace WindEnergy.UI
         private void modelRangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
-            FormRepairRange frm = new FormRepairRange(rang, new List<InterpolateMethods>() { InterpolateMethods.Linear, InterpolateMethods.Stepwise }, "Моделирование ряда");
+            FormRepairRange frm = new FormRepairRange(rang, new List<InterpolateMethods>() { InterpolateMethods.Linear, InterpolateMethods.Stepwise }, "Моделирование ряда", "Моделировать ряд");
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);

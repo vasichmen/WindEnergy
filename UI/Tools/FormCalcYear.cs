@@ -104,17 +104,6 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void dataGridViewExt1_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
         {
-            //Interval = qinfo.Intervals.Count == 1 ? qinfo.Intervals[0].Interval : StandartIntervals.Variable,
-            //        Completness = qinfo.Completeness,
-            //        Vmax = r.Max((t) => t.Speed),
-            //        Year = r[0].Date.Year,
-            //        From = r[0].Date,
-            //        To = r[r.Count - 1].Date,
-            //        SpeedDeviation = dinfo.SpeedDeviation,
-            //        ExpectancyDeviation = dinfo.ExpDeviation,
-            //        AverageSpeed = aver
-            //    };
-
             switch (e.Column.Name.ToLower())
             {
                 case "year":
@@ -124,6 +113,7 @@ namespace WindEnergy.UI.Tools
                 case "interval":
                     e.Column.HeaderText = "Δt";
                     e.Column.CellTemplate = new DataGridViewComboboxCell<StandartIntervals>();
+                    e.Column.Width = 60;
                     break;
                 case "completness":
                     e.Column.HeaderText = "Полнота ряда, %";
@@ -144,10 +134,6 @@ namespace WindEnergy.UI.Tools
                     e.Column.DefaultCellStyle.Format = "n2";
                     e.Column.Width = 130;
                     break;
-                case "averagespeed":
-                    e.Column.HeaderText = "Средняя скорость, м/с";
-                    e.Column.DefaultCellStyle.Format = "n1";
-                    break;
                 case "speeddeviationpercent":
                     e.Column.HeaderText = "Отклонение скорости, %";
                     e.Column.DefaultCellStyle.Format = "n2";
@@ -156,6 +142,7 @@ namespace WindEnergy.UI.Tools
                 //удаляемые колонки пишем тут:
                 case "from":
                 case "to":
+                case "averagespeed":
                     e.Column.DataGridView.Columns.Remove(e.Column);
                     break;
                 default: throw new Exception("Для этой колонки нет названия");

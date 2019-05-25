@@ -129,11 +129,11 @@ namespace WindEnergy.Lib.Data.Providers
             StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8);
             if (years.RecomendedYear != null)
                 sw.WriteLine("Рекомендуется принять в качестве расчетного " + years.RecomendedYear.Year + " год");
-            string nline = "Год;Полнота ряда, %;Интервал;Отклонение от среднемноголетней скорости, м/с;Отклонение повторяемости скорости;Средняя скорость, м/с;Максимальная скорость, м/с";
+            string nline = "Год;Полнота ряда, %;Интервал;Отклонение от среднемноголетней скорости, м/с;Отклонение повторяемости скорости;Средняя скорость, м/с";
             sw.WriteLine(nline);
             foreach (SinglePeriodInfo spi in years.Years)
             {
-                nline = string.Format("{0};{1:f2};{2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f1}", spi.Year, spi.Completness, spi.Interval.Description(), spi.SpeedDeviation, spi.SpeedDeviationPercent, spi.AverageSpeed, spi.ExpectancyDeviation, spi.Vmax);
+                nline = string.Format("{0};{1:f2};{2};{3:f2};{4:f2};{5:f2};{6:f2}", spi.Year, spi.Completness, spi.Interval.Description(), spi.SpeedDeviation, spi.SpeedDeviationPercent, spi.AverageSpeed, spi.ExpectancyDeviation);
                 sw.WriteLine(nline);
             }
             sw.Close();

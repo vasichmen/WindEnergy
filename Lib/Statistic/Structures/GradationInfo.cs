@@ -82,7 +82,7 @@ namespace WindEnergy.Lib.Statistic.Structures
         }
 
         /// <summary>
-        /// стандартные диапазоны скорости по NASA
+        /// стандартные диапазоны скорости по шкале Бофорта
         /// </summary>
         public static GradationInfo<GradationItem> BofortGradations
         {
@@ -102,9 +102,7 @@ namespace WindEnergy.Lib.Statistic.Structures
                         new GradationItem(17.1, 20.7),
                         new GradationItem(20.7, 24.4),
                         new GradationItem(24.4, 28.4),
-                        new GradationItem(28.4, 32.6),
-                        new GradationItem(32.6, 32.7),
-                        new GradationItem(34.5, 36.75)
+                        new GradationItem(28.4, 32.6)
                     }
                 };
             }

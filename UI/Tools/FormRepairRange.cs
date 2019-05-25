@@ -34,13 +34,14 @@ namespace WindEnergy.UI.Tools
         public RawRange Result { get; private set; }
 
 
-        public FormRepairRange(RawRange range, List<InterpolateMethods> methods, string caption)
+        public FormRepairRange(RawRange range, List<InterpolateMethods> methods, string caption, string buttonText)
         {
             InitializeComponent();
             this.range = range;
             this.availableMethods = methods;
             this.Text = caption;
             this.groupBoxMain.Text = caption;
+            this.buttonRepairRange.Text = buttonText;
 
             comboBoxInterpolateMethod.Items.Clear();
             foreach (var item in availableMethods)
@@ -174,6 +175,12 @@ namespace WindEnergy.UI.Tools
             comboBoxRepairInterval.SelectedIndex = 0;
 
             rangeQuality = Qualifier.ProcessRange(range);
+            if (rangeQuality == null)
+            {
+                MessageBox.Show(this, "Произошла ошибка при открытии ряда. Возможно, ряд слишком короткий", "Открытие ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Close();
+                return;
+            }
 
             labelCompletness.Text = "Полнота ряда: " + (rangeQuality.Completeness * 100).ToString("0.00") + "%";
             labelMaxEmptySpace.Text = "Максимальный перерыв в измерениях: " + rangeQuality.MaxEmptySpace.TotalDays.ToString("0.000") + " дней";
