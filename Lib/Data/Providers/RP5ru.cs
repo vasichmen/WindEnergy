@@ -304,7 +304,7 @@ namespace WindEnergy.Lib.Data.Providers
                 int end = pg.IndexOf("</span>", start);
                 if (start == -1 || end == -1)
                     throw new Exception("Что-то не так");
-                start += +"наблюдения с ".Length;
+                start += "наблюдения с ".Length;
                 string fdate = pg.Substring(start, end - 1 - start);
                 DateTime mon_from = DateTime.Parse(fdate);
                 info.MonitoringFrom = mon_from;

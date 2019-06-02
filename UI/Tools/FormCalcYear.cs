@@ -54,7 +54,7 @@ namespace WindEnergy.UI.Tools
                     labelRecomendedYear.Text = "Рекомендуется в качестве расчетного принять " + years.RecomendedYear.Year + " год:";
                     labelAverageCalcYearSpeed.Text = "Средняя скорость: " + years.RecomendedYear.AverageSpeed.ToString("0.0") + " м/с";
                     labelCompletness.Text = "Полнота ряда: " + years.RecomendedYear.Completness.ToString("0.00") + " %";
-                    labelExpectDeviation.Text = "Отклонение повторяемости скорости: " + years.RecomendedYear.ExpectancyDeviation.ToString("0.00") + "";
+                    labelExpectDeviation.Text = "Отклонение повторяемости скорости: " + years.RecomendedYear.ExpectancyDeviation.ToString("0.00") + "%";
                     labelInterval.Text = "Δt: " + years.RecomendedYear.Interval.Description() + "";
                     labelMaxSpeed.Text = "Максимальная скорость: " + years.RecomendedYear.Vmax.ToString("0.0") + " м/с";
                     labelSpeedDeviation.Text = "Отклонение скорости от многолетней: " + years.RecomendedYear.SpeedDeviation.ToString("0.00") + " м/с";
@@ -113,16 +113,12 @@ namespace WindEnergy.UI.Tools
                 case "interval":
                     e.Column.HeaderText = "Δt";
                     e.Column.CellTemplate = new DataGridViewComboboxCell<StandartIntervals>();
-                    e.Column.Width = 60;
+                    e.Column.Width = 80;
                     break;
                 case "completness":
                     e.Column.HeaderText = "Полнота ряда, %";
                     e.Column.DefaultCellStyle.Format = "n2";
                     e.Column.Width = 80;
-                    break;
-                case "vmax":
-                    e.Column.HeaderText = "Максимальная скорость, м/с";
-                    e.Column.DefaultCellStyle.Format = "n1";
                     break;
                 case "speeddeviation":
                     e.Column.HeaderText = "Отклонение скорости, м/с";
@@ -134,6 +130,10 @@ namespace WindEnergy.UI.Tools
                     e.Column.DefaultCellStyle.Format = "n2";
                     e.Column.Width = 130;
                     break;
+                case "averagespeed":
+                    e.Column.HeaderText = "Средняя скорость, м/с";
+                    e.Column.DefaultCellStyle.Format = "n1";
+                    break;
                 case "speeddeviationpercent":
                     e.Column.HeaderText = "Отклонение скорости, %";
                     e.Column.DefaultCellStyle.Format = "n2";
@@ -142,7 +142,7 @@ namespace WindEnergy.UI.Tools
                 //удаляемые колонки пишем тут:
                 case "from":
                 case "to":
-                case "averagespeed":
+                case "vmax":
                     e.Column.DataGridView.Columns.Remove(e.Column);
                     break;
                 default: throw new Exception("Для этой колонки нет названия");

@@ -120,6 +120,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// </summary>
         /// <param name="coordinates"></param>
         /// <param name="Range">ряд, для которого подбирается функция</param>
+        /// <exception cref="GetBaseRangeException">Возвращает иснформацию о параметрах, мешающих получить ближайшую МС</exception>
         /// <returns></returns>
         internal static RawRange TryGetBaseRange(RawRange Range, PointLatLng coordinates)
         {
@@ -132,17 +133,23 @@ namespace WindEnergy.Lib.Operations.Interpolation
             List<MeteostationInfo> mts = getNearestMS(coordinates, Vars.LocalFileSystem.MeteostationList, Vars.Options.NearestMSRadius, false);
             Dictionary<double, double> funcSpeed = Range.GetFunction(MeteorologyParameters.Speed); //функция скорости на заданном ряде
             RawRange res = null;
-            double rmax = double.MinValue;
+            double rmax = double.MinValue, total_rmax=double.MinValue;
             RP5ru provider = new RP5ru(Vars.Options.CacheFolder + "\\rp5.ru");
 
             for (int i = 0; i < mts.Count; i++)
             {
                 MeteostationInfo m = mts[i];
-                provider.GetMeteostationExtInfo(ref m); //получаем диапазон измерений на этой МС
-                if (m.MonitoringFrom > from) //если для этой МС нет наблюдений в этом периоде, то переходим на другую
+
+                //если нет диапазона измерений в БД, то загружаем с сайта
+                if (m.MonitoringFrom == DateTime.MinValue)
+                    provider.GetMeteostationExtInfo(ref m);
+
+                //если для этой МС нет наблюдений в этом периоде, то переходим на другую
+                if (m.MonitoringFrom > from)
                     continue;
+
                 RawRange curRange = provider.GetRange(from, to, m); //скачиваем ряд
-                curRange = Checker.ProcessRange(curRange, new CheckerParameters(LimitsProviders.StaticLimits, curRange.Position), out CheckerInfo info, null);
+                curRange = Checker.ProcessRange(curRange, new CheckerParameters(LimitsProviders.StaticLimits, curRange.Position), out CheckerInfo info, null); //исправляем ошибки
 
                 //СКОРОСТЬ
                 MeteorologyParameters parameter = MeteorologyParameters.Speed;
@@ -157,6 +164,12 @@ namespace WindEnergy.Lib.Operations.Interpolation
                 //расчёт и проверка коэфф корреляции
                 List<double>[] table = calcTableCoeff(funcSpeed, funcSpeedCurrentNearest); //таблица для расчет коэффициентов
                 double current_r = getParameterR(table); //коэффициент корреляции
+
+                //общий максимальный коэфф корреляции
+                if (current_r > total_rmax)
+                    total_rmax = current_r;
+
+                //проверяем, можно ли взять эту МС
                 if (current_r > rmax)
                 {
                     //истина, если надо проверять этот параметр на допустимый диапазон корреляции
@@ -168,6 +181,12 @@ namespace WindEnergy.Lib.Operations.Interpolation
                     }
                 }
             }
+            if (res == null) {
+                MeteostationInfo mi = GetNearestMS(coordinates, Vars.LocalFileSystem.MeteostationList, false);
+                double l = EarthModel.CalculateDistance(mi.Coordinates, coordinates);
+                throw new GetBaseRangeException(total_rmax, Vars.Options.MinimalCorrelationCoeff, l, mts.Count, Vars.Options.NearestMSRadius, coordinates);
+                    
+                    }
             return res;
         }
 

@@ -73,6 +73,7 @@ namespace WindEnergy.UI.Tools
             }
             try
             {
+                buttonDownload.Enabled = false;
                 RawRange res = engineNASA.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, spoint);
                 res.Name = geocoder.GetAddress(spoint.Coordinates);
                 Result = res;
@@ -81,11 +82,13 @@ namespace WindEnergy.UI.Tools
             }
             catch (WebException)
             {
+                buttonDownload.Enabled = true;
                 MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             catch (ApplicationException exx)
             {
+                buttonDownload.Enabled = true;
                 MessageBox.Show(this, exx.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }

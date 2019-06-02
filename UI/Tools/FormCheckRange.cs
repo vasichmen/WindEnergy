@@ -86,24 +86,32 @@ namespace WindEnergy.UI.Tools
                     if (radioButtonSelectLimitsProvider.Checked)
                     {
                         LimitsProviders provider = radioButtonSelectLimitsProvider.Checked ? LimitsProviders.StaticLimits : LimitsProviders.Manual;
-                        this.Invoke(new Action(() =>
-                        {
-                            if (provider == LimitsProviders.None)
-                            {
-                                MessageBox.Show(this, "Необходимо выбрать истоник ограничений", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-                            if (provider == LimitsProviders.Manual)
-                            {
-                                MessageBox.Show(this, "Для ручного ввода ограничений выберите соответствующий пункт", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-                            if (checkPoint.IsEmpty)
-                            {
-                                MessageBox.Show(this, "Необходимо выбрать точку на карте", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-                        }));
+                        int error = (int)this.Invoke(new Func<int>(() =>
+                         {
+                             int er = 0;
+                             if (provider == LimitsProviders.None)
+                             {
+                                 MessageBox.Show(this, "Необходимо выбрать истоник ограничений", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                 er = 1;
+                             }
+                             if (provider == LimitsProviders.Manual)
+                             {
+                                 MessageBox.Show(this, "Для ручного ввода ограничений выберите соответствующий пункт", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                 er = 1;
+                             }
+                             if (checkPoint.IsEmpty)
+                             {
+                                 MessageBox.Show(this, "Необходимо выбрать точку на карте", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                 er = 1;
+                             }
+                             if (er == 1)
+                                 this.Cursor = Cursors.Arrow;
+                             return er;
+                         }));
+
+                        if (error == 1) //если произошла ошибка, то выход
+                            return;
+
                         range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats, pcAction);
                         range.Name = "Исправленный ряд";
                         this.Invoke(new Action(() =>

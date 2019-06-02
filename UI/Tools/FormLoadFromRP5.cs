@@ -57,9 +57,9 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void buttonDownload_Click(object sender, EventArgs e)
         {
-            if (selectedMeteostation == null)
+            if (selectedMeteostation == null || selectedMeteostation.Coordinates.IsEmpty)
             {
-                MessageBox.Show(this, "Точка не выбрана", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, "Не выбрана метеостанция или координаты метеостанции недоступны", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             try
@@ -80,6 +80,7 @@ namespace WindEnergy.UI.Tools
                     }
                 });
 
+                buttonDownload.Enabled = false;
                 new Task(() =>
                 {
                     RawRange res = engine.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation,pcChange);
@@ -102,11 +103,13 @@ namespace WindEnergy.UI.Tools
             }
             catch (WebException ex)
             {
+                buttonDownload.Enabled = true;
                 MessageBox.Show(this, ex.Message + "\r\n" + ex.InnerException != null ? ex.InnerException.Message : "", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             catch (ApplicationException ae)
             {
+                buttonDownload.Enabled = true;
                 MessageBox.Show(this, ae.Message + "\r\n" + (ae.InnerException != null ? ae.InnerException.Message : "\r\n") + "\r\nПопробуйте выбрать меньший интервал времени", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
