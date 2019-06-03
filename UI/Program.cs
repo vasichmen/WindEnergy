@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Structures.Options;
@@ -20,33 +21,45 @@ namespace WindEnergy.UI
         [STAThread]
         private static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            Vars.Options = Options.Load(Application.StartupPath+ "\\options.xml");
-            Vars.LocalFileSystem = new LocalFileSystem();
-
-            winMain = new FormMain();
-
-
-            //обработчик выхода из приложения
-            Application.ApplicationExit += application_ApplicationExit;
-
-
-            #region запись статистики, проверка версии
-
-            new Task(new Action(() =>
+#if (!DEBUG)
+            try
             {
-                Velomapa site = new Velomapa(); //связь с сайтом
-                site.SendStatisticAsync(); //статистика
-                              
-            })
-            ).Start();
+#endif
 
-            #endregion
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
+                Vars.Options = Options.Load(Application.StartupPath + "\\options.xml");
+                Vars.LocalFileSystem = new LocalFileSystem();
+
+                winMain = new FormMain();
 
 
-            Application.Run(winMain);
+                //обработчик выхода из приложения
+                Application.ApplicationExit += application_ApplicationExit;
+
+
+                #region запись статистики, проверка версии
+
+                new Task(new Action(() =>
+                {
+                    Velomapa site = new Velomapa(); //связь с сайтом
+                    site.SendStatisticAsync(); //статистика
+
+                })).Start();
+
+                #endregion
+
+                Application.Run(winMain);
+#if (!DEBUG)
+            }
+            catch (Exception e)
+            {
+                StreamWriter sw = new StreamWriter("exceptions.log", true, Encoding.UTF8);
+                sw.WriteLine("{0}\r\n{1}", e.Message, e.StackTrace);
+                sw.Close();
+            }
+#endif
         }
 
         /// <summary>
@@ -59,8 +72,8 @@ namespace WindEnergy.UI
             //очистка времнной папки
             try
             {
-                if (Directory.Exists( Vars.Options.TempFolder))
-                    Directory.Delete( Vars.Options.TempFolder, true);
+                if (Directory.Exists(Vars.Options.TempFolder))
+                    Directory.Delete(Vars.Options.TempFolder, true);
             }
             catch (Exception exxx) { Debug.Print(exxx.Message); }
             finally { Debug.Print("Temp directory removed"); }
