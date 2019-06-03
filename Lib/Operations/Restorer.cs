@@ -85,7 +85,7 @@ namespace WindEnergy.Lib.Operations
                     {
                         //ищем подходящую МС из ближайших и получаем её ряд. Если подходит, то ошибки нет
                         baseRange = NearestMSInterpolateMethod.TryGetBaseRange(Range, param.Coordinates);
-                                            }
+                    }
 
                     methodSpeeds = new NearestMSInterpolateMethod(speedFunc, baseRange, MeteorologyParameters.Speed);
                     methodDirects = new LinearInterpolateMethod(directsFunc);

@@ -67,14 +67,20 @@
             // 
             this.dataGridViewExt1.AllowUserToAddRows = false;
             this.dataGridViewExt1.AllowUserToDeleteRows = false;
+            this.dataGridViewExt1.CausesValidation = false;
             this.dataGridViewExt1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tableLayoutPanel1.SetColumnSpan(this.dataGridViewExt1, 2);
             this.dataGridViewExt1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewExt1.Location = new System.Drawing.Point(2, 91);
             this.dataGridViewExt1.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridViewExt1.MultiSelect = false;
             this.dataGridViewExt1.Name = "dataGridViewExt1";
             this.dataGridViewExt1.ReadOnly = true;
             this.dataGridViewExt1.RowTemplate.Height = 55;
+            this.dataGridViewExt1.ShowCellErrors = false;
+            this.dataGridViewExt1.ShowCellToolTips = false;
+            this.dataGridViewExt1.ShowEditingIcon = false;
+            this.dataGridViewExt1.ShowRowErrors = false;
             this.dataGridViewExt1.Size = new System.Drawing.Size(531, 313);
             this.dataGridViewExt1.TabIndex = 0;
             this.dataGridViewExt1.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridViewExt1_ColumnAdded);

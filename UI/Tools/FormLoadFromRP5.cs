@@ -57,7 +57,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void buttonDownload_Click(object sender, EventArgs e)
         {
-            if (selectedMeteostation == null || selectedMeteostation.Coordinates.IsEmpty)
+            if (selectedMeteostation == null)
             {
                 MessageBox.Show(this, "Не выбрана метеостанция или координаты метеостанции недоступны", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
