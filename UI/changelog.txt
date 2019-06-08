@@ -1,8 +1,2 @@
-﻿System.NullReferenceException
-  HResult=0x80004003
-  Сообщение = Ссылка на объект не указывает на экземпляр объекта.
-  Источник = GMap.NET.Core
-  Трассировка стека:
-   at GMap.NET.Internals.FastReaderWriterLock.AcquireWriterLock()
-   at GMap.NET.Internals.Core.Dispose(Boolean disposing)
-   at GMap.NET.Internals.Core.Finalize()
+﻿**загрузка подсказок поиска МС в загрузке РП5 с задержкой в 1 с после ввода
+**добавление Speed в options.xml при выходе из программы

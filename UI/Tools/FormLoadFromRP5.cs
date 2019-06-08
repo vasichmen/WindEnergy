@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Collections;
@@ -68,10 +70,11 @@ namespace WindEnergy.UI.Tools
                 {
                     if (this.InvokeRequired)
                     {
-                    this.Invoke(new Action(() => {
-                        progressBarProgress.Value = (int)pc;
-                        progressBarProgress.Refresh();
-                    }));
+                        this.Invoke(new Action(() =>
+                        {
+                            progressBarProgress.Value = (int)pc;
+                            progressBarProgress.Refresh();
+                        }));
                     }
                     else
                     {
@@ -83,7 +86,7 @@ namespace WindEnergy.UI.Tools
                 buttonDownload.Enabled = false;
                 new Task(() =>
                 {
-                    RawRange res = engine.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation,pcChange);
+                    RawRange res = engine.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation, pcChange);
 
                     if (this.InvokeRequired)
                         this.Invoke(new Action(() =>
@@ -123,22 +126,59 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void comboBoxWMO_TextUpdate(object sender, EventArgs e)
         {
-            selectedMeteostation = null;
-            string query = comboBoxPoint.Text.Trim();
+            string curTextBox = comboBoxPoint.Text.Trim();
+            updateWMOListAsync(curTextBox);
+        }
+
+        /// <summary>
+        /// асинхронная загрузка списка адресов метеостанций 
+        /// </summary>
+        /// <param name="query">запрос</param>
+        private async void updateWMOListAsync(string query)
+        {
             if (query.Length < 2)
                 return;
+
+            //действие обновления списка подсказок
+            Action<List<RP5ru.WmoInfo>> updList = new Action<List<RP5ru.WmoInfo>>((list) =>
+            {
+                comboBoxPoint.Items.Clear();
+                comboBoxPoint.Items.AddRange(list.ToArray());
+                comboBoxPoint.SelectionStart = comboBoxPoint.Text.Length;
+            });
             try
             {
-                List<RP5ru.WmoInfo> results = engine.Search(query);
-                comboBoxPoint.Items.Clear();
-                comboBoxPoint.Items.AddRange(results.ToArray());
-                comboBoxPoint.SelectionStart = comboBoxPoint.Text.Length;
+                List<RP5ru.WmoInfo> results;
+                await Task.Run(() =>
+                {
+                    Thread.Sleep(2000); //ждем 2 с
+
+                    //получаем новый текст 
+                    string curTextBox = "";
+                    if (this.InvokeRequired)
+                        this.Invoke(new Action(() => { curTextBox = comboBoxPoint.Text.Trim(); }));
+                    else
+                        curTextBox = comboBoxPoint.Text.Trim();
+
+                    if (query != curTextBox) //если этот текст  изменился, то выходим
+                        return;
+
+                    selectedMeteostation = null;
+                    results = engine.Search(query);
+                    //обновление списка
+                    if (this.InvokeRequired)
+                        this.Invoke(updList, results);
+                    else
+                        updList.Invoke(results);
+
+                });
             }
             catch (WebException)
             {
                 MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            Debug.WriteLine("updateList end");
         }
 
         /// <summary>
