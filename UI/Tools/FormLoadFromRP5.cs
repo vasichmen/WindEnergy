@@ -177,6 +177,10 @@ namespace WindEnergy.UI.Tools
             {
                 MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }catch (ApplicationException exc)
+            {
+                MessageBox.Show(this, exc.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             Debug.WriteLine("updateList end");
         }
@@ -192,6 +196,8 @@ namespace WindEnergy.UI.Tools
 
             try
             {
+                if (comboBoxPoint.SelectedItem == null)
+                    return;
                 List<MeteostationInfo> meteost = engine.GetNearestMeteostations(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
                 //выбор метеостанции
                 MeteostationInfo meteostation;

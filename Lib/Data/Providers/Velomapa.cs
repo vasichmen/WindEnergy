@@ -18,7 +18,7 @@ namespace WindEnergy.Lib.Data.Providers
     /// </summary>
     public class Velomapa : BaseConnection
     {
-        public Velomapa() : base(null) { }
+        public Velomapa() : base("http://velomapa.ru", null) { }
 
         /// <summary>
         /// минимальное время между запросами

@@ -237,7 +237,6 @@
     <Content Include="changelog.txt" />
     <Content Include="Docs\Добавление нового поля для rawRange.txt" />
     <Content Include="icon.ico" />
-    <Content Include="input_max_speeds.txt" />
     <Content Include="staticMeteostationCoordinates.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

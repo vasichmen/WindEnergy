@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
@@ -21,6 +22,23 @@ namespace WindEnergy.Lib.Data.Providers
     public abstract class BaseConnection
     {
         /// <summary>
+        /// ID PHP сессии для этого экземпляра для заданного host. Если хост не установил заголовок PHPSESSID, то значение равно null
+        /// </summary>
+        public string PHPSESSID
+        {
+            get
+            {
+                //return "08dbd7ed81e0d8bd918cbc23499ce5a3";
+                if (_PHPSESSID == null)
+                {
+                    _PHPSESSID = GetPHPSessionID(host);
+                }
+                return _PHPSESSID;
+            }
+        }
+        private string _PHPSESSID = null;
+
+        /// <summary>
         /// создает новый экземпляр класса Base Connection
         /// </summary>
         private BaseConnection()
@@ -33,8 +51,9 @@ namespace WindEnergy.Lib.Data.Providers
         /// </summary>
         /// <param name="cacheDirectory">папка с кэшем или null, если не надо использоать кэш</param>
         /// <param name="duration">длительность хранения в часах. По умолчанию - неделя</param>
-        public BaseConnection(string cacheDirectory, double duration = 7 * 24) : this()
+        public BaseConnection(string host, string cacheDirectory, double duration = 7 * 24) : this()
         {
+            this.host = host;
             useCache = cacheDirectory != null;
             if (useCache)
             {
@@ -52,6 +71,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// время последнего запроса к сервису
         /// </summary>
         private DateTime lastQuery;
+        private readonly string host;
         private readonly bool useCache;
         private readonly string cacheDirectory;
         private readonly double duration;
@@ -73,7 +93,7 @@ namespace WindEnergy.Lib.Data.Providers
             string tmp_file = Vars.Options.TempFolder + "\\" + i + ".tmp";
             Directory.CreateDirectory(Path.GetDirectoryName(tmp_file));
             while (File.Exists(tmp_file))
-                tmp_file =  Vars.Options.TempFolder + "\\" + ++i + ".tmp";
+                tmp_file = Vars.Options.TempFolder + "\\" + ++i + ".tmp";
 
             WebClient client = new WebClient();
             client.DownloadProgressChanged +=
@@ -139,6 +159,66 @@ namespace WindEnergy.Lib.Data.Providers
         public abstract int MaxAttempts { get; }
 
         /// <summary>
+        /// строка UserAgent 
+        /// </summary>
+        public string UserAgent { get {
+                return "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 YaBrowser/19.6.1.153 Yowser/2.5 Safari/537.36";
+            } }
+
+        /// <summary>
+        /// получить ID сессии PHP для заданного хоста
+        /// </summary>
+        /// <param name="url">адрес хоста</param>
+        /// <returns></returns>
+        protected string GetPHPSessionID(string url)
+        {
+            try
+            {
+                //ожидание времени интервала между запросами
+                while (DateTime.Now - lastQuery < MinQueryInterval)
+                    Thread.Sleep(50);
+
+                //Выполняем запрос к универсальному коду ресурса (URI).
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                if (UseProxy)
+                {
+                    WebProxy wp = new WebProxy(ProxyHost, ProxyPort);
+                    request.Proxy = wp;
+                }
+                request.UserAgent = UserAgent;
+                //Получаем ответ от интернет-ресурса. 
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                string PHPSESSID = null;
+                string set_cookie = response.Headers[HttpResponseHeader.SetCookie];
+                response.Close();
+
+                //если вообще есть куки
+                if (set_cookie != null)
+                {
+                    string[] set_cooks = set_cookie.Split(';');
+
+                    //ищем строку с PHPSESSID
+                    //PHPSESSID=08dbd7ed81e0d8bd918cbc23499ce5a3; path=/; domain=rp5.ru; Expires=Tue, 19 Jan 2038 03:14:07 GMT;
+                    if (set_cooks.Length > 0)
+                    {
+                        foreach (string c in set_cooks)
+                            if (c.Contains("PHPSESSID"))
+                            {
+                                PHPSESSID = c.Substring(c.IndexOf('=') + 1);
+
+                                return PHPSESSID;
+                            }
+                    }
+                }
+                return null;
+
+            }
+            catch (WebException we) { throw new WebException("Ошибка подключения.\r\n" + url, we, we.Status, null); }
+        }
+
+        /// <summary>
         /// отправка запроса с результатом в виде xml
         /// </summary>
         /// <param name="url">запрос</param>
@@ -176,10 +256,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// <returns></returns>
         protected HtmlDocument SendHtmlPostRequest(string url, string data, string referer = "")
         {
-            string ans = SendStringPostRequest(url, data, null, referer);
-            //StreamReader sr = new StreamReader("sr.txt");
-            //string ans = sr.ReadToEnd();
-            //sr.Close();
+            string ans = SendStringPostRequest(url, data, referer);
 
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(ans);
@@ -193,10 +270,10 @@ namespace WindEnergy.Lib.Data.Providers
         /// <param name="url">адрес</param>
         /// <param name="data">данные</param>
         /// <returns></returns>
-        protected JObject SendJsonPostRequest(string url, string data, CookieCollection cookies, string referer = "")
+        protected JObject SendJsonPostRequest(string url, string data, string referer = "")
         {
             JObject jobj;
-            string json = SendStringPostRequest(url, data, cookies, referer);
+            string json = SendStringPostRequest(url, data, referer);
             if (string.IsNullOrWhiteSpace(json))
                 throw new Exception("Что-то не так с запросом - пустой ответ сервера");
             json = json.Substring(json.IndexOf('{'));
@@ -226,7 +303,8 @@ namespace WindEnergy.Lib.Data.Providers
         /// <param name="code">код ответа сервера</param>
         /// <returns></returns>
         /// <exception cref="WebException">Если произошла ошибка при подключении</exception>
-        protected string SendStringGetRequest(string url, out HttpStatusCode code, bool useGZip = true, string referer = "")
+        protected string SendStringGetRequest(string url, out HttpStatusCode code, bool useGZip = true, string referer = null, string contentType = "application/xml",
+            string xrequested = null, string cookies = null, string customHeaders = null)
         {
             if (useCache)
                 if (cache.ContainsWebUrl(url))
@@ -248,13 +326,29 @@ namespace WindEnergy.Lib.Data.Providers
                     WebProxy wp = new WebProxy(ProxyHost, ProxyPort);
                     request.Proxy = wp;
                 }
-                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36";
-                request.ContentType = "application/xml";
+                request.UserAgent = UserAgent;
+                request.ContentType = contentType;
                 request.Headers[HttpRequestHeader.AcceptLanguage] = "ru - RU,ru; q = 0.8,en - US; q = 0.6,en; q = 0.4";
                 request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
-                if (referer != "")
+                request.Accept = "application/json, text/javascript, */*; q=0.01";
+                if (!string.IsNullOrWhiteSpace(xrequested))
+                    request.Headers.Add("X-Requested-With", xrequested);
+                if (!string.IsNullOrWhiteSpace(referer))
                     request.Referer = referer;
-                //Получаем ответ от интернет-ресурса.
+                if (!string.IsNullOrWhiteSpace(cookies))
+                {
+                    string domain = new Uri(url).Host;
+                    request.CookieContainer = new CookieContainer();
+                    request.CookieContainer.Add(parseCookieString(cookies, domain));
+                }
+
+                if (!string.IsNullOrWhiteSpace(customHeaders))
+                {
+                    request.Headers.Add(parseHeadersString(customHeaders));
+                }
+
+                //Получаем ответ от интернет-ресурса. 
+
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 //string lng = response.Headers[HttpRequestHeader.var];
                 //Экземпляр класса System.IO.Stream 
@@ -304,28 +398,34 @@ namespace WindEnergy.Lib.Data.Providers
             catch (WebException we) { throw new WebException("Ошибка подключения.\r\n" + url, we, we.Status, null); }
         }
 
+
         /// <summary>
         /// отправка запроса с результатом в виде объекта JSON
         /// </summary>
         /// <param name="url">запрос</param>
         /// <returns></returns>
         /// <exception cref="WebException">Если произошла ошибка при подключении</exception>
-        protected JObject SendJsonGetRequest(string url, bool gzip = true, string referer = "")
+        protected JObject SendJsonGetRequest(string url, bool gzip = true, string referer = "", string contentType = "application/json", string cookies = null)
         {
             JObject jobj;
-            string json = SendStringGetRequest(url, out HttpStatusCode code, gzip, referer);
-            if (json == "")
-                return null;
-            if (json[0] != '[')
-            {
-                json = json.Substring(json.IndexOf('{'));
-                json = json.TrimEnd(new char[] { ';', ')' });
-            }
-            else
-                json = "{ \"array\": " + json + "}";
+            string json = SendStringGetRequest(url, out HttpStatusCode code, gzip, referer, contentType, "XMLHttpRequest", cookies);
             try
-            { jobj = JObject.Parse(json); }
-            catch (Exception ex) { throw new ApplicationException("Ошибка в парсере JSON. Сервер вернул некорректный объект.", ex); }
+            {
+                if (json == "")
+                    return null;
+                if (json[0] != '[')
+                {
+                    json = json.Substring(json.IndexOf('{'));
+                    json = json.TrimEnd(new char[] { ';', ')' });
+                }
+                else
+                    json = "{ \"array\": " + json + "}";
+                try
+                { jobj = JObject.Parse(json); }
+                catch (Exception ex) { throw new ApplicationException("Ошибка в парсере JSON. Сервер вернул некорректный объект.", ex); }
+            }
+            catch (Exception exx)
+            { throw new ApplicationException("Ошибка в парсере JSON. Сервер вернул некорректный объект: \r\n" + json, exx); }
             return jobj;
         }
 
@@ -335,7 +435,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// <param name="url">адрес</param>
         /// <param name="data">данные</param>
         /// <returns></returns>
-        protected string SendStringPostRequest(string url, string data, CookieCollection cookies, string referer)
+        protected string SendStringPostRequest(string url, string data, string referer = null, string cookies = null, string customHeaders=null)
         {
             try
             {
@@ -350,24 +450,31 @@ namespace WindEnergy.Lib.Data.Providers
                     req.Proxy = wp;
                 }
 
-                if (cookies != null)
+                if (!string.IsNullOrWhiteSpace(cookies))
                 {
+                    string domain = new Uri(url).Host;
                     req.CookieContainer = new CookieContainer();
-                    req.CookieContainer.Add(cookies);
+                    req.CookieContainer.Add(parseCookieString(cookies, domain));
                 }
+
+                if (!string.IsNullOrWhiteSpace(customHeaders))
+                {
+                    req.Headers.Add(parseHeadersString(customHeaders));
+                }
+                req.ContentType = "application/x-www-form-urlencoded";
 
 
                 req.Method = "POST";
                 req.Timeout = 100000;
-                req.ContentType = "application/x-www-form-urlencoded";
-                req.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
-                if (referer != "")
+                req.UserAgent = UserAgent;
+                if (!string.IsNullOrWhiteSpace(referer))
                     req.Referer = referer;
                 byte[] sentData = Encoding.GetEncoding(1251).GetBytes(data);
                 req.ContentLength = sentData.Length;
                 Stream sendStream = req.GetRequestStream();
                 sendStream.Write(sentData, 0, sentData.Length);
                 sendStream.Close();
+
                 WebResponse res = req.GetResponse();
                 Stream ReceiveStream = res.GetResponseStream();
                 StreamReader sr = new StreamReader(ReceiveStream, Encoding.UTF8);
@@ -383,10 +490,47 @@ namespace WindEnergy.Lib.Data.Providers
                 }
                 return Out;
             }
-            catch (WebException we) {
+            catch (WebException we)
+            {
                 if ((we.Response as HttpWebResponse).StatusCode == HttpStatusCode.InternalServerError)
                     throw new ApplicationException("Внутрення ошибка сервера", we);
-                throw new WebException("Ошибка подключения.\r\n" + url, we); }
+                throw new WebException("Ошибка подключения.\r\n" + url, we);
+            }
+        }
+
+        /// <summary>
+        /// парсит заголовки из формата название:значение;название:значение
+        /// </summary>
+        /// <param name="customHeaders"></param>
+        /// <returns></returns>
+        private NameValueCollection parseHeadersString(string customHeaders)
+        {
+            NameValueCollection res = new NameValueCollection();
+            string[] heads = customHeaders.Split(';');
+            foreach (string h in heads)
+            {
+                string[] ar = h.Split(':');
+                res.Add(ar[0].Trim(),ar[1].Trim());
+            }
+            return res;
+        }
+
+        /// <summary>
+        /// парсит данные Cookie из формата название=значение;название=значение
+        /// </summary>
+        /// <param name="cookies">строка данных</param>
+        /// <param name="domain">доменное имя для этих куки</param>
+        /// <returns></returns>
+        private CookieCollection parseCookieString(string cookies, string domain)
+        {
+            CookieCollection res = new CookieCollection();
+            string[] cooks = cookies.Split(';');
+            foreach (string cok in cooks)
+            {
+                string[] ar = cok.Split('=');
+                res.Add(new Cookie(ar[0].Trim(), ar[1].Trim()) { Domain = domain });
+            }
+            return res;
         }
     }
 }

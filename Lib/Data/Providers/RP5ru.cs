@@ -59,15 +59,42 @@ namespace WindEnergy.Lib.Data.Providers
         /// </summary>
         private const int LOAD_STEP_YEARS = 3;
 
+        /// <summary>
+        /// данные cookie для этого экземпляра
+        /// </summary>
+        private string CookieData
+        {
+            get
+            {
+                string staticData = "extreme_open=false; tab_wug=1; i=5483%7C5483; iru=5483%7C5483; ru=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%28%D0%92%D0%94%D0%9D%D0%A5%29%7C%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%28%D0%92%D0%94%D0%9D%D0%A5%29; last_visited_page=http%3A%2F%2Frp5.ru%2F%D0%9F%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0_%D0%B2_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B5_%28%D0%92%D0%94%D0%9D%D0%A5%29; tab_synop=2;__utma=66441069.285134014.1561820218.1561820218.1561820218.1; __utmc=66441069; __utmz=66441069.1561820218.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); tab_metar=2; is_adblock=0; f_enc=utf8; format=csv; __utmt=1; lang=ru; __utmb=66441069.6.10.1561820218";
+                staticData += ";last_visited_page=https://rp5.ru";
+
+                return staticData + string.Format(";PHPSESSID={0}", this.PHPSESSID);
+            }
+        }
+
         public override TimeSpan MinQueryInterval { get { return TimeSpan.FromSeconds(1); } }
         public override int MaxAttempts { get { return 5; } }
+
+        /// <summary>
+        /// заголовки для этого экземпляра
+        /// </summary>
+        public string Headers
+        {
+            get
+            {
+                return "X-Requested-With:XMLHttpRequest;Pragma:no - cache;Cache-Control:no - cache;DNT:1;Accept-Language:ru,en";
+            }
+        }
 
         /// <summary>
         /// создаёт новый объект с кэшем в указанной папке и заданной длительностью хранения 
         /// </summary>
         /// <param name="cacheDirectory">папка с кэшем или null, если не надо использоать кэш</param>
         /// <param name="duration">длительность хранения в часах. По умолчанию - неделя</param>
-        public RP5ru(string cacheDirectory, double duration = 7 * 24) : base(cacheDirectory, duration) { }
+        public RP5ru(string cacheDirectory, double duration = 7 * 24) : base("https://rp5.ru", cacheDirectory, duration)
+        {
+        }
 
         /// <summary>
         /// загрузить файл данных с сайта и открыть ряд наблюдений
@@ -80,6 +107,7 @@ namespace WindEnergy.Lib.Data.Providers
         {
             if (toDate < fromDate)
                 throw new WindEnergyException("Даты указаны неверно");
+
             if (toDate - fromDate > TimeSpan.FromDays(365 * LOAD_STEP_YEARS)) // если надо скачать больше трёх лет, то скачиваем по частям
             {
                 TimeSpan span = toDate - fromDate;
@@ -106,17 +134,55 @@ namespace WindEnergy.Lib.Data.Providers
                 return res1;
             }
 
-            //получение ссылки на файл
+            #region отправка статистики загрузки
+
             string data, link;
             switch (info.MeteoSourceType)
             {
                 case MeteoSourceType.Airport:
+                    data = "cc_id={0}&cc_str={1}&stat_p=1&s_date1={2}&s_ed3={4}&s_ed4={4}&s_ed5={5}&s_date2={3}&s_ed9=0&s_ed10=-1&s_pe=1&lng_id=2&s_dtimehi=-Период---";
+                    link = "https://rp5.ru/responses/reStatistMetar.php";
+                    data = string.Format(data,
+                        info.ID, //cc_id
+                        info.CC_Code, //cc_str
+                        fromDate.Date.ToString("dd.MM.yyyy"), //from
+                        toDate.Date.ToString("dd.MM.yyyy"), //to
+                        DateTime.Now.Month, //f_ed3 - только месяц
+                        DateTime.Now.Day //f_ed5 - только день
+                    );
+                    break;
+                case MeteoSourceType.Meteostation:
+                    data = "wmo_id={0}&stat_p=1&s_date1={1}&s_ed3={3}&s_ed4={3}&s_ed5={4}&s_date2={2}&s_ed9=0&s_ed10=-1&s_pe=1&lng_id=2&s_dtimehi=-срок---";
+                    link = "https://rp5.ru/responses/reStatistSynop.php";
+                    data = string.Format(data,
+                        info.ID, //wmo_id
+                        fromDate.Date.ToString("dd.MM.yyyy"), //from
+                        toDate.Date.ToString("dd.MM.yyyy"), //to
+                        DateTime.Now.Month, //f_ed3 - только месяц
+                        DateTime.Now.Day //f_ed5 - только день
+                    );
+                    break;
+                default: throw new Exception("Этот тип метеостанций не реализован");
+            }
+
+
+
+            string str = this.SendStringPostRequest(link, data, referer: "https://rp5.ru/", cookies: this.CookieData, customHeaders: this.Headers);
+
+            #endregion
+
+            #region получение ссылки на файл
+
+            //получение ссылки на файл
+            switch (info.MeteoSourceType)
+            {
+                case MeteoSourceType.Airport:
                     data = "metar={0}&a_date1={1}&a_date2={2}&f_ed3={3}&f_ed4={4}&f_ed5={5}&f_pe={6}&f_pe1={7}&lng_id=2";
-                    link = "http://rp5.ru/responses/reFileMetar.php";
+                    link = "https://rp5.ru/responses/reFileMetar.php";
                     break;
                 case MeteoSourceType.Meteostation:
                     data = "wmo_id={0}&a_date1={1}&a_date2={2}&f_ed3={3}&f_ed4={4}&f_ed5={5}&f_pe={6}&f_pe1={7}&lng_id=2";
-                    link = "http://rp5.ru/responses/reFileSynop.php";
+                    link = "https://rp5.ru/responses/reFileSynop.php";
                     break;
                 default: throw new Exception("Этот тип метеостанций не реализован");
             }
@@ -129,22 +195,40 @@ namespace WindEnergy.Lib.Data.Providers
                 DateTime.Now.Month, //f_ed4 - только месяц
                 DateTime.Now.Day, //f_ed5 - только день
                 1, //f_pe
-                2 //f_pe1
+                2 //f_pe1- кодировка (1 - ansi, 2 - utf8, 3 - Unicode)
                 );
 
-            string str = this.SendStringPostRequest(link, data, null, "https://rp5.ru/");
+            str = this.SendStringPostRequest(link, data, referer: "https://rp5.ru/", cookies: this.CookieData, customHeaders: this.Headers);
 
+
+            ///ОШИБКИ rp5.ru
+            ///запросы к reFileSynop.php
+            ///FS004 несуществующий wmo_id
+            ///FS002 ошибки в исходных данных (параметрах запроса)
+            ///FS000 Ошибка авторизации 
+            ///FS001-
+            ///запросы к reStatistSynop.php
+            ///SS000 Ошибка авторизации
+            ///FM000 Время жизни статистики истекло для этой сессии
             if (str.Contains("FS004"))
                 throw new Exception("Для этого id нет архива погоды");
             if (str.Contains("FS002"))
                 throw new Exception("Ошибка в исходных данных");
-
+            if (str.Contains("FS000"))
+                throw new Exception("Ошибка авторизации");
+            if (str.Contains("FS001-"))
+                throw new Exception("Неправильный метод запроса. Ожидается POST");
+            if (str.Contains("FM000"))
+                throw new Exception("Время жизни статистики истекло для этой сессии");
             int start = str.IndexOf("href=") + 5;
             str = str.Substring(start);
             int end = str.IndexOf(">");
             string lnk = str.Substring(0, end);
 
-            //загрузка файла с сервера
+            #endregion
+
+            #region  загрузка файла с сервера
+
             string tmp_dl_file = Vars.LocalFileSystem.GetTempFileName();
             WebClient webcl = new WebClient();
             webcl.DownloadFile(lnk, tmp_dl_file);
@@ -175,6 +259,8 @@ namespace WindEnergy.Lib.Data.Providers
             res.Name = info.Name;
             res.Position = pt;
             return res;
+
+            #endregion
         }
 
         /// <summary>
@@ -281,6 +367,12 @@ namespace WindEnergy.Lib.Data.Providers
             }
             else if (metar != null) //аэропорт
             {
+                //символьный код аэропорта
+                HtmlNode cc_code_node = page.GetElementbyId("cc_str");
+                string cc_code = cc_code_node.Attributes["value"].ToString();
+                info.CC_Code = cc_code;
+
+                //id в системе рп5
                 string pg = page.Text;
                 int start = pg.IndexOf("fFileMetarGet(");
                 int end = pg.IndexOf(')', start);
@@ -324,9 +416,10 @@ namespace WindEnergy.Lib.Data.Providers
 
             //https://rp5.ru/responses/reJsonSearch.php?langid=2&q=%D1%83%D1%81&limit=500&timestamp=1548533724161
             string url = "https://rp5.ru/responses/reJsonSearch.php?langid=2&q={0}&limit=500&timestamp={1}";
-            url = string.Format(url, query, 1548533724161);
+            long timestamp = (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds;
+            url = string.Format(url, query, timestamp);
 
-            JToken ans = SendJsonGetRequest(url, true, "https://rp5.ru/");
+            JToken ans = SendJsonGetRequest(url, true, "https://rp5.ru/", cookies: this.CookieData);
             if (ans == null)
                 return new List<WmoInfo>();
             List<WmoInfo> res = new List<WmoInfo>();

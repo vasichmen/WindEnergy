@@ -19,6 +19,11 @@ namespace WindEnergy.Lib.Classes.Structures
         public string ID { get; set; }
 
         /// <summary>
+        /// символьный код аэропорта
+        /// </summary>
+        public string CC_Code { get; set; }
+
+        /// <summary>
         /// является ли родительска точка этой метеостанцией
         /// </summary>
         public bool IsOwner { get { return OwnerDistance == 0; } }

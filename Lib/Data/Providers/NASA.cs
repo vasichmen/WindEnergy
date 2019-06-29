@@ -33,7 +33,7 @@ namespace WindEnergy.Lib.Data.Providers
 
         public override int MaxAttempts { get { return 5; } }
 
-        public NASA(string cacheDirectory, double duration = 7 * 24) : base(cacheDirectory, duration) { }
+        public NASA(string cacheDirectory, double duration = 7 * 24) : base("https://power.larc.nasa.gov", cacheDirectory, duration) { }
 
         /// <summary>
         /// получить ряд данных за указанный промежуток в заданной точке

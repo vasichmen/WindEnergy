@@ -14,7 +14,7 @@ namespace WindEnergy.Lib.Data.Providers
     /// </summary>
     public class Arcgis : BaseConnection, IGeocoderProvider
     {
-        public Arcgis(string folder, double d = 24 * 7) : base(folder, d) { }
+        public Arcgis(string folder, double d = 24 * 7) : base("https://arcgis.com", folder, d) { }
 
         /// <summary>
         /// 
