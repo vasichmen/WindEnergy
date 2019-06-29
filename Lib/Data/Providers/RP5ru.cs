@@ -68,7 +68,6 @@ namespace WindEnergy.Lib.Data.Providers
             {
                 string staticData = "extreme_open=false; tab_wug=1; i=5483%7C5483; iru=5483%7C5483; ru=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%28%D0%92%D0%94%D0%9D%D0%A5%29%7C%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%28%D0%92%D0%94%D0%9D%D0%A5%29; last_visited_page=http%3A%2F%2Frp5.ru%2F%D0%9F%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0_%D0%B2_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B5_%28%D0%92%D0%94%D0%9D%D0%A5%29; tab_synop=2;__utma=66441069.285134014.1561820218.1561820218.1561820218.1; __utmc=66441069; __utmz=66441069.1561820218.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); tab_metar=2; is_adblock=0; f_enc=utf8; format=csv; __utmt=1; lang=ru; __utmb=66441069.6.10.1561820218";
                 staticData += ";last_visited_page=https://rp5.ru";
-
                 return staticData + string.Format(";PHPSESSID={0}", this.PHPSESSID);
             }
         }
