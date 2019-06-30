@@ -29,7 +29,7 @@ namespace WindEnergy.Lib.Data.Providers
             get
             {
                 //return "08dbd7ed81e0d8bd918cbc23499ce5a3";
-                if (_PHPSESSID == null)
+                if (_PHPSESSID == null || _SESSID_date == DateTime.MinValue || (DateTime.Now- _SESSID_date) < this.SessionLifetime)
                 {
                     _PHPSESSID = GetPHPSessionID(host);
                 }
@@ -37,6 +37,7 @@ namespace WindEnergy.Lib.Data.Providers
             }
         }
         private string _PHPSESSID = null;
+        private DateTime _SESSID_date = DateTime.MinValue;
 
         /// <summary>
         /// создает новый экземпляр класса Base Connection
@@ -157,6 +158,11 @@ namespace WindEnergy.Lib.Data.Providers
         public abstract int MaxAttempts { get; }
 
         /// <summary>
+        /// Время жизни сессии
+        /// </summary>
+        public abstract TimeSpan SessionLifetime { get;  }
+
+        /// <summary>
         /// строка UserAgent 
         /// </summary>
         public string UserAgent
@@ -168,7 +174,7 @@ namespace WindEnergy.Lib.Data.Providers
                 return userAgent;
             }
         }
-        private string userAgent = null;
+                       private string userAgent = null;
 
         /// <summary>
         /// отправка запроса с результатом в виде xml

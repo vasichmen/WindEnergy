@@ -59,6 +59,11 @@ namespace WindEnergy.Lib.Classes.Structures
         public MeteoSourceType MeteoSourceType { get; set; }
 
         /// <summary>
+        /// координаты точки расположения метеостанции
+        /// </summary>
+        public PointLatLng Coordinates { get; set; }
+
+        /// <summary>
         /// ссылка на страницу
         /// </summary>
         public string Link
@@ -82,9 +87,10 @@ namespace WindEnergy.Lib.Classes.Structures
             }
         }
 
-        /// <summary>
-        /// координаты точки расположения метеостанции
-        /// </summary>
-        public PointLatLng Coordinates { get; set; }
+        public MeteostationInfo()
+        {
+            CC_Code = "";
+        }
+
     }
 }

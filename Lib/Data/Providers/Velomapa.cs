@@ -42,6 +42,8 @@ namespace WindEnergy.Lib.Data.Providers
             }
         }
 
+        public override TimeSpan SessionLifetime { get { return TimeSpan.FromMinutes(10); } }
+
         /// <summary>
         /// отправить отчет о запуске программы
         /// </summary>

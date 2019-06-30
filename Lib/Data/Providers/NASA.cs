@@ -33,6 +33,8 @@ namespace WindEnergy.Lib.Data.Providers
 
         public override int MaxAttempts { get { return 5; } }
 
+        public override TimeSpan SessionLifetime { get { return TimeSpan.FromMinutes(10); } }
+
         public NASA(string cacheDirectory, double duration = 7 * 24) : base("https://power.larc.nasa.gov", cacheDirectory, duration) { }
 
         /// <summary>

@@ -113,6 +113,12 @@
     <Compile Include="Tools\FormEnergyInfo.Designer.cs">
       <DependentUpon>FormEnergyInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\FormLoadData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FormLoadData.Designer.cs">
+      <DependentUpon>FormLoadData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\FormLoadFromNASA.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormEnergyInfo.resx">
       <DependentUpon>FormEnergyInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FormLoadData.resx">
+      <DependentUpon>FormLoadData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormLoadFromNASA.resx">
       <DependentUpon>FormLoadFromNASA.cs</DependentUpon>

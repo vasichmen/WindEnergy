@@ -10,6 +10,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Generic;
@@ -85,6 +86,13 @@ namespace WindEnergy.Lib.Data.Providers
                 return "X-Requested-With:XMLHttpRequest;Pragma:no - cache;Cache-Control:no - cache;DNT:1;Accept-Language:ru,en";
             }
         }
+
+        /// <summary>
+        /// время жизни сессии
+        /// </summary>
+        public override TimeSpan SessionLifetime { get {
+                return TimeSpan.FromMinutes(15);
+            } }
 
         /// <summary>
         /// создаёт новый объект с кэшем в указанной папке и заданной длительностью хранения 
@@ -365,17 +373,17 @@ namespace WindEnergy.Lib.Data.Providers
             {
                 //символьный код аэропорта
                 HtmlNode cc_code_node = page.GetElementbyId("cc_str");
-                string cc_code = cc_code_node.Attributes["value"].ToString();
+                string cc_code = cc_code_node.Attributes["value"].Value.ToString();
                 info.CC_Code = cc_code;
 
                 //id в системе рп5
-                string pg = page.Text;
-                int start = pg.IndexOf("fFileMetarGet(");
-                int end = pg.IndexOf(')', start);
-                if (start == -1 || end == -1)
+                string pg1 = page.Text;
+                int start1 = pg1.IndexOf("fFileMetarGet(");
+                int end1 = pg1.IndexOf(')', start1);
+                if (start1 == -1 || end1 == -1)
                     throw new Exception("Что-то не так");
-                start += +"fFileMetarGet(1317900300".Length;
-                string id = pg.Substring(start + 1, end - 1 - start);
+                start1 += +"fFileMetarGet(1317900300".Length;
+                string id = pg1.Substring(start1 + 1, end1 - 1 - start1);
                 info.ID = id;
                 info.MeteoSourceType = MeteoSourceType.Airport;
             }
@@ -385,18 +393,32 @@ namespace WindEnergy.Lib.Data.Providers
                 return;
             }
             else throw new WindEnergyException("Для этой метеостанции невозможно получить данные");
+
+
             //получение даты начала наблюдений
-            {
-                string pg = page.Text;
-                int start = pg.IndexOf("наблюдения с ");
-                int end = pg.IndexOf("</span>", start);
-                if (start == -1 || end == -1)
-                    throw new Exception("Что-то не так");
-                start += "наблюдения с ".Length;
-                string fdate = pg.Substring(start, end - 1 - start);
-                DateTime mon_from = DateTime.Parse(fdate);
-                info.MonitoringFrom = mon_from;
-            }
+            string pg = page.Text;
+            int start = pg.IndexOf("наблюдения с ");
+            int end = pg.IndexOf("</span>", start);
+            if (start == -1 || end == -1)
+                throw new Exception("Что-то не так");
+            start += "наблюдения с ".Length;
+            string fdate = pg.Substring(start, end - 1 - start);
+            DateTime mon_from = DateTime.Parse(fdate);
+            info.MonitoringFrom = mon_from;
+
+            //получение координат метеостанции
+            string pg2 = page.Text;
+            int start2 = pg2.IndexOf("show_map(");
+            int end2 = pg2.IndexOf(", 9);", start2);
+            if (start2 == -1 || end2 == -1)
+                throw new Exception("Что-то не так");
+            start2 += "show_map(".Length;
+            string coordinates = pg2.Substring(start2, end2 - 1 - start2);
+            //55.833333333333, 37.616666666667
+            string[] ar = coordinates.Split(',');
+            double lat = double.Parse(ar[0].Trim().Replace('.', Vars.DecimalSeparator));
+            double lon = double.Parse(ar[1].Trim().Replace('.', Vars.DecimalSeparator));
+            info.Coordinates = new PointLatLng(lat, lon);
 
         }
 
@@ -413,6 +435,7 @@ namespace WindEnergy.Lib.Data.Providers
             //https://rp5.ru/responses/reJsonSearch.php?langid=2&q=%D1%83%D1%81&limit=500&timestamp=1548533724161
             string url = "https://rp5.ru/responses/reJsonSearch.php?langid=2&q={0}&limit=500&timestamp={1}";
             long timestamp = (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds;
+            //query = HttpUtility.UrlEncode(query);
             url = string.Format(url, query, timestamp);
 
             JToken ans = SendJsonGetRequest(url, true, "https://rp5.ru/", cookies: this.CookieData);

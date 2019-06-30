@@ -22,6 +22,8 @@ namespace WindEnergy.Lib.Data.Providers
         public override TimeSpan MinQueryInterval { get { return TimeSpan.FromMilliseconds(100); } }
         public override int MaxAttempts { get { return 5; } }
 
+        public override TimeSpan SessionLifetime { get { return TimeSpan.FromMinutes(10); } }
+
         /// <summary>
         /// https://developers.arcgis.com/rest/geocode/api-reference/geocoding-reverse-geocode.htm
         /// </summary>

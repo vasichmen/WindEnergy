@@ -34,7 +34,6 @@ namespace WindEnergy.UI
         /// </summary>
         public MainHelper mainHelper;
 
-
         public FormMain()
         {
             InitializeComponent();
@@ -326,6 +325,16 @@ namespace WindEnergy.UI
             new FormOptions().Show(this);
         }
 
+        /// <summary>
+        /// загрузка данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void loadDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormLoadData().Show();
+        }
+
         #endregion
 
 
@@ -476,8 +485,12 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // (mainTabControl.SelectedTab as TabPageExt).Range.PerformRefreshQuality();
-            var ans = new RP5ru(null).Search("московск");
+            
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
 
         }
 

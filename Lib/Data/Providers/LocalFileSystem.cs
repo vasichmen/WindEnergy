@@ -25,7 +25,7 @@ namespace WindEnergy.Lib.Data.Providers
             get
             {
                 if (_meteostationList == null || _meteostationList.Count == 0)
-                    _meteostationList = loadMeteostationList(Vars.Options.StaticMeteostationCoordinatesSourceFile);
+                    _meteostationList = LoadMeteostationList(Vars.Options.StaticMeteostationCoordinatesSourceFile);
                 return _meteostationList;
             }
         }
@@ -126,7 +126,7 @@ namespace WindEnergy.Lib.Data.Providers
         {
             try
             {
-                loadMeteostationList(fileName);
+                LoadMeteostationList(fileName);
                 return true;
             }
             catch (Exception)
@@ -179,7 +179,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        private List<MeteostationInfo> loadMeteostationList(string filename)
+        public static List<MeteostationInfo> LoadMeteostationList(string filename)
         {
             StreamReader sr = new StreamReader(filename);
             sr.ReadLine(); //пропуск заголовка
@@ -188,20 +188,22 @@ namespace WindEnergy.Lib.Data.Providers
             while (!sr.EndOfStream)
             {
                 string[] arr = sr.ReadLine().Split(';');
-
+                if (arr.Length < 3)
+                    continue;
                 string wmo = arr[0];
-                string name = arr[1];
-                double lat = double.Parse(arr[2].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
-                double lon = double.Parse(arr[3].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
+                string cc_code = arr[1];
+                string name = arr[2];
+                double lat = double.Parse(arr[3].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
+                double lon = double.Parse(arr[4].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
 
                 double alt = double.NaN;
                 DateTime mfrom = DateTime.MinValue;
-                if (arr.Length > 4)
+                if (arr.Length > 5)
                 {
-                    alt = double.Parse(arr[4].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
-                    mfrom = DateTime.Parse(arr[5]);
+                    alt = double.Parse(arr[5].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
+                    mfrom = DateTime.Parse(arr[6]);
                 }
-                res.Add(new MeteostationInfo() { ID = wmo, Coordinates = new PointLatLng(lat, lon), Name = name, Altitude = alt, MonitoringFrom = mfrom });
+                res.Add(new MeteostationInfo() { ID = wmo, Coordinates = new PointLatLng(lat, lon), Name = name, Altitude = alt, MonitoringFrom = mfrom, CC_Code=cc_code });
             }
 
             sr.Close();
