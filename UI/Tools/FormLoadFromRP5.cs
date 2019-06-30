@@ -198,7 +198,7 @@ namespace WindEnergy.UI.Tools
             {
                 if (comboBoxPoint.SelectedItem == null)
                     return;
-                List<MeteostationInfo> meteost = engine.GetNearestMeteostations(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
+                List<MeteostationInfo> meteost = engine.GetMeteostationsAtPoint(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
                 //выбор метеостанции
                 MeteostationInfo meteostation;
                 if (meteost.Count == 1)

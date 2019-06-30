@@ -90,9 +90,13 @@ namespace WindEnergy.Lib.Data.Providers
         /// <summary>
         /// время жизни сессии
         /// </summary>
-        public override TimeSpan SessionLifetime { get {
+        public override TimeSpan SessionLifetime
+        {
+            get
+            {
                 return TimeSpan.FromMinutes(15);
-            } }
+            }
+        }
 
         /// <summary>
         /// создаёт новый объект с кэшем в указанной папке и заданной длительностью хранения 
@@ -268,11 +272,11 @@ namespace WindEnergy.Lib.Data.Providers
         }
 
         /// <summary>
-        /// найти ближайшие метеостанции к выбранной точке
+        /// найти ближайшие метеостанции к выбранной точке прогноза погоды
         /// </summary>
         /// <param name="wmoInfo">информация о точке с погодой</param>
         /// <returns></returns>
-        public List<MeteostationInfo> GetNearestMeteostations(WmoInfo wmoInfo)
+        public List<MeteostationInfo> GetMeteostationsAtPoint(WmoInfo wmoInfo, bool loadExtInfo = true)
         {
             //страница погоды в заданной точке
             HtmlDocument point_page = SendHtmlGetRequest(wmoInfo.Link, out HttpStatusCode code);
@@ -337,7 +341,12 @@ namespace WindEnergy.Lib.Data.Providers
                                       //break;
                         default: throw new Exception("Этот тип метеостанции не реализован");
                     }
-                    GetMeteostationExtInfo(ref nm); //запись информации об id метеостанции, дате начала наблюдений
+                    if (loadExtInfo)
+                        try
+                        {
+                            GetMeteostationExtInfo(ref nm); //запись информации об id метеостанции, дате начала наблюдений
+                        }
+                        catch (Exception) { continue; }
                     if (nm != null)
                         res.Add(nm);
                 }

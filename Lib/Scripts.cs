@@ -94,13 +94,29 @@ namespace WindEnergy.Lib
         /// экспортирует список метеостанций в указанный файл 
         /// </summary>
         /// <param name="list">список метеостанций</param>
-        /// <param name="filename">адрес файла, куда сохраняется списокЫ</param>
+        /// <param name="filename">адрес файла, куда сохраняется список</param>
         public static void ExportMeteostationList(List<MeteostationInfo> list, string filename)
         {
+            //удаление повторов
+            List<MeteostationInfo> list_unic = new List<MeteostationInfo>();
+            foreach (var m in list)
+            {
+                //проверка существования ID в массиве
+                bool contains = false;
+                foreach (var cc in list_unic)
+                    if (cc.ID == m.ID)
+                    {
+                        contains = true;
+                        break;
+                    }
+                //если не существует, то  добавляем
+                if (!contains)
+                    list_unic.Add(m);
+            }
             //запись в файл
             StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
             sw.WriteLine("ВМО ID;CC_Code;Название;Широта;Долгота;Высота над у. м., м;Дата начала наблюдений");
-            foreach (var ms in list)
+            foreach (var ms in list_unic)
                 sw.WriteLine(
                     ms.ID + ";" +
                     ms.CC_Code + ";" +
@@ -170,7 +186,7 @@ namespace WindEnergy.Lib
         /// загружает все метеостанции с расписания погоды и сохраняет их в файл fileOutput в формат списка координат метеостанций
         /// </summary>
         /// <param name="fileOutput"></param>
-        public static void LoadAllRP5Meteostations(string fileOutput, Action<int, int, string, int, int> action = null, Func<bool> checkStop = null)
+        public static void LoadAllRP5Meteostations(string fileOutput, Action<int, int, string, int, int, int, int> action = null, Func<bool> checkStop = null)
         {
             RP5ru engine = new RP5ru(null);
             List<MeteostationInfo> result;
@@ -192,7 +208,7 @@ namespace WindEnergy.Lib
             else
                 result = new List<MeteostationInfo>();
 
-            //List<string> alf = new List<string>() { "a", "б", "в", "г", "д", "е", "ё", "ж", "з", "и", "й", "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я" };
+            List<string> alf_rus = new List<string>() { "a", "б", "в", "г", "д", "е", "ё", "ж", "з", "и", "й", "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я" };
             List<string> alf = new List<string>() { "f", ",", "d", "u", "l", "t", "`", ";", "p", "b", "q", "r", "k", "v", "y", "j", "g", "h", "c", "n", "e", "a", "[", "w", "x", "i", "o", "]", "s", "m", "'", ".", "z" };
             double total = Math.Pow(alf.Count, 2);
             int c = 0;
@@ -205,6 +221,8 @@ namespace WindEnergy.Lib
                     break;
                 foreach (string s in alf)
                 {
+                    c++; //сразу переход на следующее сочетание, чтоб не терялось при поиске последнего сочетания
+
                     //выход, если требуется
                     if (checkStop != null && checkStop.Invoke())
                         break;
@@ -223,6 +241,12 @@ namespace WindEnergy.Lib
 
                     try
                     {
+                        //Сохранение временного результата перед каждым сочетанием
+                        ExportMeteostationList(result, fileOutput);
+                        StreamWriter sw1 = new StreamWriter(fileOutput, true, Encoding.Default);
+                        sw1.WriteLine(q);
+                        sw1.Close();
+
                         var points = engine.Search(q);
                         int dd = 0;
                         foreach (var point in points) //цикл по всем найденным точкам в поиске
@@ -232,50 +256,32 @@ namespace WindEnergy.Lib
                                 break;
                             try
                             {
-                                List<MeteostationInfo> meteost = engine.GetNearestMeteostations(point); //получаем архивы для этой точки
+                                dd++;
+                                List<MeteostationInfo> meteost = engine.GetMeteostationsAtPoint(point, true); //получаем архивы для этой точки
                                 all += meteost.Count;
                                 foreach (var m in meteost)
                                 {
                                     try
                                     {
-                                        //проверка существования ID в массиве
-                                        bool contains = false;
-                                        foreach (var cc in result)
-                                            if (cc.ID == m.ID)
-                                            {
-                                                contains = true;
-                                                break;
-                                            }
-
-                                        //если не существует, то загружаем доп. информацию и добавляем
-                                        if (!contains)
-                                        {
-                                            MeteostationInfo nm = new MeteostationInfo() { ID = m.ID, Link = m.Link, Name = m.Name, MeteoSourceType = m.MeteoSourceType, OwnerDistance = m.OwnerDistance, altName = m.altName };
-                                            engine.GetMeteostationExtInfo(ref nm);
-                                            nm.Altitude = Vars.ETOPOdatabase.GetElevation(nm.Coordinates);
-                                            result.Add(nm);
-                                        }
+                                        MeteostationInfo nm = new MeteostationInfo() { ID = m.ID, Link = m.Link, Name = m.Name, MeteoSourceType = m.MeteoSourceType, OwnerDistance = m.OwnerDistance, altName = m.altName };
+                                        nm.Altitude = Vars.ETOPOdatabase.GetElevation(nm.Coordinates);
+                                        result.Add(nm);
                                     }
                                     catch (Exception) { continue; }
                                 }
-                                dd++;
                             }
                             catch (Exception) { continue; }
 
                             //обновление прогресса
                             if (action != null)
-                                //perc, all, q,count,pcQ
-                                action.Invoke((int)Math.Ceiling((c / total) * 100), all, q, result.Count, (int)Math.Ceiling((dd / (double)points.Count) * 100));
-
-                            //Сохранение временного результата
-                            ExportMeteostationList(result, fileOutput);
-                            StreamWriter sw1 = new StreamWriter(fileOutput, true, Encoding.Default);
-                            sw1.WriteLine(q);
-                            sw1.Close();
+                            {
+                                //perc, all, q,count,pcQ, pc1, pc2
+                                string rr = alf_rus[alf.IndexOf(q[0].ToString())] + alf_rus[alf.IndexOf(q[1].ToString())];
+                                action.Invoke((int)Math.Ceiling((c / total) * 100), all, rr, result.Count, (int)Math.Ceiling((dd / (double)points.Count) * 100), dd, points.Count);
+                            }
                         }
                     }
                     catch (Exception) { continue; }
-                    c++;
                 }
             }
 
