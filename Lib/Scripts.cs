@@ -175,15 +175,17 @@ namespace WindEnergy.Lib
             RP5ru engine = new RP5ru(null);
             List<MeteostationInfo> result;
             string lastQ = null;
+
+            //если файл уже есть,то надо продолжить с последнего сочетания
             if (File.Exists(fileOutput))
             {
-                result = LocalFileSystem.LoadMeteostationList(fileOutput);
+                result = LocalFileSystem.LoadMeteostationList(fileOutput); //загрузка списка
                 StreamReader sr = new StreamReader(fileOutput);
                 while (!sr.EndOfStream)
                 {
                     string alstr = sr.ReadLine();
                     if (sr.EndOfStream)
-                        lastQ = alstr;
+                        lastQ = alstr; //посленее сочетание
                 }
                 sr.Close();
             }
@@ -198,13 +200,19 @@ namespace WindEnergy.Lib
             string q = "";
             foreach (string f in alf)
             {
+                //выход, если требуется
                 if (checkStop != null && checkStop.Invoke())
                     break;
                 foreach (string s in alf)
                 {
+                    //выход, если требуется
                     if (checkStop != null && checkStop.Invoke())
                         break;
+
+                    //переход на следующее сочетание
                     q = f + s;
+
+                    //если надо начинать с указанного сочетания, то ждём его
                     if (lastQ != null)
                     {
                         if (q == lastQ)
@@ -215,21 +223,22 @@ namespace WindEnergy.Lib
 
                     try
                     {
-                        var mts = engine.Search(q);
+                        var points = engine.Search(q);
                         int dd = 0;
-                        foreach (var mp in mts)
+                        foreach (var point in points) //цикл по всем найденным точкам в поиске
                         {
+                            //выход, если требуется
                             if (checkStop != null && checkStop.Invoke())
                                 break;
                             try
                             {
-                                List<MeteostationInfo> meteost = engine.GetNearestMeteostations(mp);
+                                List<MeteostationInfo> meteost = engine.GetNearestMeteostations(point); //получаем архивы для этой точки
                                 all += meteost.Count;
                                 foreach (var m in meteost)
                                 {
                                     try
                                     {
-
+                                        //проверка существования ID в массиве
                                         bool contains = false;
                                         foreach (var cc in result)
                                             if (cc.ID == m.ID)
@@ -237,6 +246,8 @@ namespace WindEnergy.Lib
                                                 contains = true;
                                                 break;
                                             }
+
+                                        //если не существует, то загружаем доп. информацию и добавляем
                                         if (!contains)
                                         {
                                             MeteostationInfo nm = new MeteostationInfo() { ID = m.ID, Link = m.Link, Name = m.Name, MeteoSourceType = m.MeteoSourceType, OwnerDistance = m.OwnerDistance, altName = m.altName };
@@ -250,9 +261,17 @@ namespace WindEnergy.Lib
                                 dd++;
                             }
                             catch (Exception) { continue; }
+
+                            //обновление прогресса
                             if (action != null)
                                 //perc, all, q,count,pcQ
-                                action.Invoke((int)Math.Ceiling((c / total) * 100), all, q, result.Count, (int)Math.Ceiling((dd / (double)mts.Count) * 100));
+                                action.Invoke((int)Math.Ceiling((c / total) * 100), all, q, result.Count, (int)Math.Ceiling((dd / (double)points.Count) * 100));
+
+                            //Сохранение временного результата
+                            ExportMeteostationList(result, fileOutput);
+                            StreamWriter sw1 = new StreamWriter(fileOutput, true, Encoding.Default);
+                            sw1.WriteLine(q);
+                            sw1.Close();
                         }
                     }
                     catch (Exception) { continue; }
@@ -260,6 +279,7 @@ namespace WindEnergy.Lib
                 }
             }
 
+            //сохранение информации
             ExportMeteostationList(result, fileOutput);
             StreamWriter sw = new StreamWriter(fileOutput, true, Encoding.Default);
             sw.WriteLine(q);
