@@ -12,6 +12,9 @@ using WindEnergy.Lib.Operations.Limits;
 
 namespace WindEnergy.Lib.Data.Providers
 {
+    /// <summary>
+    /// методы работы с файловой системой и файловыми БД
+    /// </summary>
     public class LocalFileSystem
     {
         private List<MeteostationInfo> _meteostationList = null;
