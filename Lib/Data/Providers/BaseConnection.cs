@@ -29,8 +29,9 @@ namespace WindEnergy.Lib.Data.Providers
             get
             {
                 //return "08dbd7ed81e0d8bd918cbc23499ce5a3";
-                if (_PHPSESSID == null || _SESSID_date == DateTime.MinValue || (DateTime.Now- _SESSID_date) < this.SessionLifetime)
+                if (_PHPSESSID == null || _SESSID_date == DateTime.MinValue || (DateTime.Now - _SESSID_date) < this.SessionLifetime)
                 {
+                    UserAgent = getRandomUserAgent();
                     _PHPSESSID = GetPHPSessionID(host);
                 }
                 return _PHPSESSID;
@@ -160,7 +161,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// <summary>
         /// Время жизни сессии
         /// </summary>
-        public abstract TimeSpan SessionLifetime { get;  }
+        public abstract TimeSpan SessionLifetime { get; }
 
         /// <summary>
         /// строка UserAgent 
@@ -173,8 +174,9 @@ namespace WindEnergy.Lib.Data.Providers
                     userAgent = getRandomUserAgent();
                 return userAgent;
             }
+            set { userAgent = value; }
         }
-                       private string userAgent = null;
+        private string userAgent = null;
 
         /// <summary>
         /// отправка запроса с результатом в виде xml
@@ -196,9 +198,9 @@ namespace WindEnergy.Lib.Data.Providers
         /// <param name="url">url запроса</param>
         /// <param name="code">код ошибки</param>
         /// <returns></returns>
-        protected HtmlDocument SendHtmlGetRequest(string url, out HttpStatusCode code)
+        protected HtmlDocument SendHtmlGetRequest(string url, out HttpStatusCode code, bool forceDisableCache = false)
         {
-            string ans = SendStringGetRequest(url, out code);
+            string ans = SendStringGetRequest(url, out code, forceDisableCache: forceDisableCache);
 
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(ans);
@@ -287,11 +289,15 @@ namespace WindEnergy.Lib.Data.Providers
 
 
         #region Базовые методы GET и POST
+
         /// <summary>
         /// отправка POST запроса. Бросает ApplicationException при ошибке 500 (внутренняя ошибка сервера)
         /// </summary>
         /// <param name="url">адрес</param>
         /// <param name="data">данные</param>
+        /// <param name="cookies">Строка данных Cookie формата название=значение;название=значение</param>
+        /// <param name="customHeaders">дополнительные заголовки формата название:значение;название:значение</param>
+        /// <param name="referer">заголовок referer</param>
         /// <returns></returns>
         protected string SendStringPostRequest(string url, string data, string referer = null, string cookies = null, string customHeaders = null)
         {
@@ -362,12 +368,19 @@ namespace WindEnergy.Lib.Data.Providers
         /// </summary>
         /// <param name="url">запрос</param>
         /// <param name="code">код ответа сервера</param>
+        /// <param name="contentType">Заголовок Content Type</param>
+        /// <param name="cookies">Строка данных Cookie формата название=значение;название=значение</param>
+        /// <param name="customHeaders">дополнительные заголовки формата название:значение;название:значение</param>
+        /// <param name="forceDisableCache">принудительное отключение кэшивания для этого запроса</param>
+        /// <param name="referer">заголовок referer</param>
+        /// <param name="useGZip">истина, если сервер использует сжатие</param>
+        /// <param name="xrequested">Заголовок X-Requested-With</param>
         /// <returns></returns>
         /// <exception cref="WebException">Если произошла ошибка при подключении</exception>
         protected string SendStringGetRequest(string url, out HttpStatusCode code, bool useGZip = true, string referer = null, string contentType = "application/xml",
-            string xrequested = null, string cookies = null, string customHeaders = null)
+            string xrequested = null, string cookies = null, string customHeaders = null, bool forceDisableCache = false)
         {
-            if (useCache)
+            if (useCache && !forceDisableCache) //если используем кэш и кэш принудительно не отключен для этого запроса
                 if (cache.ContainsWebUrl(url))
                 {
                     code = HttpStatusCode.OK;
@@ -451,7 +464,7 @@ namespace WindEnergy.Lib.Data.Providers
                 code = response.StatusCode;
 
                 //запись в кэш, если надо
-                if (useCache)
+                if (useCache && !forceDisableCache)
                     cache.PutWebUrl(url, responsereader);
 
                 return responsereader;

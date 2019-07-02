@@ -193,17 +193,18 @@ namespace WindEnergy.Lib.Data.Providers
                 string wmo = arr[0];
                 string cc_code = arr[1];
                 string name = arr[2];
-                double lat = double.Parse(arr[3].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
-                double lon = double.Parse(arr[4].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
+                string address = arr[3];
+                double lat = double.Parse(arr[4].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
+                double lon = double.Parse(arr[5].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
 
                 double alt = double.NaN;
                 DateTime mfrom = DateTime.MinValue;
-                if (arr.Length > 5)
+                if (arr.Length > 6)
                 {
-                    alt = double.Parse(arr[5].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
-                    mfrom = DateTime.Parse(arr[6]);
+                    alt = double.Parse(arr[6].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
+                    mfrom = DateTime.Parse(arr[7]);
                 }
-                res.Add(new MeteostationInfo() { ID = wmo, Coordinates = new PointLatLng(lat, lon), Name = name, Altitude = alt, MonitoringFrom = mfrom, CC_Code=cc_code });
+                res.Add(new MeteostationInfo() { ID = wmo, Coordinates = new PointLatLng(lat, lon), Name = name, Altitude = alt, MonitoringFrom = mfrom, CC_Code=cc_code, Address=address });
             }
 
             sr.Close();

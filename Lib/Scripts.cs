@@ -115,12 +115,13 @@ namespace WindEnergy.Lib
             }
             //запись в файл
             StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
-            sw.WriteLine("ВМО ID;CC_Code;Название;Широта;Долгота;Высота над у. м., м;Дата начала наблюдений");
+            sw.WriteLine("ВМО ID;CC_Code;Название архива;Адрес;Широта;Долгота;Высота над у. м., м;Дата начала наблюдений");
             foreach (var ms in list_unic)
                 sw.WriteLine(
                     ms.ID + ";" +
                     ms.CC_Code + ";" +
                     ms.Name + ";" +
+                    ms.Address + ";" +
                     ms.Coordinates.Lat.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
                     ms.Coordinates.Lng.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
                     ms.Altitude.ToString("0.00").Replace(Vars.DecimalSeparator, ',') + ";" +
@@ -188,7 +189,7 @@ namespace WindEnergy.Lib
         /// <param name="fileOutput"></param>
         public static void LoadAllRP5Meteostations(string fileOutput, Action<int, int, string, int, int, int, int> action = null, Func<bool> checkStop = null)
         {
-            RP5ru engine = new RP5ru(null);
+            RP5ru engine = new RP5ru(Vars.Options.CacheFolder+"\\rp5.ru");
             List<MeteostationInfo> result;
             string lastQ = null;
 
@@ -257,15 +258,15 @@ namespace WindEnergy.Lib
                             try
                             {
                                 dd++;
-                                List<MeteostationInfo> meteost = engine.GetMeteostationsAtPoint(point, true); //получаем архивы для этой точки
+                                List<MeteostationInfo> meteost = engine.GetMeteostationsAtPoint(point, true,true); //получаем архивы для этой точки
                                 all += meteost.Count;
                                 foreach (var m in meteost)
                                 {
                                     try
                                     {
-                                        MeteostationInfo nm = new MeteostationInfo() { ID = m.ID, Link = m.Link, Name = m.Name, MeteoSourceType = m.MeteoSourceType, OwnerDistance = m.OwnerDistance, altName = m.altName };
-                                        nm.Altitude = Vars.ETOPOdatabase.GetElevation(nm.Coordinates);
-                                        result.Add(nm);
+                                        m.Address = point.name;
+                                        m.Altitude = Vars.ETOPOdatabase.GetElevation(m.Coordinates);
+                                        result.Add(m);
                                     }
                                     catch (Exception) { continue; }
                                 }

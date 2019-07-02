@@ -64,6 +64,11 @@ namespace WindEnergy.Lib.Classes.Structures
         public PointLatLng Coordinates { get; set; }
 
         /// <summary>
+        /// адрес метеостанции (из поиска в РП5)
+        /// </summary>
+        public string Address { get;  set; }
+
+        /// <summary>
         /// ссылка на страницу
         /// </summary>
         public string Link
@@ -86,6 +91,7 @@ namespace WindEnergy.Lib.Classes.Structures
                 altName = value.Replace(@"https://rp5.ru/", "").Replace(@"http://rp5.ru/", "");
             }
         }
+
 
         public MeteostationInfo()
         {

@@ -73,7 +73,7 @@ namespace WindEnergy.Lib.Data.Providers
             }
         }
 
-        public override TimeSpan MinQueryInterval { get { return TimeSpan.FromSeconds(1); } }
+        public override TimeSpan MinQueryInterval { get { return TimeSpan.FromSeconds(0.5); } }
         public override int MaxAttempts { get { return 5; } }
 
         /// <summary>
@@ -276,10 +276,10 @@ namespace WindEnergy.Lib.Data.Providers
         /// </summary>
         /// <param name="wmoInfo">информация о точке с погодой</param>
         /// <returns></returns>
-        public List<MeteostationInfo> GetMeteostationsAtPoint(WmoInfo wmoInfo, bool loadExtInfo = true)
+        public List<MeteostationInfo> GetMeteostationsAtPoint(WmoInfo wmoInfo, bool loadExtInfo = true, bool forceDisableCache=false)
         {
             //страница погоды в заданной точке
-            HtmlDocument point_page = SendHtmlGetRequest(wmoInfo.Link, out HttpStatusCode code);
+            HtmlDocument point_page = SendHtmlGetRequest(wmoInfo.Link, out HttpStatusCode code, forceDisableCache:forceDisableCache);
 
             if (code != HttpStatusCode.OK)
                 throw new Exception("При загрузке страницы произошла ошибка " + code.ToString());
