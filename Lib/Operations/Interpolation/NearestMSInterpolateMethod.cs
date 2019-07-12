@@ -130,7 +130,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
 
             DateTime from = Range.Min((ri) => ri.Date).Date, to = Range.Max((ri) => ri.Date).Date;
 
-            List<MeteostationInfo> mts = getNearestMS(coordinates, Vars.LocalFileSystem.MeteostationList, Vars.Options.NearestMSRadius, false);
+            List<MeteostationInfo> mts = getNearestMS(coordinates, Vars.Meteostations.MeteostationList, Vars.Options.NearestMSRadius, false);
             Dictionary<double, double> funcSpeed = Range.GetFunction(MeteorologyParameters.Speed); //функция скорости на заданном ряде
             RawRange res = null;
             double rmax = double.MinValue, total_rmax=double.MinValue;
@@ -182,7 +182,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
                 }
             }
             if (res == null) {
-                MeteostationInfo mi = GetNearestMS(coordinates, Vars.LocalFileSystem.MeteostationList, false);
+                MeteostationInfo mi = GetNearestMS(coordinates, Vars.Meteostations.MeteostationList, false);
                 double l = EarthModel.CalculateDistance(mi.Coordinates, coordinates);
                 throw new GetBaseRangeException(total_rmax, Vars.Options.MinimalCorrelationCoeff, l, mts.Count, Vars.Options.NearestMSRadius, coordinates);
                     
@@ -460,7 +460,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
             RawRange res = null;
             List<MeteostationInfo> meteostations;
 
-            meteostations = Vars.LocalFileSystem.MeteostationList;
+            meteostations = Vars.Meteostations.MeteostationList;
             MeteostationInfo nearestMS = GetNearestMS(coordinates, meteostations);
             if (nearestMS == null)
                 throw new Exception("Не удалось найти ближайшую метеостанцию в заданном радиусе");

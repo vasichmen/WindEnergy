@@ -13,6 +13,7 @@ using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Interfaces;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Providers.DB;
 using WindEnergy.Lib.Data.Providers.ETOPO;
 
 namespace WindEnergy.Lib
@@ -48,7 +49,7 @@ namespace WindEnergy.Lib
                 { }
                 mt.Altitude = alts.GetElevation(mt.Coordinates);
             }
-            ExportMeteostationList(mts, toFile);
+            MeteostationDatabase.ExportMeteostationList(mts, toFile);
         }
 
         /// <summary>
@@ -90,44 +91,7 @@ namespace WindEnergy.Lib
             sw.Close();
         }
 
-        /// <summary>
-        /// экспортирует список метеостанций в указанный файл 
-        /// </summary>
-        /// <param name="list">список метеостанций</param>
-        /// <param name="filename">адрес файла, куда сохраняется список</param>
-        public static void ExportMeteostationList(List<MeteostationInfo> list, string filename)
-        {
-            //удаление повторов
-            List<MeteostationInfo> list_unic = new List<MeteostationInfo>();
-            foreach (var m in list)
-            {
-                //проверка существования ID в массиве
-                bool contains = false;
-                foreach (var cc in list_unic)
-                    if (cc.ID == m.ID)
-                    {
-                        contains = true;
-                        break;
-                    }
-                //если не существует, то  добавляем
-                if (!contains)
-                    list_unic.Add(m);
-            }
-            //запись в файл
-            StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
-            sw.WriteLine("ВМО ID;CC_Code;Название архива;Адрес;Широта;Долгота;Высота над у. м., м;Дата начала наблюдений");
-            foreach (var ms in list_unic)
-                sw.WriteLine(
-                    ms.ID + ";" +
-                    ms.CC_Code + ";" +
-                    ms.Name + ";" +
-                    ms.Address + ";" +
-                    ms.Coordinates.Lat.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
-                    ms.Coordinates.Lng.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
-                    ms.Altitude.ToString("0.00").Replace(Vars.DecimalSeparator, ',') + ";" +
-                    ms.MonitoringFrom.ToString());
-            sw.Close();
-        }
+       
 
         /// <summary>
         /// преобразование файла из json формата, полученного по ссылке 
@@ -180,7 +144,7 @@ namespace WindEnergy.Lib
             }
 
             //запись в файл
-            ExportMeteostationList(res, fileCoordList);
+            MeteostationDatabase.ExportMeteostationList(res, fileCoordList);
         }
 
         /// <summary>
@@ -196,7 +160,7 @@ namespace WindEnergy.Lib
             //если файл уже есть,то надо продолжить с последнего сочетания
             if (File.Exists(fileOutput))
             {
-                result = LocalFileSystem.LoadMeteostationList(fileOutput); //загрузка списка
+                result = MeteostationDatabase.LoadMeteostationList(fileOutput); //загрузка списка
                 StreamReader sr = new StreamReader(fileOutput);
                 while (!sr.EndOfStream)
                 {
@@ -243,7 +207,7 @@ namespace WindEnergy.Lib
                     try
                     {
                         //Сохранение временного результата перед каждым сочетанием
-                        ExportMeteostationList(result, fileOutput);
+                        MeteostationDatabase.ExportMeteostationList(result, fileOutput);
                         StreamWriter sw1 = new StreamWriter(fileOutput, true, Encoding.Default);
                         sw1.WriteLine(q);
                         sw1.Close();
@@ -287,7 +251,7 @@ namespace WindEnergy.Lib
             }
 
             //сохранение информации
-            ExportMeteostationList(result, fileOutput);
+            MeteostationDatabase.ExportMeteostationList(result, fileOutput);
             StreamWriter sw = new StreamWriter(fileOutput, true, Encoding.Default);
             sw.WriteLine(q);
             sw.Close();

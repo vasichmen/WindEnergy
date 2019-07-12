@@ -256,7 +256,7 @@ namespace WindEnergy.Lib.Data.Providers
                 pt = PointLatLng.Empty;
             else
             {
-                List<MeteostationInfo> list = Vars.LocalFileSystem.MeteostationList;
+                List<MeteostationInfo> list = Vars.Meteostations.MeteostationList;
                 var p = from m in list where m.ID == info.ID select m.Coordinates;
                 if (p.Count() == 0)
                     pt = PointLatLng.Empty;

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Structures;
+using WindEnergy.Lib.Data.Providers.DB;
 using WindEnergy.UI.Dialogs;
 
 namespace WindEnergy.UI.Tools
@@ -101,7 +102,7 @@ namespace WindEnergy.UI.Tools
             of.Filter = "Текстовые файлы *.txt|*.txt";
             if (of.ShowDialog(this) == DialogResult.OK)
             {
-                bool f = Vars.LocalFileSystem.CheckMSCoordinatesFile(of.FileName);
+                bool f = MeteostationDatabase.CheckMSCoordinatesFile(of.FileName);
                 if (!f)
                 {
                     MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла координат метеостанций", MessageBoxButtons.OK, MessageBoxIcon.Warning);

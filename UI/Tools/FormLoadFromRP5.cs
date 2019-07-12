@@ -37,6 +37,14 @@ namespace WindEnergy.UI.Tools
         }
 
         /// <summary>
+        /// открытие формы с уже выбранной МС
+        /// </summary>
+        public FormLoadFromRP5(MeteostationInfo meteostaion) : this()
+        {
+            selectedMeteostation = meteostaion;
+        }
+
+        /// <summary>
         /// результат работы окна 
         /// </summary>
         public RawRange Result { get; private set; }
@@ -50,6 +58,22 @@ namespace WindEnergy.UI.Tools
         {
             dateTimePickerFromDate.Value = DateTime.Now.AddDays(-2);
             dateTimePickerToDate.Value = DateTime.Now;
+
+            if (selectedMeteostation != null)
+            {
+                comboBoxPoint.Text = selectedMeteostation.Name;
+
+                //установка времени начала и конца наблюдений
+                dateTimePickerFromDate.MinDate = selectedMeteostation.MonitoringFrom;
+                dateTimePickerToDate.MaxDate = DateTime.Now;
+                labelDateRange.Text = "Выберите диапазон дат: (дата начала наблюдений: " + selectedMeteostation.MonitoringFrom.ToString() + ")";
+
+                //разблокировка элементов
+                dateTimePickerFromDate.Enabled = true;
+                dateTimePickerToDate.Enabled = true;
+                buttonDownload.Enabled = true;
+                linkLabelShowOnMap.Enabled = true;
+            }
         }
 
         /// <summary>
@@ -64,58 +88,71 @@ namespace WindEnergy.UI.Tools
                 MessageBox.Show(this, "Не выбрана метеостанция или координаты метеостанции недоступны", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            try
+
+            Action<double> pcChange = new Action<double>((pc) =>
             {
-                Action<double> pcChange = new Action<double>((pc) =>
+                if (this.InvokeRequired)
                 {
-                    if (this.InvokeRequired)
-                    {
-                        this.Invoke(new Action(() =>
-                        {
-                            progressBarProgress.Value = (int)pc;
-                            progressBarProgress.Refresh();
-                        }));
-                    }
-                    else
+                    this.Invoke(new Action(() =>
                     {
                         progressBarProgress.Value = (int)pc;
                         progressBarProgress.Refresh();
-                    }
-                });
-
-                buttonDownload.Enabled = false;
-                new Task(() =>
+                    }));
+                }
+                else
                 {
-                    RawRange res = engine.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation, pcChange);
-
-                    if (this.InvokeRequired)
-                        this.Invoke(new Action(() =>
-                        {
-                            Result = res;
-                            DialogResult = DialogResult.OK;
-                            Close();
-
-                        }));
-                    else
-                    {
-                        Result = res;
-                        DialogResult = DialogResult.OK;
-                        Close();
-                    }
-                }).Start();
-            }
-            catch (WebException ex)
+                    progressBarProgress.Value = (int)pc;
+                    progressBarProgress.Refresh();
+                }
+            });
+            Action<RawRange> success = new Action<RawRange>((res) =>
+            {
+                Result = res;
+                DialogResult = DialogResult.OK;
+                Close();
+            });
+            Action<Exception> error1 = new Action<Exception>((ex) =>
             {
                 buttonDownload.Enabled = true;
                 MessageBox.Show(this, ex.Message + "\r\n" + ex.InnerException != null ? ex.InnerException.Message : "", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }
-            catch (ApplicationException ae)
+            });
+            Action<Exception> error2 = new Action<Exception>((ae) =>
             {
                 buttonDownload.Enabled = true;
                 MessageBox.Show(this, ae.Message + "\r\n" + (ae.InnerException != null ? ae.InnerException.Message : "\r\n") + "\r\nПопробуйте выбрать меньший интервал времени", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }
+            });
+
+            buttonDownload.Enabled = false;
+
+            new Task(() =>
+            {
+                try
+                {
+                    RawRange res = engine.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation, pcChange);
+
+                    if (this.InvokeRequired)
+                        this.Invoke(success, res);
+                    else
+                        success.Invoke(res);
+                }
+                catch (WebException ex)
+                {
+                    if (this.InvokeRequired)
+                        this.Invoke(error1, ex);
+                    else
+                        error1.Invoke(ex);
+                }
+                catch (ApplicationException ae)
+                {
+
+                    if (this.InvokeRequired)
+                        this.Invoke(error2, ae);
+                    else
+                        error2.Invoke(ae);
+                }
+            }).Start();
 
         }
 
@@ -177,7 +214,8 @@ namespace WindEnergy.UI.Tools
             {
                 MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }catch (ApplicationException exc)
+            }
+            catch (ApplicationException exc)
             {
                 MessageBox.Show(this, exc.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -219,11 +257,13 @@ namespace WindEnergy.UI.Tools
                 dateTimePickerFromDate.MinDate = selectedMeteostation.MonitoringFrom;
                 dateTimePickerToDate.MaxDate = DateTime.Now;
                 labelDateRange.Text = "Выберите диапазон дат: (дата начала наблюдений: " + selectedMeteostation.MonitoringFrom.ToString() + ")";
+                linkLabelShowOnMap.Enabled = true;
 
                 //разблокировка элементов
                 dateTimePickerFromDate.Enabled = true;
                 dateTimePickerToDate.Enabled = true;
                 buttonDownload.Enabled = true;
+                linkLabelShowOnMap.Enabled = true;
 
             }
             catch (WebException)
@@ -251,6 +291,12 @@ namespace WindEnergy.UI.Tools
         {
             dateTimePickerFromDate.MaxDate = dateTimePickerToDate.Value;
             dateTimePickerToDate.MinDate = dateTimePickerFromDate.Value;
+        }
+
+        private void linkLabelShowOnMap_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (selectedMeteostation != null)
+                new FormShowMeteostationsMap(selectedMeteostation).Show();
         }
     }
 }

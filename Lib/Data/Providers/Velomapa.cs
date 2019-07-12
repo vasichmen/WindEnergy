@@ -48,10 +48,9 @@ namespace WindEnergy.Lib.Data.Providers
         /// отправить отчет о запуске программы
         /// </summary>
         /// <param name="guid">guid экземпляра</param>
-        private void AttachGuid(string guid)
+        private void AttachGuid(string guid,string ver)
         {
             string site = Vars.Options.SiteAddress;
-            string ver = string.Format("WindEnergy {0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()); ;
             string url = string.Format("{0}/receiver.php?mode=attach&program_guid={1}&version={2}", site, guid,ver);
             string ans = this.SendStringGetRequest(url,false);
             if (ans != "OK")
@@ -61,7 +60,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// <summary>
         /// отправить статистику на сервер
         /// </summary>
-        public void SendStatisticAsync()
+        public void SendStatisticAsync(string ver)
         {
             Action act = new Action(() =>
             {
@@ -73,7 +72,7 @@ namespace WindEnergy.Lib.Data.Providers
                     {
                         i++;
                         string guid = Vars.Options.ApplicationGuid;
-                        AttachGuid(guid);
+                        AttachGuid(guid,ver);
                         f = false;
                     }
                     catch (WebException)

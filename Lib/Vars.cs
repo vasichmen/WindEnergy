@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Structures.Options;
 using WindEnergy.Lib.Data.Interfaces;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Providers.DB;
 using WindEnergy.Lib.Data.Providers.ETOPO;
 
 namespace WindEnergy
@@ -54,9 +55,24 @@ namespace WindEnergy
             get
             {
                 if (_ETOPOdatabase == null)
-                    _ETOPOdatabase = new ETOPOProvider(Vars.Options.ETOPO2Folder);
+                    _ETOPOdatabase = new ETOPOProvider(Options.ETOPO2Folder);
                 return _ETOPOdatabase;
             }
         }
+
+        /// <summary>
+        /// Список метеостанций из БД Метеостанции мира
+        /// </summary>
+        public static MeteostationDatabase Meteostations
+        {
+            get
+            {
+                if (_Meteostations == null)
+                    _Meteostations = new MeteostationDatabase();
+                return _Meteostations;
+            }
+            set { _Meteostations = value; }
+        }
+        private static MeteostationDatabase _Meteostations = null;
     }
 }

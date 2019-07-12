@@ -39,6 +39,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.progressBarProgress = new System.Windows.Forms.ProgressBar();
+            this.linkLabelShowOnMap = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // dateTimePickerFromDate
@@ -146,6 +147,19 @@
             this.progressBarProgress.Size = new System.Drawing.Size(374, 23);
             this.progressBarProgress.TabIndex = 9;
             // 
+            // linkLabelShowOnMap
+            // 
+            this.linkLabelShowOnMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabelShowOnMap.AutoSize = true;
+            this.linkLabelShowOnMap.Enabled = false;
+            this.linkLabelShowOnMap.Location = new System.Drawing.Point(283, 9);
+            this.linkLabelShowOnMap.Name = "linkLabelShowOnMap";
+            this.linkLabelShowOnMap.Size = new System.Drawing.Size(103, 13);
+            this.linkLabelShowOnMap.TabIndex = 10;
+            this.linkLabelShowOnMap.TabStop = true;
+            this.linkLabelShowOnMap.Text = "Показать на карте";
+            this.linkLabelShowOnMap.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelShowOnMap_LinkClicked);
+            // 
             // FormLoadFromRP5
             // 
             this.AcceptButton = this.buttonDownload;
@@ -153,6 +167,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(395, 173);
+            this.Controls.Add(this.linkLabelShowOnMap);
             this.Controls.Add(this.progressBarProgress);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.label4);
@@ -186,5 +201,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.ProgressBar progressBarProgress;
+        private System.Windows.Forms.LinkLabel linkLabelShowOnMap;
     }
 }

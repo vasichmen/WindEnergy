@@ -42,6 +42,7 @@
             this.comboBoxMapProvider = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkBoxCalculateAirDensity = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.numericUpDownNormalLawTo = new System.Windows.Forms.NumericUpDown();
@@ -75,9 +76,12 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.checkBoxCalculateAirDensity = new System.Windows.Forms.CheckBox();
             this.buttonAccept = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -89,6 +93,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradTo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradFrom)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -99,12 +105,12 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(488, 367);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(651, 452);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tabControl1
@@ -112,12 +118,13 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(2, 2);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.tabControl1.Location = new System.Drawing.Point(3, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(484, 335);
+            this.tabControl1.Size = new System.Drawing.Size(645, 414);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -131,11 +138,11 @@
             this.tabPage1.Controls.Add(this.buttonSelectCoordinatesMSFile);
             this.tabPage1.Controls.Add(this.comboBoxMapProvider);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(476, 309);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage1.Size = new System.Drawing.Size(637, 385);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -143,35 +150,39 @@
             // labelRegionLimitsFile
             // 
             this.labelRegionLimitsFile.AutoSize = true;
-            this.labelRegionLimitsFile.Location = new System.Drawing.Point(88, 115);
+            this.labelRegionLimitsFile.Location = new System.Drawing.Point(117, 142);
+            this.labelRegionLimitsFile.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelRegionLimitsFile.Name = "labelRegionLimitsFile";
-            this.labelRegionLimitsFile.Size = new System.Drawing.Size(92, 13);
+            this.labelRegionLimitsFile.Size = new System.Drawing.Size(118, 17);
             this.labelRegionLimitsFile.TabIndex = 7;
             this.labelRegionLimitsFile.Text = "Файл не выбран";
             // 
             // labelCoordinatesMSFile
             // 
             this.labelCoordinatesMSFile.AutoSize = true;
-            this.labelCoordinatesMSFile.Location = new System.Drawing.Point(88, 73);
+            this.labelCoordinatesMSFile.Location = new System.Drawing.Point(117, 90);
+            this.labelCoordinatesMSFile.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelCoordinatesMSFile.Name = "labelCoordinatesMSFile";
-            this.labelCoordinatesMSFile.Size = new System.Drawing.Size(92, 13);
+            this.labelCoordinatesMSFile.Size = new System.Drawing.Size(118, 17);
             this.labelCoordinatesMSFile.TabIndex = 6;
             this.labelCoordinatesMSFile.Text = "Файл на выбран";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 94);
+            this.label12.Location = new System.Drawing.Point(8, 116);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(203, 13);
+            this.label12.Size = new System.Drawing.Size(265, 17);
             this.label12.TabIndex = 5;
             this.label12.Text = "Выбрать файл ограничений скоростей";
             // 
             // buttonSelectRegionLimitsFile
             // 
-            this.buttonSelectRegionLimitsFile.Location = new System.Drawing.Point(7, 110);
+            this.buttonSelectRegionLimitsFile.Location = new System.Drawing.Point(9, 135);
+            this.buttonSelectRegionLimitsFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSelectRegionLimitsFile.Name = "buttonSelectRegionLimitsFile";
-            this.buttonSelectRegionLimitsFile.Size = new System.Drawing.Size(75, 23);
+            this.buttonSelectRegionLimitsFile.Size = new System.Drawing.Size(100, 28);
             this.buttonSelectRegionLimitsFile.TabIndex = 4;
             this.buttonSelectRegionLimitsFile.Text = "Обзор";
             this.buttonSelectRegionLimitsFile.UseVisualStyleBackColor = true;
@@ -180,17 +191,19 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(4, 52);
+            this.label11.Location = new System.Drawing.Point(5, 64);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(211, 13);
+            this.label11.Size = new System.Drawing.Size(276, 17);
             this.label11.TabIndex = 3;
             this.label11.Text = "Выбрать файл координат метеостанций";
             // 
             // buttonSelectCoordinatesMSFile
             // 
-            this.buttonSelectCoordinatesMSFile.Location = new System.Drawing.Point(7, 68);
+            this.buttonSelectCoordinatesMSFile.Location = new System.Drawing.Point(9, 84);
+            this.buttonSelectCoordinatesMSFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSelectCoordinatesMSFile.Name = "buttonSelectCoordinatesMSFile";
-            this.buttonSelectCoordinatesMSFile.Size = new System.Drawing.Size(75, 23);
+            this.buttonSelectCoordinatesMSFile.Size = new System.Drawing.Size(100, 28);
             this.buttonSelectCoordinatesMSFile.TabIndex = 2;
             this.buttonSelectCoordinatesMSFile.Text = "Обзор";
             this.buttonSelectCoordinatesMSFile.UseVisualStyleBackColor = true;
@@ -199,19 +212,18 @@
             // comboBoxMapProvider
             // 
             this.comboBoxMapProvider.FormattingEnabled = true;
-            this.comboBoxMapProvider.Location = new System.Drawing.Point(7, 19);
-            this.comboBoxMapProvider.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxMapProvider.Location = new System.Drawing.Point(9, 23);
+            this.comboBoxMapProvider.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxMapProvider.Name = "comboBoxMapProvider";
-            this.comboBoxMapProvider.Size = new System.Drawing.Size(134, 21);
+            this.comboBoxMapProvider.Size = new System.Drawing.Size(177, 24);
             this.comboBoxMapProvider.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 2);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(5, 2);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 13);
+            this.label1.Size = new System.Drawing.Size(81, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Тип карты:";
             // 
@@ -239,29 +251,44 @@
             this.tabPage2.Controls.Add(this.textBoxSectionLength);
             this.tabPage2.Controls.Add(this.textBoxMinimalSpeedDeviation);
             this.tabPage2.Controls.Add(this.textBoxAirDensity);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(476, 309);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Size = new System.Drawing.Size(637, 383);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Расчёты";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // checkBoxCalculateAirDensity
+            // 
+            this.checkBoxCalculateAirDensity.AutoSize = true;
+            this.checkBoxCalculateAirDensity.Location = new System.Drawing.Point(417, 21);
+            this.checkBoxCalculateAirDensity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBoxCalculateAirDensity.Name = "checkBoxCalculateAirDensity";
+            this.checkBoxCalculateAirDensity.Size = new System.Drawing.Size(107, 21);
+            this.checkBoxCalculateAirDensity.TabIndex = 21;
+            this.checkBoxCalculateAirDensity.Text = "Авторасчёт";
+            this.checkBoxCalculateAirDensity.UseVisualStyleBackColor = true;
+            this.checkBoxCalculateAirDensity.CheckedChanged += new System.EventHandler(this.checkBoxCalculateAirDensity_CheckedChanged);
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(282, 145);
+            this.label10.Location = new System.Drawing.Point(376, 178);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(27, 13);
+            this.label10.Size = new System.Drawing.Size(34, 17);
             this.label10.TabIndex = 20;
             this.label10.Text = "ДО:";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(203, 145);
+            this.label9.Location = new System.Drawing.Point(271, 178);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(25, 13);
+            this.label9.Size = new System.Drawing.Size(32, 17);
             this.label9.TabIndex = 19;
             this.label9.Text = "ОТ:";
             // 
@@ -273,7 +300,8 @@
             0,
             0,
             131072});
-            this.numericUpDownNormalLawTo.Location = new System.Drawing.Point(313, 143);
+            this.numericUpDownNormalLawTo.Location = new System.Drawing.Point(417, 176);
+            this.numericUpDownNormalLawTo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDownNormalLawTo.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -285,7 +313,7 @@
             0,
             -2147483648});
             this.numericUpDownNormalLawTo.Name = "numericUpDownNormalLawTo";
-            this.numericUpDownNormalLawTo.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownNormalLawTo.Size = new System.Drawing.Size(56, 22);
             this.numericUpDownNormalLawTo.TabIndex = 18;
             // 
             // numericUpDownNormalLawFrom
@@ -296,7 +324,8 @@
             0,
             0,
             131072});
-            this.numericUpDownNormalLawFrom.Location = new System.Drawing.Point(234, 143);
+            this.numericUpDownNormalLawFrom.Location = new System.Drawing.Point(312, 176);
+            this.numericUpDownNormalLawFrom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDownNormalLawFrom.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -308,24 +337,26 @@
             0,
             -2147483648});
             this.numericUpDownNormalLawFrom.Name = "numericUpDownNormalLawFrom";
-            this.numericUpDownNormalLawFrom.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownNormalLawFrom.Size = new System.Drawing.Size(56, 22);
             this.numericUpDownNormalLawFrom.TabIndex = 17;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 145);
+            this.label8.Location = new System.Drawing.Point(8, 178);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(155, 13);
+            this.label8.Size = new System.Drawing.Size(201, 17);
             this.label8.TabIndex = 16;
             this.label8.Text = "Диапазон критерия Пирсона";
             // 
             // checkBoxMinCorrWet
             // 
             this.checkBoxMinCorrWet.AutoSize = true;
-            this.checkBoxMinCorrWet.Location = new System.Drawing.Point(287, 195);
+            this.checkBoxMinCorrWet.Location = new System.Drawing.Point(383, 240);
+            this.checkBoxMinCorrWet.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBoxMinCorrWet.Name = "checkBoxMinCorrWet";
-            this.checkBoxMinCorrWet.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxMinCorrWet.Size = new System.Drawing.Size(101, 21);
             this.checkBoxMinCorrWet.TabIndex = 15;
             this.checkBoxMinCorrWet.Text = "Влажность";
             this.toolTip1.SetToolTip(this.checkBoxMinCorrWet, "Использовать ограничение коэффициента корреляции для влажности");
@@ -334,9 +365,10 @@
             // checkBoxMinCorrTemp
             // 
             this.checkBoxMinCorrTemp.AutoSize = true;
-            this.checkBoxMinCorrTemp.Location = new System.Drawing.Point(188, 195);
+            this.checkBoxMinCorrTemp.Location = new System.Drawing.Point(251, 240);
+            this.checkBoxMinCorrTemp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBoxMinCorrTemp.Name = "checkBoxMinCorrTemp";
-            this.checkBoxMinCorrTemp.Size = new System.Drawing.Size(93, 17);
+            this.checkBoxMinCorrTemp.Size = new System.Drawing.Size(118, 21);
             this.checkBoxMinCorrTemp.TabIndex = 14;
             this.checkBoxMinCorrTemp.Text = "Температура";
             this.toolTip1.SetToolTip(this.checkBoxMinCorrTemp, "Использовать ограничение коэффициента корреляции для ткмпературы");
@@ -345,9 +377,10 @@
             // checkBoxMinCorrDirection
             // 
             this.checkBoxMinCorrDirection.AutoSize = true;
-            this.checkBoxMinCorrDirection.Location = new System.Drawing.Point(95, 195);
+            this.checkBoxMinCorrDirection.Location = new System.Drawing.Point(127, 240);
+            this.checkBoxMinCorrDirection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBoxMinCorrDirection.Name = "checkBoxMinCorrDirection";
-            this.checkBoxMinCorrDirection.Size = new System.Drawing.Size(94, 17);
+            this.checkBoxMinCorrDirection.Size = new System.Drawing.Size(119, 21);
             this.checkBoxMinCorrDirection.TabIndex = 13;
             this.checkBoxMinCorrDirection.Text = "Направление";
             this.toolTip1.SetToolTip(this.checkBoxMinCorrDirection, "Использовать ограничение коэффициента корреляции для направления");
@@ -356,9 +389,10 @@
             // checkBoxMinCorrSpeed
             // 
             this.checkBoxMinCorrSpeed.AutoSize = true;
-            this.checkBoxMinCorrSpeed.Location = new System.Drawing.Point(23, 195);
+            this.checkBoxMinCorrSpeed.Location = new System.Drawing.Point(31, 240);
+            this.checkBoxMinCorrSpeed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBoxMinCorrSpeed.Name = "checkBoxMinCorrSpeed";
-            this.checkBoxMinCorrSpeed.Size = new System.Drawing.Size(74, 17);
+            this.checkBoxMinCorrSpeed.Size = new System.Drawing.Size(91, 21);
             this.checkBoxMinCorrSpeed.TabIndex = 12;
             this.checkBoxMinCorrSpeed.Text = "Скорость";
             this.toolTip1.SetToolTip(this.checkBoxMinCorrSpeed, "Использовать ограничение коэффициента корреляции для скорости");
@@ -367,98 +401,110 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 172);
+            this.label7.Location = new System.Drawing.Point(8, 212);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(183, 13);
+            this.label7.Size = new System.Drawing.Size(236, 17);
             this.label7.TabIndex = 11;
             this.label7.Text = "Минимальный коэфф. корреляции";
             // 
             // textBoxMinimalCoeffCorrel
             // 
-            this.textBoxMinimalCoeffCorrel.Location = new System.Drawing.Point(206, 169);
+            this.textBoxMinimalCoeffCorrel.Location = new System.Drawing.Point(275, 208);
+            this.textBoxMinimalCoeffCorrel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxMinimalCoeffCorrel.Name = "textBoxMinimalCoeffCorrel";
-            this.textBoxMinimalCoeffCorrel.Size = new System.Drawing.Size(100, 20);
+            this.textBoxMinimalCoeffCorrel.Size = new System.Drawing.Size(132, 22);
             this.textBoxMinimalCoeffCorrel.TabIndex = 10;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 122);
+            this.label6.Location = new System.Drawing.Point(8, 150);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(194, 13);
+            this.label6.Size = new System.Drawing.Size(247, 17);
             this.label6.TabIndex = 9;
             this.label6.Text = "Максимальное расстояние до МС, м";
             // 
             // textBoxNearestMSRadius
             // 
-            this.textBoxNearestMSRadius.Location = new System.Drawing.Point(206, 119);
+            this.textBoxNearestMSRadius.Location = new System.Drawing.Point(275, 146);
+            this.textBoxNearestMSRadius.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxNearestMSRadius.Name = "textBoxNearestMSRadius";
-            this.textBoxNearestMSRadius.Size = new System.Drawing.Size(100, 20);
+            this.textBoxNearestMSRadius.Size = new System.Drawing.Size(132, 22);
             this.textBoxNearestMSRadius.TabIndex = 8;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 96);
+            this.label5.Location = new System.Drawing.Point(8, 118);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(174, 13);
+            this.label5.Size = new System.Drawing.Size(225, 17);
             this.label5.TabIndex = 7;
             this.label5.Text = "Минимальный диапазон Δt, дней";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 70);
+            this.label4.Location = new System.Drawing.Point(8, 86);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(139, 13);
+            this.label4.Size = new System.Drawing.Size(179, 17);
             this.label4.TabIndex = 6;
             this.label4.Text = "Шаг дискретизации Δt, шт";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 44);
+            this.label3.Location = new System.Drawing.Point(8, 54);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(143, 13);
+            this.label3.Size = new System.Drawing.Size(181, 17);
             this.label3.TabIndex = 5;
             this.label3.Text = "Отклонение скорости, м/с";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 18);
+            this.label2.Location = new System.Drawing.Point(8, 22);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(146, 13);
+            this.label2.Size = new System.Drawing.Size(181, 17);
             this.label2.TabIndex = 4;
             this.label2.Text = "Плотность воздуха, кг/м^3";
             // 
             // textBoxDaysToNewInterval
             // 
-            this.textBoxDaysToNewInterval.Location = new System.Drawing.Point(206, 93);
+            this.textBoxDaysToNewInterval.Location = new System.Drawing.Point(275, 114);
+            this.textBoxDaysToNewInterval.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxDaysToNewInterval.Name = "textBoxDaysToNewInterval";
-            this.textBoxDaysToNewInterval.Size = new System.Drawing.Size(100, 20);
+            this.textBoxDaysToNewInterval.Size = new System.Drawing.Size(132, 22);
             this.textBoxDaysToNewInterval.TabIndex = 3;
             // 
             // textBoxSectionLength
             // 
-            this.textBoxSectionLength.Location = new System.Drawing.Point(206, 67);
+            this.textBoxSectionLength.Location = new System.Drawing.Point(275, 82);
+            this.textBoxSectionLength.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxSectionLength.Name = "textBoxSectionLength";
-            this.textBoxSectionLength.Size = new System.Drawing.Size(100, 20);
+            this.textBoxSectionLength.Size = new System.Drawing.Size(132, 22);
             this.textBoxSectionLength.TabIndex = 2;
             // 
             // textBoxMinimalSpeedDeviation
             // 
-            this.textBoxMinimalSpeedDeviation.Location = new System.Drawing.Point(206, 41);
+            this.textBoxMinimalSpeedDeviation.Location = new System.Drawing.Point(275, 50);
+            this.textBoxMinimalSpeedDeviation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxMinimalSpeedDeviation.Name = "textBoxMinimalSpeedDeviation";
-            this.textBoxMinimalSpeedDeviation.Size = new System.Drawing.Size(100, 20);
+            this.textBoxMinimalSpeedDeviation.Size = new System.Drawing.Size(132, 22);
             this.textBoxMinimalSpeedDeviation.TabIndex = 1;
             // 
             // textBoxAirDensity
             // 
             this.textBoxAirDensity.Enabled = false;
-            this.textBoxAirDensity.Location = new System.Drawing.Point(206, 15);
+            this.textBoxAirDensity.Location = new System.Drawing.Point(275, 18);
+            this.textBoxAirDensity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxAirDensity.Name = "textBoxAirDensity";
-            this.textBoxAirDensity.Size = new System.Drawing.Size(100, 20);
+            this.textBoxAirDensity.Size = new System.Drawing.Size(132, 22);
             this.textBoxAirDensity.TabIndex = 0;
             // 
             // tabPage3
@@ -471,10 +517,11 @@
             this.tabPage3.Controls.Add(this.numericUpDownGradFrom);
             this.tabPage3.Controls.Add(this.label13);
             this.tabPage3.Controls.Add(this.comboBoxSpeedGradations);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(476, 309);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage3.Size = new System.Drawing.Size(637, 383);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Градации";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -482,27 +529,30 @@
             // labelGradStep
             // 
             this.labelGradStep.AutoSize = true;
-            this.labelGradStep.Location = new System.Drawing.Point(223, 38);
+            this.labelGradStep.Location = new System.Drawing.Point(297, 47);
+            this.labelGradStep.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelGradStep.Name = "labelGradStep";
-            this.labelGradStep.Size = new System.Drawing.Size(30, 13);
+            this.labelGradStep.Size = new System.Drawing.Size(36, 17);
             this.labelGradStep.TabIndex = 8;
             this.labelGradStep.Text = "Шаг:";
             // 
             // labelGradTo
             // 
             this.labelGradTo.AutoSize = true;
-            this.labelGradTo.Location = new System.Drawing.Point(111, 38);
+            this.labelGradTo.Location = new System.Drawing.Point(148, 47);
+            this.labelGradTo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelGradTo.Name = "labelGradTo";
-            this.labelGradTo.Size = new System.Drawing.Size(27, 13);
+            this.labelGradTo.Size = new System.Drawing.Size(34, 17);
             this.labelGradTo.TabIndex = 7;
             this.labelGradTo.Text = "ДО:";
             // 
             // labelGradFrom
             // 
             this.labelGradFrom.AutoSize = true;
-            this.labelGradFrom.Location = new System.Drawing.Point(6, 38);
+            this.labelGradFrom.Location = new System.Drawing.Point(8, 47);
+            this.labelGradFrom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelGradFrom.Name = "labelGradFrom";
-            this.labelGradFrom.Size = new System.Drawing.Size(25, 13);
+            this.labelGradFrom.Size = new System.Drawing.Size(32, 17);
             this.labelGradFrom.TabIndex = 6;
             this.labelGradFrom.Text = "ОТ:";
             // 
@@ -514,7 +564,8 @@
             0,
             0,
             131072});
-            this.numericUpDownGradStep.Location = new System.Drawing.Point(259, 36);
+            this.numericUpDownGradStep.Location = new System.Drawing.Point(345, 44);
+            this.numericUpDownGradStep.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDownGradStep.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -526,7 +577,7 @@
             0,
             -2147483648});
             this.numericUpDownGradStep.Name = "numericUpDownGradStep";
-            this.numericUpDownGradStep.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDownGradStep.Size = new System.Drawing.Size(79, 22);
             this.numericUpDownGradStep.TabIndex = 5;
             // 
             // numericUpDownGradTo
@@ -537,7 +588,8 @@
             0,
             0,
             131072});
-            this.numericUpDownGradTo.Location = new System.Drawing.Point(142, 36);
+            this.numericUpDownGradTo.Location = new System.Drawing.Point(189, 44);
+            this.numericUpDownGradTo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDownGradTo.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -549,7 +601,7 @@
             0,
             -2147483648});
             this.numericUpDownGradTo.Name = "numericUpDownGradTo";
-            this.numericUpDownGradTo.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDownGradTo.Size = new System.Drawing.Size(79, 22);
             this.numericUpDownGradTo.TabIndex = 5;
             // 
             // numericUpDownGradFrom
@@ -560,7 +612,8 @@
             0,
             0,
             131072});
-            this.numericUpDownGradFrom.Location = new System.Drawing.Point(37, 36);
+            this.numericUpDownGradFrom.Location = new System.Drawing.Point(49, 44);
+            this.numericUpDownGradFrom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDownGradFrom.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -572,24 +625,26 @@
             0,
             -2147483648});
             this.numericUpDownGradFrom.Name = "numericUpDownGradFrom";
-            this.numericUpDownGradFrom.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDownGradFrom.Size = new System.Drawing.Size(79, 22);
             this.numericUpDownGradFrom.TabIndex = 5;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(3, 12);
+            this.label13.Location = new System.Drawing.Point(4, 15);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(143, 13);
+            this.label13.Size = new System.Drawing.Size(186, 17);
             this.label13.TabIndex = 2;
             this.label13.Text = "Градации скоростей ветра";
             // 
             // comboBoxSpeedGradations
             // 
             this.comboBoxSpeedGradations.FormattingEnabled = true;
-            this.comboBoxSpeedGradations.Location = new System.Drawing.Point(152, 9);
+            this.comboBoxSpeedGradations.Location = new System.Drawing.Point(203, 11);
+            this.comboBoxSpeedGradations.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxSpeedGradations.Name = "comboBoxSpeedGradations";
-            this.comboBoxSpeedGradations.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxSpeedGradations.Size = new System.Drawing.Size(160, 24);
             this.comboBoxSpeedGradations.TabIndex = 1;
             this.comboBoxSpeedGradations.SelectedValueChanged += new System.EventHandler(this.comboBoxSpeedGradations_SelectedValueChanged);
             // 
@@ -597,28 +652,28 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.buttonCancel, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.buttonSave, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.buttonAccept, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 341);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 420);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(484, 24);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(645, 30);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(426, 0);
-            this.buttonCancel.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.buttonCancel.Location = new System.Drawing.Point(567, 0);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(56, 24);
+            this.buttonCancel.Size = new System.Drawing.Size(75, 30);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -627,48 +682,81 @@
             // buttonSave
             // 
             this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSave.Location = new System.Drawing.Point(2, 0);
-            this.buttonSave.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.buttonSave.Location = new System.Drawing.Point(3, 0);
+            this.buttonSave.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(69, 24);
+            this.buttonSave.Size = new System.Drawing.Size(92, 30);
             this.buttonSave.TabIndex = 0;
             this.buttonSave.Text = "Сохранить";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // checkBoxCalculateAirDensity
-            // 
-            this.checkBoxCalculateAirDensity.AutoSize = true;
-            this.checkBoxCalculateAirDensity.Location = new System.Drawing.Point(313, 17);
-            this.checkBoxCalculateAirDensity.Name = "checkBoxCalculateAirDensity";
-            this.checkBoxCalculateAirDensity.Size = new System.Drawing.Size(84, 17);
-            this.checkBoxCalculateAirDensity.TabIndex = 21;
-            this.checkBoxCalculateAirDensity.Text = "Авторасчёт";
-            this.checkBoxCalculateAirDensity.UseVisualStyleBackColor = true;
-            this.checkBoxCalculateAirDensity.CheckedChanged += new System.EventHandler(this.checkBoxCalculateAirDensity_CheckedChanged);
-            // 
             // buttonAccept
             // 
             this.buttonAccept.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonAccept.Location = new System.Drawing.Point(204, 0);
-            this.buttonAccept.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.buttonAccept.Location = new System.Drawing.Point(273, 0);
+            this.buttonAccept.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.buttonAccept.Name = "buttonAccept";
-            this.buttonAccept.Size = new System.Drawing.Size(77, 24);
+            this.buttonAccept.Size = new System.Drawing.Size(102, 30);
             this.buttonAccept.TabIndex = 2;
             this.buttonAccept.Text = "Применить";
             this.buttonAccept.UseVisualStyleBackColor = true;
             this.buttonAccept.Click += new System.EventHandler(this.buttonAccept_Click);
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.groupBox1);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(637, 385);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Источники данных";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radioButton2);
+            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(278, 82);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Поиск в Расписании Погоды";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(6, 21);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(146, 21);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Использовать API";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(6, 48);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(245, 21);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Использовать БД Метеостанций";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
             // FormOptions
             // 
             this.AcceptButton = this.buttonSave;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(488, 367);
+            this.ClientSize = new System.Drawing.Size(651, 452);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormOptions";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Настройки";
@@ -687,6 +775,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradTo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradFrom)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -741,5 +832,9 @@
         private System.Windows.Forms.ComboBox comboBoxSpeedGradations;
         private System.Windows.Forms.CheckBox checkBoxCalculateAirDensity;
         private System.Windows.Forms.Button buttonAccept;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
     }
 }

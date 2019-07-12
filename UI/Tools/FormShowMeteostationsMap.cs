@@ -13,6 +13,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes;
+using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Structures;
+using WindEnergy.UI.Ext;
 using WindEnergy.UI.Properties;
 
 namespace WindEnergy.UI.Tools
@@ -28,6 +31,15 @@ namespace WindEnergy.UI.Tools
         {
             InitializeComponent();
             ConfigureGMapControl();
+        }
+
+        /// <summary>
+        /// создание окна с выделенной метеостанцией на карте
+        /// </summary>
+        /// <param name="meteostation"></param>
+        public FormShowMeteostationsMap(MeteostationInfo meteostation) : this()
+        {
+            gmapControlMap.Position = meteostation.Coordinates;
         }
 
 
@@ -69,7 +81,7 @@ namespace WindEnergy.UI.Tools
 
             //язык карты
             GMapProvider.Language = LanguageType.Russian;
-
+            gmapControlMap.Position = PointLatLng.Empty;
 
             //поставщик карты
             switch (Vars.Options.MapProvider)
@@ -119,8 +131,10 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void FormShowMeteostationsMap_Shown(object sender, EventArgs e)
         {
-            gmapControlMap.Position = new PointLatLng(55.35, 37.45);
+            if (gmapControlMap.Position.IsEmpty)
+                gmapControlMap.Position = new PointLatLng(55.35, 37.45);
             showVisibleMeteostations();
+            toolStripStatusLabelStats.Text = $"Аэропортов: {Vars.Meteostations.AirportCount} шт., метеостанций: {Vars.Meteostations.MeteostationsCount} шт., всего: {Vars.Meteostations.TotalCount} шт.";
         }
 
         /// <summary>
@@ -131,12 +145,62 @@ namespace WindEnergy.UI.Tools
             //загрузка списка метеостанций
             if (lay != null)
             {
-                lay.Clear();
-                foreach (var mts in Vars.LocalFileSystem.MeteostationList)
+                //расчет областей экрана
+                int h = 15; //кол-во по высоте
+                int w = 15; //кол-во по ширине
+                double hd = gmapControlMap.ViewArea.HeightLat; //высота в градусах
+                double wd = gmapControlMap.ViewArea.WidthLng; //ширина в градусах
+                double sh = hd / h; // шаг по высоте
+                double sw = wd / w; //шаг по ширине
+                MeteostationInfo[,] mts_map = new MeteostationInfo[h, w];
+                RectLatLng[,] rec_map = new RectLatLng[h, w];
+                for (int i = 0; i < h; i++)
+                    for (int j = 0; j < w; j++)
+                    {
+                        //левый верхний угол
+                        double lat = gmapControlMap.ViewArea.Lat - (i) * sh;
+                        double lng = gmapControlMap.ViewArea.Lng + (j) * sw;
+                        rec_map[i, j] = new RectLatLng(lat, lng, sw, sh);
+                    }
+
+                //выборка точек из БД
+                List<MeteostationInfo> pts = new List<MeteostationInfo>();
+                foreach (var mts in Vars.Meteostations.MeteostationList)
                 {
                     if (gmapControlMap.ViewArea.Contains(mts.Coordinates))
-                        ShowMarker(mts.Coordinates, mts.Name);
+                    {
+                        pts.Add(mts); //добавление в общий список
+
+                        //поиск по всем областям
+                        bool exit = false;
+                        for (int i = 0; i < h && !exit; i++)
+                            for (int j = 0; j < w; j++)
+                                // если попадает в маленькую область и эта область ещё не заполнена
+                                if (rec_map[i, j].Contains(mts.Coordinates) && mts_map[i, j] == null)
+                                {//добавляем на карту и выходим
+                                    mts_map[i, j] = mts;
+                                    exit = true;
+                                    break;
+                                }
+
+                    }
                 }
+
+                List<MeteostationInfo> res;
+                if (pts.Count < h * w)
+                    res = pts;
+                else
+                {
+                    res = new List<MeteostationInfo>();
+                    foreach (var dd in mts_map)
+                        if (dd != null)
+                            res.Add(dd);
+                }
+
+                //вывод на карту
+                lay.Clear();
+                foreach (var a in res)
+                    showMarker(a.Coordinates, a.Name, a);
             }
         }
 
@@ -144,12 +208,13 @@ namespace WindEnergy.UI.Tools
         /// вывод маркетра на карту
         /// </summary>
         /// <param name="cled">координаты нового маркера</param>
-        private void ShowMarker(PointLatLng cled, string ttip)
+        private void showMarker(PointLatLng cled, string ttip, object tag)
         {
             Point offsets = new Point(0, -16);
             MapMarker mar = new MapMarker(cled, Resources.marker, offsets);
             mar.ToolTipText = ttip;
             mar.IsHitTestVisible = true;
+            mar.Tag = tag;
             lay.Markers.Add(mar);
         }
 
@@ -157,7 +222,7 @@ namespace WindEnergy.UI.Tools
         {
             showVisibleMeteostations();
         }
-        
+
         private void gmapControlMap_SizeChanged(object sender, EventArgs e)
         {
             showVisibleMeteostations();
@@ -167,6 +232,24 @@ namespace WindEnergy.UI.Tools
         {
             if (e.Button == gmapControlMap.DragButton)
                 showVisibleMeteostations();
+        }
+
+        private void gmapControlMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
+        {
+            MeteostationInfo mi = (MeteostationInfo)item.Tag;
+            FormLoadFromRP5 frm = new FormLoadFromRP5(mi);
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                RawRange res = frm.Result;
+                TabPageExt tab = Program.winMain.mainTabControl.OpenNewTab(res, res.Name);
+                tab.HasNotSavedChanges = true;
+                Program.winMain.Focus();
+            }
+        }
+
+        private void FormShowMeteostationsMap_Resize(object sender, EventArgs e)
+        {
+            showVisibleMeteostations();
         }
     }
 }

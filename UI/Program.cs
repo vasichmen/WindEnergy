@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -44,7 +45,7 @@ namespace WindEnergy.UI
                 new Task(new Action(() =>
                 {
                     Velomapa site = new Velomapa(); //связь с сайтом
-                    site.SendStatisticAsync(); //статистика
+                    site.SendStatisticAsync(string.Format("WindEnergy {0}", Assembly.GetExecutingAssembly().GetName().Version.ToString())); //статистика
 
                 })).Start();
 

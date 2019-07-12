@@ -17,22 +17,8 @@ namespace WindEnergy.Lib.Data.Providers
     /// </summary>
     public class LocalFileSystem
     {
-        private List<MeteostationInfo> _meteostationList = null;
         private Dictionary<PointLatLng, ManualLimits> _staticSpeedLimits = null;
-
-        /// <summary>
-        /// список метеостанций и координат
-        /// </summary>
-        public List<MeteostationInfo> MeteostationList
-        {
-            get
-            {
-                if (_meteostationList == null || _meteostationList.Count == 0)
-                    _meteostationList = LoadMeteostationList(Vars.Options.StaticMeteostationCoordinatesSourceFile);
-                return _meteostationList;
-            }
-        }
-
+        
         /// <summary>
         /// список ограничений по регионам
         /// </summary>
@@ -45,7 +31,6 @@ namespace WindEnergy.Lib.Data.Providers
                 return _staticSpeedLimits;
             }
         }
-
 
         /// <summary>
         /// создание временного файла
@@ -120,21 +105,6 @@ namespace WindEnergy.Lib.Data.Providers
             }
         }
 
-        /// <summary>
-        /// пробует загрузить файл координат метеостанций и возвращает true, если  загрузка удалась
-        /// </summary>
-        /// <param name="fileName">адрес файла</param>
-        /// <returns></returns>
-        public bool CheckMSCoordinatesFile(string fileName)
-        {
-            try
-            {
-                LoadMeteostationList(fileName);
-                return true;
-            }
-            catch (Exception)
-            { return false; }
-        }
 
         /// <summary>
         /// пробует загрузить файл ограничений и возвращает true, если  загрузка удалась
@@ -177,42 +147,6 @@ namespace WindEnergy.Lib.Data.Providers
             return limits;
         }
 
-        /// <summary>
-        /// загрузка списка метеостанций и координат
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns></returns>
-        public static List<MeteostationInfo> LoadMeteostationList(string filename)
-        {
-            StreamReader sr = new StreamReader(filename);
-            sr.ReadLine(); //пропуск заголовка
-
-            List<MeteostationInfo> res = new List<MeteostationInfo>();
-            while (!sr.EndOfStream)
-            {
-                string[] arr = sr.ReadLine().Split(';');
-                if (arr.Length < 3)
-                    continue;
-                string wmo = arr[0];
-                string cc_code = arr[1];
-                string name = arr[2];
-                string address = arr[3];
-                double lat = double.Parse(arr[4].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
-                double lon = double.Parse(arr[5].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
-
-                double alt = double.NaN;
-                DateTime mfrom = DateTime.MinValue;
-                if (arr.Length > 6)
-                {
-                    alt = double.Parse(arr[6].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
-                    mfrom = DateTime.Parse(arr[7]);
-                }
-                res.Add(new MeteostationInfo() { ID = wmo, Coordinates = new PointLatLng(lat, lon), Name = name, Altitude = alt, MonitoringFrom = mfrom, CC_Code=cc_code, Address=address });
-            }
-
-            sr.Close();
-            return res;
-        }
 
     }
 }

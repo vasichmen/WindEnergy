@@ -102,6 +102,7 @@
     <Compile Include="Data\Interfaces\IGeocoderProvider.cs" />
     <Compile Include="Data\Providers\Google.cs" />
     <Compile Include="Data\Providers\LocalFileSystem.cs" />
+    <Compile Include="Data\Providers\DB\MeteostationDatabase.cs" />
     <Compile Include="Data\Providers\MSExcel.cs" />
     <Compile Include="Data\Providers\NASA.cs" />
     <Compile Include="Data\Providers\RP5ru.cs" />
