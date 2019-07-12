@@ -163,8 +163,24 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void comboBoxWMO_TextUpdate(object sender, EventArgs e)
         {
+            buttonDownload.Enabled = false;
+            selectedMeteostation = null;
+            dateTimePickerFromDate.Enabled = false;
+            dateTimePickerToDate.Enabled = false;
+            linkLabelShowOnMap.Enabled = false;
             string curTextBox = comboBoxPoint.Text.Trim();
-            updateWMOListAsync(curTextBox);
+            switch (Vars.Options.RP5SearchEngine)
+            {
+                case RP5SearchEngine.DBSearch:
+                    List<MeteostationInfo> results = Vars.Meteostations.Search(curTextBox);
+                    comboBoxPoint.Items.Clear();
+                    comboBoxPoint.Items.AddRange(results.ToArray());
+                    comboBoxPoint.SelectionStart = comboBoxPoint.Text.Length;
+                    break;
+                case RP5SearchEngine.OnlineAPI:
+                    updateWMOListAsync(curTextBox);
+                    break;
+            }
         }
 
         /// <summary>
@@ -188,7 +204,7 @@ namespace WindEnergy.UI.Tools
                 List<RP5ru.WmoInfo> results;
                 await Task.Run(() =>
                 {
-                    Thread.Sleep(2000); //ждем 2 с
+                    Thread.Sleep(1000); //ждем 1 с
 
                     //получаем новый текст 
                     string curTextBox = "";
@@ -236,22 +252,30 @@ namespace WindEnergy.UI.Tools
             {
                 if (comboBoxPoint.SelectedItem == null)
                     return;
-                List<MeteostationInfo> meteost = engine.GetMeteostationsAtPoint(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
+
                 //выбор метеостанции
-                MeteostationInfo meteostation;
-                if (meteost.Count == 1)
-                    meteostation = meteost[0];
-                else
+                if (comboBoxPoint.SelectedItem.GetType() == typeof(RP5ru.WmoInfo))
                 {
-                    string text = "Ближайшие метеостанции к выбранной точке:\r\n\r\n";
-                    text += meteost[0].Name + ", (" + meteost[0].OwnerDistance + " км)\r\n\r\n";
-                    text += meteost[1].Name + ", (" + meteost[1].OwnerDistance + " км)\r\n\r\n";
-                    FormChooseMeteostAirportDialog dlg = new FormChooseMeteostAirportDialog("Загрузка ряда с rp5.ru", text, meteost[0].Name, meteost[1].Name);
-                    if (dlg.ShowDialog(this) == DialogResult.OK)
-                        meteostation = meteost[dlg.Result - 1];
-                    else return;
+                    List<MeteostationInfo> meteost = engine.GetMeteostationsAtPoint(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
+                    MeteostationInfo meteostation;
+                    if (meteost.Count == 0)
+                        return;
+                    if (meteost.Count == 1)
+                        meteostation = meteost[0];
+                    else
+                    {
+                        string text = "Ближайшие метеостанции к выбранной точке:\r\n\r\n";
+                        text += meteost[0].Name + ", (" + meteost[0].OwnerDistance + " км)\r\n\r\n";
+                        text += meteost[1].Name + ", (" + meteost[1].OwnerDistance + " км)\r\n\r\n";
+                        FormChooseMeteostAirportDialog dlg = new FormChooseMeteostAirportDialog("Загрузка ряда с rp5.ru", text, meteost[0].Name, meteost[1].Name);
+                        if (dlg.ShowDialog(this) == DialogResult.OK)
+                            meteostation = meteost[dlg.Result - 1];
+                        else return;
+                    }
+                    this.selectedMeteostation = meteostation;
                 }
-                this.selectedMeteostation = meteostation;
+                else
+                    this.selectedMeteostation = comboBoxPoint.SelectedItem as MeteostationInfo;
 
                 //установка времени начала и конца наблюдений
                 dateTimePickerFromDate.MinDate = selectedMeteostation.MonitoringFrom;

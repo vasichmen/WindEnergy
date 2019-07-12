@@ -62,7 +62,10 @@ namespace WindEnergy.UI.Tools
             //ОСНОВНЫЕ
             comboBoxMapProvider.Items.AddRange(MapProviders.GoogleSatellite.GetItems().ToArray());
             labelCoordinatesMSFile.Text = Path.GetFileName(Vars.Options.StaticMeteostationCoordinatesSourceFile);
+            coordinateMSFile = Vars.Options.StaticMeteostationCoordinatesSourceFile;
+            regionLimitsFile = Vars.Options.StaticRegionLimitsSourceFile;
             labelRegionLimitsFile.Text = Path.GetFileName(Vars.Options.StaticRegionLimitsSourceFile);
+            comboBoxMapProvider.SelectedItem = Vars.Options.MapProvider.Description();
 
             //РАСЧЁТ
             textBoxAirDensity.Text = Vars.Options.AirDensity.ToString();
@@ -86,9 +89,11 @@ namespace WindEnergy.UI.Tools
             numericUpDownGradFrom.Value = (decimal)Vars.Options.UserSpeedGradation.From;
             numericUpDownGradTo.Value = (decimal)Vars.Options.UserSpeedGradation.To;
             numericUpDownGradStep.Value = (decimal)Vars.Options.UserSpeedGradation.Step;
-
-            comboBoxMapProvider.SelectedItem = Vars.Options.MapProvider.Description();
             comboBoxSpeedGradations.SelectedItem = Vars.Options.CurrentSpeedGradationType.Description();
+
+            //ИСТОЧНИКИ ДАННЫХ
+            radioButtonSearchTypeAPI.Checked = Vars.Options.RP5SearchEngine == RP5SearchEngine.OnlineAPI;
+            radioButtonSearchTypeDB.Checked = Vars.Options.RP5SearchEngine == RP5SearchEngine.DBSearch;
         }
 
         /// <summary>
@@ -215,6 +220,20 @@ namespace WindEnergy.UI.Tools
             catch (Exception ex)
             {
                 MessageBox.Show(this, ex.Message + "\r\nПроверьте введённые данные на вкладке \"Градации\"", "Сохранение настроек", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            //ИСТОЧНИКИ ДАННЫХ
+            try
+            {
+                if (radioButtonSearchTypeAPI.Checked)
+                    Vars.Options.RP5SearchEngine = RP5SearchEngine.OnlineAPI;
+                if (radioButtonSearchTypeDB.Checked)
+                    Vars.Options.RP5SearchEngine = RP5SearchEngine.DBSearch;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message + "\r\nПроверьте введённые данные на вкладке \"Источники данных\"", "Сохранение настроек", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }

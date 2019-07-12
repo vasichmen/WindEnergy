@@ -168,5 +168,19 @@ namespace WindEnergy.Lib.Data.Providers.DB
             { return false; }
         }
 
+        /// <summary>
+        /// ищет в БД метеостанции по запросу
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public List<MeteostationInfo> Search(string query)
+        {
+            List<MeteostationInfo> res = new List<MeteostationInfo>();
+            foreach (var m in MeteostationList)
+                if (m.Name.ToLower().Contains(query.ToLower()))
+                    res.Add(m);
+            return res;
+        }
+
     }
 }

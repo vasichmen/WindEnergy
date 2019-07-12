@@ -98,5 +98,10 @@ namespace WindEnergy.Lib.Classes.Structures
             CC_Code = "";
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
     }
 }

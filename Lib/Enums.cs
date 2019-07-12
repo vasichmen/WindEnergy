@@ -30,6 +30,25 @@ namespace WindEnergy
     }
 
     /// <summary>
+    /// Способ поиска метеостанций (онлайн или из БД)
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<RP5SearchEngine>))]
+    public enum RP5SearchEngine
+    {
+        /// <summary>
+        /// Онлайн поиск по API
+        /// </summary>
+        [Description("Онлайн поиск")]
+        OnlineAPI,
+
+        /// <summary>
+        /// поиск по локальной БД
+        /// </summary>
+        [Description("БД Метеостанции мира")]
+        DBSearch
+    }
+
+    /// <summary>
     /// направления ветра по 16 румбам
     /// </summary>
     [TypeConverter(typeof(EnumTypeConverter<WindDirections>))]

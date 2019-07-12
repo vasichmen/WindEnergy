@@ -42,7 +42,13 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             CalculateAirDensity = false;
             ETOPO2Folder = Application.StartupPath + "\\Data\\ETOPO";
             SiteAddress = "http://velomapa.ru";
+            RP5SearchEngine = RP5SearchEngine.OnlineAPI;
         }
+
+        /// <summary>
+        /// источник поиска по метеостанциям РП5
+        /// </summary>
+        public RP5SearchEngine RP5SearchEngine { get; set; }
 
         /// <summary>
         /// адрес файла настроек
