@@ -30,6 +30,27 @@ namespace WindEnergy
     }
 
     /// <summary>
+    /// диалог обновления программы
+    /// </summary>
+    public enum UpdateDialogAnswer
+    {
+        /// <summary>
+        /// всегда спрашивать
+        /// </summary>
+        AlwaysAsk,
+
+        /// <summary>
+        /// всегда игнорировать обновления
+        /// </summary>
+        AlwaysIgnore,
+
+        /// <summary>
+        /// всегда принимать обновления
+        /// </summary>
+        AlwaysAccept
+    }
+
+    /// <summary>
     /// Способ поиска метеостанций (онлайн или из БД)
     /// </summary>
     [TypeConverter(typeof(EnumTypeConverter<RP5SearchEngine>))]

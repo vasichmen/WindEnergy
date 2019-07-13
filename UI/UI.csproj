@@ -84,6 +84,12 @@
     <Compile Include="Dialogs\FormSelectMapPointDialog.Designer.cs">
       <DependentUpon>FormSelectMapPointDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\FormUpdateDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FormUpdateDialog.designer.cs">
+      <DependentUpon>FormUpdateDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Ext\ComboboxColumn.cs" />
     <Compile Include="Ext\CalendarColumn.cs" />
     <Compile Include="Ext\DataGridViewExt.cs">
@@ -94,6 +100,12 @@
     </Compile>
     <Compile Include="Ext\TabPageExt.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAbout.designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools\FormCalcYear.cs">
       <SubType>Form</SubType>
@@ -179,6 +191,12 @@
     <EmbeddedResource Include="Dialogs\FormSelectMapPointDialog.resx">
       <DependentUpon>FormSelectMapPointDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FormUpdateDialog.resx">
+      <DependentUpon>FormUpdateDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormCalcYear.resx">
       <DependentUpon>FormCalcYear.cs</DependentUpon>
     </EmbeddedResource>
@@ -243,7 +261,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="changelog.txt" />
+    <Content Include="changelog.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Docs\Добавление нового поля для rawRange.txt" />
     <Content Include="icon.ico" />
     <Content Include="staticMeteostationCoordinates.txt">
@@ -253,6 +273,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="License-LGPL.txt" />
+    <Content Include="todo.txt" />
     <None Include="Resources\marker.ico" />
     <None Include="Resources\page_close_button.png" />
   </ItemGroup>

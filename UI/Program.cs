@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TrackConverter.UI.Common.Dialogs;
+using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Structures.Options;
 using WindEnergy.Lib.Data.Providers;
 
@@ -40,18 +42,31 @@ namespace WindEnergy.UI
                 Application.ApplicationExit += application_ApplicationExit;
 
 
-                #region запись статистики, проверка версии
+            #region запись статистики, проверка версии
 
-                new Task(new Action(() =>
+            new Task(new Action(() =>
+            {
+                Velomapa site = new Velomapa(); //связь с сайтом
+                site.SendStatisticAsync(); //статистика
+
+                //действие при проверке версии
+                Action<VersionInfo> action = new Action<VersionInfo>((vi) =>
                 {
-                    Velomapa site = new Velomapa(); //связь с сайтом
-                    site.SendStatisticAsync(string.Format("WindEnergy {0}", Assembly.GetExecutingAssembly().GetName().Version.ToString())); //статистика
+                    float curVer = Vars.Options.VersionInt;
+                    if (vi.VersionInt > curVer)
+                    {
+                        FormUpdateDialog fud = new FormUpdateDialog(vi);
+                        if (Vars.Options.UpdateMode != UpdateDialogAnswer.AlwaysIgnore)
+                            winMain.Invoke(new Action(() => fud.ShowDialog()));
+                    }
+                });
+                site.GetVersionAsync(action); //проверка версии
+            })
+            ).Start();
 
-                })).Start();
+            #endregion
 
-                #endregion
-
-                Application.Run(winMain);
+            Application.Run(winMain);
 #if (!DEBUG)
             }
             catch (Exception e)

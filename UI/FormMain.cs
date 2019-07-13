@@ -338,6 +338,19 @@ namespace WindEnergy.UI
 
         #endregion
 
+        #region Помощь
+
+        /// <summary>
+        /// Кнопка О программе
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormAbout().Show();
+        }
+
+        #endregion
 
         #endregion
 
@@ -490,10 +503,6 @@ namespace WindEnergy.UI
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
 
     }
 }

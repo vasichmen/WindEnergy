@@ -214,6 +214,43 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// </summary>
         public double QualifierDaysToBeginMissing { get; set; }
 
+        /// <summary>
+        /// версия приложения число
+        /// </summary>
+        public float VersionInt
+        {
+            get
+            {
+                return Convert.ToSingle(Application.ProductVersion.Replace(".", ""));
+            }
+        }
+
+        /// <summary>
+        /// версия приложения в виде текста
+        /// </summary>
+        public string VersionText
+        {
+            get
+            {
+                return Application.ProductVersion;
+            }
+        }
+
+
+        /// <summary>
+        /// поведение диалога обновления программы
+        /// </summary>
+        public UpdateDialogAnswer UpdateMode { get; set; }
+
+        /// <summary>
+        /// адрес для связи в Telegram
+        /// </summary>
+        public string TelegramAddress { get { return "tg://resolve?domain=vasichmen"; } }
+
+        /// <summary>
+        /// адрес репозитория гитхаб
+        /// </summary>
+        public string GitHubRepository { get { return "https://github.com/vasichmen/WindEnergy"; } }
 
         /// <summary>
         /// сохранение настроек в файл
