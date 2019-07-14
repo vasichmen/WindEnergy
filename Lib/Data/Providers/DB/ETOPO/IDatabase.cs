@@ -1,7 +1,7 @@
 ﻿using GMap.NET;
 using System;
 
-namespace WindEnergy.Lib.Data.Providers.ETOPO
+namespace WindEnergy.Lib.Data.Providers.DB.ETOPO
 {
     interface IDatabase
     {

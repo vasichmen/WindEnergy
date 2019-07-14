@@ -8,34 +8,34 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WindEnergy.Lib.Data.Providers.ETOPO
+namespace WindEnergy.Lib.Data.Providers.DB.ETOPO
 {
     /// <summary>
     /// База данных в двоичном файле .bin с заголовочным .hdr . 
     /// Поддерживаются бинарные файлы с целыми числами в ячейках с big-endian и little-endian порядком байт. 
     /// </summary>
-    class FloatDatabase : BaseGrid
+    class Int16Database : BaseGrid
     {
-        private float[,] matrix;
-        private float noData;
-        private float minimum;
-        private float maximum;
+        private Int16[,] matrix;
+        private Int16 noData;
+        private Int16 minimum;
+        private Int16 maximum;
 
 
         /// <summary>
         /// значение в ячейках, для которых нет данных
         /// </summary>
-        public float NoData { get { return this.noData; } }
+        public Int16 NoData { get { return this.noData; } }
 
         /// <summary>
         /// Минимальное значение в базе данных
         /// </summary>
-        public float Minimum { get { return this.minimum; } }
+        public Int16 Minimum { get { return this.minimum; } }
 
         /// <summary>
         /// Максимальное значение в базе данных
         /// </summary>
-        public float Maximum { get { return this.maximum; } }
+        public Int16 Maximum { get { return this.maximum; } }
 
         /// <summary>
         /// Возвращает элемент по заданным столбцу и строке
@@ -46,15 +46,17 @@ namespace WindEnergy.Lib.Data.Providers.ETOPO
         public override double this[int i, int j] { get { return matrix[i, j]; } }
 
 
+
+
         /// <summary>
         /// Загружает базу данных из заданных файлов
         /// </summary>
         /// <param name="fHeader">Путь к заголовочному файлу</param>
         /// <param name="fData">Путь к файлу данных</param>
-        public FloatDatabase(string fHeader, string fData)
+        public Int16Database(string fHeader, string fData)
             : base(fHeader, fData)
         {
-            this.Type = ETOPODBType.Float;
+            this.Type = ETOPODBType.Int16;
             this.LoadDatabase();
         }
 
@@ -81,15 +83,15 @@ namespace WindEnergy.Lib.Data.Providers.ETOPO
                     int rows = -1;
 
                     //значение для обозначения неизвестных участков
-                    float nodata = -1;
+                    short nodata = -1;
 
                     //координаты нижнего левого угла
                     double xllcorner = double.NaN;
                     double yllcorner = double.NaN;
 
                     //контрольные значения максимальной и минимальной высоты
-                    float min = -1;
-                    float max = -1;
+                    short min = -1;
+                    short max = -1;
 
                     //размер ячейки в градусах
                     double cellSize = double.NaN;
@@ -113,40 +115,48 @@ namespace WindEnergy.Lib.Data.Providers.ETOPO
                             int _ = line.IndexOf(" ");
                             string num = line.Substring(_);
                             rows = int.Parse(num.Trim());
-                        } if (line.ToLower().Contains("xllcorner"))
+                        }
+                        if (line.ToLower().Contains("xllcorner"))
                         {
                             int _ = line.IndexOf(" ");
                             string num = line.Substring(_);
                             xllcorner = double.Parse(num.Trim().Replace('.', Vars.DecimalSeparator));
-                        } if (line.ToLower().Contains("yllcorner"))
+                        }
+                        if (line.ToLower().Contains("yllcorner"))
                         {
                             int _ = line.IndexOf(" ");
                             string num = line.Substring(_);
                             yllcorner = double.Parse(num.Trim().Replace('.', Vars.DecimalSeparator));
-                        }if (line.ToLower().Contains("yllcenter") || line.ToLower().Contains("xllcenter"))
+                        }
+                        if (line.ToLower().Contains("yllcenter") || line.ToLower().Contains("xllcenter"))
                         {
                             throw new ApplicationException("Заголовочный файл должен содержать записи xllcorner и yllcorner.\r\nСкорее всего, указана grid-registred БД. Используйте cell-registred БД.\r\nПроблема в файле " + this.headerFile);
-                        } if (line.ToLower().Contains("cellsize"))
+                        }
+                        if (line.ToLower().Contains("cellsize"))
                         {
                             int _ = line.IndexOf(" ");
                             string num = line.Substring(_);
                             cellSize = double.Parse(num.Trim().Replace('.', Vars.DecimalSeparator));
-                        } if (line.ToLower().Contains("nodata_value"))
+                        }
+                        if (line.ToLower().Contains("nodata_value"))
                         {
                             int _ = line.IndexOf(" ");
                             string num = line.Substring(_);
-                            nodata = float.Parse(num.Trim().Replace('.', Vars.DecimalSeparator));
-                        } if (line.ToLower().Contains("min_value"))
+                            nodata = short.Parse(num.Trim().Replace('.', Vars.DecimalSeparator));
+                        }
+                        if (line.ToLower().Contains("min_value"))
                         {
                             int _ = line.IndexOf(" ");
                             string num = line.Substring(_);
-                            min = float.Parse(num.Trim().Replace('.', Vars.DecimalSeparator));
-                        } if (line.ToLower().Contains("max_value"))
+                            min = short.Parse(num.Trim().Replace('.', Vars.DecimalSeparator));
+                        }
+                        if (line.ToLower().Contains("max_value"))
                         {
                             int _ = line.IndexOf(" ");
                             string num = line.Substring(_);
-                            max = float.Parse(num.Trim().Replace('.', Vars.DecimalSeparator));
-                        } if (line.ToLower().Contains("byteorder"))
+                            max = short.Parse(num.Trim().Replace('.', Vars.DecimalSeparator));
+                        }
+                        if (line.ToLower().Contains("byteorder"))
                         {
                             int _ = line.IndexOf(" ");
                             string order = line.Substring(_);
@@ -162,11 +172,11 @@ namespace WindEnergy.Lib.Data.Providers.ETOPO
                     if (columns == -1 ||
                         rows == -1 ||
                         nodata == -1 ||
-                        double.IsNaN( xllcorner) ||
-                        double.IsNaN( yllcorner ) ||
+                        double.IsNaN(xllcorner) ||
+                        double.IsNaN(yllcorner) ||
                         min == -1 ||
                         max == -1 ||
-                        double.IsNaN( cellSize) ||
+                        double.IsNaN(cellSize) ||
                         isMostByteFirst == null)
                         throw new Exception("Ошибка при чтении заголовочного файла. Не все данные прочитаны");
 
@@ -175,7 +185,7 @@ namespace WindEnergy.Lib.Data.Providers.ETOPO
                     #region основной файл данных
 
 
-                    float[,] fileArray = new float[rows, columns];
+                    Int16[,] fileArray = new Int16[rows, columns];
 
                     //заполнение массива
                     float nmin = float.MaxValue;
@@ -184,15 +194,15 @@ namespace WindEnergy.Lib.Data.Providers.ETOPO
                         for (int j = 0; j < columns; j++)
                         {
                             //чтение двух байт из файла
-                            byte b1 = (byte)rbin.ReadByte();
-                            byte b2 = (byte)rbin.ReadByte();
-                            byte b3 = (byte)rbin.ReadByte();
-                            byte b4 = (byte)rbin.ReadByte();
-                  
-                            //преобразование в Float
-                            float val = (bool)isMostByteFirst
-                                ? BitConverter.ToSingle(new byte[] { b4, b3, b2, b1 }, 0)
-                                : BitConverter.ToSingle(new byte[] { b1, b2, b3, b4 }, 0);
+                            int imost = rbin.ReadByte();
+                            int ileast = rbin.ReadByte();
+                            byte most = (byte)imost;
+                            byte least = (byte)ileast;
+
+                            //преобразование в ShortInt
+                            Int16 val = (bool)isMostByteFirst
+                                ? BitConverter.ToInt16(new byte[] { least, most }, 0)
+                                : BitConverter.ToInt16(new byte[] { most, least }, 0);
 
                             fileArray[i, j] = val;
 
@@ -210,8 +220,9 @@ namespace WindEnergy.Lib.Data.Providers.ETOPO
                     if (!end)
                         throw new Exception("Ошибка при чтении файла данных. Просмотр файла осуществлен не до конца");
 
-                    //проверка максимумов и минимумов
-                    if (Math.Abs(nmax - max)>50 || Math.Abs(nmin - min)> 50)
+
+
+                    if (Math.Abs(nmax - max) > 50 || Math.Abs(nmin - min) > 50)
                         throw new Exception("Ошибка при чтении файла данных. Не совпадают контрольные значения");
 
                     #endregion
@@ -224,12 +235,8 @@ namespace WindEnergy.Lib.Data.Providers.ETOPO
                     this.rows = rows;
                     this.minimum = min;
                     this.maximum = max;
-                    this.LLCorner = new PointLatLng( yllcorner,xllcorner);
-
-                    //rhead.Close();
+                    this.LLCorner = new PointLatLng(yllcorner, xllcorner);
                 }
-
-                //rbin.Close();
             }
         }
     }

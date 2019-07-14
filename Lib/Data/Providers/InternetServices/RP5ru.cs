@@ -16,8 +16,9 @@ using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Generic;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data.Interfaces;
+using WindEnergy.Lib.Data.Providers.FileSystem;
 
-namespace WindEnergy.Lib.Data.Providers
+namespace WindEnergy.Lib.Data.Providers.InternetServices
 {
     /// <summary>
     /// взаимодействие с сайтом RP5.ru

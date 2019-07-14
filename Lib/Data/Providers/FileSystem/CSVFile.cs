@@ -5,16 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Data.Providers.InternetServices;
 using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.Lib.Statistic.Collections;
 using WindEnergy.Lib.Statistic.Structures;
 
-namespace WindEnergy.Lib.Data.Providers
+namespace WindEnergy.Lib.Data.Providers.FileSystem
 {
     /// <summary>
-    /// работа с файлами формата MS Excel
+    /// работа с файлами формата csv
     /// </summary>
-    public static class MSExcel
+    public static class CSVFile
     {
         /// <summary>
         /// сохранить энергетические характеристики в файл csv 

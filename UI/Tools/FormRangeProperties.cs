@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Providers.InternetServices;
 using WindEnergy.UI.Dialogs;
 
 namespace WindEnergy.UI.Tools

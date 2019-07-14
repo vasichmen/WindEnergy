@@ -11,6 +11,7 @@ using WindEnergy.Lib.Classes.Generic;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data.Interfaces;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Providers.InternetServices;
 using WindEnergy.Lib.Geomodel;
 using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.Lib.Statistic.Calculations;

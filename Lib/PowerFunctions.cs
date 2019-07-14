@@ -7,7 +7,6 @@ using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Data.Interfaces;
 using WindEnergy.Lib.Data.Providers;
-using WindEnergy.Lib.Data.Providers.ETOPO;
 
 namespace WindEnergy
 {

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Providers.FileSystem;
 using WindEnergy.Lib.Operations;
 using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.Lib.Statistic.Calculations;
@@ -188,14 +189,14 @@ namespace WindEnergy.UI.Tools
                     cap += ";" + wd.Description();
 
                 //запись в файл
-                MSExcel.SaveEnergyInfoCSV(sf.FileName, null, null, null, null, cap, "", "", 0, false); //запись заголовка
+                CSVFile.SaveEnergyInfoCSV(sf.FileName, null, null, null, null, cap, "", "", 0, false); //запись заголовка
 
                 //запись данных обо всём периоде
                 EnergyInfo ri1 = StatisticEngine.ProcessRange(range);
                 StatisticalRange<WindDirections> sd1 = StatisticEngine.GetDirectionExpectancy(range, GradationInfo<WindDirections>.Rhumb16Gradations);
                 StatisticalRange<GradationItem> ss1 = StatisticEngine.GetExpectancy(range, Vars.Options.CurrentSpeedGradation);
                 EnergyInfo ei1 = StatisticEngine.ProcessRange(ss1);
-                MSExcel.SaveEnergyInfoCSV(sf.FileName, ri1, ei1, sd1, ss1, null, "Все года","Все месяцы", range.Count, true);
+                CSVFile.SaveEnergyInfoCSV(sf.FileName, ri1, ei1, sd1, ss1, null, "Все года","Все месяцы", range.Count, true);
 
                 //запись данных для каждого года
                 foreach (int year in years) //цикл по годам
@@ -211,7 +212,7 @@ namespace WindEnergy.UI.Tools
                         StatisticalRange<WindDirections> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections>.Rhumb16Gradations);
                         StatisticalRange<GradationItem> ss = StatisticEngine.GetExpectancy(rn, Vars.Options.CurrentSpeedGradation);
                         EnergyInfo ei = StatisticEngine.ProcessRange(ss);
-                        MSExcel.SaveEnergyInfoCSV(sf.FileName, ri, ei, sd, ss, null, year.ToString(), month.Description(), rn.Count, true);
+                        CSVFile.SaveEnergyInfoCSV(sf.FileName, ri, ei, sd, ss, null, year.ToString(), month.Description(), rn.Count, true);
                     }
                 }
                 Process.Start(sf.FileName);

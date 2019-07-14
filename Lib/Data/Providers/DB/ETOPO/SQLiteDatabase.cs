@@ -4,7 +4,7 @@ using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
 
-namespace WindEnergy.Lib.Data.Providers.ETOPO
+namespace WindEnergy.Lib.Data.Providers.DB.ETOPO
 {
     /// <summary>
     /// Работа с базой данных ETOPO в формате SQLite

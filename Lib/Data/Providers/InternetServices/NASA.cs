@@ -11,7 +11,7 @@ using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data.Interfaces;
 
-namespace WindEnergy.Lib.Data.Providers
+namespace WindEnergy.Lib.Data.Providers.InternetServices
 {
     /// <summary>
     /// взаимодействие с БД NASA https://power.larc.nasa.gov/docs/v1/

@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
+using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Operations;
 using WindEnergy.Lib.Operations.Structures;
@@ -131,7 +132,7 @@ namespace WindEnergy.UI.Tools
                             Vars.Options.LastDirectory = Path.GetDirectoryName(of.FileName);
                             try
                             {
-                                baseRange = MSExcel.LoadCSV(of.FileName);
+                                baseRange = RawRangeSerializer.DeserializeFile(of.FileName);
                             }
                             catch (Exception ex)
                             {

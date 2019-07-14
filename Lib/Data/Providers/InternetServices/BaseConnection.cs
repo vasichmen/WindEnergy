@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace WindEnergy.Lib.Data.Providers
+namespace WindEnergy.Lib.Data.Providers.InternetServices
 {
     /// <summary>
     /// базовый класс HTTP запросов к серверу
@@ -403,7 +403,8 @@ namespace WindEnergy.Lib.Data.Providers
                 request.UserAgent = UserAgent;
                 request.ContentType = contentType;
                 request.Headers[HttpRequestHeader.AcceptLanguage] = "ru - RU,ru; q = 0.8,en - US; q = 0.6,en; q = 0.4";
-                request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
+                if (useGZip)
+                    request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
                 request.Accept = "application/json, text/javascript, */*; q=0.01";
                 if (!string.IsNullOrWhiteSpace(xrequested))
                     request.Headers.Add("X-Requested-With", xrequested);

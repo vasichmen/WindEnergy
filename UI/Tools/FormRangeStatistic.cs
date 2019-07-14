@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Providers.FileSystem;
 using WindEnergy.Lib.Statistic.Structures;
 using WindEnergy.UI.Ext;
 
@@ -93,7 +94,7 @@ namespace WindEnergy.UI.Tools
             if (sf.ShowDialog(this) == DialogResult.OK)
             {
                 Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
-                MSExcel.SaveRangeQualityInfoCSV(sf.FileName, qualityInfo,range.Length);
+                CSVFile.SaveRangeQualityInfoCSV(sf.FileName, qualityInfo,range.Length);
                 Process.Start(sf.FileName);
             }
         }

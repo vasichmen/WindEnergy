@@ -13,7 +13,7 @@ using System.IO;
 using System.Windows.Forms;
 using WindEnergy.Lib.Data.Providers;
 
-namespace WindEnergy.Lib.Data.Providers
+namespace WindEnergy.Lib.Data.Providers.InternetServices
 {
     /// <summary>
     /// Работа с API Google

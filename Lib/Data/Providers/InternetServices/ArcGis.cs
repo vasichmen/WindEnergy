@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Data.Interfaces;
 
-namespace WindEnergy.Lib.Data.Providers
+namespace WindEnergy.Lib.Data.Providers.InternetServices
 {
     /// <summary>
     /// Связь с сервисом ArcGis.com

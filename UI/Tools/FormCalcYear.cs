@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Providers.FileSystem;
 using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.Lib.Statistic.Calculations;
 using WindEnergy.UI.Ext;
@@ -92,7 +93,7 @@ namespace WindEnergy.UI.Tools
             if (sf.ShowDialog(this) == DialogResult.OK)
             {
                 Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
-                MSExcel.SaveCalcYearInfoCSV(sf.FileName,years);
+                CSVFile.SaveCalcYearInfoCSV(sf.FileName,years);
                 Process.Start(sf.FileName);
             }
         }

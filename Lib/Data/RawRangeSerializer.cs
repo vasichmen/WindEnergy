@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Providers.FileSystem;
+using WindEnergy.Lib.Data.Providers.InternetServices;
 
 namespace WindEnergy.Lib.Data
 {
@@ -26,7 +28,7 @@ namespace WindEnergy.Lib.Data
             switch (ext)
             {
                 case ".csv":
-                    RawRange rang = MSExcel.LoadCSV(FileName);
+                    RawRange rang = CSVFile.LoadCSV(FileName);
                     return rang;
                 default: throw new Exception("Открытие этого типа файлов не реализовано");
             }

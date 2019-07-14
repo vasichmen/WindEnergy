@@ -12,7 +12,7 @@ using System.Xml;
 using Newtonsoft.Json.Linq;
 using WindEnergy.Lib.Classes;
 
-namespace WindEnergy.Lib.Data.Providers
+namespace WindEnergy.Lib.Data.Providers.InternetServices
 {
     /// <summary>
     /// Взаимодействие с сайтом TrackConverter

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Operations.Limits;
 
-namespace WindEnergy.Lib.Data.Providers
+namespace WindEnergy.Lib.Data.Providers.FileSystem
 {
     /// <summary>
     /// методы работы с файловой системой и файловыми БД

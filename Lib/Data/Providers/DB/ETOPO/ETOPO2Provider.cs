@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using WindEnergy.Lib.Data.Interfaces;
 
-namespace WindEnergy.Lib.Data.Providers.ETOPO
+namespace WindEnergy.Lib.Data.Providers.DB.ETOPO
 {
     /// <summary>
     /// Данные о высоте из локальной базы данных ETOPO. 

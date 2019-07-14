@@ -14,7 +14,7 @@ using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Interfaces;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Data.Providers.DB;
-using WindEnergy.Lib.Data.Providers.ETOPO;
+using WindEnergy.Lib.Data.Providers.InternetServices;
 
 namespace WindEnergy.Lib
 {

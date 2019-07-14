@@ -14,6 +14,7 @@ using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Providers.InternetServices;
 using WindEnergy.Lib.Operations;
 using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.UI.Dialogs;
