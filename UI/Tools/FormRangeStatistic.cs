@@ -41,11 +41,11 @@ namespace WindEnergy.UI.Tools
         {
             range.PerformRefreshQuality();
             qualityInfo = range.Quality;
-            labelCompletness.Text = "Полнота ряда: " + (qualityInfo.Completeness * 100).ToString("0.0")+"%";
-            labelExpectAmount.Text = "Ожидаемое число измерений: " + qualityInfo.ExpectAmount.ToString()+ " штук";
+            labelCompletness.Text = "Полнота ряда: " + (qualityInfo.Completeness * 100).ToString("0.0") + "%";
+            labelExpectAmount.Text = "Ожидаемое число измерений: " + qualityInfo.ExpectAmount.ToString() + " штук";
             labelLength.Text = "Длительность ряда наблюдений: " + range.Length.ToText();
             labelMaxEmpty.Text = "Максимальная длительность пропуска данных: " + qualityInfo.MaxEmptySpace.ToText();
-            labelMeasureAmount.Text = "Общее количество наблюдений: " + qualityInfo.MeasureAmount.ToString()+" штук";
+            labelMeasureAmount.Text = "Общее количество наблюдений: " + qualityInfo.MeasureAmount.ToString() + " штук";
             dataGridViewExt1.DataSource = null;
             dataGridViewExt1.DataSource = qualityInfo.Intervals;
         }
@@ -94,7 +94,7 @@ namespace WindEnergy.UI.Tools
             if (sf.ShowDialog(this) == DialogResult.OK)
             {
                 Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
-                CSVFile.SaveRangeQualityInfoCSV(sf.FileName, qualityInfo,range.Length);
+                new CSVFile().SaveRangeQualityInfo(sf.FileName, qualityInfo, range.Length);
                 Process.Start(sf.FileName);
             }
         }

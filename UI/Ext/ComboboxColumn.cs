@@ -44,7 +44,7 @@ namespace WindEnergy.UI.Ext
     /// <typeparam name="T"></typeparam>
     public class DataGridViewComboboxCell<T> : DataGridViewTextBoxCell
     {
-        private List<object> items;
+        private readonly List<object> items;
 
         public DataGridViewComboboxCell()
             : base()

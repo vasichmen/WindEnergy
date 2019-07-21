@@ -19,7 +19,7 @@ namespace WindEnergy.Lib.Classes.Structures
         public string ID { get; set; }
 
         /// <summary>
-        /// символьный код аэропорта
+        /// символьный код аэропорта (METAR id)
         /// </summary>
         public string CC_Code { get; set; }
 

@@ -1,12 +1,17 @@
-﻿using System;
+﻿using GMap.NET;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data.Providers.InternetServices;
 using WindEnergy.Lib.Operations.Structures;
+using WindEnergy.Lib.Statistic.Calculations;
 using WindEnergy.Lib.Statistic.Collections;
 using WindEnergy.Lib.Statistic.Structures;
 
@@ -15,7 +20,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
     /// <summary>
     /// работа с файлами формата csv
     /// </summary>
-    public static class CSVFile
+    public class CSVFile : FileProvider
     {
         /// <summary>
         /// сохранить энергетические характеристики в файл csv 
@@ -30,7 +35,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
         /// <param name="month">значение графы месяц</param>
         /// <param name="year">значение графы год</param>
         /// <param name="amount">количество измерений в ряде</param>
-        public static void SaveEnergyInfoCSV(
+        private void saveEnergyInfoLine(
             string fileName,
             EnergyInfo range_info,
             EnergyInfo ext_info,
@@ -84,16 +89,104 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public static RawRange LoadCSV(string fileName)
+        public override RawRange LoadRange(string fileName)
         {
             StreamReader sr = new StreamReader(fileName, Encoding.UTF8, true);
 
             //определение формата файла csv
-            string title = sr.ReadLine();
+            string title = null, title2 = null, title3 = null;
+            title = sr.ReadLine();
+            if (!sr.EndOfStream)
+                title2 = sr.ReadLine();
+            if (!sr.EndOfStream)
+                title3 = sr.ReadLine();
             sr.Close();
-            if (title.Contains("WMO_ID") || title.Contains("METAR"))
+
+            if (title == null)
+                throw new WindEnergyException("Файл пуст!");
+
+            string regex = @"^\d+[\.\,].\d*\s+\d+[\.\,].\d*$";
+
+            //этот файл - один из типов файлов rp5.ru (в заголовке есть тип источника, во второй строке указана кодировка, в третьей есть ссылка на источник)
+            if ((title.Contains("WMO_ID") || title.Contains("METAR"))
+                && title2 != null && title2.Contains("UTF-8")
+                && title3 != null && title3.Contains("rp5.ru"))
                 return RP5ru.LoadCSV(fileName);
+
+            //этот файл - просто файл CSV (в заголовке есть тип источника, во второй строке есть координаты точки)
+            else if ((title.Contains("ID"))
+                     && title2 != null && new Regex(regex).IsMatch(title2))
+                return loadCSVFile(fileName);
+
+            //этот файл другого формата
             else throw new Exception("Файл повреждён или имеет неподдерживаемый формат");
+        }
+
+        /// <summary>
+        /// загрузка ряда из формата WindEnergy
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        private RawRange loadCSVFile(string filename)
+        {
+            StreamReader sr = new StreamReader(filename, Encoding.UTF8);
+            string title = sr.ReadLine();
+            string coordinates = sr.ReadLine();
+            string name = sr.ReadLine();
+            sr.ReadLine();//пропуск заголовка таблицы
+            string data = sr.ReadToEnd();
+            sr.Close();
+            RawRange res = new RawRange() { Name = name };
+
+            //чтение координат файла
+            string regex = @"^\d+[\.\,].\d*\s+\d+[\.\,].\d*$";
+            bool isMatch = new Regex(regex).IsMatch(coordinates);
+            PointLatLng coord;
+            if (isMatch)
+            {
+                string[] s = coordinates.Split(' ');
+                double lat = double.Parse(s[0].Trim().Replace('.', Vars.DecimalSeparator));
+                double lon = double.Parse(s[1].Trim().Replace('.', Vars.DecimalSeparator));
+                coord = new PointLatLng(lat, lon);
+            }
+            else
+                coord = PointLatLng.Empty;
+            res.Position = coord;
+            res.BeginChange();
+
+
+            string[] lines = data.Split('\n');
+            foreach (string line in lines)
+            {
+                string[] elems = line.Split(';');
+                if (elems.Length < 5)
+                    continue;
+                if (elems[3] == "")
+                    continue;
+                if (elems[4] == "")
+                    continue;
+
+                double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Vars.DecimalSeparator));
+                DateTime dt = DateTime.Parse(elems[0]);
+                double spd = double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
+                double wet = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
+                double dirs = double.Parse(elems[3].Replace('.', Vars.DecimalSeparator));
+                try
+                { res.Add(new RawItem() { Date = dt, Direction = dirs, Speed = spd, Temperature = temp, Wetness = wet }); }
+                catch (Exception)
+                { continue; }
+            }
+
+            //поиск информации о МС
+            MeteostationInfo meteostation = null;
+            int start = title.IndexOf("ID=") + "ID=".Length;
+            string id_s = title.Substring(start);
+            meteostation = Vars.Meteostations.GetByID(int.Parse(id_s));
+            res.Meteostation = meteostation;
+
+
+            res.EndChange();
+            return res;
         }
 
         /// <summary>
@@ -101,7 +194,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="qualityInfo"></param>
-        public static void SaveRangeQualityInfoCSV(string fileName, QualityInfo qualityInfo, TimeSpan rangeLength)
+        public override void SaveRangeQualityInfo(string fileName, QualityInfo qualityInfo, TimeSpan rangeLength)
         {
             StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8);
             sw.WriteLine("Полнота ряда, %;" + qualityInfo.Completeness * 100);
@@ -125,7 +218,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="years"></param>
-        public static void SaveCalcYearInfoCSV(string fileName, CalculateYearInfo years)
+        public override void SaveCalcYearInfo(string fileName, CalculateYearInfo years)
         {
             StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8);
             if (years.RecomendedYear != null)
@@ -140,6 +233,85 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
             sw.Close();
         }
 
+        /// <summary>
+        /// Сохранение ВЭК в формате CSV
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="range"></param>
+        public override void SaveEnergyInfo(string filename, RawRange range)
+        {
 
+            List<object> years = new List<object>();
+            foreach (RawItem item in range)
+            {
+                if (!years.Contains(item.Date.Year))
+                    years.Add(item.Date.Year);
+            }
+
+            //формирование заголовка
+            string cap = "Год;Месяц;кол-во изм";
+            foreach (GradationItem grad in Vars.Options.CurrentSpeedGradation.Items)
+                cap += ";" + grad.Average.ToString("0.00");
+            cap += ";Vmin, м/с;Vmax, м/с;Vср, м/с;Cv(V);параметр γ;параметр β;Nвал уд., Вт/м^2;Эвал уд., Вт*ч/м^2";
+            foreach (WindDirections wd in WindDirections.Calm.GetEnumItems().GetRange(0, 17))
+                cap += ";" + wd.Description();
+
+            //запись в файл
+            saveEnergyInfoLine(filename, null, null, null, null, cap, "", "", 0, false); //запись заголовка
+
+            //запись данных обо всём периоде
+            EnergyInfo ri1 = StatisticEngine.ProcessRange(range);
+            StatisticalRange<WindDirections> sd1 = StatisticEngine.GetDirectionExpectancy(range, GradationInfo<WindDirections>.Rhumb16Gradations);
+            StatisticalRange<GradationItem> ss1 = StatisticEngine.GetExpectancy(range, Vars.Options.CurrentSpeedGradation);
+            EnergyInfo ei1 = StatisticEngine.ProcessRange(ss1);
+            saveEnergyInfoLine(filename, ri1, ei1, sd1, ss1, null, "Все года", "Все месяцы", range.Count, true);
+
+            //запись данных для каждого года
+            foreach (int year in years) //цикл по годам
+            {
+                //для каждого месяца в году
+                for (int mt = 0; mt <= 12; mt++)//по месяцам, начиная со всех
+                {
+                    Months month = (Months)mt;
+                    RawRange rn = range.GetRange(false, true, DateTime.Now, DateTime.Now, year, month.Description());
+                    if (rn == null || rn.Count == 0)
+                        continue;
+                    EnergyInfo ri = StatisticEngine.ProcessRange(rn);
+                    StatisticalRange<WindDirections> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections>.Rhumb16Gradations);
+                    StatisticalRange<GradationItem> ss = StatisticEngine.GetExpectancy(rn, Vars.Options.CurrentSpeedGradation);
+                    EnergyInfo ei = StatisticEngine.ProcessRange(ss);
+                    saveEnergyInfoLine(filename, ri, ei, sd, ss, null, year.ToString(), month.Description(), rn.Count, true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// сохранение файла в формате CSV
+        /// </summary>
+        /// <param name="rang"></param>
+        /// <param name="filename"></param>
+        internal override void SaveRange(RawRange rang, string filename)
+        {
+            StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
+            string coordinates = rang.Position.Lat.ToString("0.000000") + " " + rang.Position.Lng.ToString("0.000000");
+            string caption = "Местное время;T;U;DD;ff";
+            string title;
+            if (rang.Meteostation == null)
+                title = "ID=undefined";
+            else
+                title = $"ID={rang.Meteostation.ID}";
+            sw.WriteLine(title);
+            sw.WriteLine(coordinates);
+            sw.WriteLine(rang.Name);
+            sw.WriteLine(caption);
+            foreach (RawItem item in rang)
+            {
+                if (double.IsNaN(item.Direction) || double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections.Undefined)
+                    continue;
+                sw.WriteLine($"{item.Date.ToString("dd.MM.yyyy HH:mm")};{item.Temperature};{item.Wetness};{item.Direction};{item.Speed}");
+            }
+
+            sw.Close();
+        }
     }
 }

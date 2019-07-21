@@ -21,7 +21,7 @@ namespace WindEnergy.Lib.Statistic.Structures
         /// </summary>
         public List<object> Items => items;
 
-        private List<object> items;
+        private  List<object> items;
 
         private GradationInfo()
         {

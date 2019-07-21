@@ -55,14 +55,29 @@ namespace WindEnergy.Lib.Classes.Collections
         public string Name { get; set; }
 
         /// <summary>
-        /// формат файла
+        /// информация об метеостанции, откуда получены данные
         /// </summary>
-        public FileFormats FileFormat { get; set; }
+        public MeteostationInfo Meteostation { get; set; }
 
         /// <summary>
         /// координаты точки радa
         /// </summary>
-        public PointLatLng Position { get; set; }
+        public PointLatLng Position
+        {
+            get
+            {
+                if (_position.IsEmpty)
+                {
+                    if (Meteostation != null)
+                        return Meteostation.Coordinates;
+                    return PointLatLng.Empty;
+                }
+                else
+                    return _position;
+            }
+            set { _position = value; }
+        }
+        private PointLatLng _position = PointLatLng.Empty;
 
         /// <summary>
         /// длина ряда
@@ -94,7 +109,7 @@ namespace WindEnergy.Lib.Classes.Collections
                 return airDensity;
             }
         }
-        private double airDensity=double.NaN;
+        private double airDensity = double.NaN;
 
 
         public RawRange()
@@ -194,6 +209,76 @@ namespace WindEnergy.Lib.Classes.Collections
         }
 
         /// <summary>
+        /// выбор ряда из исходного по заданной фильтрации
+        /// </summary>
+        /// <param name="isPeriod">истина, если надо выбрать период от fromDate до toDate</param>
+        /// <param name="isYearMonth">истина, если надо выбрать по месяцу и году</param>
+        /// <param name="fromDate">начальная дата</param>
+        /// <param name="toDate">конечная дата</param>
+        /// <param name="Year">значение selectedItem в combobox года(СТРОКА)</param>
+        /// <param name="Month">значение selectedItem в combobox месяца(СТРОКА)</param>
+        /// <returns></returns>
+        public RawRange GetRange(bool isPeriod, bool isYearMonth, DateTime fromDate, DateTime toDate, object Year, object Month)
+        {
+            if (isPeriod != !isYearMonth)
+                return null;
+
+            RawRange res = null;
+
+            //для выбранного периода времени
+            if (isPeriod)
+            {
+                res = new RawRange((from ttt in this
+                                    where ttt.Date > fromDate && ttt.Date < toDate
+                                    orderby ttt.Date
+                                    select ttt).ToList());
+            }
+            else
+            {
+                //для выбранного года или месяцев
+                if (isYearMonth)
+                {
+                    Months mt = (Months)(new EnumTypeConverter<Months>().ConvertFrom(Month));
+                    int month = (int)mt;
+
+                    if (month == 0) //любой месяц
+                    {
+                        if (Year.GetType() == typeof(string) && (string)Year == "Все") //любой год, любой месяц
+                            res = new RawRange((from ttt in this
+                                                orderby ttt.Date
+                                                select ttt).ToList());
+                        else //любой месяц, заданный год
+                        {
+                            int yr = (int)Year;
+                            res = new RawRange((from ttt in this
+                                                where ttt.Date.Year == yr
+                                                orderby ttt.Date
+                                                select ttt).ToList());
+                        }
+                    }
+                    else //заданный месяц
+                    {
+                        if (Year.GetType() == typeof(string) && (string)Year == "Все") //любой год, заданный месяц
+                            res = new RawRange((from ttt in this
+                                                where ttt.Date.Month == month
+                                                orderby ttt.Date
+                                                select ttt).ToList());
+                        else //заданный месяц, заданный год
+                        {
+                            int yr = (int)Year;
+                            res = new RawRange((from ttt in this
+                                                where ttt.Date.Year == yr && ttt.Date.Month == month
+                                                orderby ttt.Date
+                                                select ttt).ToList());
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+
+
+        /// <summary>
         /// при изменении коллекции перерасчёт параметров
         /// </summary>
         /// <param name="sender"></param>
@@ -204,6 +289,11 @@ namespace WindEnergy.Lib.Classes.Collections
                 PerformRefreshQuality();
             airDensity = double.NaN;
             length = TimeSpan.MinValue;
+        }
+
+        public override string ToString()
+        {
+            return $"count: {this.Count}, {this.Position.ToString()}, {this.Meteostation.ToString()}";
         }
     }
 }

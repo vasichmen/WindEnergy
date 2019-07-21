@@ -28,35 +28,32 @@ namespace WindEnergy.UI.Helpers
         /// сохранить как отдельный файл
         /// </summary>
         /// <param name="rang"></param>
-        internal string SaveAsFile(RawRange rang)
+        internal string SaveAsFile(RawRange rang, string fileName = null)
         {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.InitialDirectory = Vars.Options.LastDirectory;
-            sf.AddExtension = true;
-            sf.FileName = rang.Name;
-
-            sf.Filter = "Файл rp5.ru METAR (*.csv)|*.csv";
-            sf.Filter += "|Файл rp5.ru WMO (*.csv)|*.csv";
-
-            if (sf.ShowDialog(f) == DialogResult.OK)
+            if (fileName == null)
             {
-                Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
-                FileFormats format;
-                switch (sf.FilterIndex)
+                SaveFileDialog sf = new SaveFileDialog();
+                sf.InitialDirectory = Vars.Options.LastDirectory;
+                sf.AddExtension = true;
+                sf.FileName = rang.Name;
+
+                sf.Filter = "Файл rp5.ru  (*.csv)|*.csv";
+                sf.Filter += "|Файл Excel (*.xlsx)|*.xlsx";
+
+                if (sf.ShowDialog(f) == DialogResult.OK)
                 {
-                    case 1:
-                        format = FileFormats.RP5MetarCSV;
-                        break;
-                    case 2:
-                        format = FileFormats.RP5WmoCSV;
-                        break;
-                    default: throw new Exception("Этот тип не реализован");
+                    Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
+                    RawRangeSerializer.SerializeFile(rang, sf.FileName);
+                    rang.FilePath = sf.FileName;
+                    return sf.FileName;
                 }
-                RawRangeSerializer.SerializeFile(rang, sf.FileName, format);
-                rang.FilePath = sf.FileName;
-                return sf.FileName;
+                return null;
             }
-            return null;
+            else {
+                    RawRangeSerializer.SerializeFile(rang, fileName);
+                    rang.FilePath = fileName;
+                    return fileName;
+            }
         }
 
         /// <summary>
@@ -69,7 +66,7 @@ namespace WindEnergy.UI.Helpers
                 return;
             RawRange rang = (tab as TabPageExt).Range;
             if (!string.IsNullOrWhiteSpace(rang.FilePath)) // если есть путь для сохранения
-                RawRangeSerializer.SerializeFile(rang, rang.FilePath, rang.FileFormat);
+                SaveAsFile(rang, rang.FilePath);
             else
             {
                 string name = SaveAsFile(rang);

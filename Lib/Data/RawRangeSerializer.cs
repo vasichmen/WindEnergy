@@ -28,8 +28,10 @@ namespace WindEnergy.Lib.Data
             switch (ext)
             {
                 case ".csv":
-                    RawRange rang = CSVFile.LoadCSV(FileName);
-                    return rang;
+                    return  new CSVFile().LoadRange(FileName);
+                case ".xls":
+                case ".xlsx":
+                    return  new ExcelFile().LoadRange(FileName);
                 default: throw new Exception("Открытие этого типа файлов не реализовано");
             }
         }
@@ -39,22 +41,21 @@ namespace WindEnergy.Lib.Data
         /// </summary>
         /// <param name="rang"></param>
         /// <param name="fileFormat"></param>
-        public static void SerializeFile(RawRange rang, string filename, FileFormats fileFormat = FileFormats.None)
+        public static void SerializeFile(RawRange rang, string filename)
         {
-            if (fileFormat == FileFormats.None)
-                fileFormat = rang.FileFormat;
-            
-            switch (fileFormat)
+            FileProvider provider;
+            string ext = Path.GetExtension(filename);
+            switch (ext)
             {
-                case FileFormats.RP5MetarCSV:
-                    RP5ru.ExportCSV(rang,filename, FileFormats.RP5MetarCSV);
+                case ".csv":
+                    provider = new CSVFile();
                     break;
-
-                case FileFormats.RP5WmoCSV:
-                    RP5ru.ExportCSV(rang,filename, FileFormats.RP5WmoCSV);
+                case ".xlsx":
+                    provider = new ExcelFile();
                     break;
-                default: throw new Exception("Этот формат не реализован");
+                default: throw new Exception("Этот тип не реализован");
             }
+            provider.SaveRange(rang, filename);
         }
     }
 }

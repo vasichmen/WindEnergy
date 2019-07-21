@@ -20,20 +20,17 @@ namespace WindEnergy.UI.Tools
     /// </summary>
     public partial class FormRangeProperties : Form
     {
-        private PointLatLng point;
         private readonly RawRange Range;
 
         public FormRangeProperties(RawRange range)
         {
             InitializeComponent();
             this.Range = range;
-            point = range.Position;
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
             Range.Name = textBoxName.Text;
-            Range.Position = point;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -44,31 +41,58 @@ namespace WindEnergy.UI.Tools
             Close();
         }
 
-        private void buttonSelectCoordinates_Click(object sender, EventArgs e)
-        {
-            FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", point);
-            if (spt.ShowDialog(this) == DialogResult.OK)
-            {
-                point = spt.Result;
-                labelCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";
-                labelAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(spt.Result);
-            }
-        }
-
         private void FormRangeProperties_Shown(object sender, EventArgs e)
         {
-            if (!point.IsEmpty)
+            if (Range.Meteostation != null)
             {
-                labelCoordinates.Text = $"Широта: {point.Lat.ToString("0.000")} Долгота: {point.Lng.ToString("0.000")}";
-                labelAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(point);
+                textBoxMSName.Text = Range.Meteostation.Name;
+                new ToolTip().SetToolTip(textBoxMSName, textBoxMSName.Text);
+
+                textBoxMSCoordinates.Text = $"Широта: {Range.Meteostation.Coordinates.Lat.ToString("0.000")} Долгота: {Range.Meteostation.Coordinates.Lng.ToString("0.000")}";
+                new ToolTip().SetToolTip(textBoxMSCoordinates, textBoxMSCoordinates.Text);
+
+                textBoxMSAddress.Text = Range.Meteostation.Address;
+                new ToolTip().SetToolTip(textBoxMSAddress, textBoxMSAddress.Text);
+
+                switch (Range.Meteostation.MeteoSourceType) {
+                    case MeteoSourceType.Meteostation:
+                        textBoxMSType.Text = "Метеостанция";
+                        labelMSID.Text = "WMO ID метеостанции";
+                        textBoxMSID.Text = Range.Meteostation.ID;
+                        new ToolTip().SetToolTip(textBoxMSAddress, textBoxMSAddress.Text);
+                        break;
+                    case MeteoSourceType.Airport:
+                        textBoxMSType.Text = "Аэропорт";
+                        labelMSID.Text = "CC код аэропорта";
+                        textBoxMSID.Text = Range.Meteostation.CC_Code;
+                        new ToolTip().SetToolTip(textBoxMSAddress, textBoxMSAddress.Text);
+                        break;
+                    default: throw new Exception("Этот тип МС не реализован");
+                }
             }
+
+
+            textBoxRangeCount.Text = Range.Count.ToString() +" штук";
+            new ToolTip().SetToolTip(textBoxRangeCount, textBoxRangeCount.Text);
+
             textBoxName.Text = Range.Name;
+            new ToolTip().SetToolTip(textBoxName, Range.Name);
         }
 
         private void labelCoordinates_TextChanged(object sender, EventArgs e)
         {
             string n = ((Label)sender).Text;
             new ToolTip().SetToolTip(sender as Label, n);
+        }
+
+        /// <summary>
+        /// окно интервалов наблюдений
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonIntervals_Click(object sender, EventArgs e)
+        {
+            new FormRangeStatistic(Range).Show(this);
         }
     }
 }

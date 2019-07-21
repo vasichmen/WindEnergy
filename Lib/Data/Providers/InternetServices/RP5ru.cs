@@ -139,10 +139,11 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                     res1.Add(r);
                     res1.Name = r.Name;
                     res1.Position = r.Position;
+                    res1.Meteostation = r.Meteostation;
                     i++;
                 }
-                DateTime fr = dt - TimeSpan.FromDays(365 * LOAD_STEP_YEARS);
-                RawRange r1 = GetRange(fr, toDate, info);
+                //DateTime fr = dt - TimeSpan.FromDays(365 * LOAD_STEP_YEARS);
+                //RawRange r1 = GetRange(fr, toDate, info);
                 return res1;
             }
 
@@ -247,26 +248,13 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             LocalFileSystem.UnGZip(tmp_dl_file, tmp_unpack_file);
 
             //открытие файла
-            RawRange res = RawRangeSerializer.DeserializeFile(tmp_unpack_file);
+            RawRange res = LoadCSV(tmp_unpack_file, info);
 
-
-
-            //получение кооординат станции 
-            PointLatLng pt;
-            if (info.MeteoSourceType == MeteoSourceType.Airport)
-                pt = PointLatLng.Empty;
-            else
-            {
-                List<MeteostationInfo> list = Vars.Meteostations.MeteostationList;
-                var p = from m in list where m.ID == info.ID select m.Coordinates;
-                if (p.Count() == 0)
-                    pt = PointLatLng.Empty;
-                else
-                    pt = p.ToList()[0];
-            }
             res = new RawRange(res.OrderBy(x => x.Date).ToList());
             res.Name = info.Name;
-            res.Position = pt;
+            res.Position = info.Coordinates;
+            res.Meteostation = info;
+            Vars.Meteostations.TryAddMeteostation(info); //если такой метеостанции нет в БД, то добавляем
             return res;
 
             #endregion
@@ -277,10 +265,10 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// </summary>
         /// <param name="wmoInfo">информация о точке с погодой</param>
         /// <returns></returns>
-        public List<MeteostationInfo> GetMeteostationsAtPoint(WmoInfo wmoInfo, bool loadExtInfo = true, bool forceDisableCache=false)
+        public List<MeteostationInfo> GetMeteostationsAtPoint(WmoInfo wmoInfo, bool loadExtInfo = true, bool forceDisableCache = false)
         {
             //страница погоды в заданной точке
-            HtmlDocument point_page = SendHtmlGetRequest(wmoInfo.Link, out HttpStatusCode code, forceDisableCache:forceDisableCache);
+            HtmlDocument point_page = SendHtmlGetRequest(wmoInfo.Link, out HttpStatusCode code, forceDisableCache: forceDisableCache);
 
             if (code != HttpStatusCode.OK)
                 throw new Exception("При загрузке страницы произошла ошибка " + code.ToString());
@@ -560,15 +548,15 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         }
 
         /// <summary>
-        /// Загрузить ряд из файла csv
+        /// Загрузить ряд из файла csv, полученного с сайта
         /// </summary>
         /// <param name="file">файл csv</param>
         /// <returns></returns>
-        public static RawRange LoadCSV(string file)
+        public static RawRange LoadCSV(string file, MeteostationInfo meteostation = null)
         {
             StreamReader sr = new StreamReader(file, Encoding.UTF8, true);
             RawRange res = new RawRange();
-            res.BeginChange();
+            res.BeginChange(); //приостановка обработки событий изменения ряда
 
             //определение формата файла csv
             MeteoSourceType type;
@@ -577,28 +565,11 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                 type = MeteoSourceType.Meteostation;
             else if (title.Contains("METAR"))
                 type = MeteoSourceType.Airport;
-            else throw new Exception("Неизвестный формат файла");
+            else throw new Exception("Файл повреждён или имеет неизвестный формат данных rp5.ru");
 
             //пропуск пустых строк (одна уже пропущена при чтении заголовка)
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
                 sr.ReadLine();
-
-            //чтение координат файла
-            string str = sr.ReadLine();
-            string regex = @"^\d+[\.\,].\d*\s+\d+[\.\,].\d*$";
-            bool isMatch = new Regex(regex).IsMatch(str);
-            PointLatLng coord;
-            if (isMatch)
-            {
-                string[] s = str.Split(' ');
-                double lat = double.Parse(s[0].Trim().Replace('.', Vars.DecimalSeparator));
-                double lon = double.Parse(s[1].Trim().Replace('.', Vars.DecimalSeparator));
-                coord = new PointLatLng(lat, lon);
-            }
-            else
-                coord = PointLatLng.Empty;
-            res.Position = coord;
-
             switch (type)
             {
                 case MeteoSourceType.Meteostation: //загрузка архива с метеостанции
@@ -627,7 +598,15 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                         catch (Exception)
                         { continue; }
                     }
-                    res.FileFormat = FileFormats.RP5WmoCSV;
+
+                    //поиск информации о МС
+                    if (meteostation == null)
+                    {
+                        int start = title.IndexOf("WMO_ID=") + "WMO_ID=".Length;
+                        int end = title.IndexOf(',', start);
+                        string id_s = title.Substring(start, end - start);
+                        meteostation = Vars.Meteostations.GetByID(int.Parse(id_s));
+                    }
                     break;
                 case MeteoSourceType.Airport: //загрузка архива с аэропорта
 
@@ -652,72 +631,23 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                         WindDirections direct = RP5ru.GetWindDirectionFromString(dirs);
                         res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet });
                     }
-                    res.FileFormat = FileFormats.RP5MetarCSV;
+                    //поиск информации о МС
+                    if (meteostation == null)
+                    {
+                        int start = title.IndexOf("METAR=") + "METAR=".Length;
+                        int end = title.IndexOf(',', start);
+                        string id_s = title.Substring(start, end - start);
+                        meteostation = Vars.Meteostations.GetByCC_code(id_s);
+                    }
                     break;
                 case MeteoSourceType.UnofficialMeteostation:
                     throw new Exception("Этот тип файла не поддерживается");
             }
+
+            res.Meteostation = meteostation;
             res.EndChange();
             return res;
         }
 
-        /// <summary>
-        /// сохранить как файл CSV
-        /// </summary>
-        /// <param name="rang">ряд для сохранениея</param>
-        /// <param name="filename">адрес файла</param>
-        /// <param name="rP5MetarCSV">формат</param>
-        public static void ExportCSV(RawRange rang, string filename, FileFormats format)
-        {
-            StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
-            string coordinates = rang.Position.Lat.ToString("0.000000") + " " + rang.Position.Lng.ToString("0.000000");
-            switch (format)
-            {
-                case FileFormats.RP5MetarCSV:
-                    string caption = "\"Местное время\";\"T\";\"P0\";\"P\";\"U\";\"DD\";\"Ff\";\"ff10\";\"WW\";\"W'W'\";\"c\";\"VV\";\"Td\";";
-                    string title = "METAR";
-                    sw.WriteLine(title);
-                    for (int i = 0; i < 4; i++) sw.WriteLine("#");
-                    sw.WriteLine(caption);
-                    sw.WriteLine(coordinates);
-                    string fm = "\"{0}\";\"{1}\";\"\";\"\";\"{2}\";\"{3}\";\"{4}\";\"\";\"\";\"\";\"\";\"\";\"\";";
-                    foreach (RawItem item in rang)
-                    {
-                        if (double.IsNaN(item.Direction) || double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections.Undefined)
-                            continue;
-                        sw.WriteLine(fm,
-                            item.Date.ToString("dd.MM.yyyy HH:mm"),
-                            item.Temperature,
-                            item.Wetness,
-                            GetStringFromWindDirection(item.DirectionRhumb),
-                            item.Speed);
-                    }
-                    break;
-
-                case FileFormats.RP5WmoCSV:
-                    string caption1 = "\"Местное время\";\"T\";\"Po\";\"P\";\"Pa\";\"U\";\"DD\";\"Ff\";\"ff10\";\"ff3\";\"N\";\"WW\";\"W1\";\"W2\";\"Tn\";\"Tx\";\"Cl\";\"Nh\";\"H\";\"Cm\";\"Ch\";\"VV\";\"Td\";\"RRR\";\"tR\";\"E\";\"Tg\";\"E'\";\"sss\"";
-                    string title1 = "WMO_ID";
-                    sw.WriteLine(title1);
-                    for (int i = 0; i < 4; i++) sw.WriteLine("#");
-                    sw.WriteLine(caption1);
-                    sw.WriteLine(coordinates);
-                    string fm1 = "\"{0}\";\"{1}\";\"\";\"\";\"\";\"{2}\";\"{3}\";\"{4}\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";\"\";";
-                    foreach (RawItem item in rang)
-                    {
-                        if (double.IsNaN(item.Direction) || double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections.Undefined)
-                            continue;
-                        sw.WriteLine(fm1,
-                            item.Date.ToString("dd.MM.yyyy HH:mm"),
-                            item.Temperature,
-                            item.Wetness,
-                            GetStringFromWindDirection(item.DirectionRhumb),
-                            item.Speed);
-                    }
-                    break;
-                default: throw new Exception("Этот формат не реализован");
-            }
-
-            sw.Close();
-        }
     }
 }

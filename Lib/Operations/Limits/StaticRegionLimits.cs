@@ -15,7 +15,7 @@ namespace WindEnergy.Lib.Operations.Limits
     /// </summary>
     public class StaticRegionLimits : ILimitsProvider
     {
-        private Dictionary<PointLatLng, ManualLimits> limits;
+        private readonly Dictionary<PointLatLng, ManualLimits> limits;
 
         /// <summary>
         /// загружает ограничения из заданного файла

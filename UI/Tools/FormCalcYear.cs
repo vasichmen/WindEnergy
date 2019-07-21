@@ -49,7 +49,7 @@ namespace WindEnergy.UI.Tools
                 years = YearCalculator.ProcessRange(range);
                 dataGridViewExt1.DataSource = years.Years;
                 dataGridViewExt1.ReadOnly = true;
-                
+
                 if (years.RecomendedYear != null) //если расчётный год найден
                 {
                     labelRecomendedYear.Text = "Рекомендуется в качестве расчетного принять " + years.RecomendedYear.Year + " год:";
@@ -62,7 +62,7 @@ namespace WindEnergy.UI.Tools
                 }
                 else //если расчётный год не найден
                 {
-                    MessageBox.Show(this,"Не удалось найти расчётный год.\r\nРяд очень маленький или не содержит года необходимого качества");
+                    MessageBox.Show(this, "Не удалось найти расчётный год.\r\nРяд очень маленький или не содержит года необходимого качества");
                     labelAverageCalcYearSpeed.Text = "Средняя скорость: ";
                     labelCompletness.Text = "Полнота ряда: ";
                     labelExpectDeviation.Text = "Отклонение повторяемости скорости: ";
@@ -70,12 +70,12 @@ namespace WindEnergy.UI.Tools
                     labelMaxSpeed.Text = "Максимальная скорость: ";
                     labelSpeedDeviation.Text = "Отклонение скорости от многолетней: ";
                 }
-                labelAverageYearsSpeed.Text = "Среднемноголетняя скорость: "+ years.AverageSpeed.ToString("0.0") + " м/с";
+                labelAverageYearsSpeed.Text = "Среднемноголетняя скорость: " + years.AverageSpeed.ToString("0.0") + " м/с";
             }
             catch (ArgumentException wex)
             {
-                MessageBox.Show(this,wex.Message,"Выбор расчётного года",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-                Close();                
+                MessageBox.Show(this, wex.Message, "Выбор расчётного года", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Close();
             }
         }
 
@@ -93,7 +93,7 @@ namespace WindEnergy.UI.Tools
             if (sf.ShowDialog(this) == DialogResult.OK)
             {
                 Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
-                CSVFile.SaveCalcYearInfoCSV(sf.FileName,years);
+                new CSVFile().SaveCalcYearInfo(sf.FileName, years);
                 Process.Start(sf.FileName);
             }
         }

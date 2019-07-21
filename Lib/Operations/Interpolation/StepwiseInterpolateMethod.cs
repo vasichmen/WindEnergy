@@ -12,7 +12,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
     public class StepwiseInterpolateMethod : IInterpolateMethod
     {
         private readonly Dictionary<double, double> values;
-        private List<double> sortedX;
+        private readonly List<double> sortedX;
 
         /// <summary>
         /// сохдаёт новый экземпляр с заданной функцией

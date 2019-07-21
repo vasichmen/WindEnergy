@@ -27,7 +27,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
     {
         private readonly Dictionary<double, double> func;
         private readonly MeteorologyParameters parameterType;
-        private RawRange nearestRange;
+        private readonly RawRange nearestRange;
         private readonly Func<double, double> getRes = null;
         private readonly Diapason<double> interpolationDiapason;
 

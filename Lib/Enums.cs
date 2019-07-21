@@ -214,7 +214,13 @@ namespace WindEnergy
         /// неофициальная метеостанция
         /// </summary>
         [Description("Неофициальная метеостанция")]
-        UnofficialMeteostation
+        UnofficialMeteostation,
+
+        /// <summary>
+        /// неизвестный
+        /// </summary>
+        [Description("Неизвестный")]
+        None
     }
 
     /// <summary>
@@ -224,19 +230,20 @@ namespace WindEnergy
     public enum FileFormats
     {
         /// <summary>
-        /// формат файлов, полученных из архива rp5 для аэропорта
+        /// формат файлов, полученных из архива rp5
         /// </summary>
-        RP5MetarCSV,
+        CSV,
 
-        /// <summary>
-        /// формат файлов, полученных из архива rp5 для метеостанции
-        /// </summary>
-        RP5WmoCSV,
 
         /// <summary>
         /// другой формат
         /// </summary>
-        None
+        None,
+
+        /// <summary>
+        /// формат XLSX
+        /// </summary>
+        XLSX
     }
 
     /// <summary>

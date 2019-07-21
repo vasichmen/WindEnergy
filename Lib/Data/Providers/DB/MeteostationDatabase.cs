@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Structures;
+using WindEnergy.Lib.Data.Providers.InternetServices;
 
 namespace WindEnergy.Lib.Data.Providers.DB
 {
     /// <summary>
     /// База данных метеостанций
     /// </summary>
-   public class MeteostationDatabase
+    public class MeteostationDatabase
     {
         /// <summary>
         /// список метеостанций и координат
@@ -29,10 +30,20 @@ namespace WindEnergy.Lib.Data.Providers.DB
         private List<MeteostationInfo> _meteostationList = null;
 
         /// <summary>
+        /// получить инфомацию по id метеостанции или аэропорта
+        /// </summary>
+        /// <param name="id">значение поля MeteostationInfo.ID</param>
+        /// <returns></returns>
+        public MeteostationInfo this[string id] { get { return (from m in MeteostationList where m.ID == id select m).FirstOrDefault(); }  }
+
+        /// <summary>
         /// количество аэропортов в БД
         /// </summary>
-        public int AirportCount { get {
-                if(_airportCount==-1)
+        public int AirportCount
+        {
+            get
+            {
+                if (_airportCount == -1)
                 {
                     _airportCount = 0;
                     foreach (var m in MeteostationList)
@@ -40,13 +51,17 @@ namespace WindEnergy.Lib.Data.Providers.DB
                             _airportCount++;
                 }
                 return _airportCount;
-            }  }
-        private int _airportCount=-1;
+            }
+        }
+        private int _airportCount = -1;
 
         /// <summary>
         /// количество метеостанций в БД
         /// </summary>
-        public int MeteostationsCount { get {
+        public int MeteostationsCount
+        {
+            get
+            {
                 if (_meteostationsCount == -1)
                 {
                     _meteostationsCount = 0;
@@ -55,15 +70,20 @@ namespace WindEnergy.Lib.Data.Providers.DB
                             _meteostationsCount++;
                 }
                 return _meteostationsCount;
-            }  }
+            }
+        }
         private int _meteostationsCount = -1;
 
         /// <summary>
         /// общее количество записей
         /// </summary>
-        public int TotalCount { get {
+        public int TotalCount
+        {
+            get
+            {
                 return MeteostationList.Count;
-            }  }
+            }
+        }
 
 
         /// <summary>
@@ -182,5 +202,69 @@ namespace WindEnergy.Lib.Data.Providers.DB
             return res;
         }
 
+        /// <summary>
+        /// найти МС по wmo_id
+        /// </summary>
+        /// <param name="id">wmo_id</param>
+        /// <returns></returns>
+        internal MeteostationInfo GetByID(int id)
+        {
+            string id_str = id.ToString();
+            var res = from t in MeteostationList
+                      where t.ID == id_str
+                      select t;
+            if (res.Count() > 0)
+                return res.First();
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// найти аэропорт по METAR
+        /// </summary>
+        /// <param name="CC_code">METAR</param>
+        /// <returns></returns>
+        internal MeteostationInfo GetByCC_code(string CC_code)
+        {
+            var res = from t in MeteostationList
+                      where t.CC_Code == CC_code
+                      select t;
+            if (res.Count() > 0)
+                return res.First();
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// попытка добавить метеостанцию с БД. Если такая уже есть, то возвращает false. При успешном добавлении перезаписывает файл БД и возвращает true
+        /// </summary>
+        /// <param name="info">информация о МС для добавления в БД</param>
+        internal bool TryAddMeteostation(MeteostationInfo info)
+        {
+            if (this.Contains(info))
+                return false;
+
+            if (double.IsNaN(info.Altitude))
+                info.Altitude = Vars.ETOPOdatabase.GetElevation(info.Coordinates);
+            if (string.IsNullOrWhiteSpace(info.Address))
+                info.Address = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(info.Coordinates);
+
+            MeteostationList.Add(info);
+            ExportMeteostationList(this.MeteostationList, Vars.Options.StaticMeteostationCoordinatesSourceFile);
+            return true;
+        }
+
+        /// <summary>
+        /// проверка существования метеостанции в БД
+        /// </summary>
+        /// <param name="meteostation"></param>
+        /// <returns></returns>
+        public bool Contains(MeteostationInfo meteostation)
+        {
+            foreach (var v in this.MeteostationList)
+                if (v.ID == meteostation.ID)
+                    return true;
+            return false;
+        }
     }
 }
