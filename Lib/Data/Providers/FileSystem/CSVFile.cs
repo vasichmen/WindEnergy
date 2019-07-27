@@ -159,7 +159,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
             foreach (string line in lines)
             {
                 string[] elems = line.Split(';');
-                if (elems.Length < 5)
+                if (elems.Length < 6)
                     continue;
                 if (elems[3] == "")
                     continue;
@@ -169,10 +169,11 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Vars.DecimalSeparator));
                 DateTime dt = DateTime.Parse(elems[0]);
                 double spd = double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
+                double press = double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
                 double wet = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
                 double dirs = double.Parse(elems[3].Replace('.', Vars.DecimalSeparator));
                 try
-                { res.Add(new RawItem() { Date = dt, Direction = dirs, Speed = spd, Temperature = temp, Wetness = wet }); }
+                { res.Add(new RawItem() { Date = dt, Direction = dirs, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press }); }
                 catch (Exception)
                 { continue; }
             }
@@ -308,7 +309,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
             {
                 if (double.IsNaN(item.Direction) || double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections.Undefined)
                     continue;
-                sw.WriteLine($"{item.Date.ToString("dd.MM.yyyy HH:mm")};{item.Temperature};{item.Wetness};{item.Direction};{item.Speed}");
+                sw.WriteLine($"{item.Date.ToString("dd.MM.yyyy HH:mm")};{item.Temperature};{item.Wetness};{item.Direction};{item.Speed};{item.Pressure}");
             }
 
             sw.Close();

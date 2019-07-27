@@ -38,7 +38,6 @@ namespace WindEnergy.UI.Ext
             this.ToolTipText = string.IsNullOrWhiteSpace(range.FilePath) ? "" : range.FilePath;
             this.Text = text;
             DataGridViewExt ndgv = new DataGridViewExt();
-            ndgv.ColumnAdded += Program.winMain.DataGridView_ColumnAdded;
             ndgv.Dock = DockStyle.Fill;
             ndgv.Parent = this;
             ndgv.DataSource = range;

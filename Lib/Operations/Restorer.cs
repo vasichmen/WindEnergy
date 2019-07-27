@@ -35,7 +35,8 @@ namespace WindEnergy.Lib.Operations
                 speedFunc = new Dictionary<double, double>(), //функция скорости
                 directsFunc = new Dictionary<double, double>(), //функция направления
                 wetFunc = new Dictionary<double, double>(), //функция влажности
-                tempFunc = new Dictionary<double, double>(); //функция температуры
+                tempFunc = new Dictionary<double, double>(), //функция температуры
+                pressFunc = new Dictionary<double, double>(); //функция давления
 
             Range = new RawRange(Range.OrderBy(x => x.Date).ToList());
 
@@ -53,11 +54,18 @@ namespace WindEnergy.Lib.Operations
                     wetFunc.Add(timeStamp, item.Wetness);
                 if (!double.IsNaN(item.Temperature))
                     tempFunc.Add(timeStamp, item.Temperature);
+                if (!double.IsNaN(item.Pressure))
+                    tempFunc.Add(timeStamp, item.Pressure);
             }
 
             //ПОДГОТОВКА ИНТЕРПОЛЯТОРОВ
             //создание интерполяторов функций скорости, направления, температуры, влажности
-            IInterpolateMethod methodSpeeds, methodDirects, methodWet, methodTemp;
+            IInterpolateMethod 
+                methodSpeeds, 
+                methodDirects, 
+                methodWet, 
+                methodTemp, 
+                methodPress;
             switch (param.Method)
             {
                 case InterpolateMethods.Linear:
@@ -65,12 +73,14 @@ namespace WindEnergy.Lib.Operations
                     methodDirects = new LinearInterpolateMethod(directsFunc);
                     methodTemp = new LinearInterpolateMethod(tempFunc);
                     methodWet = new LinearInterpolateMethod(wetFunc);
+                    methodPress = new LinearInterpolateMethod(pressFunc);
                     break;
                 case InterpolateMethods.Stepwise:
                     methodSpeeds = new StepwiseInterpolateMethod(speedFunc);
                     methodDirects = new StepwiseInterpolateMethod(directsFunc);
                     methodTemp = new StepwiseInterpolateMethod(tempFunc);
                     methodWet = new StepwiseInterpolateMethod(wetFunc);
+                    methodPress = new LinearInterpolateMethod(pressFunc);
                     break;
                 case InterpolateMethods.NearestMeteostation:
                     RawRange baseRange;//ряд, на основе которого будет идти восстановление
@@ -91,6 +101,7 @@ namespace WindEnergy.Lib.Operations
                     methodDirects = new LinearInterpolateMethod(directsFunc);
                     methodTemp = new LinearInterpolateMethod(tempFunc);
                     methodWet = new LinearInterpolateMethod(wetFunc);
+                    methodPress = new LinearInterpolateMethod(pressFunc);
                     break;
                 default: throw new Exception("Этот метод не реализован");
             }
@@ -102,7 +113,13 @@ namespace WindEnergy.Lib.Operations
             //метки времени для нового ряда
             List<double> newRangeX = new List<double>();
             double start = double.MinValue;
-            double[] starts = new double[] { speedFunc.Keys.Min(), directsFunc.Keys.Min(), tempFunc.Keys.Min(), wetFunc.Keys.Min() };
+            double[] starts = new double[] {
+                speedFunc.Keys.Min(),
+                directsFunc.Keys.Min(),
+                tempFunc.Keys.Min(),
+                wetFunc.Keys.Min(),
+                pressFunc.Keys.Min()
+            };
             foreach (double st in starts)
                 if (st > start)
                     start = st;
@@ -125,12 +142,14 @@ namespace WindEnergy.Lib.Operations
                     double direct = methodDirects.GetValue(p);
                     double temp = methodTemp.GetValue(p);
                     double wet = methodWet.GetValue(p);
+                    double press = methodPress.GetValue(p);
                     if (double.IsNaN(speed) ||
                         double.IsNaN(direct) ||
                         double.IsNaN(temp) ||
+                        double.IsNaN(press) ||
                         double.IsNaN(wet))
                         continue;
-                    res.Add(new RawItem(p, speed, direct, temp, wet));
+                    res.Add(new RawItem(p, speed, direct, temp, wet,press));
                 }
                 res.EndChange();
                 actionAfter.Invoke(res);

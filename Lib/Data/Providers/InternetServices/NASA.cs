@@ -50,7 +50,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
 
             //выбранные поля для загрузки https://power.larc.nasa.gov/docs/v1/#box
             //скорость на 10м,направление,температура,влажность
-            string fields = "WS10M,WD10M,T10M,RH2M";
+            string fields = "WS10M,WD10M,T10M,RH2M,PS";
 
             //https://power.larc.nasa.gov/cgi-bin/v1/DataAccess.py?request=execute&identifier=SinglePoint&parameters=T2M,PS,ALLSKY_SFC_SW_DWN&startDate=20160301&endDate=20160331&userCommunity=SSE&tempAverage=DAILY&outputList=JSON,ASCII&lat=36&lon=45&user=anonymous
             string url = "https://power.larc.nasa.gov/cgi-bin/v1/DataAccess.py?request=execute&identifier=SinglePoint&parameters={0}&startDate={1}&endDate={2}&userCommunity=SSE&tempAverage=DAILY&outputList=ASCII&lat={3}&lon={4}&user=anonymous";
@@ -82,19 +82,23 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                 string line = lines[i].Replace("\r", "");
                 line = Regex.Replace(line, @"[ ]+", " ");
                 string[] elems = line.Split(' ');
-                if (elems.Length != 7) //проверка числа параметров (3 для даты, 4 - параметры атмосферы)
+                if (elems.Length != 8) //проверка числа параметров (3 для даты, 5 - параметры атмосферы)
                     throw new Exception("Текстовый файл имеет неизвестный формат. Проверьте число параметров");
 
+                double intopas = 0.00750063755419211;
                 DateTime dt = DateTime.Parse(elems[0] + "." + elems[1] + "." + elems[2]);
                 double WS10M = double.Parse(elems[3].Replace('.', Vars.DecimalSeparator));
                 double WD10M = double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
                 double T10M = double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
                 double RH2M = double.Parse(elems[6].Replace('.', Vars.DecimalSeparator));
+                double PS = double.Parse(elems[7].Replace('.', Vars.DecimalSeparator)); //по API про ходят данные в кПа
+                PS *= intopas*1000; //переводим в мм рт. ст.
                 res.Add(new RawItem() {
                     Date = dt,
                     Direction = WD10M == -999 ? double.NaN : WD10M,
                     Speed = WS10M == -999 ? double.NaN : WS10M,
                     Temperature = T10M == -999 ? double.NaN : T10M,
+                    Pressure = PS == -999 ? double.NaN : PS,
                     Wetness = RH2M == -999 ? double.NaN : RH2M });
             }
             res.Position = point_info.Coordinates;

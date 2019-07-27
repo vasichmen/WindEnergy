@@ -65,6 +65,11 @@ namespace WindEnergy.Lib.Classes.Structures
         public double Temperature { get; set; }
 
         /// <summary>
+        /// Давление на уровне МС, мм рт. ст. Для данных NASA загружается параметр PS (Surface Pressure)
+        /// </summary>
+        public double Pressure { get; set; }
+
+        /// <summary>
         /// влажность воздуха в процентах
         /// </summary>
         public double Wetness
@@ -102,6 +107,7 @@ namespace WindEnergy.Lib.Classes.Structures
             Date = DateTime.MinValue;
             Temperature = double.NaN;
             Speed = double.NaN;
+            Pressure = double.NaN;
         }
 
         /// <summary>
@@ -112,12 +118,13 @@ namespace WindEnergy.Lib.Classes.Structures
         /// <param name="direct">направление, град</param>
         /// <param name="temp">температура град,С</param>
         /// <param name="wet">влажность, %</param>
-        public RawItem(double p, double speed, double direct, double temp, double wet)
+        public RawItem(double p, double speed, double direct, double temp, double wet, double press)
         {
             Speed = speed;
             Direction = direct;
             Temperature = temp;
             Wetness = wet;
+            Pressure = press;
             Date = DateTime.MinValue + TimeSpan.FromMinutes(p);
         }
 

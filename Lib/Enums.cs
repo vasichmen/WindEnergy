@@ -435,7 +435,10 @@ namespace WindEnergy
         Temperature,
 
         [Description("Влажность")]
-        Wetness
+        Wetness,
+
+        [Description("Давление")]
+        Pressure
     }
 
     /// <summary>

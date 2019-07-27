@@ -591,10 +591,11 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                         DateTime dt = DateTime.Parse(elems[0]);
                         double spd = double.Parse(elems[7].Replace('.', Vars.DecimalSeparator));
                         double wet = elems[5] == "" ? double.NaN : double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
+                        double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
                         string dirs = elems[6];
                         WindDirections direct = GetWindDirectionFromString(dirs);
                         try
-                        { res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet }); }
+                        { res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press }); }
                         catch (Exception)
                         { continue; }
                     }
@@ -627,9 +628,10 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                         DateTime dt = DateTime.Parse(elems[0]);
                         double spd = double.Parse(elems[6].Replace('.', Vars.DecimalSeparator));
                         double wet = elems[4] == "" ? double.NaN : double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
+                        double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
                         string dirs = elems[5];
                         WindDirections direct = RP5ru.GetWindDirectionFromString(dirs);
-                        res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet });
+                        res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press });
                     }
                     //поиск информации о МС
                     if (meteostation == null)
