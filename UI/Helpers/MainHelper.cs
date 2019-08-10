@@ -24,6 +24,37 @@ namespace WindEnergy.UI.Helpers
             f = mainf;
         }
 
+        internal RawRange OpenFile(Form form=null)
+        {
+            if (form == null)
+                form = f;
+            OpenFileDialog of = new OpenFileDialog();
+            of.InitialDirectory = Vars.Options.LastDirectory;
+            of.Multiselect = true;
+            of.Filter = "Файл csv (*.csv)|*.csv";
+            of.Filter += "|Файл Excel (*.xlsx)|*.xlsx";
+            if (of.ShowDialog(form) == DialogResult.OK)
+            {
+                foreach (string file in of.FileNames)
+                {
+                    try
+                    {
+                        RawRange rang = RawRangeSerializer.DeserializeFile(file, null);
+                        rang.FilePath = file;
+                        rang.Name = Path.GetFileNameWithoutExtension(file);
+                        Vars.Options.LastDirectory = Path.GetDirectoryName(file);
+                        return rang;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(form, ex.Message, "Открытие файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return null;
+                    }
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// сохранить как отдельный файл
         /// </summary>
@@ -37,7 +68,7 @@ namespace WindEnergy.UI.Helpers
                 sf.AddExtension = true;
                 sf.FileName = rang.Name;
 
-                sf.Filter = "Файл rp5.ru  (*.csv)|*.csv";
+                sf.Filter = "Файл csv  (*.csv)|*.csv";
                 sf.Filter += "|Файл Excel (*.xlsx)|*.xlsx";
 
                 if (sf.ShowDialog(f) == DialogResult.OK)
@@ -49,10 +80,11 @@ namespace WindEnergy.UI.Helpers
                 }
                 return null;
             }
-            else {
-                    RawRangeSerializer.SerializeFile(rang, fileName);
-                    rang.FilePath = fileName;
-                    return fileName;
+            else
+            {
+                RawRangeSerializer.SerializeFile(rang, fileName);
+                rang.FilePath = fileName;
+                return fileName;
             }
         }
 

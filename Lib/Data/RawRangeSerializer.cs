@@ -51,6 +51,7 @@ namespace WindEnergy.Lib.Data
                     provider = new CSVFile();
                     break;
                 case ".xlsx":
+                case ".xls":
                     provider = new ExcelFile();
                     break;
                 default: throw new Exception("Этот тип не реализован");

@@ -46,6 +46,13 @@ namespace WindEnergy.UI.Dialogs
 
         private void formTextImport_Load(object sender, EventArgs e)
         {
+            //стиль индикатора
+            Indicator indic = scintillaExample.Indicators[16];
+            indic.Style = IndicatorStyle.FullBox;
+            indic.ForeColor = Color.DarkRed;
+            indic.Alpha = 100;
+            scintillaExample.IndicatorCurrent = indic.Index;
+
             //заполнение кодировок
             comboBoxEncoding.Items.Clear();
             foreach (EncodingInfo enc in Encoding.GetEncodings())
@@ -128,8 +135,14 @@ namespace WindEnergy.UI.Dialogs
             //заполнение первых 10 строк файла в окно
             try
             {
-                scintillaExample.Text = importer.GetText(10);
+                scintillaExample.Text = importer.GetText(10); //получаем текст
 
+                //выделяем разделители
+                MatchCollection collect = new Regex("w*" + textBoxDelimeter.Text + "w*").Matches(scintillaExample.Text);
+                foreach (Match match in collect)
+                    scintillaExample.IndicatorFillRange(match.Index, match.Length);
+
+                //количество столбцов в первой строке
                 string firstLine = scintillaExample.Lines[0].Text;
                 string[] cols = new Regex("w*" + textBoxDelimeter.Text + "w*").Split(firstLine);
                 int count = cols.Length;
@@ -157,7 +170,7 @@ namespace WindEnergy.UI.Dialogs
                 //заполнение примера импорта
                 try
                 {
-                    RawRange test = new RawRange(importer.Import().Take(10));
+                    RawRange test =importer.Import(10);
                     dataGridViewImported.DataSource = test;
                 }
                 catch (WindEnergyException wex)

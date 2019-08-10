@@ -124,23 +124,8 @@ namespace WindEnergy.UI.Tools
                     }
                     else
                     {
-                        OpenFileDialog of = new OpenFileDialog();
-                        of.InitialDirectory = Vars.Options.LastDirectory;
-                        of.Filter = "Файл csv|*.csv";
-                        if (of.ShowDialog(this) == DialogResult.OK)
-                        {
-                            Vars.Options.LastDirectory = Path.GetDirectoryName(of.FileName);
-                            try
-                            {
-                                baseRange = RawRangeSerializer.DeserializeFile(of.FileName);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(this, ex.Message, "Открытие файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                        }
-                        else
+                        baseRange= Program.winMain.mainHelper.OpenFile(this);
+                        if (baseRange == null)
                             return;
                     }
                 }

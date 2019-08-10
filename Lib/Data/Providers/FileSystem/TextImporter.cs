@@ -92,12 +92,13 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
         /// Пытается импортировать файл на основе заданных настроек. При ошибке выбрасывает исключение WindEnergyException с информацией или ArgumentException при недопустимых настройках
         /// </summary>
         /// <returns></returns>
-        public RawRange Import()
+        /// <param name="count">количество считываемых строк, начиная со StartLine</param>
+        public RawRange Import(long count = long.MaxValue)
         {
             CheckParameters(); //проверка параметров
 
             //Импорт данных
-            string data = GetText(long.MaxValue);
+            string data = GetText(count);
 
             RawRange res = new RawRange();
             res.BeginChange();

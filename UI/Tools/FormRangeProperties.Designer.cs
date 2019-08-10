@@ -44,12 +44,12 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.textBoxMSAddress = new System.Windows.Forms.TextBox();
             this.textBoxMSCoordinates = new System.Windows.Forms.TextBox();
+            this.labelMSType = new System.Windows.Forms.Label();
+            this.textBoxMSType = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxRangeCount = new System.Windows.Forms.TextBox();
             this.textBoxMSID = new System.Windows.Forms.TextBox();
             this.labelMSID = new System.Windows.Forms.Label();
-            this.labelMSType = new System.Windows.Forms.Label();
-            this.textBoxMSType = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -109,6 +109,9 @@
             this.textBoxMSName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxMSName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxMSName.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.textBoxMSName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxMSName.ForeColor = System.Drawing.SystemColors.Highlight;
             this.textBoxMSName.Location = new System.Drawing.Point(180, 82);
             this.textBoxMSName.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
             this.textBoxMSName.Name = "textBoxMSName";
@@ -117,6 +120,7 @@
             this.textBoxMSName.TabIndex = 8;
             this.textBoxMSName.TabStop = false;
             this.textBoxMSName.Text = "Информация недоступна";
+            this.textBoxMSName.Click += new System.EventHandler(this.textBoxMSName_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -234,6 +238,30 @@
             this.textBoxMSCoordinates.TabStop = false;
             this.textBoxMSCoordinates.Text = "Информация недоступна";
             // 
+            // labelMSType
+            // 
+            this.labelMSType.AutoSize = true;
+            this.labelMSType.Location = new System.Drawing.Point(5, 57);
+            this.labelMSType.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.labelMSType.Name = "labelMSType";
+            this.labelMSType.Size = new System.Drawing.Size(101, 13);
+            this.labelMSType.TabIndex = 7;
+            this.labelMSType.Text = "Тип метеостанции";
+            // 
+            // textBoxMSType
+            // 
+            this.textBoxMSType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxMSType.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxMSType.Location = new System.Drawing.Point(180, 57);
+            this.textBoxMSType.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.textBoxMSType.Name = "textBoxMSType";
+            this.textBoxMSType.ReadOnly = true;
+            this.textBoxMSType.Size = new System.Drawing.Size(235, 13);
+            this.textBoxMSType.TabIndex = 8;
+            this.textBoxMSType.TabStop = false;
+            this.textBoxMSType.Text = "Информация недоступна";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -281,30 +309,6 @@
             this.labelMSID.Size = new System.Drawing.Size(93, 13);
             this.labelMSID.TabIndex = 3;
             this.labelMSID.Text = "ID метеостанции";
-            // 
-            // labelMSType
-            // 
-            this.labelMSType.AutoSize = true;
-            this.labelMSType.Location = new System.Drawing.Point(5, 57);
-            this.labelMSType.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.labelMSType.Name = "labelMSType";
-            this.labelMSType.Size = new System.Drawing.Size(101, 13);
-            this.labelMSType.TabIndex = 7;
-            this.labelMSType.Text = "Тип метеостанции";
-            // 
-            // textBoxMSType
-            // 
-            this.textBoxMSType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxMSType.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxMSType.Location = new System.Drawing.Point(180, 57);
-            this.textBoxMSType.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.textBoxMSType.Name = "textBoxMSType";
-            this.textBoxMSType.ReadOnly = true;
-            this.textBoxMSType.Size = new System.Drawing.Size(235, 13);
-            this.textBoxMSType.TabIndex = 8;
-            this.textBoxMSType.TabStop = false;
-            this.textBoxMSType.Text = "Информация недоступна";
             // 
             // FormRangeProperties
             // 

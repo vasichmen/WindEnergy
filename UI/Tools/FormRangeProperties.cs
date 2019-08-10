@@ -94,5 +94,16 @@ namespace WindEnergy.UI.Tools
         {
             new FormRangeStatistic(Range).Show(this);
         }
+
+        /// <summary>
+        /// переход к метеостанции
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxMSName_Click(object sender, EventArgs e)
+        {
+            if (Range.Meteostation != null)
+                new FormShowMeteostationsMap(Range.Meteostation).Show(this);
+        }
     }
 }

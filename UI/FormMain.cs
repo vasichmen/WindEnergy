@@ -123,30 +123,11 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog of = new OpenFileDialog();
-            of.InitialDirectory = Vars.Options.LastDirectory;
-            of.Multiselect = true;
-
-            if (of.ShowDialog(this) == DialogResult.OK)
-            {
-                foreach (string file in of.FileNames)
-                {
-                    try
-                    {
-                        RawRange rang = RawRangeSerializer.DeserializeFile(file, null);
-                        rang.FilePath = file;
-                        rang.Name = Path.GetFileNameWithoutExtension(file);
-                        TabPageExt tab = mainTabControl.OpenNewTab(rang, rang.FileName);
-                        tab.HasNotSavedChanges = false;
-                        Vars.Options.LastDirectory = Path.GetDirectoryName(file);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(this, ex.Message, "Открытие файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-            }
+            RawRange rang = this.mainHelper.OpenFile();
+            if (rang == null)
+                return;
+            TabPageExt tab = this.mainTabControl.OpenNewTab(rang, rang.FileName);
+            tab.HasNotSavedChanges = false;
         }
 
         /// <summary>
@@ -160,7 +141,7 @@ namespace WindEnergy.UI
             if (fti.ShowDialog(this) == DialogResult.OK)
             {
                 RawRange rang = fti.Result;
-                TabPageExt tab =mainTabControl.OpenNewTab(rang, rang.FileName) ;
+                TabPageExt tab = mainTabControl.OpenNewTab(rang, rang.FileName);
                 tab.HasNotSavedChanges = true;
             }
         }
