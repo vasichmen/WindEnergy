@@ -59,13 +59,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             useCache = cacheDirectory != null;
             if (useCache)
             {
-                this.cacheDirectory = cacheDirectory;
-                this.duration = duration;
                 this.cache = new FileSystemCache(cacheDirectory, TimeSpan.FromHours(duration));
-            }
-            else
-            {
-
             }
         }
 
@@ -75,8 +69,6 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         private DateTime lastQuery;
         private readonly string host;
         private readonly bool useCache;
-        private readonly string cacheDirectory;
-        private readonly double duration;
         public static bool UseProxy = false;
         private readonly string ProxyHost = "127.0.0.1";
         private readonly int ProxyPort = 8118;
@@ -97,23 +89,25 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             while (File.Exists(tmp_file))
                 tmp_file = Vars.Options.TempFolder + "\\" + ++i + ".tmp";
 
-            WebClient client = new WebClient();
-            client.DownloadProgressChanged +=
-                new DownloadProgressChangedEventHandler((sender, e) =>
-                {
-                    if (operation != null)
-                    {
-                        operation.Invoke("Загрузка изображения, завершено " + (e as DownloadProgressChangedEventArgs).ProgressPercentage + "%");
-                    }
-                }
-                );
-            client.DownloadFileCompleted += new AsyncCompletedEventHandler((sender, e) =>
+            using (WebClient client = new WebClient())
             {
-                if (afterLoadComplete != null)
-                    afterLoadComplete.Invoke(tmp_file);
-                client.Dispose();
-            });
-            client.DownloadFileAsync(new Uri(url), tmp_file);
+                client.DownloadProgressChanged +=
+                    new DownloadProgressChangedEventHandler((sender, e) =>
+                    {
+                        if (operation != null)
+                        {
+                            operation.Invoke("Загрузка изображения, завершено " + (e as DownloadProgressChangedEventArgs).ProgressPercentage + "%");
+                        }
+                    }
+                    );
+                client.DownloadFileCompleted += new AsyncCompletedEventHandler((sender, e) =>
+                {
+                    if (afterLoadComplete != null)
+                        afterLoadComplete.Invoke(tmp_file);
+                    client.Dispose();
+                });
+                client.DownloadFileAsync(new Uri(url), tmp_file);
+            }
         }
 
         /// <summary>
@@ -123,16 +117,18 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <returns></returns>
         public static Image GetImage(string url)
         {
-            WebClient wc = new WebClient();
             try
             {
-                Stream str = wc.OpenRead(url);
-                if (wc.ResponseHeaders[HttpResponseHeader.ContentLength] == "0")
-                    return new Bitmap(256, 256);
-                Image res = Image.FromStream(str);
-                str.Close();
-                wc.Dispose();
-                return res;
+                using (WebClient wc = new WebClient())
+                {
+                    Stream str = wc.OpenRead(url);
+                    if (wc.ResponseHeaders[HttpResponseHeader.ContentLength] == "0")
+                        return new Bitmap(256, 256);
+                    Image res = Image.FromStream(str);
+                    str.Close();
+                    wc.Dispose();
+                    return res;
+                }
             }
             catch (WebException ex)
             {
@@ -341,18 +337,20 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
 
                 WebResponse res = req.GetResponse();
                 Stream ReceiveStream = res.GetResponseStream();
-                StreamReader sr = new StreamReader(ReceiveStream, Encoding.UTF8);
-                //Кодировка указывается в зависимости от кодировки ответа сервера
-                char[] read = new char[256];
-                int count = sr.Read(read, 0, 256);
-                string Out = string.Empty;
-                while (count > 0)
+                using (StreamReader sr = new StreamReader(ReceiveStream, Encoding.UTF8))
                 {
-                    string str = new string(read, 0, count);
-                    Out += str;
-                    count = sr.Read(read, 0, 256);
+                    //Кодировка указывается в зависимости от кодировки ответа сервера
+                    char[] read = new char[256];
+                    int count = sr.Read(read, 0, 256);
+                    string Out = string.Empty;
+                    while (count > 0)
+                    {
+                        string str = new string(read, 0, count);
+                        Out += str;
+                        count = sr.Read(read, 0, 256);
+                    }
+                    return Out;
                 }
-                return Out;
             }
             catch (WebException we)
             {
@@ -445,6 +443,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
 
                     //Считывает поток от текущего положения до конца.            
                     responsereader = sreader.ReadToEnd();
+                    sreader.Close();
                 }
                 catch (InvalidDataException)
                 {
@@ -454,6 +453,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
 
                     //Считывает поток от текущего положения до конца.            
                     responsereader = sreader.ReadToEnd();
+                    sreader.Close();
                 }
                 //Закрываем поток ответа.
                 response.Close();

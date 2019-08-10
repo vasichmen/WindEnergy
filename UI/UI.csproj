@@ -50,6 +50,9 @@
     <Reference Include="GMap.NET.WindowsForms, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
       <HintPath>..\packages\GMap.NET.WindowsForms.1.7.5\lib\net40\GMap.NET.WindowsForms.dll</HintPath>
     </Reference>
+    <Reference Include="ScintillaNET, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jacobslusser.ScintillaNET.3.6.3\lib\net40\ScintillaNET.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -71,6 +74,12 @@
     </Compile>
     <Compile Include="Dialogs\FormChooseMeteostAirportDialog.Designer.cs">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\FormTextImport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FormTextImport.Designer.cs">
+      <DependentUpon>FormTextImport.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\FormEditDiapasons.cs">
       <SubType>Form</SubType>
@@ -184,6 +193,9 @@
     </Compile>
     <EmbeddedResource Include="Dialogs\FormChooseMeteostAirportDialog.resx">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FormTextImport.resx">
+      <DependentUpon>FormTextImport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FormEditDiapasons.resx">
       <DependentUpon>FormEditDiapasons.cs</DependentUpon>

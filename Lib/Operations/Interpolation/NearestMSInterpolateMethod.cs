@@ -31,10 +31,6 @@ namespace WindEnergy.Lib.Operations.Interpolation
         private readonly Func<double, double> getRes = null;
         private readonly Diapason<double> interpolationDiapason;
 
-        /// <summary>
-        /// расстояние в метрах при котором координаты считаются совпадающими
-        /// </summary>
-        private const double COORDINATES_OVERLAP = 10;
 
         /// <summary>
         /// шаг градаций скорости в м/с
@@ -131,7 +127,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
 
             DateTime from = Range.Min((ri) => ri.Date).Date, to = Range.Max((ri) => ri.Date).Date;
 
-            List<MeteostationInfo> mts = getNearestMS(coordinates, Vars.Meteostations.MeteostationList, Vars.Options.NearestMSRadius, false);
+            List<MeteostationInfo> mts = Vars.Meteostations.GetNearestMS(coordinates,  Vars.Options.NearestMSRadius, false);
             Dictionary<double, double> funcSpeed = Range.GetFunction(MeteorologyParameters.Speed); //функция скорости на заданном ряде
             RawRange res = null;
             double rmax = double.MinValue, total_rmax=double.MinValue;
@@ -183,7 +179,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
                 }
             }
             if (res == null) {
-                MeteostationInfo mi = GetNearestMS(coordinates, Vars.Meteostations.MeteostationList, false);
+                MeteostationInfo mi = Vars.Meteostations.GetNearestMS(coordinates, false);
                 double l = EarthModel.CalculateDistance(mi.Coordinates, coordinates);
                 throw new GetBaseRangeException(total_rmax, Vars.Options.MinimalCorrelationCoeff, l, mts.Count, Vars.Options.NearestMSRadius, coordinates);
                     
@@ -261,68 +257,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
 
         #region вспомогательные методы
 
-        /// <summary>
-        /// найти ближайшую МС для заданных координат и в заданном радиусе от точки 
-        /// </summary>
-        /// <param name="coordinates"></param>
-        /// <param name="mts">список метеостанций по которому идёт поиск</param>
-        /// <param name="useMaxRadius">если истина, то поиск будет идти только в максимальном радиусе из настроек Vars.Options.NearestMSRadius</param>
-        /// <returns></returns>
-        public static MeteostationInfo GetNearestMS(PointLatLng coordinates, List<MeteostationInfo> mts, bool useMaxRadius = true)
-        {
-            MeteostationInfo res = null;
-            double min = double.MaxValue;
-            foreach (var p in mts)
-            {
-                double f = EarthModel.CalculateDistance(p.Coordinates, coordinates);
-                if (f < COORDINATES_OVERLAP)
-                {
-                    //TODO: ближайшая метеостанция не должна быть той же самой 
-                    continue;
-                }
-                if (useMaxRadius)
-                {
-                    if (f < min && f > COORDINATES_OVERLAP && f < Vars.Options.NearestMSRadius)
-                    {
-                        min = f;
-                        res = p;
-                    }
-                }
-                else
-                {
-                    if (f < min)
-                    {
-                        min = f;
-                        res = p;
-                    }
-                }
-
-            }
-            if (min == double.MaxValue)
-                return null;
-            res.OwnerDistance = min;
-            return res;
-        }
-
-        /// <summary>
-        /// найти все метеостанции из списка mts, которые находятся в радиусе radius от заданной точки coordinates
-        /// </summary>
-        /// <param name="coordinates"></param>
-        /// <param name="mts"></param>
-        /// <param name="radius"></param>
-        /// <param name="addOwn">Если истина, то если на coordinates есть МС, то она тоже будет добавлена</param>
-        /// <returns></returns>
-        private static List<MeteostationInfo> getNearestMS(PointLatLng coordinates, List<MeteostationInfo> mts, double radius, bool addOwn = false)
-        {
-            List<MeteostationInfo> res = new List<MeteostationInfo>();
-            foreach (var ms in mts)
-            {
-                double dist = EarthModel.CalculateDistance(ms.Coordinates, coordinates);
-                if ((dist < radius && dist > COORDINATES_OVERLAP) || (dist < COORDINATES_OVERLAP && addOwn)) // если попадает в радиус и не совпадает или совпадает и надо добавлять 
-                    res.Add(ms);
-            }
-            return res;
-        }
+       
 
         #region Рассчет коэффициента корреляции и параметров прямой
 
@@ -459,10 +394,8 @@ namespace WindEnergy.Lib.Operations.Interpolation
             if (from > to)
                 throw new WindEnergyException("Дата from больше, чем to");
             RawRange res = null;
-            List<MeteostationInfo> meteostations;
 
-            meteostations = Vars.Meteostations.MeteostationList;
-            MeteostationInfo nearestMS = GetNearestMS(coordinates, meteostations);
+            MeteostationInfo nearestMS = Vars.Meteostations.GetNearestMS(coordinates);
             if (nearestMS == null)
                 throw new Exception("Не удалось найти ближайшую метеостанцию в заданном радиусе");
 

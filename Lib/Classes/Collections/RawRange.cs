@@ -47,7 +47,9 @@ namespace WindEnergy.Lib.Classes.Collections
         /// <summary>
         /// статистика ряда (полнота, количество элементов, интервалы измерений)
         /// </summary>
-        public QualityInfo Quality { get { if (_quality != null) return _quality; else { _quality = Qualifier.ProcessRange(this); return _quality; } } }
+        public QualityInfo Quality { get {
+                if (_quality != null) return _quality;
+                else { _quality = Qualifier.ProcessRange(this); return _quality; } } }
 
         /// <summary>
         /// название

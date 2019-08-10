@@ -459,4 +459,116 @@ namespace WindEnergy
         User
 
     }
+
+    #region Импорт из текста, единицы измерения
+
+    /// <summary>
+    /// Единицы измерений направления
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<DirectionUnits>))]
+    public enum DirectionUnits
+    {
+        /// <summary>
+        /// текст расписания погоды
+        /// </summary>
+        [Description("Текст РП5")]
+        TextRP5,
+
+        /// <summary>
+        /// градусы
+        /// </summary>
+        [Description("Градусы")]
+        Degrees,
+
+        [Description("Не выбраны")]
+        None
+    }
+
+    /// <summary>
+    /// единицы измерения давления
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<PressureUnits>))]
+    public enum PressureUnits {
+        /// <summary>
+        /// КПа
+        /// </summary>
+        [Description("КПа")]
+        KPa,
+
+        /// <summary>
+        /// мм рт. ст.
+        /// </summary>
+        [Description("мм рт. ст.")]
+        mmHgArt,
+
+        [Description("Не выбраны")]
+        None
+    }
+
+    /// <summary>
+    /// единицы измерения давления
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<WetnessUnits>))]
+    public enum WetnessUnits
+    {
+        /// <summary>
+        /// Проценты
+        /// </summary>
+        [Description("Проценты")]
+        Percents,
+
+        /// <summary>
+        /// Доли
+        /// </summary>
+        [Description("Доли")]
+        Parts,
+
+        [Description("Не выбраны")]
+        None
+    }
+
+    /// <summary>
+    /// Поля для импорта
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<ImportFields>))]
+    public enum ImportFields
+    {
+        /// <summary>
+        /// Дата
+        /// </summary>
+        [Description("Дата")]
+        Date,
+
+        /// <summary>
+        /// Направление
+        /// </summary>
+        [Description("Направление")]
+        Direction,
+
+        /// <summary>
+        /// Скорость
+        /// </summary>
+        [Description("Скорость")]
+        Speed,
+
+        /// <summary>
+        /// Температура
+        /// </summary>
+        [Description("Температура")]
+        Temperature,
+
+        /// <summary>
+        /// Давление
+        /// </summary>
+        [Description("Давление")]
+        Pressure,
+
+        /// <summary>
+        /// Влажность
+        /// </summary>
+        [Description("Влажность")]
+        Wetness,
+
+    }
+    #endregion
 }

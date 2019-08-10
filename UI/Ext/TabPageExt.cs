@@ -38,6 +38,7 @@ namespace WindEnergy.UI.Ext
             this.ToolTipText = string.IsNullOrWhiteSpace(range.FilePath) ? "" : range.FilePath;
             this.Text = text;
             DataGridViewExt ndgv = new DataGridViewExt();
+            ndgv.ColumnAdded += DataGridView_ColumnAdded;
             ndgv.Dock = DockStyle.Fill;
             ndgv.Parent = this;
             ndgv.DataSource = range;
@@ -86,6 +87,55 @@ namespace WindEnergy.UI.Ext
                 return false;
             }
 
+        }
+
+        /// <summary>
+        /// изменение типа столбцов при добавлении
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void DataGridView_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
+        {
+            switch (e.Column.Name.ToLower())
+            {
+                case "date":
+                    e.Column.HeaderText = "Дата наблюдения";
+                    e.Column.Width = 130;
+                    e.Column.CellTemplate = new DataGridViewCalendarCell();
+                    break;
+                case "direction":
+                    e.Column.HeaderText = "Направление, °";
+                    e.Column.DefaultCellStyle.Format = "n2";
+                    break;
+                case "directionrhumb":
+                    e.Column.HeaderText = "Румб";
+                    e.Column.Width = 55;
+                    e.Column.CellTemplate = new DataGridViewComboboxCell<WindDirections>();
+                    break;
+                case "speed":
+                    e.Column.HeaderText = "Скорость, м/с";
+                    e.Column.DefaultCellStyle.Format = "n1";
+                    break;
+                case "temperature":
+                    e.Column.HeaderText = "Температура, °С";
+                    e.Column.DefaultCellStyle.Format = "n1";
+                    break;
+                case "wetness":
+                    e.Column.HeaderText = "Влажность, %";
+                    e.Column.DefaultCellStyle.Format = "n1";
+                    break;
+                case "pressure":
+                    e.Column.HeaderText = "Давление, мм рт. ст.";
+                    e.Column.Width = 130;
+                    e.Column.DefaultCellStyle.Format = "n1";
+                    break;
+
+                //удаляемые колонки пишем тут:
+                case "dateargument":
+                    e.Column.DataGridView.Columns.Remove(e.Column);
+                    break;
+                default: throw new Exception("Для этой колонки нет названия");
+            }
         }
     }
 }

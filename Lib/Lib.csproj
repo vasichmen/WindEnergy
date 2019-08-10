@@ -95,8 +95,10 @@
     <Compile Include="Classes\Structures\RangeInterval.cs" />
     <Compile Include="Classes\Exceptions.cs" />
     <Compile Include="Classes\VersionInfo.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Data\Interfaces\IGeoInfoProvider.cs" />
     <Compile Include="Data\Providers\FileSystem\FileProvider.cs" />
+    <Compile Include="Data\Providers\FileSystem\TextImporter.cs" />
     <Compile Include="Data\Providers\InternetServices\ArcGis.cs" />
     <Compile Include="Data\Providers\InternetServices\BaseConnection.cs" />
     <Compile Include="Data\Providers\DB\ETOPO\BaseGrid.cs" />

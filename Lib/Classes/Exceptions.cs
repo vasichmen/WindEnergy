@@ -10,8 +10,17 @@ namespace WindEnergy.Lib.Classes
     [Serializable]
     public class WindEnergyException : ApplicationException
     {
+        /// <summary>
+        /// всплывающая подсказка
+        /// </summary>
+        public string ToolTip { get; }
+
         public WindEnergyException(string message) : base(message)
         {
+        }
+        public WindEnergyException(string message, string tooltip) : base(message)
+        {
+            this.ToolTip = tooltip;
         }
     }
 

@@ -113,19 +113,19 @@ namespace WindEnergy.Lib.Classes.Structures
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="p">время измрения в минутах от DateTime.MinValue</param>
+        /// <param name="dateArgumentp">время измрения в минутах от DateTime.MinValue</param>
         /// <param name="speed">скорость м/с</param>
         /// <param name="direct">направление, град</param>
         /// <param name="temp">температура град,С</param>
         /// <param name="wet">влажность, %</param>
-        public RawItem(double p, double speed, double direct, double temp, double wet, double press)
+        public RawItem(double dateArgumentp, double speed, double direct, double temp, double wet, double press)
         {
             Speed = speed;
             Direction = direct;
             Temperature = temp;
             Wetness = wet;
             Pressure = press;
-            Date = DateTime.MinValue + TimeSpan.FromMinutes(p);
+            Date = DateTime.MinValue + TimeSpan.FromMinutes(dateArgumentp);
         }
 
         /// <summary>

@@ -18,6 +18,7 @@ using WindEnergy.Lib.Operations;
 using WindEnergy.Lib.Operations.Interpolation;
 using WindEnergy.Lib.Operations.Structures;
 using WindEnergy.Lib.Statistic.Structures;
+using WindEnergy.UI.Dialogs;
 using WindEnergy.UI.Ext;
 using WindEnergy.UI.Helpers;
 using WindEnergy.UI.Tools;
@@ -132,7 +133,6 @@ namespace WindEnergy.UI
                 {
                     try
                     {
-                        string ext = Path.GetExtension(file).ToLower();
                         RawRange rang = RawRangeSerializer.DeserializeFile(file, null);
                         rang.FilePath = file;
                         rang.Name = Path.GetFileNameWithoutExtension(file);
@@ -149,6 +149,21 @@ namespace WindEnergy.UI
             }
         }
 
+        /// <summary>
+        /// импортировать текстовый файл
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void importTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormTextImport fti = new FormTextImport();
+            if (fti.ShowDialog(this) == DialogResult.OK)
+            {
+                RawRange rang = fti.Result;
+                TabPageExt tab =mainTabControl.OpenNewTab(rang, rang.FileName) ;
+                tab.HasNotSavedChanges = true;
+            }
+        }
 
         /// <summary>
         /// загрузить с сайта rp5.ru
@@ -453,12 +468,13 @@ namespace WindEnergy.UI
             mainHelper.RefreshStatusBar();
         }
 
+
+
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
 
         }
-
 
     }
 }

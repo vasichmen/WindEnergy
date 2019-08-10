@@ -85,14 +85,14 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                 if (elems.Length != 8) //проверка числа параметров (3 для даты, 5 - параметры атмосферы)
                     throw new Exception("Текстовый файл имеет неизвестный формат. Проверьте число параметров");
 
-                double intopas = 0.00750063755419211;
+               
                 DateTime dt = DateTime.Parse(elems[0] + "." + elems[1] + "." + elems[2]);
                 double WS10M = double.Parse(elems[3].Replace('.', Vars.DecimalSeparator));
                 double WD10M = double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
                 double T10M = double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
                 double RH2M = double.Parse(elems[6].Replace('.', Vars.DecimalSeparator));
                 double PS = double.Parse(elems[7].Replace('.', Vars.DecimalSeparator)); //по API про ходят данные в кПа
-                PS *= intopas*1000; //переводим в мм рт. ст.
+                PS *= Constants.MMHGART_IN_1KPA; //переводим в мм рт. ст.
                 res.Add(new RawItem() {
                     Date = dt,
                     Direction = WD10M == -999 ? double.NaN : WD10M,

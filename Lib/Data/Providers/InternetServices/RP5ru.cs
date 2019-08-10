@@ -242,6 +242,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             string tmp_dl_file = Vars.LocalFileSystem.GetTempFileName();
             WebClient webcl = new WebClient();
             webcl.DownloadFile(lnk, tmp_dl_file);
+            webcl.Dispose();
 
             //распаковка
             string tmp_unpack_file = tmp_dl_file + ".csv";
@@ -554,101 +555,103 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <returns></returns>
         public static RawRange LoadCSV(string file, MeteostationInfo meteostation = null)
         {
-            StreamReader sr = new StreamReader(file, Encoding.UTF8, true);
-            RawRange res = new RawRange();
-            res.BeginChange(); //приостановка обработки событий изменения ряда
-
-            //определение формата файла csv
-            MeteoSourceType type;
-            string title = sr.ReadLine();
-            if (title.Contains("WMO_ID"))
-                type = MeteoSourceType.Meteostation;
-            else if (title.Contains("METAR"))
-                type = MeteoSourceType.Airport;
-            else throw new Exception("Файл повреждён или имеет неизвестный формат данных rp5.ru");
-
-            //пропуск пустых строк (одна уже пропущена при чтении заголовка)
-            for (int i = 0; i < 6; i++)
-                sr.ReadLine();
-            switch (type)
+            using (StreamReader sr = new StreamReader(file, Encoding.UTF8, true))
             {
-                case MeteoSourceType.Meteostation: //загрузка архива с метеостанции
+                RawRange res = new RawRange();
+                res.BeginChange(); //приостановка обработки событий изменения ряда
 
-                    string data = sr.ReadToEnd();
-                    sr.Close();
-                    string[] lines = data.Replace("\"", "").Split('\n');
-                    foreach (string line in lines)
-                    {
-                        string[] elems = line.Split(';');
-                        if (elems.Length < 8)
-                            continue;
-                        if (elems[6] == "")
-                            continue;
-                        if (elems[7] == "")
-                            continue;
+                //определение формата файла csv
+                MeteoSourceType type;
+                string title = sr.ReadLine();
+                if (title.Contains("WMO_ID"))
+                    type = MeteoSourceType.Meteostation;
+                else if (title.Contains("METAR"))
+                    type = MeteoSourceType.Airport;
+                else throw new Exception("Файл повреждён или имеет неизвестный формат данных rp5.ru");
 
-                        double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Vars.DecimalSeparator));
-                        DateTime dt = DateTime.Parse(elems[0]);
-                        double spd = double.Parse(elems[7].Replace('.', Vars.DecimalSeparator));
-                        double wet = elems[5] == "" ? double.NaN : double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
-                        double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
-                        string dirs = elems[6];
-                        WindDirections direct = GetWindDirectionFromString(dirs);
-                        try
-                        { res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press }); }
-                        catch (Exception)
-                        { continue; }
-                    }
+                //пропуск пустых строк (одна уже пропущена при чтении заголовка)
+                for (int i = 0; i < 6; i++)
+                    sr.ReadLine();
+                switch (type)
+                {
+                    case MeteoSourceType.Meteostation: //загрузка архива с метеостанции
 
-                    //поиск информации о МС
-                    if (meteostation == null)
-                    {
-                        int start = title.IndexOf("WMO_ID=") + "WMO_ID=".Length;
-                        int end = title.IndexOf(',', start);
-                        string id_s = title.Substring(start, end - start);
-                        meteostation = Vars.Meteostations.GetByID(int.Parse(id_s));
-                    }
-                    break;
-                case MeteoSourceType.Airport: //загрузка архива с аэропорта
+                        string data = sr.ReadToEnd();
+                        sr.Close();
+                        string[] lines = data.Replace("\"", "").Split('\n');
+                        foreach (string line in lines)
+                        {
+                            string[] elems = line.Split(';');
+                            if (elems.Length < 8)
+                                continue;
+                            if (elems[6] == "")
+                                continue;
+                            if (elems[7] == "")
+                                continue;
 
-                    string data2 = sr.ReadToEnd();
-                    sr.Close();
-                    string[] lines2 = data2.Replace("\"", "").Split('\n');
-                    foreach (string line in lines2)
-                    {
-                        string[] elems = line.Split(';');
-                        if (elems.Length < 8)
-                            continue;
-                        if (elems[5] == "")
-                            continue;
-                        if (elems[6] == "")
-                            continue;
+                            double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Vars.DecimalSeparator));
+                            DateTime dt = DateTime.Parse(elems[0]);
+                            double spd = double.Parse(elems[7].Replace('.', Vars.DecimalSeparator));
+                            double wet = elems[5] == "" ? double.NaN : double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
+                            double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
+                            string dirs = elems[6];
+                            WindDirections direct = GetWindDirectionFromString(dirs);
+                            try
+                            { res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press }); }
+                            catch (Exception)
+                            { continue; }
+                        }
 
-                        double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Vars.DecimalSeparator));
-                        DateTime dt = DateTime.Parse(elems[0]);
-                        double spd = double.Parse(elems[6].Replace('.', Vars.DecimalSeparator));
-                        double wet = elems[4] == "" ? double.NaN : double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
-                        double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
-                        string dirs = elems[5];
-                        WindDirections direct = RP5ru.GetWindDirectionFromString(dirs);
-                        res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press });
-                    }
-                    //поиск информации о МС
-                    if (meteostation == null)
-                    {
-                        int start = title.IndexOf("METAR=") + "METAR=".Length;
-                        int end = title.IndexOf(',', start);
-                        string id_s = title.Substring(start, end - start);
-                        meteostation = Vars.Meteostations.GetByCC_code(id_s);
-                    }
-                    break;
-                case MeteoSourceType.UnofficialMeteostation:
-                    throw new Exception("Этот тип файла не поддерживается");
+                        //поиск информации о МС
+                        if (meteostation == null)
+                        {
+                            int start = title.IndexOf("WMO_ID=") + "WMO_ID=".Length;
+                            int end = title.IndexOf(',', start);
+                            string id_s = title.Substring(start, end - start);
+                            meteostation = Vars.Meteostations.GetByID(int.Parse(id_s));
+                        }
+                        break;
+                    case MeteoSourceType.Airport: //загрузка архива с аэропорта
+
+                        string data2 = sr.ReadToEnd();
+                        sr.Close();
+                        string[] lines2 = data2.Replace("\"", "").Split('\n');
+                        foreach (string line in lines2)
+                        {
+                            string[] elems = line.Split(';');
+                            if (elems.Length < 8)
+                                continue;
+                            if (elems[5] == "")
+                                continue;
+                            if (elems[6] == "")
+                                continue;
+
+                            double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Vars.DecimalSeparator));
+                            DateTime dt = DateTime.Parse(elems[0]);
+                            double spd = double.Parse(elems[6].Replace('.', Vars.DecimalSeparator));
+                            double wet = elems[4] == "" ? double.NaN : double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
+                            double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
+                            string dirs = elems[5];
+                            WindDirections direct = RP5ru.GetWindDirectionFromString(dirs);
+                            res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press });
+                        }
+                        //поиск информации о МС
+                        if (meteostation == null)
+                        {
+                            int start = title.IndexOf("METAR=") + "METAR=".Length;
+                            int end = title.IndexOf(',', start);
+                            string id_s = title.Substring(start, end - start);
+                            meteostation = Vars.Meteostations.GetByCC_code(id_s);
+                        }
+                        break;
+                    case MeteoSourceType.UnofficialMeteostation:
+                        throw new Exception("Этот тип файла не поддерживается");
+                }
+
+                res.Meteostation = meteostation;
+                res.EndChange();
+                return res;
             }
-
-            res.Meteostation = meteostation;
-            res.EndChange();
-            return res;
         }
 
     }

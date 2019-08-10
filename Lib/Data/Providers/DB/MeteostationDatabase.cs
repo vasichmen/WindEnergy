@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data.Providers.InternetServices;
+using WindEnergy.Lib.Geomodel;
 
 namespace WindEnergy.Lib.Data.Providers.DB
 {
@@ -15,6 +16,11 @@ namespace WindEnergy.Lib.Data.Providers.DB
     /// </summary>
     public class MeteostationDatabase
     {
+        /// <summary>
+        /// расстояние в метрах при котором координаты считаются совпадающими
+        /// </summary>
+        private const double COORDINATES_OVERLAP = 10;
+
         /// <summary>
         /// список метеостанций и координат
         /// </summary>
@@ -199,6 +205,68 @@ namespace WindEnergy.Lib.Data.Providers.DB
             foreach (var m in MeteostationList)
                 if (m.Name.ToLower().Contains(query.ToLower()))
                     res.Add(m);
+            return res;
+        }
+
+        /// <summary>
+        /// найти ближайшую МС для заданных координат и в заданном радиусе от точки 
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <param name="mts">список метеостанций по которому идёт поиск</param>
+        /// <param name="useMaxRadius">если истина, то поиск будет идти только в максимальном радиусе из настроек Vars.Options.NearestMSRadius</param>
+        /// <returns></returns>
+        public  MeteostationInfo GetNearestMS(PointLatLng coordinates, bool useMaxRadius = true)
+        {
+            MeteostationInfo res = null;
+            double min = double.MaxValue;
+            foreach (var p in this.MeteostationList)
+            {
+                double f = EarthModel.CalculateDistance(p.Coordinates, coordinates);
+                if (f < COORDINATES_OVERLAP)
+                {
+                    //TODO: ближайшая метеостанция не должна быть той же самой 
+                    continue;
+                }
+                if (useMaxRadius)
+                {
+                    if (f < min && f > COORDINATES_OVERLAP && f < Vars.Options.NearestMSRadius)
+                    {
+                        min = f;
+                        res = p;
+                    }
+                }
+                else
+                {
+                    if (f < min)
+                    {
+                        min = f;
+                        res = p;
+                    }
+                }
+            }
+            if (min == double.MaxValue)
+                return null;
+            res.OwnerDistance = min;
+            return res;
+        }
+
+        /// <summary>
+        /// найти все метеостанции из списка mts, которые находятся в радиусе radius от заданной точки coordinates
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <param name="mts"></param>
+        /// <param name="radius"></param>
+        /// <param name="addOwn">Если истина, то если на coordinates есть МС, то она тоже будет добавлена</param>
+        /// <returns></returns>
+        public  List<MeteostationInfo> GetNearestMS(PointLatLng coordinates,  double radius, bool addOwn = false)
+        {
+            List<MeteostationInfo> res = new List<MeteostationInfo>();
+            foreach (var ms in this.MeteostationList)
+            {
+                double dist = EarthModel.CalculateDistance(ms.Coordinates, coordinates);
+                if ((dist < radius && dist > COORDINATES_OVERLAP) || (dist < COORDINATES_OVERLAP && addOwn)) // если попадает в радиус и не совпадает или совпадает и надо добавлять 
+                    res.Add(ms);
+            }
             return res;
         }
 

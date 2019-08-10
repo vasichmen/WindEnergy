@@ -295,7 +295,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
         {
             StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
             string coordinates = rang.Position.Lat.ToString("0.000000") + " " + rang.Position.Lng.ToString("0.000000");
-            string caption = "Местное время;T;U;DD;ff";
+            string caption = "Местное время;T;U;DD;ff;P0";
             string title;
             if (rang.Meteostation == null)
                 title = "ID=undefined";
