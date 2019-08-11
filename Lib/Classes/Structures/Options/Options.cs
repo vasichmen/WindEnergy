@@ -41,7 +41,6 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             UserSpeedGradation = new UserGradation();
             CalculateAirDensity = false;
             ETOPO2Folder = Application.StartupPath + "\\Data\\ETOPO";
-            SiteAddress = "http://velomapa.ru";
             RP5SearchEngine = RP5SearchEngine.OnlineAPI;
         }
 
@@ -207,7 +206,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// <summary>
         /// адрес сайта
         /// </summary>
-        public string SiteAddress { get; set; }
+        public string SiteAddress { get { return "https://velomapa.ru/"; } }
 
         /// <summary>
         /// минимальное количество дней, после которого считается пропуск данных как отдельный интервал

@@ -5,14 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes;
+using WindEnergy.Lib.Data.Providers.InternetServices;
 using WindEnergy.UI.Properties;
 
 namespace WindEnergy.UI.Dialogs
@@ -26,6 +29,8 @@ namespace WindEnergy.UI.Dialogs
         private PointLatLng cPoint;
         private GMapOverlay lay;
         private PointLatLng initialPoint;
+        private Yandex searcher;
+        private Dictionary<string, PointLatLng> adressess;
 
         public FormSelectMapPointDialog(string caption, PointLatLng initialPoint)
         {
@@ -38,6 +43,7 @@ namespace WindEnergy.UI.Dialogs
             else
                 gmapControlMap.Position = new PointLatLng(55, 37);
             DialogResult = DialogResult.None;
+            searcher = new Yandex(Vars.Options.CacheFolder + "\\yandex");
         }
 
         /// <summary>
@@ -170,6 +176,88 @@ namespace WindEnergy.UI.Dialogs
         {
             if (!initialPoint.IsEmpty)
                 ShowMarker(initialPoint);
+        }
+
+        /// <summary>
+        /// фильтрация по началу города
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBoxSearch_TextUpdate(object sender, EventArgs e)
+        {
+            string curTextBox = toolStripComboBoxSearch.Text.Trim();
+            updateSearchListAsync(curTextBox);
+        }
+
+        /// <summary>
+        /// асинхронная загрузка списка адресов метеостанций 
+        /// </summary>
+        /// <param name="query">запрос</param>
+        private async void updateSearchListAsync(string query)
+        {
+            if (query.Length < 2)
+                return;
+
+            //действие обновления списка подсказок
+            Action<Dictionary<string, PointLatLng>> updList = new Action<Dictionary<string, PointLatLng>>((list) =>
+            {
+                toolStripComboBoxSearch.Items.Clear();
+                toolStripComboBoxSearch.Items.AddRange(list.Keys.ToArray());
+                this.adressess = list;
+                toolStripComboBoxSearch.SelectionStart = toolStripComboBoxSearch.Text.Length;
+            });
+            try
+            {
+                Dictionary<string, PointLatLng> results;
+                await Task.Run(() =>
+                {
+                    Thread.Sleep(1000); //ждем 1 с
+
+                    //получаем новый текст 
+                    string curTextBox = "";
+                    if (this.InvokeRequired)
+                        this.Invoke(new Action(() => { curTextBox = toolStripComboBoxSearch.Text.Trim(); }));
+                    else
+                        curTextBox = toolStripComboBoxSearch.Text.Trim();
+
+                    if (query != curTextBox) //если этот текст  изменился, то выходим
+                        return;
+
+                    results = searcher.GetAddresses(query);
+                    //обновление списка
+                    if (this.InvokeRequired)
+                        this.Invoke(updList, results);
+                    else
+                        updList.Invoke(results);
+
+                });
+            }
+            catch (WebException)
+            {
+                MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            catch (ApplicationException exc)
+            {
+                MessageBox.Show(this, exc.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Debug.WriteLine("updateList end");
+        }
+
+        /// <summary>
+        /// проверка после выбора метеостанции 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBoxSearch_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            string addr = toolStripComboBoxSearch.SelectedItem as string;
+            if (adressess.ContainsKey(addr))
+            {
+                PointLatLng point = adressess[addr];
+                gmapControlMap.Position = point;
+            }
         }
     }
 }

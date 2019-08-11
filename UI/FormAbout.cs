@@ -25,7 +25,7 @@ namespace WindEnergy.UI
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = string.Format("Версия {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
-            this.linkLabelSite.Text = Vars.Options.SiteAddress;
+            this.linkLabelSite.Text = Vars.Options.SiteAddress + @"programs.php?item=windenergy";
             this.linkLabelTlg.Text = "Telegram: @vasichmen";
             this.linkLabelGithub.Text = "Репозиторий GitHub";
             this.textBoxDescription.Text = AssemblyDescription;
@@ -128,7 +128,7 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void linkLabelSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Vars.Options.SiteAddress);
+            Process.Start(Vars.Options.SiteAddress + @"programs.php?item=windenergy");
         }
 
         /// <summary>
