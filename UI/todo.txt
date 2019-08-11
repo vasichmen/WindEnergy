@@ -12,3 +12,17 @@
 5. Окно информации о ряде
 6. Добавлен параметр Давление
 7. Расширенный импорт из текстовых файлов
+
+
+*******************************************
+БИБЛИОТЕКИ
+
+ArcGis
+GMap.NetC#
+Newtonsoft.JSON
+HTMLAgilityPack
+System.Data.SQLite
+ZedGraph
+SpecialFunction (C#) Copyright (C) 2005 Miroslav Stampar
+ScintillaNET
+EPPlus

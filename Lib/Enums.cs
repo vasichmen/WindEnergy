@@ -388,6 +388,9 @@ namespace WindEnergy
         Manual
     }
 
+    /// <summary>
+    /// месяцы
+    /// </summary>
     [TypeConverter(typeof(EnumTypeConverter<Months>))]
     public enum Months
     {

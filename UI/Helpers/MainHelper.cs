@@ -24,6 +24,11 @@ namespace WindEnergy.UI.Helpers
             f = mainf;
         }
 
+        /// <summary>
+        /// Открыть файл 
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
         internal RawRange OpenFile(Form form=null)
         {
             if (form == null)
@@ -31,8 +36,9 @@ namespace WindEnergy.UI.Helpers
             OpenFileDialog of = new OpenFileDialog();
             of.InitialDirectory = Vars.Options.LastDirectory;
             of.Multiselect = true;
-            of.Filter = "Файл csv (*.csv)|*.csv";
+            of.Filter = "Все файлы|*.*";
             of.Filter += "|Файл Excel (*.xlsx)|*.xlsx";
+            of.Filter += "|Файл csv (*.csv)|*.csv";
             if (of.ShowDialog(form) == DialogResult.OK)
             {
                 foreach (string file in of.FileNames)
@@ -67,9 +73,8 @@ namespace WindEnergy.UI.Helpers
                 sf.InitialDirectory = Vars.Options.LastDirectory;
                 sf.AddExtension = true;
                 sf.FileName = rang.Name;
-
-                sf.Filter = "Файл csv  (*.csv)|*.csv";
-                sf.Filter += "|Файл Excel (*.xlsx)|*.xlsx";
+                sf.Filter = "Файл Excel (*.xlsx)|*.xlsx";
+                sf.Filter += "|Файл csv (*.csv)|*.csv";
 
                 if (sf.ShowDialog(f) == DialogResult.OK)
                 {
