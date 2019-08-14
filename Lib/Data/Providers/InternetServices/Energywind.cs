@@ -53,6 +53,21 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         {
             //TODO: парсер страницы регионов http://energywind.ru/recomendacii/karta-rossii
             throw new NotImplementedException();
+             HtmlDocument page = SendHtmlGetRequest(baseLink, out HttpStatusCode code);
+             
+             //поиск строк с регионами
+             //выбрать все ссылки, родители которых - элементы td
+            var a_list = page.QuerySelectorAll("td a");
+            List<RegionInfo> res = new List<RegionInfo>();
+            foreach(var a in a_list)
+            {
+             //получаем ссылку из атрибутов и название, 
+            link= 
+            name = 
+             res.Add(new RgionInfo(){Name = name, Link=link});
+            }
+             return res;
+            //
         }
 
         /// <summary>
@@ -79,6 +94,8 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                     act.Invoke(total_regions, current_region, region.Name, counter, bases.Count);
 
                 //TODO: создание ограничения, получение координат
+                
+
 
                 counter++;
             }
