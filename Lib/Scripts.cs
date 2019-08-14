@@ -15,6 +15,7 @@ using WindEnergy.Lib.Data.Interfaces;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Data.Providers.DB;
 using WindEnergy.Lib.Data.Providers.InternetServices;
+using WindEnergy.Lib.Operations.Limits;
 
 namespace WindEnergy.Lib
 {
@@ -91,8 +92,6 @@ namespace WindEnergy.Lib
             sw.Close();
         }
 
-       
-
         /// <summary>
         /// преобразование файла из json формата, полученного по ссылке 
         /// http://xn--80afd3balrxz7a.xn--p1ai/maps/interactive/meteostantion/data/json_Meteostantionwithdata.js
@@ -146,6 +145,7 @@ namespace WindEnergy.Lib
             //запись в файл
             MeteostationDatabase.ExportMeteostationList(res, fileCoordList);
         }
+
 
         /// <summary>
         /// загружает все метеостанции с расписания погоды и сохраняет их в файл fileOutput в формат списка координат метеостанций
@@ -256,5 +256,37 @@ namespace WindEnergy.Lib
             sw.WriteLine(q);
             sw.Close();
         }
+
+        /// <summary>
+        /// загружает все ограничения скоростей по регионам с сайта http://energywind.ru 
+        /// </summary>
+        /// <param name="fileOutput"></param>
+        /// <param name="act"></param>
+        /// <param name="checkStop"></param>
+        public static void LoadAllEnergywindLimits(string fileOutput, Action<int, int, string, int, int> act, Func<bool> checkStop)
+        {
+            string countryLink = "http://energywind.ru/recomendacii/karta-rossii";
+            Energywind engine = new Energywind( Vars.Options.CacheFolder + "\\energywind");
+            Yandex geocoder = new Yandex(Vars.Options.CacheFolder + "\\yandex");
+            List<Energywind.RegionInfo> regions = engine.GetRegions(countryLink);
+            List<ManualLimits> result = new List<ManualLimits>();
+            int regs_c = 0;
+            foreach (Energywind.RegionInfo region in regions)
+            {
+                if (checkStop.Invoke())
+                    break;
+                List<ManualLimits> lims = engine.GetLimits(region, geocoder,checkStop,act,regs_c,regions.Count);
+                result.AddRange(lims);
+                regs_c += lims.Count;
+            }
+
+            //запись в файл
+            StreamWriter sw = new StreamWriter(fileOutput,false, Encoding.UTF8);
+            sw.WriteLine("название;широта;долгота;минимальная скорость м/с;максимальная скорость м/с");
+            foreach (ManualLimits lim in result)
+                sw.WriteLine($"{lim.Name};{lim.Position.Lat.ToString().Replace(Vars.DecimalSeparator,'.')};{lim.Position.Lng.ToString().Replace(Vars.DecimalSeparator, '.')};{lim.GetMinimal(MeteorologyParameters.Speed)};{lim.GetMaximal(MeteorologyParameters.Speed)}");
+            sw.Close();
+        }
+
     }
 }

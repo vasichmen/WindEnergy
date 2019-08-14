@@ -33,8 +33,8 @@ namespace WindEnergy.Lib.Operations.Limits
         /// <param name="speedInclude"></param>
         public ManualLimits(List<Diapason<double>> directionInclude, List<Diapason<double>> speedInclude)
         {
-            this.directionInclude = directionInclude;
-            this.speedInclude = speedInclude;
+            this.directionInclude = directionInclude!=null?directionInclude:new List<Diapason<double>>();
+            this.speedInclude = speedInclude!=null ? speedInclude : new List<Diapason<double>>();
         }
 
         public bool CheckItem(RawItem item, PointLatLng coordinates)
@@ -42,6 +42,12 @@ namespace WindEnergy.Lib.Operations.Limits
             return check(speedInclude, item.Speed) && check(directionInclude, item.Direction);
         }
 
+        /// <summary>
+        /// если коллекция пустая, то возвращает trur
+        /// </summary>
+        /// <param name="diapasons">коллекция диапазонов</param>
+        /// <param name="val">проверяемое значение</param>
+        /// <returns></returns>
         private bool check(List<Diapason<double>> diapasons, double val)
         {
             if (diapasons.Count == 0) return true;
@@ -49,6 +55,26 @@ namespace WindEnergy.Lib.Operations.Limits
                 if (d.From <= val && d.To >= val)
                     return true;
             return false;
+        }
+
+        /// <summary>
+        /// возвращает минимальное ограничение для заданого параметра
+        /// </summary>
+        /// <param name="paramter">тип параметра</param>
+        /// <returns></returns>
+        internal object GetMinimal(MeteorologyParameters paramter)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// возвращает максимальное ограничение для заданого параметра
+        /// </summary>
+        /// <param name="paramter">тип параметра</param>
+        /// <returns></returns>
+        internal object GetMaximal(MeteorologyParameters paramter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

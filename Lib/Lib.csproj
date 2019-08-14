@@ -111,6 +111,7 @@
     <Compile Include="Data\Providers\FileSystem\FileSystemCache.cs" />
     <Compile Include="Data\Interfaces\IRangeProvider.cs" />
     <Compile Include="Data\Interfaces\IGeocoderProvider.cs" />
+    <Compile Include="Data\Providers\InternetServices\Energywind.cs" />
     <Compile Include="Data\Providers\InternetServices\Google.cs" />
     <Compile Include="Data\Providers\FileSystem\LocalFileSystem.cs" />
     <Compile Include="Data\Providers\DB\MeteostationDatabase.cs" />
