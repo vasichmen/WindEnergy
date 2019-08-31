@@ -1,11 +1,15 @@
 ﻿using GMap.NET;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Operations.Limits;
+using Fizzler.Systems.HtmlAgilityPack;
+using WindEnergy.Lib.Data.Interfaces;
 
 namespace WindEnergy.Lib.Data.Providers.InternetServices
 {
@@ -28,7 +32,8 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <summary>
         /// сырое ограничение с сайта
         /// </summary>
-        private class BaseLimit {
+        private class BaseLimit
+        {
             public string Name { get; set; }
             public string Link { get; set; }
             public double MaxSpeed { get; set; }
@@ -42,7 +47,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         public override int MaxAttempts { get { return 5; } }
         public override TimeSpan SessionLifetime { get { return TimeSpan.FromMinutes(30); } }
 
-        public Energywind( string cacheDir, double duration = 7 * 24) : base("http://energywind.ru", cacheDir, duration) { }
+        public Energywind(string cacheDir, double duration = 7 * 24) : base("http://energywind.ru", cacheDir, duration) { }
 
         /// <summary>
         /// получить список регионов на странице
@@ -51,23 +56,24 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <returns></returns>
         public List<RegionInfo> GetRegions(string baseLink)
         {
-            //TODO: парсер страницы регионов http://energywind.ru/recomendacii/karta-rossii
-            throw new NotImplementedException();
-             HtmlDocument page = SendHtmlGetRequest(baseLink, out HttpStatusCode code);
-             
-             //поиск строк с регионами
-             //выбрать все ссылки, родители которых - элементы td
-            var a_list = page.QuerySelectorAll("td a");
+            HtmlDocument page = SendHtmlGetRequest(baseLink, out _);
+
+            //поиск строк с регионами
+            //выбрать все ссылки, родители которых - элементы td
+            var a_list = page.DocumentNode.QuerySelectorAll("td a");
             List<RegionInfo> res = new List<RegionInfo>();
-            foreach(var a in a_list)
+            Uri ur = new Uri(baseLink);
+            foreach (var a in a_list)
             {
-             //получаем ссылку из атрибутов и название, 
-            link= 
-            name = 
-             res.Add(new RgionInfo(){Name = name, Link=link});
+                //получаем ссылку из атрибутов и название,
+                string host = ur.AbsoluteUri.Replace(ur.AbsolutePath, ""); //только протокол и хост
+                string link = a.Attributes["href"].Value;
+                Uri lnk = new Uri(new Uri(host), link);
+                string linkf = lnk.AbsoluteUri;
+                string name = a.InnerText;
+                res.Add(new RegionInfo() { Name = name, Link = linkf });
             }
-             return res;
-            //
+            return res;
         }
 
         /// <summary>
@@ -80,7 +86,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <param name="current_region">номер текущего региона (передавать в  act)</param>
         /// <param name="total_regions">всего регионов (передавать в  act)</param>
         /// <returns></returns>
-        public List<ManualLimits> GetLimits(RegionInfo region, Yandex geocoder, Func<bool> checkStop=null, Action<int, int, string, int, int> act=null, int current_region=-1,int total_regions=-1)
+        public List<ManualLimits> GetLimits(RegionInfo region, IGeocoderProvider geocoder, Func<bool> checkStop = null, Action<int, int, string, int, int> act = null, int current_region = -1, int total_regions = -1)
         {
 
             List<BaseLimit> bases = getBasesLimits(region);
@@ -88,16 +94,22 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             int counter = 0;
             foreach (BaseLimit lim in bases)
             {
-                if (checkStop.Invoke())
-                    return res;
-                if (act != null)
-                    act.Invoke(total_regions, current_region, region.Name, counter, bases.Count);
+                try
+                {
+                    if (checkStop.Invoke())
+                        return res;
+                    if (act != null)
+                        act.Invoke(current_region,total_regions,  region.Name, counter, bases.Count);
 
-                //TODO: создание ограничения, получение координат
-                
-
-
-                counter++;
+                    Diapason<double> speeds = new Diapason<double>(0, lim.MaxSpeed);
+                    ManualLimits limit = new ManualLimits(null, new List<Diapason<double>>() { speeds });
+                    limit.Name = lim.Name;
+                    limit.Position = geocoder.GetCoordinate(lim.Name);
+                    res.Add(limit);
+                    counter++;
+                }
+                catch (Exception ex)
+                { continue; }
             }
             return res;
         }
@@ -109,8 +121,27 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <returns></returns>
         private List<BaseLimit> getBasesLimits(RegionInfo region)
         {
-            //TODO: парсер таблицы с ограничениями http://energywind.ru/recomendacii/karta-rossii/severo-zapad/respublika-komi
-            throw new NotImplementedException();
+            HtmlDocument page = SendHtmlGetRequest(region.Link, out _);
+            var a_list = page.DocumentNode.QuerySelectorAll("tr");
+            List<BaseLimit> res = new List<BaseLimit>();
+            if (a_list.Count() < 3) return res;
+            for (int i = 2; i < a_list.Count(); i++) //начинаем с третьего элемента(первая строка таблицы)
+            {
+                try
+                {
+                    //получаем ссылку из атрибутов и название,
+                    HtmlNode tr = a_list.ElementAt(i);
+                    var cols = tr.QuerySelectorAll("td");
+                    if (cols.Count() != 7) continue;
+                    string name = cols.ElementAt(0).InnerText;
+                    string limit = cols.ElementAt(6).InnerText;
+                    double max = double.Parse(limit);
+                    res.Add(new BaseLimit() { Link = region.Link, MaxSpeed = max, Name = name });
+                }
+                catch (Exception ex)
+                { continue; }
+            }
+            return res;
         }
     }
 }

@@ -267,7 +267,7 @@ namespace WindEnergy.Lib
         {
             string countryLink = "http://energywind.ru/recomendacii/karta-rossii";
             Energywind engine = new Energywind( Vars.Options.CacheFolder + "\\energywind");
-            Yandex geocoder = new Yandex(Vars.Options.CacheFolder + "\\yandex");
+            IGeocoderProvider geocoder = new Arcgis(Vars.Options.CacheFolder + "\\arcgis");
             List<Energywind.RegionInfo> regions = engine.GetRegions(countryLink);
             List<ManualLimits> result = new List<ManualLimits>();
             int regs_c = 0;
@@ -277,7 +277,7 @@ namespace WindEnergy.Lib
                     break;
                 List<ManualLimits> lims = engine.GetLimits(region, geocoder,checkStop,act,regs_c,regions.Count);
                 result.AddRange(lims);
-                regs_c += lims.Count;
+                regs_c ++;
             }
 
             //запись в файл

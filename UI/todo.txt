@@ -1,5 +1,5 @@
 ﻿*добавление Speed в options.xml при выходе из программы
-**импорт максимальных скоростей с сайта http://energywind.ru/recomendacii/karta-rossii
+**
 
 
 ******************************************
@@ -13,6 +13,7 @@
 6. Добавлен параметр Давление
 7. Расширенный импорт из текстовых файлов
 8. Поддержка xlsx
+9. Обновлена БД Максимальные скорости ветра ( http://energywind.ru/recomendacii/karta-rossii )
 
 
 *******************************************
@@ -28,3 +29,4 @@ SpecialFunction (C#) Copyright (C) 2005 Miroslav Stampar
 ScintillaNET
 EPPlus
 YandexGeoApi
+Fizzler 

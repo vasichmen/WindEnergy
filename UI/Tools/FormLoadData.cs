@@ -94,13 +94,13 @@ namespace WindEnergy.UI.Tools
                 if (this.InvokeRequired)
                     this.Invoke(new Action(() =>
                     {
-                        progressBarStatusMaxSpeed.Value = (int)((processedRegions / totalCurrentRegion) * 100d);
+                        progressBarStatusMaxSpeed.Value = (int)(((double)processedRegions / (double)totalRegions) * 100d);
                         labelStatusMaxSpeed.Text = $"Обработано: {processedRegions} регионов из {totalRegions}, текущий регион \"{currentRegion}\", готов на {processedCurrentRegion}/{totalCurrentRegion}";
                         Application.DoEvents();
                     }));
                 else
                 {
-                    progressBarStatusMaxSpeed.Value = (int)((processedRegions / totalCurrentRegion) * 100d);
+                    progressBarStatusMaxSpeed.Value = (int)(((double)processedRegions / (double)totalRegions) * 100d);
                     labelStatusMaxSpeed.Text = $"Обработано: {processedRegions} регионов из {totalRegions}, текущий регион \"{currentRegion}\", готов на {processedCurrentRegion}/{totalCurrentRegion}";
                     Application.DoEvents();
                 }

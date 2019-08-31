@@ -62,9 +62,22 @@ namespace WindEnergy.Lib.Operations.Limits
         /// </summary>
         /// <param name="paramter">тип параметра</param>
         /// <returns></returns>
-        internal object GetMinimal(MeteorologyParameters paramter)
+        internal double GetMinimal(MeteorologyParameters paramter)
         {
-            throw new NotImplementedException();
+            switch (paramter)
+            {
+                case MeteorologyParameters.Direction:
+                    double min = directionInclude.Min(new Func<Diapason<double>, double>((diapason)=>{
+                        return diapason.From;
+                    }));
+                    return min;
+                case MeteorologyParameters.Speed:
+                    double mins = speedInclude.Min(new Func<Diapason<double>, double>((diapason) => {
+                        return diapason.From;
+                    }));
+                    return mins;
+                default: throw new Exception("Этот параметр не реализован");
+            }
         }
 
         /// <summary>
@@ -72,9 +85,22 @@ namespace WindEnergy.Lib.Operations.Limits
         /// </summary>
         /// <param name="paramter">тип параметра</param>
         /// <returns></returns>
-        internal object GetMaximal(MeteorologyParameters paramter)
+        internal double GetMaximal(MeteorologyParameters paramter)
         {
-            throw new NotImplementedException();
+            switch (paramter)
+            {
+                case MeteorologyParameters.Direction:
+                    double max = directionInclude.Max(new Func<Diapason<double>, double>((diapason) => {
+                        return diapason.To;
+                    }));
+                    return max;
+                case MeteorologyParameters.Speed:
+                    double maxs = speedInclude.Max(new Func<Diapason<double>, double>((diapason) => {
+                        return diapason.To;
+                    }));
+                    return maxs;
+                default: throw new Exception("Этот параметр не реализован");
+            }
         }
     }
 }

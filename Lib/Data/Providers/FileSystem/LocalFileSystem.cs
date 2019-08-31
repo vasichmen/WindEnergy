@@ -18,7 +18,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
     public class LocalFileSystem
     {
         private Dictionary<PointLatLng, ManualLimits> _staticSpeedLimits = null;
-        
+
         /// <summary>
         /// список ограничений по регионам
         /// </summary>
@@ -141,7 +141,8 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 Diapason<double> d = new Diapason<double>(double.Parse(arr[3].Replace('.', Vars.DecimalSeparator)), double.Parse(arr[4].Replace('.', Vars.DecimalSeparator)));
                 PointLatLng p = new PointLatLng(double.Parse(arr[1].Replace('.', Vars.DecimalSeparator)), double.Parse(arr[2].Replace('.', Vars.DecimalSeparator)));
                 ManualLimits ml = new ManualLimits(new List<Diapason<double>>(), new List<Diapason<double>>() { d }) { Position = p, Name = arr[0] };
-                limits.Add(p, ml);
+                if (!limits.ContainsKey(p))
+                    limits.Add(p, ml);
             }
             sr.Close();
             return limits;
