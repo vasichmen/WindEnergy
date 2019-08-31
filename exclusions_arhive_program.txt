@@ -1,0 +1,16 @@
+*GMap.NET.Core.xml
+*GMap.NET.WindowsForms.xml
+*Newtonsoft.Json.xml
+*options.xml
+*System.Data.SQLite.xml
+*ZedGraph.xml
+*.json
+*.kml
+*.application
+*app.publish
+*vshost.exe
+*.manifest
+*.pdb
+Release/cache/*
+
+
