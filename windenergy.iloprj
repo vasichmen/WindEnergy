@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NineRays.ILOMD.Options.Project>
+  <PathToSignTool>
+  </PathToSignTool>
+  <AssemblyList>
+    <NineRays.ILOMD.Options.AssemblyFileName>
+      <ObfuscationOptions>
+        <NineRays.ILOMD.Options.Options>
+          <Anonymizer>StringEncryption</Anonymizer>
+          <Optimizer>
+            <NineRays.ILOMD.Options.OptimizationOptions>
+              <Properties>Complete</Properties>
+              <Events>Complete</Events>
+              <Parameters>Complete</Parameters>
+              <RemoveUnnecessaryAttributes>True</RemoveUnnecessaryAttributes>
+            </NineRays.ILOMD.Options.OptimizationOptions>
+          </Optimizer>
+          <AntiILDASM>True</AntiILDASM>
+          <NamespacesRestructuring>EachTypeOneNameSpace</NamespacesRestructuring>
+          <Members>Full</Members>
+          <ResourcesProtection>Anonymize, AntiTamper</ResourcesProtection>
+          <StringEncryptionMode>Encrypt3DES</StringEncryptionMode>
+          <SoftwareWatermark>WindEnergy</SoftwareWatermark>
+          <IncrementalObfuscation>True</IncrementalObfuscation>
+          <Naming>AlphaNumericAndNonDisplayableAndCustom</Naming>
+          <MixDictionary>True</MixDictionary>
+        </NineRays.ILOMD.Options.Options>
+      </ObfuscationOptions>
+      <Name>UI\bin\Release\WindEnergy.exe</Name>
+    </NineRays.ILOMD.Options.AssemblyFileName>
+    <NineRays.ILOMD.Options.AssemblyFileName>
+      <ObfuscationOptions>
+        <NineRays.ILOMD.Options.Options>
+          <Anonymizer>High</Anonymizer>
+          <AntiILDASM>True</AntiILDASM>
+          <NamespacesRestructuring>EachTypeOneNameSpace</NamespacesRestructuring>
+          <Members>Namespaces, Methods, Fields, Properties, Events, Public, Interfaces, Parameters, Overridables, Enums, Protected, LeaveGeneratedByCompiler, LeaveDebuggerHidden, LeaveSerializables, ComImport</Members>
+          <ResourcesProtection>Anonymize, AntiTamper</ResourcesProtection>
+          <StringEncryptionMode>EnhancedEncrypt</StringEncryptionMode>
+          <UniqueNames>True</UniqueNames>
+          <SoftwareWatermark>
+          </SoftwareWatermark>
+          <IncrementalObfuscation>True</IncrementalObfuscation>
+          <Naming>AlphaNumericAndCustom</Naming>
+          <MixDictionary>True</MixDictionary>
+        </NineRays.ILOMD.Options.Options>
+      </ObfuscationOptions>
+      <SaveToDirectory>Output\libs\</SaveToDirectory>
+      <Name>UI\bin\Release\libs\Lib.dll</Name>
+    </NineRays.ILOMD.Options.AssemblyFileName>
+  </AssemblyList>
+  <StrongNameKeyFile>
+  </StrongNameKeyFile>
+  <LayoutInfo>&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-16&amp;quot;?&amp;gt;
+&amp;lt;Layout&amp;gt;
+  &amp;lt;Window Guid=&amp;quot;e6607a8f-236a-4e10-8378-b8604e2800d0&amp;quot; LastFocused=&amp;quot;132159077575876609&amp;quot; DockedSize=&amp;quot;200&amp;quot; PopupSize=&amp;quot;0&amp;quot; FloatingLocation=&amp;quot;-1, -1&amp;quot; FloatingSize=&amp;quot;550, 400&amp;quot; LastOpenDockSituation=&amp;quot;Document&amp;quot; LastFixedDockSituation=&amp;quot;Document&amp;quot; LastFixedDockLocation=&amp;quot;Right&amp;quot; LastFloatingWindowGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; LastDockContainerCount=&amp;quot;0&amp;quot; LastDockContainerIndex=&amp;quot;0&amp;quot; DockedWorkingSize=&amp;quot;250, 400&amp;quot; DockedWindowGroupGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; DockedIndexInWindowGroup=&amp;quot;0&amp;quot; DockedSplitPath=&amp;quot;0&amp;quot; DocumentWorkingSize=&amp;quot;250, 400&amp;quot; DocumentWindowGroupGuid=&amp;quot;4d495d98-cf54-48eb-a3e6-9dc981a28a82&amp;quot; DocumentIndexInWindowGroup=&amp;quot;0&amp;quot; DocumentSplitPath=&amp;quot;0&amp;quot; FloatingWorkingSize=&amp;quot;250, 400&amp;quot; FloatingWindowGroupGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; FloatingIndexInWindowGroup=&amp;quot;0&amp;quot; FloatingSplitPath=&amp;quot;0&amp;quot; /&amp;gt;
+  &amp;lt;Window Guid=&amp;quot;d011ae1a-b131-40cb-8ce1-4454c2694fcd&amp;quot; LastFocused=&amp;quot;132141712810348635&amp;quot; DockedSize=&amp;quot;472&amp;quot; PopupSize=&amp;quot;0&amp;quot; FloatingLocation=&amp;quot;-1, -1&amp;quot; FloatingSize=&amp;quot;250, 400&amp;quot; LastOpenDockSituation=&amp;quot;Docked&amp;quot; LastFixedDockSituation=&amp;quot;Docked&amp;quot; LastFixedDockLocation=&amp;quot;Left&amp;quot; LastFloatingWindowGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; LastDockContainerCount=&amp;quot;1&amp;quot; LastDockContainerIndex=&amp;quot;0&amp;quot; DockedWorkingSize=&amp;quot;302, 407&amp;quot; DockedWindowGroupGuid=&amp;quot;c6fc1126-48a9-447a-8539-8eccce803b15&amp;quot; DockedIndexInWindowGroup=&amp;quot;1&amp;quot; DockedSplitPath=&amp;quot;0&amp;quot; DocumentWorkingSize=&amp;quot;250, 400&amp;quot; DocumentWindowGroupGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; DocumentIndexInWindowGroup=&amp;quot;0&amp;quot; DocumentSplitPath=&amp;quot;0&amp;quot; FloatingWorkingSize=&amp;quot;250, 400&amp;quot; FloatingWindowGroupGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; FloatingIndexInWindowGroup=&amp;quot;0&amp;quot; FloatingSplitPath=&amp;quot;0&amp;quot; /&amp;gt;
+  &amp;lt;Window Guid=&amp;quot;16bbe2d2-5504-4cd4-82f2-6737d26493b8&amp;quot; LastFocused=&amp;quot;132141647969943938&amp;quot; DockedSize=&amp;quot;472&amp;quot; PopupSize=&amp;quot;0&amp;quot; FloatingLocation=&amp;quot;-1, -1&amp;quot; FloatingSize=&amp;quot;250, 400&amp;quot; LastOpenDockSituation=&amp;quot;Docked&amp;quot; LastFixedDockSituation=&amp;quot;Docked&amp;quot; LastFixedDockLocation=&amp;quot;Left&amp;quot; LastFloatingWindowGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; LastDockContainerCount=&amp;quot;1&amp;quot; LastDockContainerIndex=&amp;quot;0&amp;quot; DockedWorkingSize=&amp;quot;302, 407&amp;quot; DockedWindowGroupGuid=&amp;quot;c6fc1126-48a9-447a-8539-8eccce803b15&amp;quot; DockedIndexInWindowGroup=&amp;quot;2&amp;quot; DockedSplitPath=&amp;quot;0&amp;quot; DocumentWorkingSize=&amp;quot;250, 400&amp;quot; DocumentWindowGroupGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; DocumentIndexInWindowGroup=&amp;quot;0&amp;quot; DocumentSplitPath=&amp;quot;0&amp;quot; FloatingWorkingSize=&amp;quot;250, 400&amp;quot; FloatingWindowGroupGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; FloatingIndexInWindowGroup=&amp;quot;0&amp;quot; FloatingSplitPath=&amp;quot;0&amp;quot; /&amp;gt;
+  &amp;lt;Window Guid=&amp;quot;1ab51f96-7428-4b68-9f25-0af0d8415f26&amp;quot; LastFocused=&amp;quot;132159076435626609&amp;quot; DockedSize=&amp;quot;472&amp;quot; PopupSize=&amp;quot;0&amp;quot; FloatingLocation=&amp;quot;-1, -1&amp;quot; FloatingSize=&amp;quot;250, 400&amp;quot; LastOpenDockSituation=&amp;quot;Docked&amp;quot; LastFixedDockSituation=&amp;quot;Docked&amp;quot; LastFixedDockLocation=&amp;quot;Left&amp;quot; LastFloatingWindowGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; LastDockContainerCount=&amp;quot;1&amp;quot; LastDockContainerIndex=&amp;quot;0&amp;quot; DockedWorkingSize=&amp;quot;302, 407&amp;quot; DockedWindowGroupGuid=&amp;quot;c6fc1126-48a9-447a-8539-8eccce803b15&amp;quot; DockedIndexInWindowGroup=&amp;quot;0&amp;quot; DockedSplitPath=&amp;quot;0&amp;quot; DocumentWorkingSize=&amp;quot;250, 400&amp;quot; DocumentWindowGroupGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; DocumentIndexInWindowGroup=&amp;quot;0&amp;quot; DocumentSplitPath=&amp;quot;0&amp;quot; FloatingWorkingSize=&amp;quot;250, 400&amp;quot; FloatingWindowGroupGuid=&amp;quot;00000000-0000-0000-0000-000000000000&amp;quot; FloatingIndexInWindowGroup=&amp;quot;0&amp;quot; FloatingSplitPath=&amp;quot;0&amp;quot; /&amp;gt;
+  &amp;lt;Container Dock=&amp;quot;3&amp;quot; ContentSize=&amp;quot;472&amp;quot;&amp;gt;
+    &amp;lt;SplitLayoutSystem WorkingSize=&amp;quot;250, 400&amp;quot; SplitMode=&amp;quot;0&amp;quot;&amp;gt;
+      &amp;lt;ControlLayoutSystem WorkingSize=&amp;quot;302, 407&amp;quot; Guid=&amp;quot;c6fc1126-48a9-447a-8539-8eccce803b15&amp;quot; Collapsed=&amp;quot;0&amp;quot; SelectedControl=&amp;quot;1ab51f96-7428-4b68-9f25-0af0d8415f26&amp;quot;&amp;gt;
+        &amp;lt;Controls&amp;gt;
+          &amp;lt;Control Guid=&amp;quot;1ab51f96-7428-4b68-9f25-0af0d8415f26&amp;quot; /&amp;gt;
+          &amp;lt;Control Guid=&amp;quot;d011ae1a-b131-40cb-8ce1-4454c2694fcd&amp;quot; /&amp;gt;
+          &amp;lt;Control Guid=&amp;quot;16bbe2d2-5504-4cd4-82f2-6737d26493b8&amp;quot; /&amp;gt;
+        &amp;lt;/Controls&amp;gt;
+      &amp;lt;/ControlLayoutSystem&amp;gt;
+    &amp;lt;/SplitLayoutSystem&amp;gt;
+  &amp;lt;/Container&amp;gt;
+&amp;lt;/Layout&amp;gt;</LayoutInfo>
+</NineRays.ILOMD.Options.Project>

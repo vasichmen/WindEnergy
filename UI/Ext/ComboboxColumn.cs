@@ -49,18 +49,13 @@ namespace WindEnergy.UI.Ext
         public DataGridViewComboboxCell()
             : base()
         {
-            switch (typeof(T).Name)
-            {
-                case "WindDirections":
-                    items =  WindDirections.Undefined.GetItems().ConvertAll<object>((s)=>(object)s); // получение списка элементов перечисления
-                    break;
-                case "StandartIntervals":
-                    items = StandartIntervals.H1.GetItems().ConvertAll<object>((s) => (object)s); // получение списка элементов перечисления
-                    break;
+            if (typeof(T) == typeof(WindDirections))
+                items = WindDirections.Undefined.GetItems().ConvertAll<object>((s) => (object)s); // получение списка элементов перечисления
+            else if (typeof(T) == typeof(StandartIntervals))
+                items = StandartIntervals.H1.GetItems().ConvertAll<object>((s) => (object)s); // получение списка элементов перечисления
+            else
+                throw new Exception("Конвертер типов для этого перечисления не реализован");
 
-                default: throw new Exception("Конвертер типов для этого перечисления не реализован");
-
-            }
         }
 
       

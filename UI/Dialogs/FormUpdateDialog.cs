@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using WindEnergy;
 using WindEnergy.Lib.Classes;
 
-namespace TrackConverter.UI.Common.Dialogs
+namespace WindEnergy.UI.Common.Dialogs
 {
     /// <summary>
     /// Окно информации о новой версии

@@ -43,7 +43,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
             //иначе границей раздела интервалов берётся гранича разделов отрезков с разными интервалами
 
             List<RawItem> range = new List<RawItem>(Range);
-            range.Sort(new DateTimeComparer());
+            range.Sort(new DateTimeComparerRawItem());
 
             //делим ряд по 10 измерений и для каждого отрезка находим минимальный интервал
             List<Diapason<int>> diapasons = new List<Diapason<int>>();
@@ -275,7 +275,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
             //иначе границей раздела интервалов берётся гранича разделов отрезков с разными интервалами
 
             List<RawItem> range = new List<RawItem>(Range);
-            range.Sort(new DateTimeComparer());
+            range.Sort(new DateTimeComparerRawItem());
 
             //делим ряд по 10 измерений и для каждого отрезка находим минимальный интервал
             List<Diapason<int>> diapasons = new List<Diapason<int>>();

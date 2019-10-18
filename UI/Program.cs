@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TrackConverter.UI.Common.Dialogs;
+using WindEnergy.UI.Common.Dialogs;
 using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Structures.Options;
 using WindEnergy.Lib.Data.Providers;
@@ -20,6 +20,8 @@ namespace WindEnergy.UI
     {
         public static FormMain winMain { get; set; }
 
+
+
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -31,17 +33,21 @@ namespace WindEnergy.UI
             {
 #endif
 
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
-                Vars.Options = Options.Load(Application.StartupPath + "\\options.xml");
-                Vars.LocalFileSystem = new LocalFileSystem();
+            Vars.Options = Options.Load(Application.StartupPath + "\\options.xml");
+            if (Vars.Options == null)
+            {
+                throw new Exception("Файлы программы повреждены, запуск невозможен");
+            }
+            Vars.LocalFileSystem = new LocalFileSystem();
 
-                winMain = new FormMain();
+            winMain = new FormMain();
 
 
-                //обработчик выхода из приложения
-                Application.ApplicationExit += application_ApplicationExit;
+            //обработчик выхода из приложения
+            Application.ApplicationExit += application_ApplicationExit;
 
 
             #region запись статистики, проверка версии

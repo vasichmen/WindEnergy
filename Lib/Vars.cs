@@ -13,6 +13,9 @@ using WindEnergy.Lib.Data.Providers.FileSystem;
 
 namespace WindEnergy
 {
+    /// <summary>
+    /// глобальные переменные
+    /// </summary>
     public static class Vars
     {
         /// <summary>
@@ -60,6 +63,11 @@ namespace WindEnergy
                 return _ETOPOdatabase;
             }
         }
+
+        /// <summary>
+        /// дата последней проверки параметров компьютера
+        /// </summary>
+        public static DateTime LastCheckEngine = DateTime.MinValue;
 
         /// <summary>
         /// Список метеостанций из БД Метеостанции мира

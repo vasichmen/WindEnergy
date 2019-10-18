@@ -34,7 +34,7 @@ namespace WindEnergy.UI.Ext
     }
     public class DataGridViewCalendarCell : DataGridViewTextBoxCell
     {
-        private const string FORMAT = "dd.MM.yyyy HH:mm";
+        private static string FORMAT = "dd.MM.yyyy HH:mm";
 
         public DataGridViewCalendarCell()
             : base()
@@ -95,7 +95,7 @@ namespace WindEnergy.UI.Ext
         private DataGridView dataGridView;
         private bool valueChanged = false;
         private int rowIndex;
-        private const string FORMAT = "dd.MM.yyyy HH:mm";
+        private static string FORMAT = "dd.MM.yyyy HH:mm";
 
         public CalendarEditingControl()
         {

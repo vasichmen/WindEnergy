@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib;
@@ -262,29 +263,7 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void equalizeRangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofMax = new OpenFileDialog()
-            {
-                DefaultExt = ".csv",
-                Filter = "*.csv|*.csv",
-                Multiselect = false,
-                InitialDirectory = Application.StartupPath
-            };
-            MessageBox.Show("Выберите ряд с большим интервалом");
-            if (ofMax.ShowDialog() == DialogResult.OK)
-            {
-                OpenFileDialog ofMin = new OpenFileDialog()
-                {
-                    DefaultExt = ".csv",
-                    Filter = "*.csv|*.csv",
-                    Multiselect = false,
-                    InitialDirectory = Application.StartupPath
-                };
-                MessageBox.Show("Выберите ряд с меньшим интервалом");
-                if (ofMin.ShowDialog() == DialogResult.OK)
-                {
-                    Equalizer.ProcessRange(ofMax.FileName, ofMin.FileName);
-                }
-            }
+            new FormEqualizer().Show(this);
         }
 
         /// <summary>
@@ -408,6 +387,14 @@ namespace WindEnergy.UI
         #endregion
 
 
+        private void FormMain_Activated(object sender, EventArgs e)
+        {
+            Thread.Sleep(500);
+            if (DateTime.Now - Vars.LastCheckEngine < TimeSpan.FromSeconds(30))
+            {
+            }
+        }
+
         /// <summary>
         /// подтверждение закрытия окна приложения
         /// </summary>
@@ -453,9 +440,10 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            Thread.Sleep(300);
 
         }
+
 
     }
 }

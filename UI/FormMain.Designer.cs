@@ -36,6 +36,7 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadRP5ruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadNASAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,7 +72,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.button1 = new System.Windows.Forms.Button();
-            this.importTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -140,6 +140,13 @@
             this.downloadNASAToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
             this.downloadNASAToolStripMenuItem.Text = "Загрузить ряд из СБД NASA";
             this.downloadNASAToolStripMenuItem.Click += new System.EventHandler(this.downloadNASAToolStripMenuItem_Click);
+            // 
+            // importTextToolStripMenuItem
+            // 
+            this.importTextToolStripMenuItem.Name = "importTextToolStripMenuItem";
+            this.importTextToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
+            this.importTextToolStripMenuItem.Text = "Импортировать текстовый файл";
+            this.importTextToolStripMenuItem.Click += new System.EventHandler(this.importTextToolStripMenuItem_Click);
             // 
             // openFileToolStripMenuItem1
             // 
@@ -442,13 +449,6 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // importTextToolStripMenuItem
-            // 
-            this.importTextToolStripMenuItem.Name = "importTextToolStripMenuItem";
-            this.importTextToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
-            this.importTextToolStripMenuItem.Text = "Импортировать текстовый файл";
-            this.importTextToolStripMenuItem.Click += new System.EventHandler(this.importTextToolStripMenuItem_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -463,6 +463,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.Text = "Wind Energy";
+            this.Activated += new System.EventHandler(this.FormMain_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMain_FormClosing);
             this.Shown += new System.EventHandler(this.formMain_Shown);
             this.menuStrip1.ResumeLayout(false);

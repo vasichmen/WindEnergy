@@ -55,7 +55,7 @@ namespace WindEnergy.Lib.Operations
                 if (!double.IsNaN(item.Temperature))
                     tempFunc.Add(timeStamp, item.Temperature);
                 if (!double.IsNaN(item.Pressure))
-                    tempFunc.Add(timeStamp, item.Pressure);
+                    pressFunc.Add(timeStamp, item.Pressure);
             }
 
             //ПОДГОТОВКА ИНТЕРПОЛЯТОРОВ

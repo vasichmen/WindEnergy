@@ -1,4 +1,4 @@
-﻿namespace TrackConverter.UI.Common.Dialogs
+﻿namespace WindEnergy.UI.Common.Dialogs
 {
     partial class FormUpdateDialog
     {

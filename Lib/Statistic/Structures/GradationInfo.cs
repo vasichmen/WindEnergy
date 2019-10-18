@@ -21,7 +21,7 @@ namespace WindEnergy.Lib.Statistic.Structures
         /// </summary>
         public List<object> Items => items;
 
-        private  List<object> items;
+        private List<object> items;
 
         private GradationInfo()
         {
@@ -150,26 +150,27 @@ namespace WindEnergy.Lib.Statistic.Structures
         {
             if (double.IsNaN(val))
                 throw new ArgumentException("Заданное значение не является числом!");
-            switch (typeof(T).Name)
-            {
-                case "GradationItem":
-                    foreach (var v in items)
-                        if (val >= (v as GradationItem).From && val <= (v as GradationItem).To)
-                            return v;
-                    var max = double.MinValue;
-                    GradationItem mgi = null;
-                    foreach (GradationItem gi in items)
-                        if (gi.To > max) { max = gi.To; mgi = gi; }
-                    if (mgi != null)
-                        return mgi;
-                    else
-                        return GradationItem.Empty;
-                case "WindDirections":
-                    return new RawItem() { Direction = val }.DirectionRhumb;
 
-                default: throw new Exception("Этот тип не реализован");
+            if (typeof(T) == typeof(GradationItem))
+            {
+                foreach (var v in items)
+                    if (val >= (v as GradationItem).From && val <= (v as GradationItem).To)
+                        return v;
+                var max = double.MinValue;
+                GradationItem mgi = null;
+                foreach (GradationItem gi in items)
+                    if (gi.To > max) { max = gi.To; mgi = gi; }
+                if (mgi != null)
+                    return mgi;
+                else
+                    return GradationItem.Empty;
             }
-            return null;
+            else if (typeof(T) == typeof(WindDirections))
+            { return new RawItem() { Direction = val }.DirectionRhumb; }
+            else
+                throw new Exception("Этот тип не реализован");
+
+
         }
 
         /// <summary>

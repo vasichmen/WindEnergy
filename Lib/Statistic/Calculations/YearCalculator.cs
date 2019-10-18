@@ -27,7 +27,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
             if (Range == null || Range.Count < 3)
                 throw new ArgumentException("Ряд не может быть null или длиной меньше трёх значений");
             List<RawItem> range = new List<RawItem>(Range);
-            range.Sort(new DateTimeComparer());
+            range.Sort(new DateTimeComparerRawItem());
             if (range[range.Count - 1].Date - range[0].Date < TimeSpan.FromDays(366))
                 throw new ArgumentException("Ряд должен быть длиной больше одного года");
             

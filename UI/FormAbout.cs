@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
-using TrackConverter.UI.Common.Dialogs;
+using WindEnergy.UI.Common.Dialogs;
 using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Data.Providers.InternetServices;

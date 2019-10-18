@@ -254,7 +254,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// <summary>
         /// сохранение настроек в файл
         /// </summary>
-        /// <param name="Directory">адрес папки, куда сохранить файл</param>
+        /// <param name="filename">адрес папки, куда сохранить файл</param>
         public void Save(string filename)
         {
             if (File.Exists(filename))
@@ -265,7 +265,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// <summary>
         /// Загрузка файла настроек
         /// </summary>
-        /// <param name="Directory">адрес файла</param>
+        /// <param name="filename">адрес файла</param>
         /// <returns></returns>
         public static Options Load(string filename)
         {
@@ -322,6 +322,15 @@ namespace WindEnergy.Lib.Classes.Structures.Options
 
 
         #endregion
+
+        /// <summary>
+        /// получить параметры компьютера
+        /// </summary>
+        /// <returns></returns>
+        public static string GetEngineParams()
+        {
+            return "valid";
+        }
 
     }
 }

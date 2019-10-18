@@ -10,11 +10,12 @@ namespace WindEnergy.Lib.Classes.Generic
     /// <summary>
     /// компаратор DataItem для упорядочивания по возрастанию дат ряда
     /// </summary>
-    public class DateTimeComparer : IComparer<RawItem>
+    public class DateTimeComparerRawItem : IComparer<RawItem>
     {
         public int Compare(RawItem x, RawItem y)
         {
             return x.Date.CompareTo(y.Date);
         }
     }
+
 }
