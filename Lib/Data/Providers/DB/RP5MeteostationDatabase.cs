@@ -14,26 +14,18 @@ namespace WindEnergy.Lib.Data.Providers.DB
     /// <summary>
     /// База данных метеостанций
     /// </summary>
-    public class RP5MeteostationDatabase
+    public class RP5MeteostationDatabase : BaseFileDatabase<string, RP5MeteostationInfo>
     {
+        /// <summary>
+        /// создает объект для этого файла, не загружая данные
+        /// </summary>
+        /// <param name="FileName">адрес файла БД</param>
+        public RP5MeteostationDatabase(string FileName) : base(FileName) { }
+
         /// <summary>
         /// расстояние в метрах при котором координаты считаются совпадающими
         /// </summary>
         private const double COORDINATES_OVERLAP = 10;
-
-        /// <summary>
-        /// список метеостанций и координат
-        /// </summary>
-        public List<RP5MeteostationInfo> List
-        {
-            get
-            {
-                if (_meteostationList == null || _meteostationList.Count == 0)
-                    _meteostationList = LoadMeteostationList(Vars.Options.StaticMeteostationCoordinatesSourceFile);
-                return _meteostationList;
-            }
-        }
-        private List<RP5MeteostationInfo> _meteostationList = null;
 
         /// <summary>
         /// получить инфомацию по id метеостанции или аэропорта
@@ -97,12 +89,12 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public static List<RP5MeteostationInfo> LoadMeteostationList(string filename)
+        public override Dictionary<string, RP5MeteostationInfo> LoadDatabaseFile()
         {
-            StreamReader sr = new StreamReader(filename);
+            StreamReader sr = new StreamReader(FileName);
             sr.ReadLine(); //пропуск заголовка
 
-            List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
+            Dictionary<string, RP5MeteostationInfo> res = new Dictionary<string, RP5MeteostationInfo>();
             while (!sr.EndOfStream)
             {
                 string[] arr = sr.ReadLine().Split(';');
@@ -122,10 +114,11 @@ namespace WindEnergy.Lib.Data.Providers.DB
                     alt = double.Parse(arr[6].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
                     mfrom = DateTime.Parse(arr[7]);
                 }
-                res.Add(new RP5MeteostationInfo()
+                PointLatLng position = new PointLatLng(lat, lon);
+                res.Add(wmo,new RP5MeteostationInfo()
                 {
                     ID = wmo,
-                    Coordinates = new PointLatLng(lat, lon),
+                    Coordinates = position,
                     Name = name,
                     Altitude = alt,
                     MonitoringFrom = mfrom,
@@ -176,22 +169,6 @@ namespace WindEnergy.Lib.Data.Providers.DB
                     ms.Altitude.ToString("0.00").Replace(Vars.DecimalSeparator, ',') + ";" +
                     ms.MonitoringFrom.ToString());
             sw.Close();
-        }
-
-        /// <summary>
-        /// пробует загрузить файл координат метеостанций и возвращает true, если  загрузка удалась
-        /// </summary>
-        /// <param name="fileName">адрес файла</param>
-        /// <returns></returns>
-        public static bool CheckMSCoordinatesFile(string fileName)
-        {
-            try
-            {
-                LoadMeteostationList(fileName);
-                return true;
-            }
-            catch (Exception)
-            { return false; }
         }
 
         /// <summary>
@@ -317,7 +294,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
             if (string.IsNullOrWhiteSpace(info.Address))
                 info.Address = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(info.Coordinates);
 
-            List.Add(info);
+            _dictionary.Add(info.ID,info);
             ExportMeteostationList(this.List, Vars.Options.StaticMeteostationCoordinatesSourceFile);
             return true;
         }

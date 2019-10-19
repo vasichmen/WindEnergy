@@ -77,7 +77,7 @@ namespace WindEnergy
             get
             {
                 if (_RP5Meteostations == null)
-                    _RP5Meteostations = new RP5MeteostationDatabase();
+                    _RP5Meteostations = new RP5MeteostationDatabase(Options.StaticMeteostationCoordinatesSourceFile);
                 return _RP5Meteostations;
             }
             set { _RP5Meteostations = value; }
@@ -107,7 +107,7 @@ namespace WindEnergy
             get
             {
                 if (_AMSMeteostations == null)
-                    _AMSMeteostations = new AMSMeteostationDatabase();
+                    _AMSMeteostations = new AMSMeteostationDatabase(Options.StaticAMSDatabaseSourceFile);
                 return _AMSMeteostations;
             }
             set { _AMSMeteostations = value; }

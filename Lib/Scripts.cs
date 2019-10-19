@@ -277,7 +277,7 @@ namespace WindEnergy.Lib
             //если файл уже есть,то надо продолжить с последнего сочетания
             if (File.Exists(fileOutput))
             {
-                result = RP5MeteostationDatabase.LoadMeteostationList(fileOutput); //загрузка списка
+                result = new RP5MeteostationDatabase(fileOutput).LoadDatabaseFile().Values.ToList(); //загрузка списка
                 StreamReader sr = new StreamReader(fileOutput);
                 while (!sr.EndOfStream)
                 {

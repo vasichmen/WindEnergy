@@ -1,59 +1,29 @@
 ﻿using GMap.NET;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.Lib.Classes.Structures;
-
 namespace WindEnergy.Lib.Data.Providers.DB
 {
     /// <summary>
     /// База данных коэффициентов пересчета на высоту по данным АМС
     /// </summary>
-    public class AMSMeteostationDatabase
+    public class AMSMeteostationDatabase:BaseFileDatabase<PointLatLng,AMSMeteostationInfo>
     {
-        private Dictionary<PointLatLng, AMSMeteostationInfo> _AMSDatabase = null;
-
         /// <summary>
-        /// список ограничений по регионам
+        /// создает объект для этого файла, не загружая данные
         /// </summary>
-        public Dictionary<PointLatLng, AMSMeteostationInfo> List
-        {
-            get
-            {
-                if (_AMSDatabase == null || _AMSDatabase.Count == 0)
-                    _AMSDatabase = loadAMSDatabase(Vars.Options.StaticAMSDatabaseSourceFile);
-                return _AMSDatabase;
-            }
-        }
-
-        /// <summary>
-        /// пробует загрузить файл ограничений и возвращает true, если  загрузка удалась
-        /// </summary>
-        /// <param name="fileName">адрес файла</param>
-        /// <returns></returns>
-        public bool CheckAMSDatabaseFile(string fileName)
-        {
-            try
-            {
-                loadAMSDatabase(fileName);
-                return true;
-            }
-            catch (Exception)
-            { return false; }
-        }
+        /// <param name="FileName">адрес файла БД</param>
+        public AMSMeteostationDatabase(string FileName) : base(FileName) { }
 
         /// <summary>
         /// загрузить список ограничений скоростей по точкам
         /// </summary>
         /// <param name="filename">адрес файла ограничения скоростей</param>
         /// <returns></returns>
-        private Dictionary<PointLatLng, AMSMeteostationInfo> loadAMSDatabase(string filename)
+        public override Dictionary<PointLatLng, AMSMeteostationInfo>  LoadDatabaseFile()
         {
             Dictionary<PointLatLng, AMSMeteostationInfo> limits = new Dictionary<PointLatLng, AMSMeteostationInfo>();
-            StreamReader sr = new StreamReader(filename);
+            StreamReader sr = new StreamReader(FileName);
             sr.ReadLine();//пропускаем первую строку-заголовок
             while (!sr.EndOfStream)
             {

@@ -107,7 +107,7 @@ namespace WindEnergy.UI.Tools
             of.Filter = "Текстовые файлы *.txt|*.txt";
             if (of.ShowDialog(this) == DialogResult.OK)
             {
-                bool f = RP5MeteostationDatabase.CheckMSCoordinatesFile(of.FileName);
+                bool f = new RP5MeteostationDatabase(of.FileName).CheckDatabaseFile();
                 if (!f)
                 {
                     MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла координат метеостанций", MessageBoxButtons.OK, MessageBoxIcon.Warning);
