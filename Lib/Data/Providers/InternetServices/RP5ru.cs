@@ -253,7 +253,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
 
             res = new RawRange(res.OrderBy(x => x.Date).ToList());
             res.Name = info.Name;
-            res.Position = info.Coordinates;
+            res.Position = info.Position;
             res.Meteostation = info;
             Vars.RP5Meteostations.TryAddMeteostation(info); //если такой метеостанции нет в БД, то добавляем
             return res;
@@ -417,7 +417,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             string[] ar = coordinates.Split(',');
             double lat = double.Parse(ar[0].Trim().Replace('.', Vars.DecimalSeparator));
             double lon = double.Parse(ar[1].Trim().Replace('.', Vars.DecimalSeparator));
-            info.Coordinates = new PointLatLng(lat, lon);
+            info.Position = new PointLatLng(lat, lon);
 
         }
 

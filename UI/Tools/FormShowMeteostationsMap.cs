@@ -39,7 +39,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="meteostation"></param>
         public FormShowMeteostationsMap(RP5MeteostationInfo meteostation) : this()
         {
-            gmapControlMap.Position = meteostation.Coordinates;
+            gmapControlMap.Position = meteostation.Position;
         }
 
 
@@ -167,7 +167,7 @@ namespace WindEnergy.UI.Tools
                 List<RP5MeteostationInfo> pts = new List<RP5MeteostationInfo>();
                 foreach (var mts in Vars.RP5Meteostations.List)
                 {
-                    if (gmapControlMap.ViewArea.Contains(mts.Coordinates))
+                    if (gmapControlMap.ViewArea.Contains(mts.Position))
                     {
                         pts.Add(mts); //добавление в общий список
 
@@ -176,7 +176,7 @@ namespace WindEnergy.UI.Tools
                         for (int i = 0; i < h && !exit; i++)
                             for (int j = 0; j < w; j++)
                                 // если попадает в маленькую область и эта область ещё не заполнена
-                                if (rec_map[i, j].Contains(mts.Coordinates) && mts_map[i, j] == null)
+                                if (rec_map[i, j].Contains(mts.Position) && mts_map[i, j] == null)
                                 {//добавляем на карту и выходим
                                     mts_map[i, j] = mts;
                                     exit = true;
@@ -200,7 +200,7 @@ namespace WindEnergy.UI.Tools
                 //вывод на карту
                 lay.Clear();
                 foreach (var a in res)
-                    showMarker(a.Coordinates, a.Name, a);
+                    showMarker(a.Position, a.Name, a);
             }
         }
 

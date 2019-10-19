@@ -10,23 +10,8 @@ namespace WindEnergy.Lib.Classes.Structures
     /// <summary>
     /// Информация о метеостанции из БД АМС
     /// </summary>
-    public class AMSMeteostationInfo
+    public class AMSMeteostationInfo: BaseMeteostationInfo
     {
-        /// <summary>
-        /// ID метеостанции в БД АМС
-        /// </summary>
-        public int ID { get; set; }
-
-        /// <summary>
-        /// Название метеостанции
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Координаты
-        /// </summary>
-        public PointLatLng Position { get; set; }
-
         /// <summary>
         /// коэффициенты m по месяцам 
         /// </summary>

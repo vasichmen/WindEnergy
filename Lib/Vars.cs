@@ -113,5 +113,20 @@ namespace WindEnergy
             set { _AMSMeteostations = value; }
         }
         private static AMSMeteostationDatabase _AMSMeteostations = null;
+
+        /// <summary>
+        /// Список метеостанций из БД АМС
+        /// </summary>
+        public static FlugerMeteostationDatabase FlugerMeteostations
+        {
+            get
+            {
+                if (_FlugerMeteostations == null)
+                    _FlugerMeteostations = new FlugerMeteostationDatabase(Options.StaticFlugerDatabaseSourceFile);
+                return _FlugerMeteostations;
+            }
+            set { _FlugerMeteostations = value; }
+        }
+        private static FlugerMeteostationDatabase _FlugerMeteostations = null;
     }
 }

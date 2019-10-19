@@ -46,7 +46,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <returns></returns>
         public RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo point_info, Action<double> onPercentChange = null)
         {
-            PointLatLng coord = point_info.Coordinates;
+            PointLatLng coord = point_info.Position;
 
             //выбранные поля для загрузки https://power.larc.nasa.gov/docs/v1/#box
             //скорость на 10м,направление,температура,влажность
@@ -101,7 +101,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                     Pressure = PS == -999 ? double.NaN : PS,
                     Wetness = RH2M == -999 ? double.NaN : RH2M });
             }
-            res.Position = point_info.Coordinates;
+            res.Position = point_info.Position;
             return res;
         }
     }

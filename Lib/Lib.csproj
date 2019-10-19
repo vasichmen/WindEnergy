@@ -163,6 +163,7 @@
     <Compile Include="Classes\Generic\DateTimeComparer.cs" />
     <Compile Include="Classes\MapMarker.cs" />
     <Compile Include="Classes\Structures\AMSMeteostationInfo.cs" />
+    <Compile Include="Classes\Structures\BaseMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Diapason.cs" />
     <Compile Include="Classes\Structures\FlugerMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\RP5MeteostationInfo.cs" />

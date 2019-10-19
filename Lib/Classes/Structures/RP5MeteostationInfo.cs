@@ -11,13 +11,8 @@ namespace WindEnergy.Lib.Classes.Structures
     /// <summary>
     /// информация о метеостанции с архивом погоды
     /// </summary>
-    public class RP5MeteostationInfo
+    public class RP5MeteostationInfo: BaseMeteostationInfo
     {
-        /// <summary>
-        /// wmo_id или metar_id метеостанции для загрузки архива
-        /// </summary>
-        public string ID { get; set; }
-
         /// <summary>
         /// символьный код аэропорта (METAR id)
         /// </summary>
@@ -32,11 +27,6 @@ namespace WindEnergy.Lib.Classes.Structures
         /// расстояние от метеостанции до точки в км
         /// </summary>
         public double OwnerDistance { get; set; }
-
-        /// <summary>
-        /// Название
-        /// </summary>
-        public string Name { get; set; }
 
         /// <summary>
         /// строка ссылки
@@ -57,11 +47,6 @@ namespace WindEnergy.Lib.Classes.Structures
         /// источник данных архива
         /// </summary>
         public MeteoSourceType MeteoSourceType { get; set; }
-
-        /// <summary>
-        /// координаты точки расположения метеостанции
-        /// </summary>
-        public PointLatLng Coordinates { get; set; }
 
         /// <summary>
         /// адрес метеостанции (из поиска в РП5)

@@ -440,9 +440,14 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //обновление БД АМС
             //Scripts.ConvertMCoefficientsFromFile(Application.StartupPath+"\\m.csv",Application.StartupPath+"\\amsdatabase.csv");
             //Scripts.ConvertMSIDFromFile(Application.StartupPath+"\\coords.csv",Application.StartupPath+"\\amsdatabase.csv");
-            var mm = Vars.AMSMeteostations.List;
+
+            //обновление БД Флюгер
+            //Scripts.ConvertFlugerFromFile(Application.StartupPath+"\\coords.csv",Application.StartupPath+"\\flugerDatabase.csv");
+            //Scripts.ConvertFlugerDataFromFile(Application.StartupPath+"\\data.csv",Application.StartupPath+"\\flugerDatabase.csv");
+
 
         }
 

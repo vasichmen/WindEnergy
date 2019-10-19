@@ -71,7 +71,7 @@ namespace WindEnergy.Lib.Classes.Collections
                 if (_position.IsEmpty)
                 {
                     if (Meteostation != null)
-                        return Meteostation.Coordinates;
+                        return Meteostation.Position;
                     return PointLatLng.Empty;
                 }
                 else

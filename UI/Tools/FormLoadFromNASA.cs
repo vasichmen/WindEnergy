@@ -49,7 +49,7 @@ namespace WindEnergy.UI.Tools
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
                 spoint = new RP5MeteostationInfo();
-                spoint.Coordinates = spt.Result;
+                spoint.Position = spt.Result;
                 point = spt.Result;
                 labelPointCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";
                 labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(spt.Result);
@@ -76,7 +76,7 @@ namespace WindEnergy.UI.Tools
             {
                 buttonDownload.Enabled = false;
                 RawRange res = engineNASA.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, spoint);
-                res.Name = geocoder.GetAddress(spoint.Coordinates);
+                res.Name = geocoder.GetAddress(spoint.Position);
                 Result = res;
                 DialogResult = DialogResult.OK;
                 Close();

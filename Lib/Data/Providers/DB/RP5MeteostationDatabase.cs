@@ -118,7 +118,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
                 res.Add(wmo,new RP5MeteostationInfo()
                 {
                     ID = wmo,
-                    Coordinates = position,
+                    Position = position,
                     Name = name,
                     Altitude = alt,
                     MonitoringFrom = mfrom,
@@ -164,8 +164,8 @@ namespace WindEnergy.Lib.Data.Providers.DB
                     ms.CC_Code + ";" +
                     ms.Name + ";" +
                     ms.Address + ";" +
-                    ms.Coordinates.Lat.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
-                    ms.Coordinates.Lng.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
+                    ms.Position.Lat.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
+                    ms.Position.Lng.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
                     ms.Altitude.ToString("0.00").Replace(Vars.DecimalSeparator, ',') + ";" +
                     ms.MonitoringFrom.ToString());
             sw.Close();
@@ -198,7 +198,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
             double min = double.MaxValue;
             foreach (var p in this.List)
             {
-                double f = EarthModel.CalculateDistance(p.Coordinates, coordinates);
+                double f = EarthModel.CalculateDistance(p.Position, coordinates);
                 if (f < COORDINATES_OVERLAP)
                 {
                     //TODO: ближайшая метеостанция не должна быть той же самой 
@@ -240,7 +240,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
             List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
             foreach (var ms in this.List)
             {
-                double dist = EarthModel.CalculateDistance(ms.Coordinates, coordinates);
+                double dist = EarthModel.CalculateDistance(ms.Position, coordinates);
                 if ((dist < radius && dist > COORDINATES_OVERLAP) || (dist < COORDINATES_OVERLAP && addOwn)) // если попадает в радиус и не совпадает или совпадает и надо добавлять 
                     res.Add(ms);
             }
@@ -290,9 +290,9 @@ namespace WindEnergy.Lib.Data.Providers.DB
                 return false;
 
             if (double.IsNaN(info.Altitude))
-                info.Altitude = Vars.ETOPOdatabase.GetElevation(info.Coordinates);
+                info.Altitude = Vars.ETOPOdatabase.GetElevation(info.Position);
             if (string.IsNullOrWhiteSpace(info.Address))
-                info.Address = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(info.Coordinates);
+                info.Address = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(info.Position);
 
             _dictionary.Add(info.ID,info);
             ExportMeteostationList(this.List, Vars.Options.StaticMeteostationCoordinatesSourceFile);

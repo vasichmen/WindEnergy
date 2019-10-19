@@ -137,6 +137,97 @@ namespace WindEnergy.Lib
 
         #endregion
 
+        #region обновление БД Флюгер
+
+        /// <summary>
+        /// Получает координаты и ID  метеостанций из созраненного листа Список метеостанций по ФО БД АМС
+        /// </summary>
+        /// <param name="fromFile">сохраненный лист из БД АМС</param>
+        /// <param name="destFile">результирующая БД, файл будет перезаписан</param>
+        public static void ConvertFlugerFromFile(string fromFile, string destFile)
+        {
+            using (StreamReader sr = new StreamReader(fromFile))
+            {
+                using (StreamWriter sw = new StreamWriter(destFile, false, Encoding.UTF8))
+                {
+                    List<int> ids = new List<int>();
+                    sr.ReadLine();
+                    while (!sr.EndOfStream)
+                    {
+                        string line = sr.ReadLine();
+                        string[] arr = line.Split(';');
+                        int id = int.Parse(arr[0]);
+                        if (!ids.Contains(id))
+                        {
+                            //ID;Name;Lat;Lon
+                            string name = arr[3];
+                            string lat = arr[4];
+                            string lon = arr[5];
+                            string lineW = $"{id};{name};{lat};{lon}";
+                            sw.WriteLine(lineW);
+                            ids.Add(id);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Загружает данные из сохраненного листа БД АМС "Скорости по ФО"
+        /// </summary>
+        /// <param name="dataFile"> лист БД АМС "Скорости по ФО"</param>
+        /// <param name="destFile">результирующий файл от метода Scripts.ConvertMSIDFromFile</param>
+        public static void ConvertFlugerDataFromFile(string dataFile, string destFile)
+        {
+            List<string[]> destLines = new List<string[]>();
+            using (StreamReader sr = new StreamReader(destFile))
+            {
+                while (!sr.EndOfStream)
+                {
+                    destLines.Add(sr.ReadLine().Split(';'));
+                }
+            }
+
+            Dictionary<int, string[]> mLines = new Dictionary<int, string[]>();
+            using (StreamReader sr = new StreamReader(dataFile))
+            {
+                sr.ReadLine();
+                string line = sr.ReadLine();
+                while (!sr.EndOfStream)
+                {
+                    string[] arr = line.Split(';');
+                    int id = int.Parse(arr[0]);
+                    mLines.Add(id,arr.Skip(1).ToArray());
+                    line = sr.ReadLine();
+                }
+            }
+
+            using (StreamWriter sw = new StreamWriter(destFile, false, Encoding.UTF8))
+            {
+                foreach (var ln in destLines)
+                {
+                    int id = int.Parse(ln[0]);
+                    if (mLines.ContainsKey(id))
+                    {
+                        string[] data = mLines[id];
+                        string[] resultLine = ln.Concat(data).ToArray();
+                        string w = "";
+                        foreach (string s in resultLine)
+                            w += s + ";";
+                        w = w.Trim(';');
+                        sw.WriteLine(w);
+                    }
+                }
+            }
+
+
+
+
+        }
+
+
+        #endregion
+
 
         /// <summary>
         /// записывает в список метеостанций mts высоты и даты начала наблюдений и сохраняет в файл toFile
@@ -162,7 +253,7 @@ namespace WindEnergy.Lib
                 }
                 catch (WindEnergyException wex)
                 { }
-                mt.Altitude = alts.GetElevation(mt.Coordinates);
+                mt.Altitude = alts.GetElevation(mt.Position);
             }
             RP5MeteostationDatabase.ExportMeteostationList(mts, toFile);
         }
@@ -249,7 +340,7 @@ namespace WindEnergy.Lib
 
                 res.Add(new RP5MeteostationInfo()
                 {
-                    Coordinates = new PointLatLng(latd, lond),
+                    Position = new PointLatLng(latd, lond),
                     ID = wmo,
                     Name = name,
                     MeteoSourceType = MeteoSourceType.Meteostation
@@ -346,7 +437,7 @@ namespace WindEnergy.Lib
                                     try
                                     {
                                         m.Address = point.name;
-                                        m.Altitude = Vars.ETOPOdatabase.GetElevation(m.Coordinates);
+                                        m.Altitude = Vars.ETOPOdatabase.GetElevation(m.Position);
                                         result.Add(m);
                                     }
                                     catch (Exception) { continue; }

@@ -22,7 +22,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// <returns></returns>
         public override Dictionary<PointLatLng, AMSMeteostationInfo>  LoadDatabaseFile()
         {
-            Dictionary<PointLatLng, AMSMeteostationInfo> limits = new Dictionary<PointLatLng, AMSMeteostationInfo>();
+            Dictionary<PointLatLng, AMSMeteostationInfo> items = new Dictionary<PointLatLng, AMSMeteostationInfo>();
             StreamReader sr = new StreamReader(FileName);
             sr.ReadLine();//пропускаем первую строку-заголовок
             while (!sr.EndOfStream)
@@ -61,7 +61,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
 
                 AMSMeteostationInfo data = new AMSMeteostationInfo()
                 {
-                    ID = id,
+                    ID = id.ToString(),
                     Name = name,
                     Position = p,
                     AverageM = averM,
@@ -69,11 +69,11 @@ namespace WindEnergy.Lib.Data.Providers.DB
                     V10 = speeds
                 };
 
-                if (!limits.ContainsKey(p))
-                    limits.Add(p, data);
+                if (!items.ContainsKey(p))
+                    items.Add(p, data);
             }
             sr.Close();
-            return limits;
+            return items;
         }
 
     }
