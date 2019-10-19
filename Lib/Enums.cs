@@ -428,18 +428,33 @@ namespace WindEnergy
     [TypeConverter(typeof(EnumTypeConverter<MeteorologyParameters>))]
     public enum MeteorologyParameters
     {
+        /// <summary>
+        /// Направление
+        /// </summary>
         [Description("Направление")]
         Direction,
 
+        /// <summary>
+        /// Скорость
+        /// </summary>
         [Description("Скорость")]
         Speed,
 
+        /// <summary>
+        /// Температура
+        /// </summary>
         [Description("Температура")]
         Temperature,
 
+        /// <summary>
+        /// Влажность
+        /// </summary>
         [Description("Влажность")]
         Wetness,
 
+        /// <summary>
+        /// Давление
+        /// </summary>
         [Description("Давление")]
         Pressure
     }

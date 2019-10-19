@@ -59,7 +59,7 @@ namespace WindEnergy.Lib.Classes.Collections
         /// <summary>
         /// информация об метеостанции, откуда получены данные
         /// </summary>
-        public MeteostationInfo Meteostation { get; set; }
+        public RP5MeteostationInfo Meteostation { get; set; }
 
         /// <summary>
         /// координаты точки радa

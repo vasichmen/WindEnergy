@@ -11,7 +11,7 @@ namespace WindEnergy.Lib.Classes.Structures
     /// <summary>
     /// информация о метеостанции с архивом погоды
     /// </summary>
-    public class MeteostationInfo
+    public class RP5MeteostationInfo
     {
         /// <summary>
         /// wmo_id или metar_id метеостанции для загрузки архива
@@ -93,7 +93,7 @@ namespace WindEnergy.Lib.Classes.Structures
         }
 
 
-        public MeteostationInfo()
+        public RP5MeteostationInfo()
         {
             CC_Code = "";
         }

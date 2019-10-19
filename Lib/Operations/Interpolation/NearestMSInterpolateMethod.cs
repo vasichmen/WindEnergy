@@ -127,7 +127,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
 
             DateTime from = Range.Min((ri) => ri.Date).Date, to = Range.Max((ri) => ri.Date).Date;
 
-            List<MeteostationInfo> mts = Vars.Meteostations.GetNearestMS(coordinates,  Vars.Options.NearestMSRadius, false);
+            List<RP5MeteostationInfo> mts = Vars.RP5Meteostations.GetNearestMS(coordinates,  Vars.Options.NearestMSRadius, false);
             Dictionary<double, double> funcSpeed = Range.GetFunction(MeteorologyParameters.Speed); //функция скорости на заданном ряде
             RawRange res = null;
             double rmax = double.MinValue, total_rmax=double.MinValue;
@@ -135,7 +135,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
 
             for (int i = 0; i < mts.Count; i++)
             {
-                MeteostationInfo m = mts[i];
+                RP5MeteostationInfo m = mts[i];
 
                 //если нет диапазона измерений в БД, то загружаем с сайта
                 if (m.MonitoringFrom == DateTime.MinValue)
@@ -179,7 +179,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
                 }
             }
             if (res == null) {
-                MeteostationInfo mi = Vars.Meteostations.GetNearestMS(coordinates, false);
+                RP5MeteostationInfo mi = Vars.RP5Meteostations.GetNearestMS(coordinates, false);
                 double l = EarthModel.CalculateDistance(mi.Coordinates, coordinates);
                 throw new GetBaseRangeException(total_rmax, Vars.Options.MinimalCorrelationCoeff, l, mts.Count, Vars.Options.NearestMSRadius, coordinates);
                     
@@ -395,7 +395,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
                 throw new WindEnergyException("Дата from больше, чем to");
             RawRange res = null;
 
-            MeteostationInfo nearestMS = Vars.Meteostations.GetNearestMS(coordinates);
+            RP5MeteostationInfo nearestMS = Vars.RP5Meteostations.GetNearestMS(coordinates);
             if (nearestMS == null)
                 throw new Exception("Не удалось найти ближайшую метеостанцию в заданном радиусе");
 

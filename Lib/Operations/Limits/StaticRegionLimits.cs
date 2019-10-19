@@ -11,7 +11,7 @@ using WindEnergy.Lib.Geomodel;
 namespace WindEnergy.Lib.Operations.Limits
 {
     /// <summary>
-    /// статические ограничения скоростей по регионам
+    /// БД Максимальные скорости ветра
     /// </summary>
     public class StaticRegionLimits : ILimitsProvider
     {
@@ -23,7 +23,7 @@ namespace WindEnergy.Lib.Operations.Limits
         /// <param name="sourceFile"></param>
         public StaticRegionLimits(string sourceFile)
         {
-           limits= Vars.LocalFileSystem.StaticSpeedLimits;
+           limits= Vars.SpeedLimits.List;
         }
 
       

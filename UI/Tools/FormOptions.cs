@@ -107,7 +107,7 @@ namespace WindEnergy.UI.Tools
             of.Filter = "Текстовые файлы *.txt|*.txt";
             if (of.ShowDialog(this) == DialogResult.OK)
             {
-                bool f = MeteostationDatabase.CheckMSCoordinatesFile(of.FileName);
+                bool f = RP5MeteostationDatabase.CheckMSCoordinatesFile(of.FileName);
                 if (!f)
                 {
                     MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла координат метеостанций", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -129,7 +129,7 @@ namespace WindEnergy.UI.Tools
             of.Filter = "Текстовые файлы *.txt|*.txt";
             if (of.ShowDialog(this) == DialogResult.OK)
             {
-                bool f = Vars.LocalFileSystem.CheckRegionLimitsFile(of.FileName);
+                bool f = Vars.SpeedLimits.CheckRegionLimitsFile(of.FileName);
                 if (!f)
                 {
                     MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла ограничений скоростей", MessageBoxButtons.OK, MessageBoxIcon.Warning);

@@ -14,7 +14,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
     /// <summary>
     /// База данных метеостанций
     /// </summary>
-    public class MeteostationDatabase
+    public class RP5MeteostationDatabase
     {
         /// <summary>
         /// расстояние в метрах при котором координаты считаются совпадающими
@@ -24,7 +24,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// <summary>
         /// список метеостанций и координат
         /// </summary>
-        public List<MeteostationInfo> MeteostationList
+        public List<RP5MeteostationInfo> List
         {
             get
             {
@@ -33,14 +33,14 @@ namespace WindEnergy.Lib.Data.Providers.DB
                 return _meteostationList;
             }
         }
-        private List<MeteostationInfo> _meteostationList = null;
+        private List<RP5MeteostationInfo> _meteostationList = null;
 
         /// <summary>
         /// получить инфомацию по id метеостанции или аэропорта
         /// </summary>
         /// <param name="id">значение поля MeteostationInfo.ID</param>
         /// <returns></returns>
-        public MeteostationInfo this[string id] { get { return (from m in MeteostationList where m.ID == id select m).FirstOrDefault(); }  }
+        public RP5MeteostationInfo this[string id] { get { return (from m in List where m.ID == id select m).FirstOrDefault(); }  }
 
         /// <summary>
         /// количество аэропортов в БД
@@ -52,7 +52,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
                 if (_airportCount == -1)
                 {
                     _airportCount = 0;
-                    foreach (var m in MeteostationList)
+                    foreach (var m in List)
                         if (m.MeteoSourceType == MeteoSourceType.Airport)
                             _airportCount++;
                 }
@@ -71,7 +71,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
                 if (_meteostationsCount == -1)
                 {
                     _meteostationsCount = 0;
-                    foreach (var m in MeteostationList)
+                    foreach (var m in List)
                         if (m.MeteoSourceType == MeteoSourceType.Meteostation)
                             _meteostationsCount++;
                 }
@@ -87,7 +87,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
         {
             get
             {
-                return MeteostationList.Count;
+                return List.Count;
             }
         }
 
@@ -97,12 +97,12 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public static List<MeteostationInfo> LoadMeteostationList(string filename)
+        public static List<RP5MeteostationInfo> LoadMeteostationList(string filename)
         {
             StreamReader sr = new StreamReader(filename);
             sr.ReadLine(); //пропуск заголовка
 
-            List<MeteostationInfo> res = new List<MeteostationInfo>();
+            List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
             while (!sr.EndOfStream)
             {
                 string[] arr = sr.ReadLine().Split(';');
@@ -122,7 +122,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
                     alt = double.Parse(arr[6].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
                     mfrom = DateTime.Parse(arr[7]);
                 }
-                res.Add(new MeteostationInfo()
+                res.Add(new RP5MeteostationInfo()
                 {
                     ID = wmo,
                     Coordinates = new PointLatLng(lat, lon),
@@ -144,10 +144,10 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// </summary>
         /// <param name="list">список метеостанций</param>
         /// <param name="filename">адрес файла, куда сохраняется список</param>
-        public static void ExportMeteostationList(List<MeteostationInfo> list, string filename)
+        public static void ExportMeteostationList(List<RP5MeteostationInfo> list, string filename)
         {
             //удаление повторов
-            List<MeteostationInfo> list_unic = new List<MeteostationInfo>();
+            List<RP5MeteostationInfo> list_unic = new List<RP5MeteostationInfo>();
             foreach (var m in list)
             {
                 //проверка существования ID в массиве
@@ -199,10 +199,10 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public List<MeteostationInfo> Search(string query)
+        public List<RP5MeteostationInfo> Search(string query)
         {
-            List<MeteostationInfo> res = new List<MeteostationInfo>();
-            foreach (var m in MeteostationList)
+            List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
+            foreach (var m in List)
                 if (m.Name.ToLower().Contains(query.ToLower()))
                     res.Add(m);
             return res;
@@ -215,11 +215,11 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// <param name="mts">список метеостанций по которому идёт поиск</param>
         /// <param name="useMaxRadius">если истина, то поиск будет идти только в максимальном радиусе из настроек Vars.Options.NearestMSRadius</param>
         /// <returns></returns>
-        public  MeteostationInfo GetNearestMS(PointLatLng coordinates, bool useMaxRadius = true)
+        public  RP5MeteostationInfo GetNearestMS(PointLatLng coordinates, bool useMaxRadius = true)
         {
-            MeteostationInfo res = null;
+            RP5MeteostationInfo res = null;
             double min = double.MaxValue;
-            foreach (var p in this.MeteostationList)
+            foreach (var p in this.List)
             {
                 double f = EarthModel.CalculateDistance(p.Coordinates, coordinates);
                 if (f < COORDINATES_OVERLAP)
@@ -258,10 +258,10 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// <param name="radius"></param>
         /// <param name="addOwn">Если истина, то если на coordinates есть МС, то она тоже будет добавлена</param>
         /// <returns></returns>
-        public  List<MeteostationInfo> GetNearestMS(PointLatLng coordinates,  double radius, bool addOwn = false)
+        public  List<RP5MeteostationInfo> GetNearestMS(PointLatLng coordinates,  double radius, bool addOwn = false)
         {
-            List<MeteostationInfo> res = new List<MeteostationInfo>();
-            foreach (var ms in this.MeteostationList)
+            List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
+            foreach (var ms in this.List)
             {
                 double dist = EarthModel.CalculateDistance(ms.Coordinates, coordinates);
                 if ((dist < radius && dist > COORDINATES_OVERLAP) || (dist < COORDINATES_OVERLAP && addOwn)) // если попадает в радиус и не совпадает или совпадает и надо добавлять 
@@ -275,10 +275,10 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// </summary>
         /// <param name="id">wmo_id</param>
         /// <returns></returns>
-        internal MeteostationInfo GetByID(int id)
+        internal RP5MeteostationInfo GetByID(int id)
         {
             string id_str = id.ToString();
-            var res = from t in MeteostationList
+            var res = from t in List
                       where t.ID == id_str
                       select t;
             if (res.Count() > 0)
@@ -292,9 +292,9 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// </summary>
         /// <param name="CC_code">METAR</param>
         /// <returns></returns>
-        internal MeteostationInfo GetByCC_code(string CC_code)
+        internal RP5MeteostationInfo GetByCC_code(string CC_code)
         {
-            var res = from t in MeteostationList
+            var res = from t in List
                       where t.CC_Code == CC_code
                       select t;
             if (res.Count() > 0)
@@ -307,7 +307,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// попытка добавить метеостанцию с БД. Если такая уже есть, то возвращает false. При успешном добавлении перезаписывает файл БД и возвращает true
         /// </summary>
         /// <param name="info">информация о МС для добавления в БД</param>
-        internal bool TryAddMeteostation(MeteostationInfo info)
+        internal bool TryAddMeteostation(RP5MeteostationInfo info)
         {
             if (this.Contains(info))
                 return false;
@@ -317,8 +317,8 @@ namespace WindEnergy.Lib.Data.Providers.DB
             if (string.IsNullOrWhiteSpace(info.Address))
                 info.Address = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(info.Coordinates);
 
-            MeteostationList.Add(info);
-            ExportMeteostationList(this.MeteostationList, Vars.Options.StaticMeteostationCoordinatesSourceFile);
+            List.Add(info);
+            ExportMeteostationList(this.List, Vars.Options.StaticMeteostationCoordinatesSourceFile);
             return true;
         }
 
@@ -327,9 +327,9 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// </summary>
         /// <param name="meteostation"></param>
         /// <returns></returns>
-        public bool Contains(MeteostationInfo meteostation)
+        public bool Contains(RP5MeteostationInfo meteostation)
         {
-            foreach (var v in this.MeteostationList)
+            foreach (var v in this.List)
                 if (v.ID == meteostation.ID)
                     return true;
             return false;

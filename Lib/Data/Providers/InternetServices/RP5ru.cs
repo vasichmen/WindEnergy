@@ -115,7 +115,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <param name="toDate">до какой даты</param>
         /// <param name="point_info">объект MeteostationInfo - информация о метеостанции</param>
         /// <returns></returns>
-        public RawRange GetRange(DateTime fromDate, DateTime toDate, MeteostationInfo info, Action<double> onPercentChange = null)
+        public RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo info, Action<double> onPercentChange = null)
         {
             if (toDate < fromDate)
                 throw new WindEnergyException("Даты указаны неверно");
@@ -255,7 +255,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             res.Name = info.Name;
             res.Position = info.Coordinates;
             res.Meteostation = info;
-            Vars.Meteostations.TryAddMeteostation(info); //если такой метеостанции нет в БД, то добавляем
+            Vars.RP5Meteostations.TryAddMeteostation(info); //если такой метеостанции нет в БД, то добавляем
             return res;
 
             #endregion
@@ -266,7 +266,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// </summary>
         /// <param name="wmoInfo">информация о точке с погодой</param>
         /// <returns></returns>
-        public List<MeteostationInfo> GetMeteostationsAtPoint(WmoInfo wmoInfo, bool loadExtInfo = true, bool forceDisableCache = false)
+        public List<RP5MeteostationInfo> GetMeteostationsAtPoint(WmoInfo wmoInfo, bool loadExtInfo = true, bool forceDisableCache = false)
         {
             //страница погоды в заданной точке
             HtmlDocument point_page = SendHtmlGetRequest(wmoInfo.Link, out HttpStatusCode code, forceDisableCache: forceDisableCache);
@@ -288,11 +288,11 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                     archives.AddRange(a);
             }
 
-            List<MeteostationInfo> res = new List<MeteostationInfo>();
+            List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
             foreach (HtmlNode some_link in archives)
                 if (some_link != null)
                 {
-                    MeteostationInfo nm = new MeteostationInfo();
+                    RP5MeteostationInfo nm = new RP5MeteostationInfo();
                     nm.Name = wmoInfo.name; //искомая точка
                     nm.Link = some_link.Attributes["href"].Value; //ссылка на страницу
 
@@ -348,7 +348,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// </summary>
         /// <param name="page_link">ссылка на страницу архива</param>
         /// <returns></returns>
-        public void GetMeteostationExtInfo(ref MeteostationInfo info)
+        public void GetMeteostationExtInfo(ref RP5MeteostationInfo info)
         {
             if (info == null)
                 throw new ArgumentException("info");
@@ -553,7 +553,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// </summary>
         /// <param name="file">файл csv</param>
         /// <returns></returns>
-        public static RawRange LoadCSV(string file, MeteostationInfo meteostation = null)
+        public static RawRange LoadCSV(string file, RP5MeteostationInfo meteostation = null)
         {
             using (StreamReader sr = new StreamReader(file, Encoding.UTF8, true))
             {
@@ -608,7 +608,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                             int start = title.IndexOf("WMO_ID=") + "WMO_ID=".Length;
                             int end = title.IndexOf(',', start);
                             string id_s = title.Substring(start, end - start);
-                            meteostation = Vars.Meteostations.GetByID(int.Parse(id_s));
+                            meteostation = Vars.RP5Meteostations.GetByID(int.Parse(id_s));
                         }
                         break;
                     case MeteoSourceType.Airport: //загрузка архива с аэропорта
@@ -641,7 +641,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                             int start = title.IndexOf("METAR=") + "METAR=".Length;
                             int end = title.IndexOf(',', start);
                             string id_s = title.Substring(start, end - start);
-                            meteostation = Vars.Meteostations.GetByCC_code(id_s);
+                            meteostation = Vars.RP5Meteostations.GetByCC_code(id_s);
                         }
                         break;
                     case MeteoSourceType.UnofficialMeteostation:

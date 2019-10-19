@@ -37,7 +37,7 @@ namespace WindEnergy.UI.Tools
         /// создание окна с выделенной метеостанцией на карте
         /// </summary>
         /// <param name="meteostation"></param>
-        public FormShowMeteostationsMap(MeteostationInfo meteostation) : this()
+        public FormShowMeteostationsMap(RP5MeteostationInfo meteostation) : this()
         {
             gmapControlMap.Position = meteostation.Coordinates;
         }
@@ -134,7 +134,7 @@ namespace WindEnergy.UI.Tools
             if (gmapControlMap.Position.IsEmpty)
                 gmapControlMap.Position = new PointLatLng(55.35, 37.45);
             showVisibleMeteostations();
-            toolStripStatusLabelStats.Text = $"Аэропортов: {Vars.Meteostations.AirportCount} шт., метеостанций: {Vars.Meteostations.MeteostationsCount} шт., всего: {Vars.Meteostations.TotalCount} шт.";
+            toolStripStatusLabelStats.Text = $"Аэропортов: {Vars.RP5Meteostations.AirportCount} шт., метеостанций: {Vars.RP5Meteostations.MeteostationsCount} шт., всего: {Vars.RP5Meteostations.TotalCount} шт.";
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace WindEnergy.UI.Tools
                 double wd = gmapControlMap.ViewArea.WidthLng; //ширина в градусах
                 double sh = hd / h; // шаг по высоте
                 double sw = wd / w; //шаг по ширине
-                MeteostationInfo[,] mts_map = new MeteostationInfo[h, w];
+                RP5MeteostationInfo[,] mts_map = new RP5MeteostationInfo[h, w];
                 RectLatLng[,] rec_map = new RectLatLng[h, w];
                 for (int i = 0; i < h; i++)
                     for (int j = 0; j < w; j++)
@@ -164,8 +164,8 @@ namespace WindEnergy.UI.Tools
                     }
 
                 //выборка точек из БД
-                List<MeteostationInfo> pts = new List<MeteostationInfo>();
-                foreach (var mts in Vars.Meteostations.MeteostationList)
+                List<RP5MeteostationInfo> pts = new List<RP5MeteostationInfo>();
+                foreach (var mts in Vars.RP5Meteostations.List)
                 {
                     if (gmapControlMap.ViewArea.Contains(mts.Coordinates))
                     {
@@ -186,12 +186,12 @@ namespace WindEnergy.UI.Tools
                     }
                 }
 
-                List<MeteostationInfo> res;
+                List<RP5MeteostationInfo> res;
                 if (pts.Count < h * w)
                     res = pts;
                 else
                 {
-                    res = new List<MeteostationInfo>();
+                    res = new List<RP5MeteostationInfo>();
                     foreach (var dd in mts_map)
                         if (dd != null)
                             res.Add(dd);
@@ -236,7 +236,7 @@ namespace WindEnergy.UI.Tools
 
         private void gmapControlMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
-            MeteostationInfo mi = (MeteostationInfo)item.Tag;
+            RP5MeteostationInfo mi = (RP5MeteostationInfo)item.Tag;
             FormLoadFromRP5 frm = new FormLoadFromRP5(mi);
             if (frm.ShowDialog(this) == DialogResult.OK)
             {

@@ -72,16 +72,46 @@ namespace WindEnergy
         /// <summary>
         /// Список метеостанций из БД Метеостанции мира
         /// </summary>
-        public static MeteostationDatabase Meteostations
+        public static RP5MeteostationDatabase RP5Meteostations
         {
             get
             {
-                if (_Meteostations == null)
-                    _Meteostations = new MeteostationDatabase();
-                return _Meteostations;
+                if (_RP5Meteostations == null)
+                    _RP5Meteostations = new RP5MeteostationDatabase();
+                return _RP5Meteostations;
             }
-            set { _Meteostations = value; }
+            set { _RP5Meteostations = value; }
         }
-        private static MeteostationDatabase _Meteostations = null;
+        private static RP5MeteostationDatabase _RP5Meteostations = null;
+
+        /// <summary>
+        /// Список метеостанций из БД Метеостанции мира
+        /// </summary>
+        public static SpeedLimitsDatabase SpeedLimits
+        {
+            get
+            {
+                if (_SpeedLimits == null)
+                    _SpeedLimits = new SpeedLimitsDatabase();
+                return _SpeedLimits;
+            }
+            set { _SpeedLimits = value; }
+        }
+        private static SpeedLimitsDatabase _SpeedLimits = null;
+
+        /// <summary>
+        /// Список метеостанций из БД АМС
+        /// </summary>
+        public static AMSMeteostationDatabase AMSMeteostations
+        {
+            get
+            {
+                if (_AMSMeteostations == null)
+                    _AMSMeteostations = new AMSMeteostationDatabase();
+                return _AMSMeteostations;
+            }
+            set { _AMSMeteostations = value; }
+        }
+        private static AMSMeteostationDatabase _AMSMeteostations = null;
     }
 }

@@ -152,8 +152,9 @@
   <ItemGroup>
     <Compile Include="Classes\Generic\DateTimeComparer.cs" />
     <Compile Include="Classes\MapMarker.cs" />
+    <Compile Include="Classes\Structures\AMSMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Diapason.cs" />
-    <Compile Include="Classes\Structures\MeteostationInfo.cs" />
+    <Compile Include="Classes\Structures\RP5MeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Options\Options.cs" />
     <Compile Include="Classes\Generic\PropertyComparer.cs" />
     <Compile Include="Classes\Generic\SortableBindingList.cs" />
@@ -163,6 +164,9 @@
     <Compile Include="Classes\VersionInfo.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Data\Interfaces\IGeoInfoProvider.cs" />
+    <Compile Include="Data\Providers\DB\AMSMeteostationDatabase.cs" />
+    <Compile Include="Data\Providers\DB\EquipmentDatabase.cs" />
+    <Compile Include="Data\Providers\DB\SpeedLimitsDatabase.cs" />
     <Compile Include="Data\Providers\FileSystem\FileProvider.cs" />
     <Compile Include="Data\Providers\FileSystem\TextImporter.cs" />
     <Compile Include="Data\Providers\InternetServices\ArcGis.cs" />
@@ -180,7 +184,7 @@
     <Compile Include="Data\Providers\InternetServices\Energywind.cs" />
     <Compile Include="Data\Providers\InternetServices\Google.cs" />
     <Compile Include="Data\Providers\FileSystem\LocalFileSystem.cs" />
-    <Compile Include="Data\Providers\DB\MeteostationDatabase.cs" />
+    <Compile Include="Data\Providers\DB\RP5MeteostationDatabase.cs" />
     <Compile Include="Data\Providers\FileSystem\CSVFile.cs" />
     <Compile Include="Data\Providers\InternetServices\NASA.cs" />
     <Compile Include="Data\Providers\InternetServices\RP5ru.cs" />

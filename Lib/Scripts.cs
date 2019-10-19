@@ -24,6 +24,120 @@ namespace WindEnergy.Lib
     /// </summary>
     public static class Scripts
     {
+        #region не используются
+
+        #region обновление БД АМС
+
+        /// <summary>
+        /// Получает координаты и ID  метеостанций из созраненного листа Список метеостанций по ФО БД АМС
+        /// </summary>
+        /// <param name="fromFile">сохраненный лист из БД АМС</param>
+        /// <param name="destFile">результирующая БД, файл будет перезаписан</param>
+        public static void ConvertMSIDFromFile(string fromFile, string destFile)
+        {
+            using (StreamReader sr = new StreamReader(fromFile))
+            {
+                using (StreamWriter sw = new StreamWriter(destFile, false, Encoding.UTF8))
+                {
+                    List<int> ids = new List<int>();
+                    sr.ReadLine();
+                    while (!sr.EndOfStream)
+                    {
+                        string line = sr.ReadLine();
+                        string[] arr = line.Split(';');
+                        int id = int.Parse(arr[5]);
+                        if (!ids.Contains(id))
+                        {
+                            //ID;Name;Lat;Lon
+                            string name = arr[6];
+                            string lat = arr[7];
+                            string lon = arr[8];
+                            string lineW = $"{id};{name};{lat};{lon}";
+                            sw.WriteLine(lineW);
+                            ids.Add(id);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Загружает данные из сохраненного листа БД АМС "Скорости по ФО"
+        /// </summary>
+        /// <param name="mFile"> лист БД АМС "Скорости по ФО"</param>
+        /// <param name="destFile">результирующий файл от метода Scripts.ConvertMSIDFromFile</param>
+        public static void ConvertMCoefficientsFromFile(string mFile, string destFile)
+        {
+            List<string[]> destLines = new List<string[]>();
+            using (StreamReader sr = new StreamReader(destFile))
+            {
+                while (!sr.EndOfStream)
+                {
+                    destLines.Add(sr.ReadLine().Split(';'));
+                }
+            }
+
+            Dictionary<int, string[]> mLines = new Dictionary<int, string[]>();
+            using (StreamReader sr = new StreamReader(mFile))
+            {
+                int nextLine = 0; //считаем, что первый заголовок на 0 строке
+                int i = 0;
+                string line = sr.ReadLine();
+                while (!sr.EndOfStream)
+                {
+                    if (i == nextLine)
+                    {
+                        string[] arr = line.Split(';');
+                        int id = int.Parse(arr[0]);
+
+                        //скорости
+                        string speedLine = sr.ReadLine();
+                        string[] speeds10 = speedLine.Split(';').Skip(14).Take(12).ToArray();
+
+                        //среднее m
+                        string averLine = sr.ReadLine();
+                        string[] mAver = averLine.Split(';').Skip(28).Take(1).ToArray();
+
+                        sr.ReadLine(); sr.ReadLine();
+
+                        //месячные m
+                        string mLine = sr.ReadLine();
+                        string[] ms = mLine.Split(';').Skip(14).Take(12).ToArray();
+
+                        string[] res = speeds10.Concat(ms).Concat(mAver).ToArray();
+                        mLines.Add(id, res);
+
+                        nextLine += 20; i += 5; //переход на следующий элемент
+                    }
+                    i++;
+                    line = sr.ReadLine();
+                }
+            }
+
+            using (StreamWriter sw = new StreamWriter(destFile, false, Encoding.UTF8))
+            {
+                foreach (var ln in destLines)
+                {
+                    int id = int.Parse(ln[0]);
+                    string[] data = mLines[id];
+                    string[] resultLine = ln.Concat(data).ToArray();
+                    string w = "";
+                    foreach (string s in resultLine)
+                        w += s + ";";
+                    w = w.Trim(';');
+                    sw.WriteLine(w);
+                }
+            }
+
+
+
+
+        }
+
+
+        #endregion
+
+
         /// <summary>
         /// записывает в список метеостанций mts высоты и даты начала наблюдений и сохраняет в файл toFile
         /// </summary>
@@ -31,7 +145,7 @@ namespace WindEnergy.Lib
         /// <param name="toFile">файл, в который сохранится список метеостанций после обработки</param>
         /// <param name="alts">источник данных о высотах точек</param>
         /// <param name="action">действие при изменении процента выполнения</param>
-        public static void DownloadMeteostationExtInfo(List<MeteostationInfo> mts, string toFile, IGeoInfoProvider alts, Action<int> action = null)
+        public static void DownloadMeteostationExtInfo(List<RP5MeteostationInfo> mts, string toFile, IGeoInfoProvider alts, Action<int> action = null)
         {
             RP5ru provider = new RP5ru(Vars.Options.CacheFolder + "\\rp5.ru");
             double i = 0;
@@ -39,7 +153,7 @@ namespace WindEnergy.Lib
             {
                 if (Math.IEEERemainder(i++, 50) == 0 && action != null)
                     action.Invoke((int)((i / mts.Count) * 100));
-                MeteostationInfo tmp = new MeteostationInfo();
+                RP5MeteostationInfo tmp = new RP5MeteostationInfo();
                 tmp.Link = mt.Link;
                 try
                 {
@@ -50,7 +164,7 @@ namespace WindEnergy.Lib
                 { }
                 mt.Altitude = alts.GetElevation(mt.Coordinates);
             }
-            MeteostationDatabase.ExportMeteostationList(mts, toFile);
+            RP5MeteostationDatabase.ExportMeteostationList(mts, toFile);
         }
 
         /// <summary>
@@ -103,7 +217,7 @@ namespace WindEnergy.Lib
             string json = sr.ReadToEnd();
             sr.Close();
 
-            List<MeteostationInfo> res = new List<MeteostationInfo>();
+            List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
             JObject obj = JObject.Parse(json);
 
             //чтение json
@@ -133,7 +247,7 @@ namespace WindEnergy.Lib
                 double latd = double.Parse(lat);
                 double lond = double.Parse(lon);
 
-                res.Add(new MeteostationInfo()
+                res.Add(new RP5MeteostationInfo()
                 {
                     Coordinates = new PointLatLng(latd, lond),
                     ID = wmo,
@@ -143,9 +257,12 @@ namespace WindEnergy.Lib
             }
 
             //запись в файл
-            MeteostationDatabase.ExportMeteostationList(res, fileCoordList);
+            RP5MeteostationDatabase.ExportMeteostationList(res, fileCoordList);
         }
 
+        #endregion
+
+        #region Используются в окне загрузки данных
 
         /// <summary>
         /// загружает все метеостанции с расписания погоды и сохраняет их в файл fileOutput в формат списка координат метеостанций
@@ -153,14 +270,14 @@ namespace WindEnergy.Lib
         /// <param name="fileOutput"></param>
         public static void LoadAllRP5Meteostations(string fileOutput, Action<int, int, string, int, int, int, int> action = null, Func<bool> checkStop = null)
         {
-            RP5ru engine = new RP5ru(Vars.Options.CacheFolder+"\\rp5.ru");
-            List<MeteostationInfo> result;
+            RP5ru engine = new RP5ru(Vars.Options.CacheFolder + "\\rp5.ru");
+            List<RP5MeteostationInfo> result;
             string lastQ = null;
 
             //если файл уже есть,то надо продолжить с последнего сочетания
             if (File.Exists(fileOutput))
             {
-                result = MeteostationDatabase.LoadMeteostationList(fileOutput); //загрузка списка
+                result = RP5MeteostationDatabase.LoadMeteostationList(fileOutput); //загрузка списка
                 StreamReader sr = new StreamReader(fileOutput);
                 while (!sr.EndOfStream)
                 {
@@ -171,7 +288,7 @@ namespace WindEnergy.Lib
                 sr.Close();
             }
             else
-                result = new List<MeteostationInfo>();
+                result = new List<RP5MeteostationInfo>();
 
             List<string> alf_rus = new List<string>() { "a", "б", "в", "г", "д", "е", "ё", "ж", "з", "и", "й", "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я" };
             List<string> alf = new List<string>() { "f", ",", "d", "u", "l", "t", "`", ";", "p", "b", "q", "r", "k", "v", "y", "j", "g", "h", "c", "n", "e", "a", "[", "w", "x", "i", "o", "]", "s", "m", "'", ".", "z" };
@@ -207,7 +324,7 @@ namespace WindEnergy.Lib
                     try
                     {
                         //Сохранение временного результата перед каждым сочетанием
-                        MeteostationDatabase.ExportMeteostationList(result, fileOutput);
+                        RP5MeteostationDatabase.ExportMeteostationList(result, fileOutput);
                         StreamWriter sw1 = new StreamWriter(fileOutput, true, Encoding.Default);
                         sw1.WriteLine(q);
                         sw1.Close();
@@ -222,7 +339,7 @@ namespace WindEnergy.Lib
                             try
                             {
                                 dd++;
-                                List<MeteostationInfo> meteost = engine.GetMeteostationsAtPoint(point, true,true); //получаем архивы для этой точки
+                                List<RP5MeteostationInfo> meteost = engine.GetMeteostationsAtPoint(point, true, true); //получаем архивы для этой точки
                                 all += meteost.Count;
                                 foreach (var m in meteost)
                                 {
@@ -251,7 +368,7 @@ namespace WindEnergy.Lib
             }
 
             //сохранение информации
-            MeteostationDatabase.ExportMeteostationList(result, fileOutput);
+            RP5MeteostationDatabase.ExportMeteostationList(result, fileOutput);
             StreamWriter sw = new StreamWriter(fileOutput, true, Encoding.Default);
             sw.WriteLine(q);
             sw.Close();
@@ -266,7 +383,7 @@ namespace WindEnergy.Lib
         public static void LoadAllEnergywindLimits(string fileOutput, Action<int, int, string, int, int> act, Func<bool> checkStop)
         {
             string countryLink = "http://energywind.ru/recomendacii/karta-rossii";
-            Energywind engine = new Energywind( Vars.Options.CacheFolder + "\\energywind");
+            Energywind engine = new Energywind(Vars.Options.CacheFolder + "\\energywind");
             IGeocoderProvider geocoder = new Arcgis(Vars.Options.CacheFolder + "\\arcgis");
             List<Energywind.RegionInfo> regions = engine.GetRegions(countryLink);
             List<ManualLimits> result = new List<ManualLimits>();
@@ -275,18 +392,21 @@ namespace WindEnergy.Lib
             {
                 if (checkStop.Invoke())
                     break;
-                List<ManualLimits> lims = engine.GetLimits(region, geocoder,checkStop,act,regs_c,regions.Count);
+                List<ManualLimits> lims = engine.GetLimits(region, geocoder, checkStop, act, regs_c, regions.Count);
                 result.AddRange(lims);
-                regs_c ++;
+                regs_c++;
             }
 
             //запись в файл
-            StreamWriter sw = new StreamWriter(fileOutput,false, Encoding.UTF8);
+            StreamWriter sw = new StreamWriter(fileOutput, false, Encoding.UTF8);
             sw.WriteLine("название;широта;долгота;минимальная скорость м/с;максимальная скорость м/с");
             foreach (ManualLimits lim in result)
-                sw.WriteLine($"{lim.Name};{lim.Position.Lat.ToString().Replace(Vars.DecimalSeparator,'.')};{lim.Position.Lng.ToString().Replace(Vars.DecimalSeparator, '.')};{lim.GetMinimal(MeteorologyParameters.Speed)};{lim.GetMaximal(MeteorologyParameters.Speed)}");
+                sw.WriteLine($"{lim.Name};{lim.Position.Lat.ToString().Replace(Vars.DecimalSeparator, '.')};{lim.Position.Lng.ToString().Replace(Vars.DecimalSeparator, '.')};{lim.GetMinimal(MeteorologyParameters.Speed)};{lim.GetMaximal(MeteorologyParameters.Speed)}");
             sw.Close();
         }
+
+        #endregion
+
 
     }
 }

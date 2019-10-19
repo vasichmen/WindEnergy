@@ -26,8 +26,9 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             LastDirectory = Application.StartupPath;
             CacheFolder = Application.StartupPath + "\\cache";
             MapProvider = MapProviders.YandexMap;
-            StaticRegionLimitsSourceFile = Application.StartupPath + "\\staticRegionLimits.txt";
-            StaticMeteostationCoordinatesSourceFile = Application.StartupPath + "\\staticMeteostationCoordinates.txt";
+            StaticRegionLimitsSourceFile = Application.StartupPath + "\\Data\\staticRegionLimits.txt";
+            StaticMeteostationCoordinatesSourceFile = Application.StartupPath + "\\Data\\staticMeteostationCoordinates.txt";
+            StaticAMSDatabaseSourceFile = Application.StartupPath + "\\Data\\AMS.database.txt";
             QualifierSectionLength = 20; //20 измерений
             QualifierDaysToNewInterval = 60; //2 месяца
             QualifierDaysToBeginMissing = 30; //1 месяца
@@ -83,6 +84,11 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// адрес файла списка метеостанций и координат
         /// </summary>
         public string StaticMeteostationCoordinatesSourceFile { get; set; }
+
+        /// <summary>
+        /// адрес файла коэффициентов перевода скорости ветра на высоту
+        /// </summary>
+        public string StaticAMSDatabaseSourceFile { get; set; }
 
         /// <summary>
         /// длина отрезка (количество измерений) при разбиении на промежутки для поиска разделов интервалов наблюдений

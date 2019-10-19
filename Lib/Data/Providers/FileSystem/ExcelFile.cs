@@ -87,10 +87,10 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
 
 
                 //поиск информации о МС
-                MeteostationInfo meteostation = null;
+                RP5MeteostationInfo meteostation = null;
                 int start = title.IndexOf("ID=") + "ID=".Length;
                 string id_s = title.Substring(start);
-                meteostation = Vars.Meteostations.GetByID(int.Parse(id_s));
+                meteostation = Vars.RP5Meteostations.GetByID(int.Parse(id_s));
                 res.Meteostation = meteostation;
                 res.EndChange();
                 return res;

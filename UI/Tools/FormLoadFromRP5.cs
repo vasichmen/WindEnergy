@@ -27,7 +27,7 @@ namespace WindEnergy.UI.Tools
         /// <summary>
         /// список ближайших метеостанций к выбранной точке погоды
         /// </summary>
-        private MeteostationInfo selectedMeteostation = null;
+        private RP5MeteostationInfo selectedMeteostation = null;
         private RP5ru engine;
 
         public FormLoadFromRP5()
@@ -40,7 +40,7 @@ namespace WindEnergy.UI.Tools
         /// <summary>
         /// открытие формы с уже выбранной МС
         /// </summary>
-        public FormLoadFromRP5(MeteostationInfo meteostaion) : this()
+        public FormLoadFromRP5(RP5MeteostationInfo meteostaion) : this()
         {
             selectedMeteostation = meteostaion;
         }
@@ -173,7 +173,7 @@ namespace WindEnergy.UI.Tools
             switch (Vars.Options.RP5SearchEngine)
             {
                 case RP5SearchEngine.DBSearch:
-                    List<MeteostationInfo> results = Vars.Meteostations.Search(curTextBox);
+                    List<RP5MeteostationInfo> results = Vars.RP5Meteostations.Search(curTextBox);
                     comboBoxPoint.Items.Clear();
                     comboBoxPoint.Items.AddRange(results.ToArray());
                     comboBoxPoint.SelectionStart = comboBoxPoint.Text.Length;
@@ -257,8 +257,8 @@ namespace WindEnergy.UI.Tools
                 //выбор метеостанции
                 if (comboBoxPoint.SelectedItem.GetType() == typeof(RP5ru.WmoInfo))
                 {
-                    List<MeteostationInfo> meteost = engine.GetMeteostationsAtPoint(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
-                    MeteostationInfo meteostation;
+                    List<RP5MeteostationInfo> meteost = engine.GetMeteostationsAtPoint(comboBoxPoint.SelectedItem as RP5ru.WmoInfo);
+                    RP5MeteostationInfo meteostation;
                     if (meteost.Count == 0)
                         return;
                     if (meteost.Count == 1)
@@ -276,7 +276,7 @@ namespace WindEnergy.UI.Tools
                     this.selectedMeteostation = meteostation;
                 }
                 else
-                    this.selectedMeteostation = comboBoxPoint.SelectedItem as MeteostationInfo;
+                    this.selectedMeteostation = comboBoxPoint.SelectedItem as RP5MeteostationInfo;
 
                 //установка времени начала и конца наблюдений
                 dateTimePickerFromDate.MinDate = selectedMeteostation.MonitoringFrom;

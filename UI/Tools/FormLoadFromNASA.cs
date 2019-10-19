@@ -27,7 +27,7 @@ namespace WindEnergy.UI.Tools
         public RawRange Result = null;
         private NASA engineNASA;
         private IGeocoderProvider geocoder;
-        private MeteostationInfo spoint;
+        private RP5MeteostationInfo spoint;
         private PointLatLng point = PointLatLng.Empty;
 
         public FormLoadFromNASA()
@@ -48,7 +48,7 @@ namespace WindEnergy.UI.Tools
             FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", point);
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
-                spoint = new MeteostationInfo();
+                spoint = new RP5MeteostationInfo();
                 spoint.Coordinates = spt.Result;
                 point = spt.Result;
                 labelPointCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";

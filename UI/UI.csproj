@@ -307,6 +307,9 @@
     <EmbeddedResource Include="Tools\FormShowMeteostationsMap.resx">
       <DependentUpon>FormShowMeteostationsMap.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="Data\AMS.database.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Data\ETOPO\etopo2.sq3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -331,10 +334,10 @@
     <Content Include="Docs\Добавление нового поля для rawRange.txt" />
     <Content Include="icon.ico" />
     <Content Include="License-LGPL.txt" />
-    <Content Include="staticMeteostationCoordinates.txt">
+    <Content Include="Data\staticMeteostationCoordinates.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="staticRegionLimits.txt">
+    <Content Include="Data\staticRegionLimits.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="todo.txt" />

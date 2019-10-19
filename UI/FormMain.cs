@@ -440,7 +440,9 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Thread.Sleep(300);
+            //Scripts.ConvertMCoefficientsFromFile(Application.StartupPath+"\\m.csv",Application.StartupPath+"\\amsdatabase.csv");
+            //Scripts.ConvertMSIDFromFile(Application.StartupPath+"\\coords.csv",Application.StartupPath+"\\amsdatabase.csv");
+            var mm = Vars.AMSMeteostations.List;
 
         }
 
