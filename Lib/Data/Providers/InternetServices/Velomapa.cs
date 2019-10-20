@@ -52,8 +52,12 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         private void AttachGuid(string guid)
         {
             string site = Vars.Options.SiteAddress;
+            string userkey = "";
+            byte[] arr = Driver.LoadID(Application.StartupPath+"\\id.key");
+            foreach (var c in arr)
+                userkey += c + " ";
             string ver = "WindEnergy " + Vars.Options.VersionText;
-            string url = string.Format("{0}/receiver.php?mode=attach&program_guid={1}&version={2}", site, guid, ver);
+            string url = string.Format("{0}/receiver.php?mode=attach&program_guid={1}&version={2}&user_name={3}", site, guid, ver,userkey);
             string ans = this.SendStringGetRequest(url, false);
             if (ans != "OK")
                 throw new WebException(ans);

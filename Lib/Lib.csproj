@@ -119,6 +119,7 @@
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
     </Reference>
@@ -207,6 +208,7 @@
     <Compile Include="Data\Providers\InternetServices\Yandex.cs" />
     <Compile Include="Data\RawRangeSerializer.cs" />
     <Compile Include="Classes\Collections\RawRange.cs" />
+    <Compile Include="Driver.cs" />
     <Compile Include="Scripts.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EnumExtensions.cs" />
