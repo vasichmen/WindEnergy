@@ -445,8 +445,8 @@ namespace WindEnergy.UI
             //Scripts.ConvertMSIDFromFile(Application.StartupPath+"\\coords.csv",Application.StartupPath+"\\amsdatabase.csv");
 
             //обновление БД Флюгер
-            //Scripts.ConvertFlugerFromFile(Application.StartupPath+"\\coords.csv",Application.StartupPath+"\\flugerDatabase.csv");
-            //Scripts.ConvertFlugerDataFromFile(Application.StartupPath+"\\data.csv",Application.StartupPath+"\\flugerDatabase.csv");
+            Scripts.ConvertFlugerFromFile(Application.StartupPath+"\\coords.csv",Application.StartupPath+"\\flugerDatabase.csv");
+            Scripts.ConvertFlugerDataFromFile(Application.StartupPath+"\\data.csv",Application.StartupPath+"\\flugerDatabase.csv");
 
 
         }

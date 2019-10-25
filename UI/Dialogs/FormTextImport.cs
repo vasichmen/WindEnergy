@@ -96,7 +96,7 @@ namespace WindEnergy.UI.Dialogs
         {
             foreach (Control contr in groupBoxColumns.Controls)
                 if (contr.GetType() == typeof(NumericUpDown))
-                    if (contr.Tag != null && contr.Tag.GetType() == typeof(ImportFields))
+                    if (contr.Tag != null && contr.Tag.GetType() == typeof(ImportFields) && contr.Enabled) //если есть подходищий тег и контрол активен
                         if (importer.Columns.ContainsKey((ImportFields)contr.Tag))
                             importer.Columns[(ImportFields)contr.Tag] = (int)((NumericUpDown)contr).Value;
                         else
@@ -165,12 +165,13 @@ namespace WindEnergy.UI.Dialogs
                 {
                     toolStripStatusLabelImportOptionsCorrect.Text = aex.Message;
                     toolStripStatusLabelImportOptionsCorrect.ForeColor = Color.Red;
+                    dataGridViewImported.DataSource = null;
                 }
 
                 //заполнение примера импорта
                 try
                 {
-                    RawRange test =importer.Import(10);
+                    RawRange test = importer.Import(10);
                     dataGridViewImported.DataSource = test;
                 }
                 catch (WindEnergyException wex)
@@ -178,12 +179,14 @@ namespace WindEnergy.UI.Dialogs
                     toolStripStatusLabelImportOptionsCorrect.Text = "Ошибка импорта: " + wex.Message;
                     toolStripStatusLabelImportOptionsCorrect.ToolTipText = wex.ToolTip;
                     toolStripStatusLabelImportOptionsCorrect.ForeColor = Color.Red;
+                    dataGridViewImported.DataSource = null;
                 }
             }
             catch (Exception ex)
             {
                 toolStripStatusLabelImportOptionsCorrect.Text = ex.Message;
                 toolStripStatusLabelImportOptionsCorrect.ForeColor = Color.Red;
+                dataGridViewImported.DataSource = null;
             }
             scintillaExample.ReadOnly = true;
         }
@@ -219,10 +222,15 @@ namespace WindEnergy.UI.Dialogs
                 case "numericUpDownColPress":
                     var contr = sender as NumericUpDown;
                     ImportFields fld = (ImportFields)contr.Tag;
-                    if (importer.Columns.ContainsKey(fld))
-                        importer.Columns[fld] = (int)contr.Value;
+                    if (contr.Enabled)
+                    {
+                        if (importer.Columns.ContainsKey(fld))
+                            importer.Columns[fld] = (int)contr.Value;
+                        else
+                            importer.Columns.Add(fld, (int)contr.Value);
+                    }
                     else
-                        importer.Columns.Add(fld, (int)contr.Value);
+                        importer.Columns.Remove(fld);
                     break;
                 case "comboBoxDirectUnit":
                     importer.DirectionUnit = (DirectionUnits)(new EnumTypeConverter<DirectionUnits>().ConvertFrom(comboBoxDirectUnit.SelectedItem));
@@ -401,5 +409,44 @@ namespace WindEnergy.UI.Dialogs
         }
 
         #endregion
+
+        /// <summary>
+        /// Изменение активности необязательный полей
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxUse_CheckedChanged(object sender, EventArgs e)
+        {
+            labelTemp.Enabled = checkBoxUseTemperature.Checked;
+            numericUpDownColTemper.Enabled = checkBoxUseTemperature.Checked;
+
+
+            labelWet.Enabled = checkBoxUseWetness.Checked;
+            numericUpDownColWet.Enabled = checkBoxUseWetness.Checked;
+            comboBoxWetUnit.Enabled = checkBoxUseWetness.Checked;
+
+            labelPress.Enabled = checkBoxUsePressure.Checked;
+            numericUpDownColPress.Enabled = checkBoxUsePressure.Checked;
+            comboBoxPressUnit.Enabled = checkBoxUsePressure.Checked;
+
+            object numeric = null;
+            switch (((Control)sender).Name)
+            {
+                case "checkBoxUseTemperature":
+                    numeric = numericUpDownColTemper;
+                    break;
+                case "checkBoxUsePressure":
+                    numeric = numericUpDownColPress;
+                    break;
+                case "checkBoxUseWetness":
+                    numeric = numericUpDownColWet;
+                    break;
+                default: throw new Exception("Неизвестный контрол");
+
+            }
+
+            controlUpdate_Event(numeric, e); //вызываем событие обновления нужного NumericUpDown колонки
+            update(); //пересобираем окно
+        }
     }
 }

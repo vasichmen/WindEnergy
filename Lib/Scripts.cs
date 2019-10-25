@@ -156,6 +156,7 @@ namespace WindEnergy.Lib
                     {
                         string line = sr.ReadLine();
                         string[] arr = line.Split(';');
+                        if (arr.Length == 0 || arr[0] == "") break;
                         int id = int.Parse(arr[0]);
                         if (!ids.Contains(id))
                         {

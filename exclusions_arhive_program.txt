@@ -3,7 +3,11 @@
 *Newtonsoft.Json.xml
 *options.xml
 *System.Data.SQLite.xml
+*HtmlAgilityPack.xml
+*EPPlus.xml
+*Lib.xml
 *ZedGraph.xml
+*ScintillaNET.xml
 *.json
 *.kml
 *.application
@@ -12,5 +16,6 @@
 *.manifest
 *.pdb
 Release/cache/*
+*id.key
 
 

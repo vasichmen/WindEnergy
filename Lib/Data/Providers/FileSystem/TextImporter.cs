@@ -71,6 +71,11 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
         public bool? BindNearestMS { get; set; }
 
         /// <summary>
+        /// Необязательные поля
+        /// </summary>
+        public List<ImportFields> NonRequireFields { get; }
+
+        /// <summary>
         /// создает пустой объект импортера
         /// </summary>
         public TextImporter()
@@ -86,7 +91,9 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
             Coordinates = PointLatLng.Empty;
             BindNearestMS = null;
             WetnessUnit = WetnessUnits.None;
+            NonRequireFields = new List<ImportFields>() { ImportFields.Pressure, ImportFields.Temperature, ImportFields.Wetness };
         }
+
 
         /// <summary>
         /// Пытается импортировать файл на основе заданных настроек. При ошибке выбрасывает исключение WindEnergyException с информацией или ArgumentException при недопустимых настройках
@@ -112,10 +119,11 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 if (arr.Length <= 1)
                     continue;
 
-                List<ImportFields> fields = ImportFields.Date.GetEnumItems().Cast<ImportFields>().ToList();
+                List<ImportFields> fields = this.Columns.Keys.ToList();
                 RawItem item = new RawItem();
                 foreach (ImportFields field in fields)
                 {
+                    
                     int index = Columns[field] - 1;
                     string value = arr[index];
                     if (Trimmers != null && Trimmers.Length > 0)
@@ -205,18 +213,18 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
         /// </summary>
         public string CheckParameters()
         {
-            if (DirectionUnit == DirectionUnits.None)
+            if (DirectionUnit == DirectionUnits.None && !NonRequireFields.Contains(ImportFields.Direction))
                 throw new ArgumentException("Не заданы едиицы измерения направления");
-            if (PressureUnit == PressureUnits.None)
+            if (PressureUnit == PressureUnits.None && !NonRequireFields.Contains(ImportFields.Pressure))
                 throw new ArgumentException("Не заданы едиицы измерения давления");
-            if (WetnessUnit == WetnessUnits.None)
+            if (WetnessUnit == WetnessUnits.None && !NonRequireFields.Contains(ImportFields.Wetness))
                 throw new ArgumentException("Не заданы едиицы измерения влажности");
             if (BindNearestMS == null)
                 throw new ArgumentException("Не установлена связка с ближайшей МС");
             if (string.IsNullOrEmpty(Delimeter))
                 throw new ArgumentException("Не задан разделитель столбцов");
             foreach (ImportFields fld in ImportFields.Date.GetEnumItems())
-                if (!Columns.ContainsKey(fld))
+                if (!Columns.ContainsKey(fld) && !NonRequireFields.Contains(fld))
                     throw new ArgumentException($"Не указан столбец для параметра {fld.Description()}");
             if (!File.Exists(FilePath))
                 throw new ArgumentException("Не задан путь к файлу или файл не существует");
@@ -247,8 +255,9 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 else
                 {
                     string res = "";
-                    for (long i = 0; i < lineCount; i++)
-                        res += sr.ReadLine() + "\r\n";
+                    for (long i = 0; i < lineCount + this.StartLine; i++)
+                        if (!sr.EndOfStream)
+                            res += sr.ReadLine() + "\r\n";
                     return res;
                 }
             }

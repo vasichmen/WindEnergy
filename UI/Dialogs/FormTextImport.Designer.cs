@@ -38,6 +38,7 @@ namespace WindEnergy.UI.Dialogs
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxTrimmers = new System.Windows.Forms.TextBox();
+            this.checkBoxFindNearestMS = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBoxEncoding = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,19 +47,21 @@ namespace WindEnergy.UI.Dialogs
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxDelimeter = new System.Windows.Forms.TextBox();
             this.groupBoxColumns = new System.Windows.Forms.GroupBox();
-            this.checkBoxFindNearestMS = new System.Windows.Forms.CheckBox();
+            this.checkBoxUseWetness = new System.Windows.Forms.CheckBox();
+            this.checkBoxUsePressure = new System.Windows.Forms.CheckBox();
+            this.checkBoxUseTemperature = new System.Windows.Forms.CheckBox();
             this.comboBoxWetUnit = new System.Windows.Forms.ComboBox();
             this.labelCoordinates = new System.Windows.Forms.Label();
             this.buttonSelectCoordinates = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
+            this.labelTemp = new System.Windows.Forms.Label();
             this.numericUpDownColTemper = new System.Windows.Forms.NumericUpDown();
             this.comboBoxDirectUnit = new System.Windows.Forms.ComboBox();
             this.comboBoxPressUnit = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.numericUpDownColDirect = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
+            this.labelWet = new System.Windows.Forms.Label();
             this.numericUpDownColWet = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
+            this.labelPress = new System.Windows.Forms.Label();
             this.numericUpDownColPress = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.numericUpDownColSpeed = new System.Windows.Forms.NumericUpDown();
@@ -114,7 +117,7 @@ namespace WindEnergy.UI.Dialogs
             this.scintillaExample.Location = new System.Drawing.Point(12, 56);
             this.scintillaExample.Name = "scintillaExample";
             this.scintillaExample.ReadOnly = true;
-            this.scintillaExample.Size = new System.Drawing.Size(833, 131);
+            this.scintillaExample.Size = new System.Drawing.Size(857, 138);
             this.scintillaExample.TabIndex = 9;
             this.scintillaExample.TextChanged += new System.EventHandler(this.scintilla_TextChanged);
             // 
@@ -141,6 +144,21 @@ namespace WindEnergy.UI.Dialogs
             this.toolTip1.SetToolTip(this.textBoxTrimmers, "Символы, удаляемые в начале и в конце ячейки перед импортом");
             this.textBoxTrimmers.TextChanged += new System.EventHandler(this.controlUpdate_Event);
             // 
+            // checkBoxFindNearestMS
+            // 
+            this.checkBoxFindNearestMS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxFindNearestMS.AutoSize = true;
+            this.checkBoxFindNearestMS.Checked = true;
+            this.checkBoxFindNearestMS.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxFindNearestMS.Location = new System.Drawing.Point(415, 102);
+            this.checkBoxFindNearestMS.Name = "checkBoxFindNearestMS";
+            this.checkBoxFindNearestMS.Size = new System.Drawing.Size(157, 17);
+            this.checkBoxFindNearestMS.TabIndex = 17;
+            this.checkBoxFindNearestMS.Text = "Связать с ближайшей МС";
+            this.toolTip1.SetToolTip(this.checkBoxFindNearestMS, "Если выбрано, то к ряду будет привязана ближайшая МС из БД Метеостанции мира");
+            this.checkBoxFindNearestMS.UseVisualStyleBackColor = true;
+            this.checkBoxFindNearestMS.CheckedChanged += new System.EventHandler(this.controlUpdate_Event);
+            // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -152,7 +170,7 @@ namespace WindEnergy.UI.Dialogs
             this.groupBox1.Controls.Add(this.numericUpDownStartLine);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textBoxDelimeter);
-            this.groupBox1.Location = new System.Drawing.Point(12, 193);
+            this.groupBox1.Location = new System.Drawing.Point(12, 200);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(273, 127);
             this.groupBox1.TabIndex = 13;
@@ -165,7 +183,7 @@ namespace WindEnergy.UI.Dialogs
             this.comboBoxEncoding.FormattingEnabled = true;
             this.comboBoxEncoding.Location = new System.Drawing.Point(139, 71);
             this.comboBoxEncoding.Name = "comboBoxEncoding";
-            this.comboBoxEncoding.Size = new System.Drawing.Size(63, 21);
+            this.comboBoxEncoding.Size = new System.Drawing.Size(128, 21);
             this.comboBoxEncoding.TabIndex = 18;
             this.comboBoxEncoding.SelectedIndexChanged += new System.EventHandler(this.controlUpdate_Event);
             // 
@@ -238,50 +256,74 @@ namespace WindEnergy.UI.Dialogs
             // 
             this.groupBoxColumns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxColumns.Controls.Add(this.checkBoxUseWetness);
+            this.groupBoxColumns.Controls.Add(this.checkBoxUsePressure);
+            this.groupBoxColumns.Controls.Add(this.checkBoxUseTemperature);
             this.groupBoxColumns.Controls.Add(this.checkBoxFindNearestMS);
             this.groupBoxColumns.Controls.Add(this.comboBoxWetUnit);
             this.groupBoxColumns.Controls.Add(this.labelCoordinates);
             this.groupBoxColumns.Controls.Add(this.buttonSelectCoordinates);
-            this.groupBoxColumns.Controls.Add(this.label10);
+            this.groupBoxColumns.Controls.Add(this.labelTemp);
             this.groupBoxColumns.Controls.Add(this.numericUpDownColTemper);
             this.groupBoxColumns.Controls.Add(this.comboBoxDirectUnit);
             this.groupBoxColumns.Controls.Add(this.comboBoxPressUnit);
             this.groupBoxColumns.Controls.Add(this.label9);
             this.groupBoxColumns.Controls.Add(this.numericUpDownColDirect);
-            this.groupBoxColumns.Controls.Add(this.label8);
+            this.groupBoxColumns.Controls.Add(this.labelWet);
             this.groupBoxColumns.Controls.Add(this.numericUpDownColWet);
-            this.groupBoxColumns.Controls.Add(this.label7);
+            this.groupBoxColumns.Controls.Add(this.labelPress);
             this.groupBoxColumns.Controls.Add(this.numericUpDownColPress);
             this.groupBoxColumns.Controls.Add(this.label6);
             this.groupBoxColumns.Controls.Add(this.numericUpDownColSpeed);
             this.groupBoxColumns.Controls.Add(this.label5);
             this.groupBoxColumns.Controls.Add(this.numericUpDownColDate);
-            this.groupBoxColumns.Location = new System.Drawing.Point(291, 193);
+            this.groupBoxColumns.Location = new System.Drawing.Point(291, 200);
             this.groupBoxColumns.Name = "groupBoxColumns";
-            this.groupBoxColumns.Size = new System.Drawing.Size(554, 127);
+            this.groupBoxColumns.Size = new System.Drawing.Size(578, 127);
             this.groupBoxColumns.TabIndex = 14;
             this.groupBoxColumns.TabStop = false;
             this.groupBoxColumns.Text = "Настройки столбцов";
             // 
-            // checkBoxFindNearestMS
+            // checkBoxUseWetness
             // 
-            this.checkBoxFindNearestMS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxFindNearestMS.AutoSize = true;
-            this.checkBoxFindNearestMS.Checked = true;
-            this.checkBoxFindNearestMS.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxFindNearestMS.Location = new System.Drawing.Point(391, 102);
-            this.checkBoxFindNearestMS.Name = "checkBoxFindNearestMS";
-            this.checkBoxFindNearestMS.Size = new System.Drawing.Size(157, 17);
-            this.checkBoxFindNearestMS.TabIndex = 17;
-            this.checkBoxFindNearestMS.Text = "Связать с ближайшей МС";
-            this.checkBoxFindNearestMS.UseVisualStyleBackColor = true;
-            this.checkBoxFindNearestMS.CheckedChanged += new System.EventHandler(this.controlUpdate_Event);
+            this.checkBoxUseWetness.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxUseWetness.AutoSize = true;
+            this.checkBoxUseWetness.Location = new System.Drawing.Point(325, 71);
+            this.checkBoxUseWetness.Name = "checkBoxUseWetness";
+            this.checkBoxUseWetness.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxUseWetness.TabIndex = 20;
+            this.checkBoxUseWetness.Tag = "";
+            this.checkBoxUseWetness.UseVisualStyleBackColor = true;
+            this.checkBoxUseWetness.CheckedChanged += new System.EventHandler(this.checkBoxUse_CheckedChanged);
+            // 
+            // checkBoxUsePressure
+            // 
+            this.checkBoxUsePressure.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxUsePressure.AutoSize = true;
+            this.checkBoxUsePressure.Location = new System.Drawing.Point(325, 42);
+            this.checkBoxUsePressure.Name = "checkBoxUsePressure";
+            this.checkBoxUsePressure.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxUsePressure.TabIndex = 19;
+            this.checkBoxUsePressure.Tag = "";
+            this.checkBoxUsePressure.UseVisualStyleBackColor = true;
+            this.checkBoxUsePressure.CheckedChanged += new System.EventHandler(this.checkBoxUse_CheckedChanged);
+            // 
+            // checkBoxUseTemperature
+            // 
+            this.checkBoxUseTemperature.AutoSize = true;
+            this.checkBoxUseTemperature.Location = new System.Drawing.Point(142, 70);
+            this.checkBoxUseTemperature.Name = "checkBoxUseTemperature";
+            this.checkBoxUseTemperature.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxUseTemperature.TabIndex = 18;
+            this.checkBoxUseTemperature.UseVisualStyleBackColor = true;
+            this.checkBoxUseTemperature.CheckedChanged += new System.EventHandler(this.checkBoxUse_CheckedChanged);
             // 
             // comboBoxWetUnit
             // 
             this.comboBoxWetUnit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxWetUnit.Enabled = false;
             this.comboBoxWetUnit.FormattingEnabled = true;
-            this.comboBoxWetUnit.Location = new System.Drawing.Point(459, 65);
+            this.comboBoxWetUnit.Location = new System.Drawing.Point(483, 65);
             this.comboBoxWetUnit.Name = "comboBoxWetUnit";
             this.comboBoxWetUnit.Size = new System.Drawing.Size(89, 21);
             this.comboBoxWetUnit.TabIndex = 16;
@@ -306,17 +348,19 @@ namespace WindEnergy.UI.Dialogs
             this.buttonSelectCoordinates.UseVisualStyleBackColor = true;
             this.buttonSelectCoordinates.Click += new System.EventHandler(this.ButtonSelectCoordinates_Click);
             // 
-            // label10
+            // labelTemp
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 72);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(74, 13);
-            this.label10.TabIndex = 13;
-            this.label10.Text = "Температура";
+            this.labelTemp.AutoSize = true;
+            this.labelTemp.Enabled = false;
+            this.labelTemp.Location = new System.Drawing.Point(6, 72);
+            this.labelTemp.Name = "labelTemp";
+            this.labelTemp.Size = new System.Drawing.Size(74, 13);
+            this.labelTemp.TabIndex = 13;
+            this.labelTemp.Text = "Температура";
             // 
             // numericUpDownColTemper
             // 
+            this.numericUpDownColTemper.Enabled = false;
             this.numericUpDownColTemper.Location = new System.Drawing.Point(86, 67);
             this.numericUpDownColTemper.Minimum = new decimal(new int[] {
             1,
@@ -337,7 +381,7 @@ namespace WindEnergy.UI.Dialogs
             // 
             this.comboBoxDirectUnit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxDirectUnit.FormattingEnabled = true;
-            this.comboBoxDirectUnit.Location = new System.Drawing.Point(459, 12);
+            this.comboBoxDirectUnit.Location = new System.Drawing.Point(483, 12);
             this.comboBoxDirectUnit.Name = "comboBoxDirectUnit";
             this.comboBoxDirectUnit.Size = new System.Drawing.Size(89, 21);
             this.comboBoxDirectUnit.TabIndex = 11;
@@ -346,8 +390,9 @@ namespace WindEnergy.UI.Dialogs
             // comboBoxPressUnit
             // 
             this.comboBoxPressUnit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxPressUnit.Enabled = false;
             this.comboBoxPressUnit.FormattingEnabled = true;
-            this.comboBoxPressUnit.Location = new System.Drawing.Point(459, 39);
+            this.comboBoxPressUnit.Location = new System.Drawing.Point(483, 39);
             this.comboBoxPressUnit.Name = "comboBoxPressUnit";
             this.comboBoxPressUnit.Size = new System.Drawing.Size(89, 21);
             this.comboBoxPressUnit.TabIndex = 10;
@@ -357,7 +402,7 @@ namespace WindEnergy.UI.Dialogs
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(322, 15);
+            this.label9.Location = new System.Drawing.Point(346, 15);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(75, 13);
             this.label9.TabIndex = 9;
@@ -366,7 +411,7 @@ namespace WindEnergy.UI.Dialogs
             // numericUpDownColDirect
             // 
             this.numericUpDownColDirect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownColDirect.Location = new System.Drawing.Point(403, 13);
+            this.numericUpDownColDirect.Location = new System.Drawing.Point(427, 13);
             this.numericUpDownColDirect.Minimum = new decimal(new int[] {
             1,
             0,
@@ -382,20 +427,22 @@ namespace WindEnergy.UI.Dialogs
             0});
             this.numericUpDownColDirect.ValueChanged += new System.EventHandler(this.controlUpdate_Event);
             // 
-            // label8
+            // labelWet
             // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(323, 70);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(63, 13);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "Влажность";
+            this.labelWet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelWet.AutoSize = true;
+            this.labelWet.Enabled = false;
+            this.labelWet.Location = new System.Drawing.Point(347, 70);
+            this.labelWet.Name = "labelWet";
+            this.labelWet.Size = new System.Drawing.Size(63, 13);
+            this.labelWet.TabIndex = 7;
+            this.labelWet.Text = "Влажность";
             // 
             // numericUpDownColWet
             // 
             this.numericUpDownColWet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownColWet.Location = new System.Drawing.Point(403, 65);
+            this.numericUpDownColWet.Enabled = false;
+            this.numericUpDownColWet.Location = new System.Drawing.Point(427, 65);
             this.numericUpDownColWet.Minimum = new decimal(new int[] {
             1,
             0,
@@ -411,20 +458,22 @@ namespace WindEnergy.UI.Dialogs
             0});
             this.numericUpDownColWet.ValueChanged += new System.EventHandler(this.controlUpdate_Event);
             // 
-            // label7
+            // labelPress
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(322, 42);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(58, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Давление";
+            this.labelPress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPress.AutoSize = true;
+            this.labelPress.Enabled = false;
+            this.labelPress.Location = new System.Drawing.Point(346, 42);
+            this.labelPress.Name = "labelPress";
+            this.labelPress.Size = new System.Drawing.Size(58, 13);
+            this.labelPress.TabIndex = 5;
+            this.labelPress.Text = "Давление";
             // 
             // numericUpDownColPress
             // 
             this.numericUpDownColPress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownColPress.Location = new System.Drawing.Point(403, 40);
+            this.numericUpDownColPress.Enabled = false;
+            this.numericUpDownColPress.Location = new System.Drawing.Point(427, 40);
             this.numericUpDownColPress.Minimum = new decimal(new int[] {
             1,
             0,
@@ -498,9 +547,9 @@ namespace WindEnergy.UI.Dialogs
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelImportOptionsCorrect});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 477);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 484);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(857, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(881, 22);
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -513,7 +562,7 @@ namespace WindEnergy.UI.Dialogs
             // buttonImport
             // 
             this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonImport.Location = new System.Drawing.Point(726, 385);
+            this.buttonImport.Location = new System.Drawing.Point(750, 392);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(119, 50);
             this.buttonImport.TabIndex = 16;
@@ -525,7 +574,7 @@ namespace WindEnergy.UI.Dialogs
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(726, 441);
+            this.buttonCancel.Location = new System.Drawing.Point(750, 448);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(119, 33);
             this.buttonCancel.TabIndex = 17;
@@ -539,7 +588,7 @@ namespace WindEnergy.UI.Dialogs
             this.установкиПоУмолчаниюToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(857, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(881, 24);
             this.menuStrip1.TabIndex = 18;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -571,10 +620,10 @@ namespace WindEnergy.UI.Dialogs
             this.dataGridViewImported.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewImported.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewImported.Location = new System.Drawing.Point(12, 326);
+            this.dataGridViewImported.Location = new System.Drawing.Point(12, 333);
             this.dataGridViewImported.Name = "dataGridViewImported";
             this.dataGridViewImported.ReadOnly = true;
-            this.dataGridViewImported.Size = new System.Drawing.Size(708, 148);
+            this.dataGridViewImported.Size = new System.Drawing.Size(732, 148);
             this.dataGridViewImported.TabIndex = 10;
             this.dataGridViewImported.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.DataGridView_ColumnAdded);
             // 
@@ -584,7 +633,7 @@ namespace WindEnergy.UI.Dialogs
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(857, 499);
+            this.ClientSize = new System.Drawing.Size(881, 506);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonImport);
             this.Controls.Add(this.statusStrip1);
@@ -642,9 +691,9 @@ namespace WindEnergy.UI.Dialogs
         private System.Windows.Forms.NumericUpDown numericUpDownColDate;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label labelWet;
         private System.Windows.Forms.NumericUpDown numericUpDownColWet;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelPress;
         private System.Windows.Forms.NumericUpDown numericUpDownColPress;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.NumericUpDown numericUpDownColSpeed;
@@ -652,7 +701,7 @@ namespace WindEnergy.UI.Dialogs
         private System.Windows.Forms.ComboBox comboBoxPressUnit;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numericUpDownColDirect;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label labelTemp;
         private System.Windows.Forms.NumericUpDown numericUpDownColTemper;
         private System.Windows.Forms.Button buttonSelectCoordinates;
         private System.Windows.Forms.Label labelCoordinates;
@@ -665,5 +714,8 @@ namespace WindEnergy.UI.Dialogs
         private System.Windows.Forms.ToolStripMenuItem установкиПоУмолчаниюToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem defaultRP5wmoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem defaultRP5metarToolStripMenuItem;
+        private System.Windows.Forms.CheckBox checkBoxUseWetness;
+        private System.Windows.Forms.CheckBox checkBoxUsePressure;
+        private System.Windows.Forms.CheckBox checkBoxUseTemperature;
     }
 }

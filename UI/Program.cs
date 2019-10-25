@@ -41,7 +41,7 @@ namespace WindEnergy.UI
             }
             if (!is_accept)
             {
-                MessageBox.Show("Ошибка при проверке файла ключа, программа будет закрыта\r\nЕсли ключ ");
+                MessageBox.Show("Ошибка при проверке файла ключа, программа будет закрыта\r\n");
                 return;
             }
 #if (!DEBUG)     
