@@ -34,7 +34,7 @@ namespace WindEnergy.UI
         /// <summary>
         /// вспомогательные методы интерфейса
         /// </summary>
-        public MainHelper mainHelper;
+        public MainHelper mainHelper { get; set; }
 
         public FormMain()
         {
@@ -145,6 +145,7 @@ namespace WindEnergy.UI
                 TabPageExt tab = mainTabControl.OpenNewTab(rang, rang.FileName);
                 tab.HasNotSavedChanges = true;
             }
+            fti.Dispose();
         }
 
         /// <summary>
@@ -162,6 +163,7 @@ namespace WindEnergy.UI
                 TabPageExt tab = mainTabControl.OpenNewTab(res, res.Name);
                 tab.HasNotSavedChanges = true;
             }
+            frm.Dispose();
         }
 
         /// <summary>
@@ -178,6 +180,7 @@ namespace WindEnergy.UI
                 TabPageExt tab = mainTabControl.OpenNewTab(res, res.Name);
                 tab.HasNotSavedChanges = true;
             }
+            frm.Dispose();
         }
 
         /// <summary>
@@ -187,7 +190,8 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void showMeteostationsMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormShowMeteostationsMap().Show();
+           new FormShowMeteostationsMap().Show();
+
         }
 
         #endregion
@@ -207,7 +211,7 @@ namespace WindEnergy.UI
             {
                 mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
             }
-
+            frm.Dispose();
         }
 
         /// <summary>
@@ -223,6 +227,7 @@ namespace WindEnergy.UI
             {
                 mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
             }
+            frm.Dispose();
         }
 
         /// <summary>
@@ -238,6 +243,7 @@ namespace WindEnergy.UI
             {
                 mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
             }
+            frm.Dispose();
         }
 
         /// <summary>
@@ -250,6 +256,7 @@ namespace WindEnergy.UI
             RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
             FormRangeProperties frm = new FormRangeProperties(rang);
             frm.ShowDialog(this);
+            frm.Dispose();
         }
 
         #endregion

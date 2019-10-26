@@ -33,6 +33,7 @@ namespace WindEnergy.UI.Ext
         /// <param name="text"></param>
         public TabPageExt(RawRange range, string text)
         {
+            range = range ?? throw new ArgumentNullException(nameof(range));
             TextChanged += tabPageExt_TextChanged;
             Range = range;
             this.ToolTipText = string.IsNullOrWhiteSpace(range.FilePath) ? "" : range.FilePath;
@@ -96,6 +97,7 @@ namespace WindEnergy.UI.Ext
         /// <param name="e"></param>
         public void DataGridView_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
         {
+            e = e ?? throw new ArgumentNullException(nameof(e));
             switch (e.Column.Name.ToLower())
             {
                 case "date":

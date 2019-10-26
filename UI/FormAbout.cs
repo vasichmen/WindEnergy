@@ -33,7 +33,7 @@ namespace WindEnergy.UI
 
         #region Методы доступа к атрибутам сборки
 
-        public string AssemblyTitle
+        public static string AssemblyTitle
         {
             get
             {
@@ -41,7 +41,7 @@ namespace WindEnergy.UI
                 if (attributes.Length > 0)
                 {
                     AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
+                    if (!string.IsNullOrEmpty (titleAttribute.Title))
                     {
                         return titleAttribute.Title;
                     }
@@ -50,15 +50,9 @@ namespace WindEnergy.UI
             }
         }
 
-        public string AssemblyVersion
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-        }
+        public static string AssemblyVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-        public string AssemblyDescription
+        public static string AssemblyDescription
         {
             get
             {
@@ -71,7 +65,7 @@ namespace WindEnergy.UI
             }
         }
 
-        public string AssemblyProduct
+        public static string AssemblyProduct
         {
             get
             {
@@ -84,7 +78,7 @@ namespace WindEnergy.UI
             }
         }
 
-        public string AssemblyCopyright
+        public static string AssemblyCopyright
         {
             get
             {
@@ -97,7 +91,7 @@ namespace WindEnergy.UI
             }
         }
 
-        public string AssemblyCompany
+        public static string AssemblyCompany
         {
             get
             {
@@ -128,7 +122,7 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void linkLabelSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Vars.Options.SiteAddress + @"programs.php?item=windenergy");
+            _ = Process.Start(Vars.Options.SiteAddress + @"programs.php?item=windenergy");
         }
 
         /// <summary>
@@ -148,14 +142,14 @@ namespace WindEnergy.UI
                 if (vi.VersionInt > curVer)
                 {
                     FormUpdateDialog fud = new FormUpdateDialog(vi);
-                    this.Invoke(new Action(() => fud.ShowDialog()));
+                    _ = this.Invoke(new Action(() => fud.ShowDialog()));
                 }
                 else
-                    MessageBox.Show(this, "Обновлений нет!", "Обновление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _ = MessageBox.Show(this, "Обновлений нет!", "Обновление", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (WebException we)
             {
-                MessageBox.Show(this, "Ошибка подключения!\r\n" + we.Message, "Обновление", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, "Ошибка подключения!\r\n" + we.Message, "Обновление", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -167,7 +161,7 @@ namespace WindEnergy.UI
         private void linkLabelTlg_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
 
-            Process.Start(Vars.Options.TelegramAddress);
+            _ = Process.Start(Vars.Options.TelegramAddress);
         }
 
         /// <summary>
@@ -177,7 +171,7 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void linkLabelGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Vars.Options.GitHubRepository);
+            _ = Process.Start(Vars.Options.GitHubRepository);
         }
 
         private void ButtonOK_Click(object sender, EventArgs e)

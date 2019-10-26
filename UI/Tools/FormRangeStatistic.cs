@@ -31,6 +31,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="rang"></param>
         public FormRangeStatistic(RawRange rang)
         {
+            rang = rang ?? throw new ArgumentNullException(nameof(rang));
             InitializeComponent();
             dataGridViewExt1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             Text = rang.Name + " - Статистика ряда";
@@ -95,7 +96,7 @@ namespace WindEnergy.UI.Tools
             {
                 Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
                 new CSVFile().SaveRangeQualityInfo(sf.FileName, qualityInfo, range.Length);
-                Process.Start(sf.FileName);
+                _ = Process.Start(sf.FileName);
             }
         }
     }

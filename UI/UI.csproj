@@ -164,6 +164,7 @@
     <Compile Include="FormAbout.designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Tools\FormCalcYear.cs">
       <SubType>Form</SubType>
     </Compile>

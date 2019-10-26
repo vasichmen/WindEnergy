@@ -57,15 +57,15 @@ namespace WindEnergy.UI.Tools
         {
             if (files == null ||files.Count<2)
             {
-                MessageBox.Show(this,"Преобразование файлов","Ошибка: необходимо выбрать 2 или более файлов");
+                _ = MessageBox.Show(this, "Преобразование файлов", "Ошибка: необходимо выбрать 2 или более файлов");
             }
 
             if (string.IsNullOrWhiteSpace(folder))
             {
-                MessageBox.Show(this, "Преобразование файлов", "Ошибка: не выбрана папка сохранения файлов");
+                _ = MessageBox.Show(this, "Преобразование файлов", "Ошибка: не выбрана папка сохранения файлов");
             }
             Equalizer.ProcessRanges(files, folder, (int)numericUpDownStartLine.Value, checkBoxSeparateDate.Checked);
-            Process.Start(folder);
+            _ = Process.Start(folder);
         }
     }
 }

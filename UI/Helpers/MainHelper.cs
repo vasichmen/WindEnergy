@@ -53,11 +53,12 @@ namespace WindEnergy.UI.Helpers
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(form, ex.Message, "Открытие файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        _ = MessageBox.Show(form, ex.Message, "Открытие файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return null;
                     }
                 }
             }
+            of.Dispose();
             return null;
         }
 
@@ -83,6 +84,7 @@ namespace WindEnergy.UI.Helpers
                     rang.FilePath = sf.FileName;
                     return sf.FileName;
                 }
+                sf.Dispose();
                 return null;
             }
             else
@@ -103,7 +105,7 @@ namespace WindEnergy.UI.Helpers
                 return;
             RawRange rang = (tab as TabPageExt).Range;
             if (!string.IsNullOrWhiteSpace(rang.FilePath)) // если есть путь для сохранения
-                SaveAsFile(rang, rang.FilePath);
+                _ = SaveAsFile(rang, rang.FilePath);
             else
             {
                 string name = SaveAsFile(rang);

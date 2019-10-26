@@ -16,8 +16,8 @@ namespace WindEnergy.UI.Tools
     /// </summary>
     public partial class FormLoadData : Form
     {
-        public bool stopMS = false;
-        public bool stopMaxSpeed = false;
+        bool stopMS = false;
+        bool stopMaxSpeed = false;
 
         public FormLoadData()
         {
@@ -37,13 +37,13 @@ namespace WindEnergy.UI.Tools
             Action<int, int, string, int, int, int, int> act = new Action<int, int, string, int, int, int, int>((perc, all, q, count, pcQ, pc1, pc2) =>
             {
                 if (this.InvokeRequired)
-                    this.Invoke(new Action(() =>
-                    {
-                        progressBarStatusMS.Value = perc;
-                        labelStatusMS.Text = $"Обработано: {all}, текущее сочетание \"{q}\" готово на {pcQ}% ({pc1}/{pc2}), найдено МС: {count}";
+                    _ = this.Invoke(new Action(() =>
+                      {
+                          progressBarStatusMS.Value = perc;
+                          labelStatusMS.Text = $"Обработано: {all}, текущее сочетание \"{q}\" готово на {pcQ}% ({pc1}/{pc2}), найдено МС: {count}";
 
-                        Application.DoEvents();
-                    }));
+                          Application.DoEvents();
+                      }));
                 else
                 {
                     progressBarStatusMS.Value = perc;
@@ -53,22 +53,22 @@ namespace WindEnergy.UI.Tools
             });
             Func<bool> checkStop = new Func<bool>(() => { return stopMS; });
 
-            Task.Run(() =>
-            {
-                Scripts.LoadAllRP5Meteostations(Application.StartupPath + "\\all_mts_test.txt", act, checkStop);
+            _ = Task.Run(() =>
+              {
+                  Scripts.LoadAllRP5Meteostations(Application.StartupPath + "\\all_mts_test.txt", act, checkStop);
 
-                if (this.InvokeRequired)
-                    this.Invoke(new Action(() =>
-                    {
-                        MessageBox.Show("Операция завершена!");
-                        buttonStartMS.Enabled = true;
-                    }));
-                else
-                {
-                    MessageBox.Show("Операция завершена!");
-                    buttonStartMS.Enabled = true;
-                }
-            });
+                  if (InvokeRequired)
+                      _ = this.Invoke(new Action(() =>
+                        {
+                            _ = MessageBox.Show("Операция завершена!");
+                            buttonStartMS.Enabled = true;
+                        }));
+                  else
+                  {
+                      _ = MessageBox.Show("Операция завершена!");
+                      buttonStartMS.Enabled = true;
+                  }
+              });
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
@@ -92,12 +92,12 @@ namespace WindEnergy.UI.Tools
             Action<int, int, string, int, int> act = new Action<int, int, string, int, int>((processedRegions, totalRegions, currentRegion, processedCurrentRegion, totalCurrentRegion) =>
             {
                 if (this.InvokeRequired)
-                    this.Invoke(new Action(() =>
-                    {
-                        progressBarStatusMaxSpeed.Value = (int)(((double)processedRegions / (double)totalRegions) * 100d);
-                        labelStatusMaxSpeed.Text = $"Обработано: {processedRegions} регионов из {totalRegions}, текущий регион \"{currentRegion}\", готов на {processedCurrentRegion}/{totalCurrentRegion}";
-                        Application.DoEvents();
-                    }));
+                    _ = this.Invoke(new Action(() =>
+                      {
+                          progressBarStatusMaxSpeed.Value = (int)(((double)processedRegions / (double)totalRegions) * 100d);
+                          labelStatusMaxSpeed.Text = $"Обработано: {processedRegions} регионов из {totalRegions}, текущий регион \"{currentRegion}\", готов на {processedCurrentRegion}/{totalCurrentRegion}";
+                          Application.DoEvents();
+                      }));
                 else
                 {
                     progressBarStatusMaxSpeed.Value = (int)(((double)processedRegions / (double)totalRegions) * 100d);
@@ -107,22 +107,22 @@ namespace WindEnergy.UI.Tools
             });
             Func<bool> checkStop = new Func<bool>(() => { return stopMaxSpeed; });
 
-            Task.Run(() =>
-            {
-                Scripts.LoadAllEnergywindLimits(Application.StartupPath + "\\all_limits_test.txt", act, checkStop);
+            _ = Task.Run(() =>
+              {
+                  Scripts.LoadAllEnergywindLimits(Application.StartupPath + "\\all_limits_test.txt", act, checkStop);
 
-                if (this.InvokeRequired)
-                    this.Invoke(new Action(() =>
-                    {
-                        MessageBox.Show("Операция завершена!");
-                        buttonStartMaxSpeed.Enabled = true;
-                    }));
-                else
-                {
-                    MessageBox.Show("Операция завершена!");
-                    buttonStartMaxSpeed.Enabled = true;
-                }
-            });
+                  if (this.InvokeRequired)
+                      _ = this.Invoke(new Action(() =>
+                        {
+                            _ = MessageBox.Show("Операция завершена!");
+                            buttonStartMaxSpeed.Enabled = true;
+                        }));
+                  else
+                  {
+                      _ = MessageBox.Show("Операция завершена!");
+                      buttonStartMaxSpeed.Enabled = true;
+                  }
+              });
         }
 
         private void buttonStopMaxSpeed_Click(object sender, EventArgs e)

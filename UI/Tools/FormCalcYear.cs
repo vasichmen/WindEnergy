@@ -62,7 +62,7 @@ namespace WindEnergy.UI.Tools
                 }
                 else //если расчётный год не найден
                 {
-                    MessageBox.Show(this, "Не удалось найти расчётный год.\r\nРяд очень маленький или не содержит года необходимого качества");
+                    _ = MessageBox.Show(this, "Не удалось найти расчётный год.\r\nРяд очень маленький или не содержит года необходимого качества");
                     labelAverageCalcYearSpeed.Text = "Средняя скорость: ";
                     labelCompletness.Text = "Полнота ряда: ";
                     labelExpectDeviation.Text = "Отклонение повторяемости скорости: ";
@@ -74,7 +74,7 @@ namespace WindEnergy.UI.Tools
             }
             catch (ArgumentException wex)
             {
-                MessageBox.Show(this, wex.Message, "Выбор расчётного года", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, wex.Message, "Выбор расчётного года", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Close();
             }
         }
@@ -108,7 +108,7 @@ namespace WindEnergy.UI.Tools
                     default: throw new Exception("Этот тип файла не реализован");
                 }
                 provider.SaveCalcYearInfo(sf.FileName, years);
-                Process.Start(sf.FileName);
+                _ = Process.Start(sf.FileName);
             }
         }
 
@@ -119,6 +119,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void dataGridViewExt1_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
         {
+            e= e ?? throw new ArgumentNullException(nameof(e));
             switch (e.Column.Name.ToLower())
             {
                 case "year":

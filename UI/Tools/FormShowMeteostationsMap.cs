@@ -39,6 +39,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="meteostation"></param>
         public FormShowMeteostationsMap(RP5MeteostationInfo meteostation) : this()
         {
+            meteostation = meteostation ?? throw new ArgumentNullException(nameof(meteostation));
             gmapControlMap.Position = meteostation.Position;
         }
 
@@ -113,7 +114,7 @@ namespace WindEnergy.UI.Tools
             gmapControlMap.MapScaleInfoEnabled = true;
 
             //папка с кэшем
-            Directory.CreateDirectory(Vars.Options.CacheFolder);
+            _ = Directory.CreateDirectory(Vars.Options.CacheFolder);
             gmapControlMap.CacheLocation = Vars.Options.CacheFolder;
 
             #endregion
@@ -152,15 +153,20 @@ namespace WindEnergy.UI.Tools
                 double wd = gmapControlMap.ViewArea.WidthLng; //ширина в градусах
                 double sh = hd / h; // шаг по высоте
                 double sw = wd / w; //шаг по ширине
-                RP5MeteostationInfo[,] mts_map = new RP5MeteostationInfo[h, w];
-                RectLatLng[,] rec_map = new RectLatLng[h, w];
+
+                RP5MeteostationInfo[][] mts_map = new RP5MeteostationInfo[h][];
+                for (int i = 0; i < h; i++) mts_map[i] = new RP5MeteostationInfo[w];
+
+                RectLatLng[][] rec_map = new RectLatLng[h][];
+                for (int i = 0; i < h; i++) rec_map[i] = new RectLatLng[w];
+
                 for (int i = 0; i < h; i++)
                     for (int j = 0; j < w; j++)
                     {
                         //левый верхний угол
                         double lat = gmapControlMap.ViewArea.Lat - (i) * sh;
                         double lng = gmapControlMap.ViewArea.Lng + (j) * sw;
-                        rec_map[i, j] = new RectLatLng(lat, lng, sw, sh);
+                        rec_map[i][j] = new RectLatLng(lat, lng, sw, sh);
                     }
 
                 //выборка точек из БД
@@ -176,9 +182,9 @@ namespace WindEnergy.UI.Tools
                         for (int i = 0; i < h && !exit; i++)
                             for (int j = 0; j < w; j++)
                                 // если попадает в маленькую область и эта область ещё не заполнена
-                                if (rec_map[i, j].Contains(mts.Position) && mts_map[i, j] == null)
+                                if (rec_map[i][j].Contains(mts.Position) && mts_map[i][j] == null)
                                 {//добавляем на карту и выходим
-                                    mts_map[i, j] = mts;
+                                    mts_map[i][j] = mts;
                                     exit = true;
                                     break;
                                 }
@@ -192,9 +198,11 @@ namespace WindEnergy.UI.Tools
                 else
                 {
                     res = new List<RP5MeteostationInfo>();
-                    foreach (var dd in mts_map)
-                        if (dd != null)
-                            res.Add(dd);
+                    for (int i = 0; i < mts_map.Length; i++)
+                        if (mts_map[i] != null)
+                            foreach (var dd in mts_map[i])
+                                if (dd != null)
+                                    res.Add(dd);
                 }
 
                 //вывод на карту
@@ -236,6 +244,7 @@ namespace WindEnergy.UI.Tools
 
         private void gmapControlMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
+            item = item ?? throw new ArgumentNullException(nameof(item));
             RP5MeteostationInfo mi = (RP5MeteostationInfo)item.Tag;
             FormLoadFromRP5 frm = new FormLoadFromRP5(mi);
             if (frm.ShowDialog(this) == DialogResult.OK)
@@ -243,7 +252,7 @@ namespace WindEnergy.UI.Tools
                 RawRange res = frm.Result;
                 TabPageExt tab = Program.winMain.mainTabControl.OpenNewTab(res, res.Name);
                 tab.HasNotSavedChanges = true;
-                Program.winMain.Focus();
+                _ = Program.winMain.Focus();
             }
         }
 

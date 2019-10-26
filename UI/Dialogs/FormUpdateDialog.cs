@@ -30,7 +30,7 @@ namespace WindEnergy.UI.Common.Dialogs
         /// <param name="vi">Информация о новой версии</param>
         public FormUpdateDialog(VersionInfo vi) : this()
         {
-            this.vi = vi;
+            this.vi = vi ?? throw new ArgumentNullException(nameof(vi));
             Text = "Доступна новая версия " + vi.VersionText;
             labelСur.Text = "Текущая версия: " + Vars.Options.VersionText;
             labelNew.Text = "Новая версия: " + vi.VersionText;
@@ -46,7 +46,7 @@ namespace WindEnergy.UI.Common.Dialogs
         {
             if (checkBoxRemember.Checked)
                 Vars.Options.UpdateMode = UpdateDialogAnswer.AlwaysAccept;
-            Process.Start(Vars.Options.SiteAddress + vi.DownloadLink); 
+            _ = Process.Start(Vars.Options.SiteAddress + vi.DownloadLink); 
             this.Close();
         }
 

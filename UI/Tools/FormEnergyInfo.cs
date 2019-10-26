@@ -68,6 +68,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="rang">ряд наблюдений, для которого расчитываются характеристики</param>
         public FormEnergyInfo(RawRange rang)
         {
+            rang = rang ?? throw new ArgumentNullException(nameof(rang));
             InitializeComponent();
             this.range = rang;
             Text = rang.Name;
@@ -120,7 +121,7 @@ namespace WindEnergy.UI.Tools
                 if (!years.Contains(item.Date.Year))
                     years.Add(item.Date.Year);
             }
-            comboBoxYear.Items.Add("Все");
+            _ = comboBoxYear.Items.Add("Все");
             comboBoxYear.Items.AddRange(years.ToArray());
             comboBoxYear.SelectedItem = "Все";
 
@@ -161,7 +162,7 @@ namespace WindEnergy.UI.Tools
             }
             catch (Exception exx)
             {
-                MessageBox.Show(this, exx.Message, "Расчёт энергетических характеристик", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, exx.Message, "Расчёт энергетических характеристик", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -196,7 +197,7 @@ namespace WindEnergy.UI.Tools
                 }
                 provider.SaveEnergyInfo(sf.FileName, range);
 
-                Process.Start(sf.FileName);
+                _ = Process.Start(sf.FileName);
             }
         }
 
@@ -228,13 +229,13 @@ namespace WindEnergy.UI.Tools
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "Расчёт энергетических характеристик", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, ex.Message, "Расчёт энергетических характеристик", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (range_info == null || exp_info == null)
             {
-                MessageBox.Show(this, "Для заданного ряда невозможно рассчитать характеристики на выбранном интервале", "Расчёт энергетических характеристик", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, "Для заданного ряда невозможно рассчитать характеристики на выбранном интервале", "Расчёт энергетических характеристик", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -277,7 +278,7 @@ namespace WindEnergy.UI.Tools
             PointPairList slist = new PointPairList();
             for (int i = 0; i < stat_speeds.Values.Count; i++)
                 slist.Add((stat_speeds.Keys[i] as GradationItem).Average, stat_speeds.Values[i] * 100);
-            spane.AddCurve("t(V)", slist, Color.Red);
+            _ = spane.AddCurve("t(V)", slist, Color.Red);
             zedGraphControlSpeed.AxisChange();
             zedGraphControlSpeed.Invalidate();
 
@@ -303,7 +304,7 @@ namespace WindEnergy.UI.Tools
                 TextObj t = new TextObj(txt, x, y);
                 dpane.GraphObjList.Add(t);
             }
-            dpane.AddCurve("t(DD)", dlist, Color.Blue);
+            _ = dpane.AddCurve("t(DD)", dlist, Color.Blue);
             zedGraphControlDirection.AxisChange();
             zedGraphControlDirection.Invalidate();
         }

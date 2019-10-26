@@ -86,7 +86,7 @@ namespace WindEnergy.UI.Tools
         {
             if (selectedMeteostation == null)
             {
-                MessageBox.Show(this, "Не выбрана метеостанция или координаты метеостанции недоступны", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, "Не выбрана метеостанция или координаты метеостанции недоступны", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -94,11 +94,11 @@ namespace WindEnergy.UI.Tools
             {
                 if (this.InvokeRequired)
                 {
-                    this.Invoke(new Action(() =>
-                    {
-                        progressBarProgress.Value = (int)pc;
-                        progressBarProgress.Refresh();
-                    }));
+                    _ = Invoke(new Action(() =>
+                      {
+                          progressBarProgress.Value = (int)pc;
+                          progressBarProgress.Refresh();
+                      }));
                 }
                 else
                 {
@@ -115,13 +115,13 @@ namespace WindEnergy.UI.Tools
             Action<Exception> error1 = new Action<Exception>((ex) =>
             {
                 buttonDownload.Enabled = true;
-                MessageBox.Show(this, ex.Message + "\r\n" + ex.InnerException != null ? ex.InnerException.Message : "", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, ex.Message + "\r\n" + ex.InnerException != null ? ex.InnerException.Message : "", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             });
             Action<Exception> error2 = new Action<Exception>((ae) =>
             {
                 buttonDownload.Enabled = true;
-                MessageBox.Show(this, ae.Message + "\r\n" + (ae.InnerException != null ? ae.InnerException.Message : "\r\n") + "\r\nПопробуйте выбрать меньший интервал времени", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, ae.Message + "\r\n" + (ae.InnerException != null ? ae.InnerException.Message : "\r\n") + "\r\nПопробуйте выбрать меньший интервал времени", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             });
 
@@ -134,14 +134,14 @@ namespace WindEnergy.UI.Tools
                     RawRange res = engine.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation, pcChange);
 
                     if (this.InvokeRequired)
-                        this.Invoke(success, res);
+                        _ = Invoke(success, res);
                     else
                         success.Invoke(res);
                 }
                 catch (WebException ex)
                 {
                     if (this.InvokeRequired)
-                        this.Invoke(error1, ex);
+                        _ = Invoke(error1, ex);
                     else
                         error1.Invoke(ex);
                 }
@@ -149,7 +149,7 @@ namespace WindEnergy.UI.Tools
                 {
 
                     if (this.InvokeRequired)
-                        this.Invoke(error2, ae);
+                        _ = Invoke(error2, ae);
                     else
                         error2.Invoke(ae);
                 }
@@ -209,8 +209,8 @@ namespace WindEnergy.UI.Tools
 
                     //получаем новый текст 
                     string curTextBox = "";
-                    if (this.InvokeRequired)
-                        this.Invoke(new Action(() => { curTextBox = comboBoxPoint.Text.Trim(); }));
+                    if (InvokeRequired)
+                        _ = Invoke(new Action(() => { curTextBox = comboBoxPoint.Text.Trim(); }));
                     else
                         curTextBox = comboBoxPoint.Text.Trim();
 
@@ -220,21 +220,21 @@ namespace WindEnergy.UI.Tools
                     selectedMeteostation = null;
                     results = engine.Search(query);
                     //обновление списка
-                    if (this.InvokeRequired)
-                        this.Invoke(updList, results);
+                    if (InvokeRequired)
+                        _ = Invoke(updList, results);
                     else
                         updList.Invoke(results);
 
-                });
+                }).ConfigureAwait(false);
             }
             catch (WebException)
             {
-                MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             catch (ApplicationException exc)
             {
-                MessageBox.Show(this, exc.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, exc.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             Debug.WriteLine("updateList end");
@@ -293,7 +293,7 @@ namespace WindEnergy.UI.Tools
             }
             catch (WebException)
             {
-                MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

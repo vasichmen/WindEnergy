@@ -209,6 +209,11 @@
     <Compile Include="Data\RawRangeSerializer.cs" />
     <Compile Include="Classes\Collections\RawRange.cs" />
     <Compile Include="Driver.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Scripts.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EnumExtensions.cs" />
@@ -254,6 +259,12 @@
   <ItemGroup>
     <Folder Include="Transformation\Altitude\" />
     <Folder Include="Transformation\Terrain\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" />

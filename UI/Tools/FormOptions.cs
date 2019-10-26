@@ -110,7 +110,7 @@ namespace WindEnergy.UI.Tools
                 bool f = new RP5MeteostationDatabase(of.FileName).CheckDatabaseFile();
                 if (!f)
                 {
-                    MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла координат метеостанций", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла координат метеостанций", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 this.coordinateMSFile = of.FileName;
@@ -132,7 +132,7 @@ namespace WindEnergy.UI.Tools
                 bool f = Vars.SpeedLimits.CheckRegionLimitsFile(of.FileName);
                 if (!f)
                 {
-                    MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла ограничений скоростей", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла ограничений скоростей", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 this.regionLimitsFile = of.FileName;
@@ -202,7 +202,7 @@ namespace WindEnergy.UI.Tools
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message + "\r\nПроверьте введённые данные на вкладке \"Расчёт\"", "Сохранение настроек", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, ex.Message + "\r\nПроверьте введённые данные на вкладке \"Расчёт\"", "Сохранение настроек", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -219,7 +219,7 @@ namespace WindEnergy.UI.Tools
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message + "\r\nПроверьте введённые данные на вкладке \"Градации\"", "Сохранение настроек", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, ex.Message + "\r\nПроверьте введённые данные на вкладке \"Градации\"", "Сохранение настроек", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -233,7 +233,7 @@ namespace WindEnergy.UI.Tools
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message + "\r\nПроверьте введённые данные на вкладке \"Источники данных\"", "Сохранение настроек", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, ex.Message + "\r\nПроверьте введённые данные на вкладке \"Источники данных\"", "Сохранение настроек", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }

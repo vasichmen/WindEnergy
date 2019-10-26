@@ -47,7 +47,7 @@ namespace WindEnergy.UI.Ext
             {
                 try
                 {
-                    double.Parse(e.FormattedValue as string);
+                    _ = double.Parse(e.FormattedValue as string);
                 }
                 catch (Exception)
                 {

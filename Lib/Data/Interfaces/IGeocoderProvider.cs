@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GMap.NET;
 
 namespace WindEnergy.Lib.Data.Interfaces
@@ -8,6 +9,14 @@ namespace WindEnergy.Lib.Data.Interfaces
     /// </summary>
     public interface IGeocoderProvider
     {
+
+        /// <summary>
+        /// получить список адресов по части адреса
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        Dictionary<string, PointLatLng> GetAddresses(string query);
+
         /// <summary>
         /// получить адрес по заданным координатам
         /// </summary>

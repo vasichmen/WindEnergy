@@ -47,6 +47,8 @@ namespace WindEnergy.UI.Ext
         /// <param name="e"></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            e = e ?? throw new ArgumentNullException(nameof(e));
+
             //закрытие вкладки по нажатию на кнопку закрыть
             Rectangle tabTextArea = this.GetTabRect(SelectedIndex);
             Rectangle closeButtonArea = new Rectangle(tabTextArea.X + tabTextArea.Width - 16, 5, 13, 13);
@@ -54,7 +56,7 @@ namespace WindEnergy.UI.Ext
             if (closeButtonArea.Contains(pt))
             {
                 //закрытие вкладки
-                (this.SelectedTab as TabPageExt).ClosePage();
+                _ = (this.SelectedTab as TabPageExt).ClosePage();
             }
 
             //закрытие при нажатии СКМ
@@ -63,7 +65,7 @@ namespace WindEnergy.UI.Ext
                 {
                     Rectangle rect = GetTabRect(i);
                     if (rect.Contains(pt))
-                        (TabPages[i] as TabPageExt).ClosePage();
+                        _ = (TabPages[i] as TabPageExt).ClosePage();
                 }
         }
 
@@ -73,6 +75,7 @@ namespace WindEnergy.UI.Ext
         /// <param name="e"></param>
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
+            e = e ?? throw new ArgumentNullException(nameof(e));
             RectangleF tabTextArea = RectangleF.Empty;
             for (int nIndex = 0; nIndex < this.TabCount; nIndex++)
             {

@@ -56,25 +56,25 @@ namespace WindEnergy.UI.Dialogs
             //заполнение кодировок
             comboBoxEncoding.Items.Clear();
             foreach (EncodingInfo enc in Encoding.GetEncodings())
-                comboBoxEncoding.Items.Add(enc.GetEncoding().WebName);
+                _ = comboBoxEncoding.Items.Add(enc.GetEncoding().WebName);
             comboBoxEncoding.SelectedItem = "utf-8";
 
             //направления
             comboBoxDirectUnit.Items.Clear();
             foreach (string item in DirectionUnits.Degrees.GetItems())
-                comboBoxDirectUnit.Items.Add(item);
+                _ = comboBoxDirectUnit.Items.Add(item);
             comboBoxDirectUnit.SelectedItem = DirectionUnits.TextRP5.Description();
 
             //давление
             comboBoxPressUnit.Items.Clear();
             foreach (string item in PressureUnits.KPa.GetItems())
-                comboBoxPressUnit.Items.Add(item);
+                _ = comboBoxPressUnit.Items.Add(item);
             comboBoxPressUnit.SelectedItem = PressureUnits.KPa.Description();
 
             //влажность
             comboBoxWetUnit.Items.Clear();
             foreach (string item in WetnessUnits.Parts.GetItems())
-                comboBoxWetUnit.Items.Add(item);
+                _ = comboBoxWetUnit.Items.Add(item);
             comboBoxWetUnit.SelectedItem = WetnessUnits.Parts.Description();
 
             //установка тегов для полей колонок
@@ -230,7 +230,7 @@ namespace WindEnergy.UI.Dialogs
                             importer.Columns.Add(fld, (int)contr.Value);
                     }
                     else
-                        importer.Columns.Remove(fld);
+                        _ = importer.Columns.Remove(fld);
                     break;
                 case "comboBoxDirectUnit":
                     importer.DirectionUnit = (DirectionUnits)(new EnumTypeConverter<DirectionUnits>().ConvertFrom(comboBoxDirectUnit.SelectedItem));
@@ -285,6 +285,7 @@ namespace WindEnergy.UI.Dialogs
                 importer.Coordinates = spt.Result;
                 update();
             }
+                spt.Dispose();
         }
 
         /// <summary>
@@ -302,7 +303,7 @@ namespace WindEnergy.UI.Dialogs
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Импорт из файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(ex.Message, "Импорт из файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -320,6 +321,8 @@ namespace WindEnergy.UI.Dialogs
         /// <param name="e"></param>
         public void DataGridView_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
         {
+            if (e==null || e.Column == null || e.Column.Name == null)
+                return;
             switch (e.Column.Name.ToLower())
             {
                 case "date":

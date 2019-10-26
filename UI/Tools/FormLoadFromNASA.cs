@@ -24,7 +24,7 @@ namespace WindEnergy.UI.Tools
     /// </summary>
     public partial class FormLoadFromNASA : Form
     {
-        public RawRange Result = null;
+        public RawRange Result { get; private set; }
         private NASA engineNASA;
         private IGeocoderProvider geocoder;
         private RP5MeteostationInfo spoint;
@@ -33,6 +33,7 @@ namespace WindEnergy.UI.Tools
         public FormLoadFromNASA()
         {
             InitializeComponent();
+            Result = null;
             DialogResult = DialogResult.None;
             engineNASA = new NASA(Vars.Options.CacheFolder + "\\nasa");
             geocoder = new Arcgis(Vars.Options.CacheFolder + "\\arcgis");
@@ -69,7 +70,7 @@ namespace WindEnergy.UI.Tools
         {
             if (spoint == null)
             {
-                MessageBox.Show(this, "Точка не выбрана", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, "Точка не выбрана", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             try
@@ -84,13 +85,13 @@ namespace WindEnergy.UI.Tools
             catch (WebException)
             {
                 buttonDownload.Enabled = true;
-                MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             catch (ApplicationException exx)
             {
                 buttonDownload.Enabled = true;
-                MessageBox.Show(this, exx.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, exx.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }

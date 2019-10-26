@@ -37,6 +37,7 @@ namespace WindEnergy.UI.Tools
 
         public FormRepairRange(RawRange range, List<InterpolateMethods> methods, string caption, string buttonText)
         {
+            methods = methods ?? throw new ArgumentNullException(nameof(methods));
             InitializeComponent();
             this.range = range;
             this.availableMethods = methods;
@@ -46,12 +47,12 @@ namespace WindEnergy.UI.Tools
 
             comboBoxInterpolateMethod.Items.Clear();
             foreach (var item in availableMethods)
-                comboBoxInterpolateMethod.Items.Add(item.Description());
+                _ = comboBoxInterpolateMethod.Items.Add(item.Description());
 
             comboBoxRepairInterval.Items.Clear();
             foreach (var item in StandartIntervals.H1.GetEnumItems())
                 if ((StandartIntervals)item != StandartIntervals.Variable && (StandartIntervals)item != StandartIntervals.Variable)
-                    comboBoxRepairInterval.Items.Add(item.Description());
+                    _ = comboBoxRepairInterval.Items.Add(item.Description());
         }
 
 
@@ -72,7 +73,7 @@ namespace WindEnergy.UI.Tools
                 try
                 {
                     if (this.InvokeRequired)
-                        this.Invoke(new Action(() => { progressBar1.Value = percent; }));
+                        _ = Invoke(new Action(() => { progressBar1.Value = percent; }));
                     else
                         progressBar1.Value = percent;
                 }
@@ -81,22 +82,22 @@ namespace WindEnergy.UI.Tools
 
             Action<RawRange> actionAfter = new Action<RawRange>((rawRange) =>
             {
-                this.Invoke(new Action(() =>
-                {
-                    rawRange.Name = "Восстановленный ряд до интервала" + interval.Description();
-                    MessageBox.Show(this, $"Ряд восстановлен до интервала {interval.Description()}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _ = this.Invoke(new Action(() =>
+                  {
+                      rawRange.Name = "Восстановленный ряд до интервала" + interval.Description();
+                      _ = MessageBox.Show(this, $"Ряд восстановлен до интервала {interval.Description()}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    if (rawRange == null)
-                        DialogResult = DialogResult.Cancel;
-                    else
-                    {
-                        DialogResult = DialogResult.OK;
-                        Result = rawRange;
-                    }
-                    Cursor = Cursors.Arrow;
-                    Result = rawRange;
-                    Close();
-                }));
+                      if (rawRange == null)
+                          DialogResult = DialogResult.Cancel;
+                      else
+                      {
+                          DialogResult = DialogResult.OK;
+                          Result = rawRange;
+                      }
+                      Cursor = Cursors.Arrow;
+                      Result = rawRange;
+                      Close();
+                  }));
             });
 
             try
@@ -135,19 +136,19 @@ namespace WindEnergy.UI.Tools
             catch (WebException exc)
             {
                 Cursor = Cursors.Arrow;
-                MessageBox.Show(this, exc.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, exc.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
             catch (WindEnergyException wex)
             {
                 Cursor = Cursors.Arrow;
-                MessageBox.Show(this, wex.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, wex.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
             catch (ApplicationException exc)
             {
                 Cursor = Cursors.Arrow;
-                MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
 
@@ -163,7 +164,7 @@ namespace WindEnergy.UI.Tools
             rangeQuality = Qualifier.ProcessRange(range);
             if (rangeQuality == null)
             {
-                MessageBox.Show(this, "Произошла ошибка при открытии ряда. Возможно, ряд слишком короткий", "Открытие ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, "Произошла ошибка при открытии ряда. Возможно, ряд слишком короткий", "Открытие ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.Close();
                 return;
             }
