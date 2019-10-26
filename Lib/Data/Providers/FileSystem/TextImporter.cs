@@ -18,6 +18,9 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
     /// </summary>
     public class TextImporter
     {
+        /// <summary>
+        /// Выбранные координаты для привязки с ряду
+        /// </summary>
         public PointLatLng Coordinates;
 
         /// <summary>
@@ -175,7 +178,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                                         item.Wetness = double.Parse(value.Replace('.', Vars.DecimalSeparator)) * 100d;//перевод в %
                                         break;
                                     case WetnessUnits.None:
-                                        throw new ArgumentException("Не заданы единицы измерения для давления");
+                                        throw new ArgumentException("Не заданы единицы измерения для влажности");
                                     default:
                                         throw new WindEnergyException("Эта единица измерений не реализована");
                                 }

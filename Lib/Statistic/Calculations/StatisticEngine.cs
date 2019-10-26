@@ -219,6 +219,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// </summary>
         /// <param name="range"></param>
         /// <param name="gradations"></param>
+        /// <param name="parameter"></param>
         /// <returns></returns>
         public static StatisticalRange<GradationItem> GetExpectancy(IList<RawItem> range, GradationInfo<GradationItem> gradations, MeteorologyParameters parameter = MeteorologyParameters.Speed)
         {

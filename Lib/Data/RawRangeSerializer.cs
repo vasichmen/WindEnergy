@@ -40,7 +40,7 @@ namespace WindEnergy.Lib.Data
         /// сохранение файла с заданным форматом. Если формат не задан, то будет использован формат из ряда
         /// </summary>
         /// <param name="rang"></param>
-        /// <param name="fileFormat"></param>
+        /// <param name="filename"></param>
         public static void SerializeFile(RawRange rang, string filename)
         {
             FileProvider provider;

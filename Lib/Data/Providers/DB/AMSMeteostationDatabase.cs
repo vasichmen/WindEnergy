@@ -18,7 +18,6 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// <summary>
         /// загрузить список ограничений скоростей по точкам
         /// </summary>
-        /// <param name="filename">адрес файла ограничения скоростей</param>
         /// <returns></returns>
         public override Dictionary<PointLatLng, AMSMeteostationInfo>  LoadDatabaseFile()
         {

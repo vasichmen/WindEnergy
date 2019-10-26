@@ -43,6 +43,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <param name="fromDate"></param>
         /// <param name="toDate"></param>
         /// <param name="point_info"></param>
+        /// <param name="onPercentChange">Метод, вызываемый при изменении процента выполнения</param>
         /// <returns></returns>
         public RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo point_info, Action<double> onPercentChange = null)
         {

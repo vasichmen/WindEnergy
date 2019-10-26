@@ -62,7 +62,7 @@ namespace WindEnergy.UI.Tools
 
             if (string.IsNullOrWhiteSpace(folder))
             {
-                MessageBox.Show(this, "Преобразование файлов", "Ошибка: файлы не выбраны");
+                MessageBox.Show(this, "Преобразование файлов", "Ошибка: не выбрана папка сохранения файлов");
             }
             Equalizer.ProcessRanges(files, folder, (int)numericUpDownStartLine.Value, checkBoxSeparateDate.Checked);
             Process.Start(folder);

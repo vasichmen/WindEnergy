@@ -20,7 +20,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// <summary>
         /// обработка ряда и получение расчётного года
         /// </summary>
-        /// <param name="range"></param>
+        /// <param name="Range"></param>
         /// <returns></returns>
         public static CalculateYearInfo ProcessRange(RawRange Range)
         {

@@ -12,6 +12,12 @@ namespace WindEnergy.Lib.Classes.Generic
     /// </summary>
     public class DateTimeComparerRawItem : IComparer<RawItem>
     {
+        /// <summary>
+        /// сравнение дат в ряде
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public int Compare(RawItem x, RawItem y)
         {
             return x.Date.CompareTo(y.Date);

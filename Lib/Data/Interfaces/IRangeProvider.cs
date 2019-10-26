@@ -15,6 +15,7 @@ namespace WindEnergy.Lib.Data.Interfaces
         /// <param name="fromDate">начало</param>
         /// <param name="toDate">конец</param>
         /// <param name="point_info">информация о точке (объект класса PointInfo конкретного класса)</param>
+        /// <param name="onPercentChange">метод, вызываемый при изменении процесса прогресса выполнения</param>
         /// <returns></returns>
         RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo point_info, Action<double> onPercentChange = null);
     }

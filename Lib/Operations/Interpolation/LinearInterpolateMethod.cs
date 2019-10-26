@@ -72,8 +72,8 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// интерполяция между заданными точками
         /// </summary>
         /// <param name="x1">левый известнтый х</param>
-        /// <param name="x3">правый известный х</param>
-        /// <param name="x2">искомый агрумент </param>
+        /// <param name="x2">правый известный х</param>
+        /// <param name="x">искомый агрумент </param>
         /// <returns></returns>
         private double linInterpolate(double x1, double x2, double x)
         {

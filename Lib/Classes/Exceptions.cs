@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace WindEnergy.Lib.Classes
 {
+    /// <summary>
+    /// Исключения для WindEnergy
+    /// </summary>
     [Serializable]
     public class WindEnergyException : ApplicationException
     {
@@ -15,15 +18,28 @@ namespace WindEnergy.Lib.Classes
         /// </summary>
         public string ToolTip { get; }
 
+        /// <summary>
+        /// Простое исключение с сообщением
+        /// </summary>
+        /// <param name="message"></param>
         public WindEnergyException(string message) : base(message)
         {
         }
+
+        /// <summary>
+        /// сообщение и описание
+        /// </summary>
+        /// <param name="message">сообщение </param>
+        /// <param name="tooltip">описание проблемы</param>
         public WindEnergyException(string message, string tooltip) : base(message)
         {
             this.ToolTip = tooltip;
         }
     }
 
+    /// <summary>
+    /// исключение при попытке восстановления ряда
+    /// </summary>
     [Serializable]
     public class GetBaseRangeException : WindEnergyException
     {
@@ -59,7 +75,6 @@ namespace WindEnergy.Lib.Classes
         /// <summary>
         /// Создает новый экземпляр класса 
         /// </summary>
-        /// <param name="message">Сообщение об ошибке</param>
         /// <param name="maxCorrelKoeff">Максимальный коэффициент корреляции, найденный в списке МС</param>
         /// <param name="nearestMS">расстояние в м до ближайшей существующей МС</param>
         /// <param name="nearestMSRadius">максимальный радиус поиска метеостанций из настроек</param>

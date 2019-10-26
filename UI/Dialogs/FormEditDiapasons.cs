@@ -24,7 +24,7 @@ namespace WindEnergy.UI.Dialogs
         /// <summary>
         /// результат - список диапазонов
         /// </summary>
-        public List<Diapason<double>> Result { get; set; }
+        public List<Diapason<double>> Result { get; private set; }
 
         /// <summary>
         /// создаёт новое окно и заполняет указанными диапазонами
@@ -52,7 +52,7 @@ namespace WindEnergy.UI.Dialogs
             nd.To = (double)numericUpDownTo.Value;
             if (nd.From >= nd.To)
             {
-                MessageBox.Show(this, "Начало диапазона должно быть меньше конца", "Добавление диапазона", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, "Начало диапазона должно быть меньше конца", "Добавление диапазона", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             diapasons.Add(nd);

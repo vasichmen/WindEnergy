@@ -21,6 +21,8 @@ namespace WindEnergy.Lib.Operations
         /// </summary>
         /// <param name="range">ряд</param>
         /// <param name="param">параметры обработки ошибок</param>
+        /// <param name="info">результаты проверки ряда</param>
+        /// <param name="action">действие, при изменении провенца выполнения</param>
         /// <returns></returns>
         public static RawRange ProcessRange(RawRange range, CheckerParameters param, out CheckerInfo info, Action<int> action = null)
         {

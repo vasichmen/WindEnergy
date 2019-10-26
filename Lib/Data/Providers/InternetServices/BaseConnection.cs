@@ -51,6 +51,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <summary>
         /// создаёт новый объект с кэшем в указанной папке и заданной длительностью хранения
         /// </summary>
+        /// <param name="host">хост для подключения (для установки cookie)</param>
         /// <param name="cacheDirectory">папка с кэшем или null, если не надо использоать кэш</param>
         /// <param name="duration">длительность хранения в часах. По умолчанию - неделя</param>
         public BaseConnection(string host, string cacheDirectory, double duration = 7 * 24) : this()
@@ -193,6 +194,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// </summary>
         /// <param name="url">url запроса</param>
         /// <param name="code">код ошибки</param>
+        /// <param name="forceDisableCache">если задано true, то кэш будет принудительно отключен независомо от настроек объекта</param>
         /// <returns></returns>
         protected HtmlDocument SendHtmlGetRequest(string url, out HttpStatusCode code, bool forceDisableCache = false)
         {
@@ -209,6 +211,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// </summary>
         /// <param name="url">url запроса</param>
         /// <param name="data">данные POST  запроса</param>
+        /// <param name="referer">http параметр referer</param>
         /// <returns></returns>
         protected HtmlDocument SendHtmlPostRequest(string url, string data, string referer = "")
         {
@@ -225,6 +228,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// </summary>
         /// <param name="url">адрес</param>
         /// <param name="data">данные</param>
+        /// <param name="referer"></param>
         /// <returns></returns>
         protected JObject SendJsonPostRequest(string url, string data, string referer = "")
         {
@@ -244,6 +248,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// отправка запроса с результатом в виде строки
         /// </summary>
         /// <param name="url">запрос</param>
+        /// <param name="useGZip"></param>
         /// <returns></returns>
         /// <exception cref="WebException">Если произошла ошибка при подключении</exception>
         protected string SendStringGetRequest(string url, bool useGZip = true)
@@ -257,6 +262,10 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// отправка запроса с результатом в виде объекта JSON
         /// </summary>
         /// <param name="url">запрос</param>
+        /// <param name="gzip"></param>
+        /// <param name="referer"></param>
+        /// <param name="contentType"></param>
+        /// <param name="cookies"></param>
         /// <returns></returns>
         /// <exception cref="WebException">Если произошла ошибка при подключении</exception>
         protected JObject SendJsonGetRequest(string url, bool gzip = true, string referer = "", string contentType = "application/json", string cookies = null)

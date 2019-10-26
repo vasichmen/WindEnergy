@@ -68,6 +68,7 @@ namespace WindEnergy.Lib.Data.Providers
         /// создвёт новый объект кэша в указанной папке
         /// </summary>
         /// <param name="dir">базовая папка с файлами</param>
+        /// <param name="duration">время жизни кэша</param>
         public FileSystemCache(string dir, TimeSpan duration)
         {
             directory = dir;

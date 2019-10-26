@@ -359,7 +359,9 @@ namespace WindEnergy.Lib
         /// <summary>
         /// загружает все метеостанции с расписания погоды и сохраняет их в файл fileOutput в формат списка координат метеостанций
         /// </summary>
-        /// <param name="fileOutput"></param>
+        /// <param name="fileOutput">результирующий файл</param>
+        /// <param name="action">действие при изменении процента</param>
+        /// <param name="checkStop">функция, вызываемая для проверки необходимости остановить процесс</param>
         public static void LoadAllRP5Meteostations(string fileOutput, Action<int, int, string, int, int, int, int> action = null, Func<bool> checkStop = null)
         {
             RP5ru engine = new RP5ru(Vars.Options.CacheFolder + "\\rp5.ru");

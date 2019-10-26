@@ -19,7 +19,6 @@ namespace WindEnergy.Lib.Geomodel
         /// <param name="A">точка А (первая точка)</param>
         /// <param name="B">точка В (полюс)</param>
         /// <param name="C">точка С (вторая точка)</param>
-        /// <param name="Measure">единица измерения угла для результата</param>
         /// <returns></returns>
         public static double CalculateAngle(PointLatLng A, PointLatLng B, PointLatLng C)
         {

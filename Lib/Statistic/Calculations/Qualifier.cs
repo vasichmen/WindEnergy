@@ -19,7 +19,6 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// <summary>
         /// обработать ряд и получить сведения о полноте, интервалах, количестве ошибок
         /// </summary>
-        /// <param name="range"></param>
         /// <returns></returns>
         public static QualityInfo ProcessRange(RawRange Range)
         {
@@ -251,7 +250,6 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// <summary>
         /// обработать ряд и получить сведения о полноте, интервалах, количестве ошибок
         /// </summary>
-        /// <param name="range"></param>
         /// <returns></returns>
         public static QualityInfo ProcessRange2(RawRange Range)
         {

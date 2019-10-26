@@ -79,8 +79,9 @@ namespace WindEnergy.Lib
                     if (line.Length > 0)
                         res.Add(byte.Parse(line));
                 }
-                return res.ToArray();
+                var result= res.ToArray();
                 sr.Close();
+                return result;
             }
         }
 

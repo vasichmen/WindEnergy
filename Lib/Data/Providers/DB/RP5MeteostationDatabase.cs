@@ -27,12 +27,6 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// </summary>
         private const double COORDINATES_OVERLAP = 10;
 
-        /// <summary>
-        /// получить инфомацию по id метеостанции или аэропорта
-        /// </summary>
-        /// <param name="id">значение поля MeteostationInfo.ID</param>
-        /// <returns></returns>
-        public RP5MeteostationInfo this[string id] { get { return (from m in List where m.ID == id select m).FirstOrDefault(); }  }
 
         /// <summary>
         /// количество аэропортов в БД
@@ -87,7 +81,6 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// <summary>
         /// загрузка списка метеостанций и координат
         /// </summary>
-        /// <param name="filename"></param>
         /// <returns></returns>
         public override Dictionary<string, RP5MeteostationInfo> LoadDatabaseFile()
         {
@@ -189,7 +182,6 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// найти ближайшую МС для заданных координат и в заданном радиусе от точки 
         /// </summary>
         /// <param name="coordinates"></param>
-        /// <param name="mts">список метеостанций по которому идёт поиск</param>
         /// <param name="useMaxRadius">если истина, то поиск будет идти только в максимальном радиусе из настроек Vars.Options.NearestMSRadius</param>
         /// <returns></returns>
         public  RP5MeteostationInfo GetNearestMS(PointLatLng coordinates, bool useMaxRadius = true)
@@ -231,7 +223,6 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// найти все метеостанции из списка mts, которые находятся в радиусе radius от заданной точки coordinates
         /// </summary>
         /// <param name="coordinates"></param>
-        /// <param name="mts"></param>
         /// <param name="radius"></param>
         /// <param name="addOwn">Если истина, то если на coordinates есть МС, то она тоже будет добавлена</param>
         /// <returns></returns>

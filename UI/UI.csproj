@@ -315,6 +315,7 @@
     <Content Include="Data\AMS.database.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include=".editorconfig" />
     <None Include="Data\ETOPO\etopo2.sq3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

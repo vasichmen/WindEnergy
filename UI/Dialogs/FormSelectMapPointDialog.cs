@@ -29,7 +29,7 @@ namespace WindEnergy.UI.Dialogs
         private PointLatLng cPoint;
         private GMapOverlay lay;
         private PointLatLng initialPoint;
-        private Yandex searcher;
+        private Arcgis searcher;
         private Dictionary<string, PointLatLng> adressess;
 
         public FormSelectMapPointDialog(string caption, PointLatLng initialPoint)
@@ -43,7 +43,7 @@ namespace WindEnergy.UI.Dialogs
             else
                 gmapControlMap.Position = new PointLatLng(55, 37);
             DialogResult = DialogResult.None;
-            searcher = new Yandex(Vars.Options.CacheFolder + "\\yandex");
+            searcher = new Arcgis(Vars.Options.CacheFolder + "\\arcgis");
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace WindEnergy.UI.Dialogs
             gmapControlMap.MapScaleInfoEnabled = true;
 
             //папка с кэшем
-            Directory.CreateDirectory(Vars.Options.CacheFolder);
+            _ = Directory.CreateDirectory(Vars.Options.CacheFolder);
             gmapControlMap.CacheLocation = Vars.Options.CacheFolder;
 
             #endregion
@@ -215,8 +215,8 @@ namespace WindEnergy.UI.Dialogs
 
                     //получаем новый текст 
                     string curTextBox = "";
-                    if (this.InvokeRequired)
-                        this.Invoke(new Action(() => { curTextBox = toolStripComboBoxSearch.Text.Trim(); }));
+                    if (InvokeRequired)
+                        _ = Invoke(new Action(() => { curTextBox = toolStripComboBoxSearch.Text.Trim(); }));
                     else
                         curTextBox = toolStripComboBoxSearch.Text.Trim();
 
@@ -225,21 +225,21 @@ namespace WindEnergy.UI.Dialogs
 
                     results = searcher.GetAddresses(query);
                     //обновление списка
-                    if (this.InvokeRequired)
-                        this.Invoke(updList, results);
+                    if (InvokeRequired)
+                        _ = Invoke(updList, results);
                     else
                         updList.Invoke(results);
 
-                });
+                }).ConfigureAwait(false);
             }
             catch (WebException)
             {
-                MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             catch (ApplicationException exc)
             {
-                MessageBox.Show(this, exc.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, exc.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             Debug.WriteLine("updateList end");

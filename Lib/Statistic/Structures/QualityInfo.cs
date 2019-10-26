@@ -46,6 +46,7 @@ namespace WindEnergy.Lib.Statistic.Structures
         /// создает новую структуру информации о качестве ряда с указанными значениями
         /// </summary>
         /// <param name="intervals">диапазоны наблюдений с разными значениями интервалов</param>
+        /// <param name="maxEmptySpace"></param>
         /// <param name="measures">общее количество измерений в ряде</param>
         public QualityInfo(List<RangeInterval> intervals, TimeSpan maxEmptySpace,int measures)
         {

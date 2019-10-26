@@ -193,8 +193,9 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
         /// <summary>
         /// сохранение статистики наблюдений в файл
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="qualityInfo"></param>
+        /// <param name="fileName">имя файла</param>
+        /// <param name="qualityInfo">информация о полноте ряда</param>
+        /// <param name="rangeLength">длительность наблюдений</param>
         public override void SaveRangeQualityInfo(string fileName, QualityInfo qualityInfo, TimeSpan rangeLength)
         {
             StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8);

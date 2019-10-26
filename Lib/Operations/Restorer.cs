@@ -21,8 +21,10 @@ namespace WindEnergy.Lib.Operations
         /// <summary>
         /// восстановить ряд до нужного интревала наблюдений
         /// </summary>
-        /// <param name="range"></param>
-        /// <param name="param"></param>
+        /// <param name="Range"></param>
+        /// <param name="param">параметры восстановления</param>
+        /// <param name="actionPercent">изменение процента выполнения</param>
+        /// <param name="actionAfter">действие после обработки</param>
         /// <returns></returns>
         public static void ProcessRange(RawRange Range, RestorerParameters param, Action<int> actionPercent, Action<RawRange> actionAfter)
         {

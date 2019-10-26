@@ -61,8 +61,8 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// создание нового интерполятора с заданными значениями на основе существующего интерполятора (в том случае, если для этой точки уже был создан интерполятор)
         /// </summary>
         /// <param name="func">известные значения функции</param>
-        /// <param name="baseInterpolator"></param>
-        /// <param name="direction">тип мтеорологического параметра</param>
+        /// <param name="baseInterpolator">интерполятор, откуда взять ряд наблюдения для этого экземпляра</param>
+        /// <param name="parameterType">тип параметра для восстановления</param>
         public NearestMSInterpolateMethod(Dictionary<double, double> func, NearestMSInterpolateMethod baseInterpolator, MeteorologyParameters parameterType)
             : this(func, baseInterpolator.nearestRange, parameterType) { }
 
@@ -192,6 +192,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// Возвращает false если ряд не соответствует
         /// </summary>
         /// <param name="baseRange">проверяемый ряд</param>
+        /// <param name="acceptDiapason">допустимый диапазон</param>
         /// <returns></returns>
         internal static bool CheckNormalLaw(RawRange baseRange, Diapason<double> acceptDiapason)
         {
@@ -209,7 +210,8 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// https://life-prog.ru/2_84515_proverka-po-kriteriyu-hi-kvadrat.html критерий пирсона
         /// https://math.semestr.ru/group/example-normal-distribution.php для нормального распределения
         /// </summary>
-        /// <param name="range"></param>
+        /// <param name="range">ряд</param>
+        /// <param name="parameter">проверяемый параметр</param>
         /// <returns></returns>
         private static double checkNormalLaw(RawRange range, MeteorologyParameters parameter)
         {
@@ -269,15 +271,15 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// <returns></returns>
         private static List<double>[] calcTableCoeff(Dictionary<double, double> func, Dictionary<double, double> baseFunc)
         {
-            ///V1 - заданная функция
-            ///V2 - функция на ближайшей МС
-            ///V1*V2
-            ///V1^2
-            ///dV1=V1-averV1
-            ///dV2=V2-averV2
-            ///dV1*dV2
-            ///dV1^2
-            ///dV2^2
+            //V1 - заданная функция
+            //V2 - функция на ближайшей МС
+            //V1*V2
+            //V1^2
+            //dV1=V1-averV1
+            //dV2=V2-averV2
+            //dV1*dV2
+            //dV1^2
+            //dV2^2
             List<double>[] res = new List<double>[9];
             for (int i = 0; i < res.Length; i++) res[i] = new List<double>();
 
@@ -341,6 +343,7 @@ namespace WindEnergy.Lib.Operations.Interpolation
         /// получить параметр b прямой 
         /// </summary>
         /// <param name="tableCoeff">таблица для расчета коэффициентов</param>
+        /// <param name="a">параметр А</param>
         /// <returns></returns>
         private static double getParameterB(List<double>[] tableCoeff, double a)
         {

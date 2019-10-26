@@ -114,6 +114,9 @@ namespace WindEnergy.Lib.Classes.Collections
         private double airDensity = double.NaN;
 
 
+        /// <summary>
+        /// Созадает новый пустой ряд
+        /// </summary>
         public RawRange()
         {
             FilePath = null;
@@ -293,6 +296,10 @@ namespace WindEnergy.Lib.Classes.Collections
             length = TimeSpan.MinValue;
         }
 
+        /// <summary>
+        /// преобразует в строковое представление
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"count: {this.Count}, {this.Position.ToString()}, {this.Meteostation.ToString()}";

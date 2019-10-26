@@ -113,7 +113,8 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// </summary>
         /// <param name="fromDate">с какой даты</param>
         /// <param name="toDate">до какой даты</param>
-        /// <param name="point_info">объект MeteostationInfo - информация о метеостанции</param>
+        /// <param name="info">Метеостанция, с которой загружается ряд</param>
+        /// <param name="onPercentChange"></param>
         /// <returns></returns>
         public RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo info, Action<double> onPercentChange = null)
         {
@@ -211,15 +212,15 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             string str = this.SendStringPostRequest(link, data, referer: "https://rp5.ru/", cookies: this.CookieData, customHeaders: this.Headers);
 
 
-            ///ОШИБКИ rp5.ru
-            ///запросы к reFileSynop.php
-            ///FS004 несуществующий wmo_id
-            ///FS002 ошибки в исходных данных (параметрах запроса)
-            ///FS000 Ошибка авторизации 
-            ///FS001-
-            ///запросы к reStatistSynop.php
-            ///SS000 Ошибка авторизации
-            ///FM000 Время жизни статистики истекло для этой сессии
+            //ОШИБКИ rp5.ru
+            //запросы к reFileSynop.php
+            //FS004 несуществующий wmo_id
+            //FS002 ошибки в исходных данных (параметрах запроса)
+            //FS000 Ошибка авторизации 
+            //FS001-
+            //запросы к reStatistSynop.php
+            //S000 Ошибка авторизации
+            //FM000 Время жизни статистики истекло для этой сессии
             if (str.Contains("FS004"))
                 throw new Exception("Для этого id нет архива погоды");
             if (str.Contains("FS002"))
@@ -265,6 +266,8 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// найти ближайшие метеостанции к выбранной точке прогноза погоды
         /// </summary>
         /// <param name="wmoInfo">информация о точке с погодой</param>
+        /// <param name="loadExtInfo">загружать доп информацию о метеостанции (id, дата начала наблюдения)</param>
+        /// <param name="forceDisableCache">откюлчение кэша</param>
         /// <returns></returns>
         public List<RP5MeteostationInfo> GetMeteostationsAtPoint(WmoInfo wmoInfo, bool loadExtInfo = true, bool forceDisableCache = false)
         {
@@ -346,7 +349,6 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <summary>
         /// получить из страницы архива погоды id метеостанции, дату начала наблюдений. Двнные запишутся в структуру info, где уже должна быть записана ссылка на страницу
         /// </summary>
-        /// <param name="page_link">ссылка на страницу архива</param>
         /// <returns></returns>
         public void GetMeteostationExtInfo(ref RP5MeteostationInfo info)
         {
@@ -552,6 +554,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// Загрузить ряд из файла csv, полученного с сайта
         /// </summary>
         /// <param name="file">файл csv</param>
+        /// <param name="meteostation">Привязка к метеостанции. Если null, то будет найдена из БД по ID из заголовка</param>
         /// <returns></returns>
         public static RawRange LoadCSV(string file, RP5MeteostationInfo meteostation = null)
         {

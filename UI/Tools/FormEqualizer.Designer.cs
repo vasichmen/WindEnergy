@@ -92,6 +92,7 @@
             this.checkBoxSeparateDate.Size = new System.Drawing.Size(194, 17);
             this.checkBoxSeparateDate.TabIndex = 4;
             this.checkBoxSeparateDate.Text = "Дата и время в разных столбцах";
+            this.toolTip1.SetToolTip(this.checkBoxSeparateDate, "Если выбрано, то дата и время в первом и втором столбце соответственно");
             this.checkBoxSeparateDate.UseVisualStyleBackColor = true;
             // 
             // numericUpDownStartLine
@@ -105,6 +106,7 @@
             this.numericUpDownStartLine.Name = "numericUpDownStartLine";
             this.numericUpDownStartLine.Size = new System.Drawing.Size(47, 20);
             this.numericUpDownStartLine.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.numericUpDownStartLine, "Количество пропускаемый строк перед импортом");
             this.numericUpDownStartLine.Value = new decimal(new int[] {
             1,
             0,
@@ -120,6 +122,7 @@
             this.label1.Size = new System.Drawing.Size(102, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Строк в заголовке";
+            this.toolTip1.SetToolTip(this.label1, "Количество пропускаемый строк перед импортом");
             // 
             // buttonStart
             // 

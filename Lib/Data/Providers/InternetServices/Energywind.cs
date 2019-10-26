@@ -117,7 +117,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <summary>
         /// парсер страницы с ограничениями в регионе
         /// </summary>
-        /// <param name="region"информация о регионе></param>
+        /// <param name="region">информация о регионе></param>
         /// <returns></returns>
         private List<BaseLimit> getBasesLimits(RegionInfo region)
         {

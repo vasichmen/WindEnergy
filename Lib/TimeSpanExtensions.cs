@@ -11,7 +11,7 @@ namespace WindEnergy
         /// <summary>
         /// значение атрибута Description у перечисления
         /// </summary>
-        /// <param name="enumElement"></param>
+        /// <param name="timeSpan"></param>
         /// <param name="useNewLine">если истина, то результат будет разбит на несколько строк</param>
         /// <returns></returns>
         public static string ToText(this TimeSpan timeSpan, bool useNewLine = false)

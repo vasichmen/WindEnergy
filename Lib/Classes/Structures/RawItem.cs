@@ -118,6 +118,7 @@ namespace WindEnergy.Lib.Classes.Structures
         /// <param name="direct">направление, град</param>
         /// <param name="temp">температура град,С</param>
         /// <param name="wet">влажность, %</param>
+        /// <param name="press">давление, мм рт. ст.</param>
         public RawItem(double dateArgumentp, double speed, double direct, double temp, double wet, double press)
         {
             Speed = speed;
