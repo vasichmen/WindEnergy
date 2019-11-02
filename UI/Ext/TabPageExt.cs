@@ -71,6 +71,10 @@ namespace WindEnergy.UI.Ext
                 switch (result)
                 {
                     case DialogResult.No:
+                        this.CausesValidation = false;
+                        this.DataGrid.CausesValidation = false;
+                        this.DataGrid.RefreshEdit();
+                        this.DataGrid.EndEdit();
                         (this.Parent as TabControlExt).TabPages.Remove(this); //закрываем вкладку без сохранения
                         return false;
                     case DialogResult.Yes:

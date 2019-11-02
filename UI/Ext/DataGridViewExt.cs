@@ -42,15 +42,13 @@ namespace WindEnergy.UI.Ext
         /// <param name="e"></param>
         private void dataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
+             this.Rows[e.RowIndex].ErrorText = "";
             //проверка значений double на соответствие типу
-            if (e.ColumnIndex == 1 || e.ColumnIndex == 3 || e.ColumnIndex == 4 || e.ColumnIndex == 5)
+            if (e.ColumnIndex == 1 || e.ColumnIndex == 3 || e.ColumnIndex == 4 || e.ColumnIndex == 5 || e.ColumnIndex == 6)
             {
-                try
+                if (!double.TryParse(e.FormattedValue as string,out double d))
                 {
-                    _ = double.Parse(e.FormattedValue as string);
-                }
-                catch (Exception)
-                {
+                    this.Rows[e.RowIndex].ErrorText = "Не удалось распознать число";
                     e.Cancel = true;
                     return;
                 }
@@ -61,16 +59,18 @@ namespace WindEnergy.UI.Ext
                 double dir = double.Parse(e.FormattedValue as string);
                 if (dir < 0 || dir >= 360)
                 {
+                    this.Rows[e.RowIndex].ErrorText = "Направление должно быть в диапазоне от 0 до 360";
                     e.Cancel = true;
                     return;
                 }
             }
             //проверка влажности на допустимый диапазон
-            if (e.ColumnIndex == 5)
+            if (e.ColumnIndex == 6)
             {
                 double dir = double.Parse(e.FormattedValue as string);
                 if (dir < 0 || dir > 100)
                 {
+                    this.Rows[e.RowIndex].ErrorText = "Влажность должна быть в диапазоне от 0 до 100%";
                     e.Cancel = true;
                     return;
                 }
