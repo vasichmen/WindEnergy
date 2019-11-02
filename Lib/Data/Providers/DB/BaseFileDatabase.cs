@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WindEnergy.Lib.Data.Providers.DB
 {
     /// <summary>
-    /// базовые функции для работы файловой БД метеостанций
+    /// базовые функции для работы файловой БД
     /// </summary>
     /// <typeparam name="TKey">ключ по которому хранятся данные</typeparam>
     /// <typeparam name="TData">тип данных в БД</typeparam>

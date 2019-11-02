@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
+using WindEnergy.Lib.Classes.Structures.Options;
 using WindEnergy.Lib.Data.Providers.FileSystem;
 using WindEnergy.UI.Ext;
 
@@ -63,19 +64,16 @@ namespace WindEnergy.UI.Dialogs
             comboBoxDirectUnit.Items.Clear();
             foreach (string item in DirectionUnits.Degrees.GetItems())
                 _ = comboBoxDirectUnit.Items.Add(item);
-            comboBoxDirectUnit.SelectedItem = DirectionUnits.TextRP5.Description();
 
             //давление
             comboBoxPressUnit.Items.Clear();
             foreach (string item in PressureUnits.KPa.GetItems())
                 _ = comboBoxPressUnit.Items.Add(item);
-            comboBoxPressUnit.SelectedItem = PressureUnits.KPa.Description();
 
             //влажность
             comboBoxWetUnit.Items.Clear();
             foreach (string item in WetnessUnits.Parts.GetItems())
                 _ = comboBoxWetUnit.Items.Add(item);
-            comboBoxWetUnit.SelectedItem = WetnessUnits.Parts.Description();
 
             //установка тегов для полей колонок
             numericUpDownColDate.Tag = ImportFields.Date;
@@ -84,6 +82,9 @@ namespace WindEnergy.UI.Dialogs
             numericUpDownColWet.Tag = ImportFields.Wetness;
             numericUpDownColDirect.Tag = ImportFields.Direction;
             numericUpDownColPress.Tag = ImportFields.Pressure;
+
+            //начальные значения для контролов из последнего импорта
+            installControls(Vars.Options.TextImportState);
 
             writeImporter();
             update();
@@ -126,8 +127,33 @@ namespace WindEnergy.UI.Dialogs
             }
         }
 
+
         /// <summary>
-        /// обновление полей после изменения параметров импорта
+        /// Установить все контролы в соответствии с заданными настройками
+        /// </summary>
+        /// <param name="state"></param>
+        private void installControls(TextImporterState state)
+        {
+            try
+            {
+                numericUpDownColDate.Value = state.DateColumn;
+                numericUpDownColDirect.Value = state.DirectionColumn;
+                numericUpDownColPress.Value = state.PressColumn;
+                numericUpDownColSpeed.Value = state.SpeedColumn;
+                numericUpDownColTemper.Value = state.TemperatureColumn;
+                numericUpDownColWet.Value = state.WetnessColumnm;
+                comboBoxDirectUnit.SelectedItem = state.DirectionUnits.Description();
+                comboBoxPressUnit.SelectedItem = state.PressureUnits.Description();
+                comboBoxWetUnit.SelectedItem = state.WetnessUnits.Description();
+                textBoxTrimmers.Text = state.Trimmers;
+                textBoxDelimeter.Text = state.Delimeter;
+            }
+            catch (Exception)
+            { }
+        }
+
+        /// <summary>
+        /// обновление полей, установка ошибок после изменения параметров импорта
         /// </summary>
         private void update()
         {
@@ -158,8 +184,11 @@ namespace WindEnergy.UI.Dialogs
                 try
                 {
                     string success = importer.CheckParameters();
-                    toolStripStatusLabelImportOptionsCorrect.ForeColor = Color.Green;
+                    toolStripStatusLabelImportOptionsCorrect.ForeColor = Color.Green; //если ошибок не произошло, то устанавливаем зеленый статус
                     toolStripStatusLabelImportOptionsCorrect.Text = success;
+
+                    //сохраняем состояние импорта для следующего запуска
+                    saveImportState();
                 }
                 catch (ArgumentException aex)
                 {
@@ -189,6 +218,24 @@ namespace WindEnergy.UI.Dialogs
                 dataGridViewImported.DataSource = null;
             }
             scintillaExample.ReadOnly = true;
+        }
+
+        /// <summary>
+        /// сохранение текущего состояния настроек импорта полей в настройки
+        /// </summary>
+        private void saveImportState()
+        {
+            Vars.Options.TextImportState.DateColumn = (int)numericUpDownColDate.Value;
+            Vars.Options.TextImportState.DirectionColumn = (int)numericUpDownColDirect.Value;
+            Vars.Options.TextImportState.PressColumn = (int)numericUpDownColPress.Value;
+            Vars.Options.TextImportState.SpeedColumn = (int)numericUpDownColSpeed.Value;
+            Vars.Options.TextImportState.TemperatureColumn = (int)numericUpDownColTemper.Value;
+            Vars.Options.TextImportState.WetnessColumnm = (int)numericUpDownColWet.Value;
+            Vars.Options.TextImportState.DirectionUnits = (DirectionUnits)(new EnumTypeConverter<DirectionUnits>().ConvertFrom(comboBoxDirectUnit.SelectedItem));
+            Vars.Options.TextImportState.PressureUnits = (PressureUnits)(new EnumTypeConverter<PressureUnits>().ConvertFrom(comboBoxPressUnit.SelectedItem));
+            Vars.Options.TextImportState.WetnessUnits = (WetnessUnits)(new EnumTypeConverter<WetnessUnits>().ConvertFrom(comboBoxWetUnit.SelectedItem));
+            Vars.Options.TextImportState.Trimmers = textBoxTrimmers.Text;
+            Vars.Options.TextImportState.Delimeter = textBoxDelimeter.Text;
         }
 
         /// <summary>
@@ -285,7 +332,7 @@ namespace WindEnergy.UI.Dialogs
                 importer.Coordinates = spt.Result;
                 update();
             }
-                spt.Dispose();
+            spt.Dispose();
         }
 
         /// <summary>
@@ -321,7 +368,7 @@ namespace WindEnergy.UI.Dialogs
         /// <param name="e"></param>
         public void DataGridView_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
         {
-            if (e==null || e.Column == null || e.Column.Name == null)
+            if (e == null || e.Column == null || e.Column.Name == null)
                 return;
             switch (e.Column.Name.ToLower())
             {
@@ -369,46 +416,40 @@ namespace WindEnergy.UI.Dialogs
 
         private void defaultRP5wmoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                numericUpDownColDate.Value = 1;
-                numericUpDownColDirect.Value = 7;
-                numericUpDownColPress.Value = 3;
-                numericUpDownColSpeed.Value = 8;
-                numericUpDownColTemper.Value = 2;
-                numericUpDownColWet.Value = 6;
-                comboBoxDirectUnit.SelectedItem = DirectionUnits.TextRP5.Description();
-                comboBoxPressUnit.SelectedItem = PressureUnits.mmHgArt.Description();
-                comboBoxWetUnit.SelectedItem = WetnessUnits.Percents.Description();
-                textBoxTrimmers.Text = "\"";
-                textBoxDelimeter.Text = ";";
-                writeImporter();
-                update();
-            }
-            catch (Exception)
-            { }
+            TextImporterState state = new TextImporterState();
+            state.DateColumn = 1;
+            state.DirectionColumn = 7;
+            state.PressColumn = 3;
+            state.SpeedColumn = 8;
+            state.TemperatureColumn = 2;
+            state.WetnessColumnm = 6;
+            state.DirectionUnits = DirectionUnits.TextRP5;
+            state.PressureUnits = PressureUnits.mmHgArt;
+            state.WetnessUnits = WetnessUnits.Percents;
+            state.Trimmers = "\"";
+            state.Delimeter = ";";
+            installControls(state);
+            writeImporter();
+            update();
         }
 
         private void defaultRP5metarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                numericUpDownColDate.Value = 1;
-                numericUpDownColDirect.Value = 6;
-                numericUpDownColPress.Value = 3;
-                numericUpDownColSpeed.Value = 7;
-                numericUpDownColTemper.Value = 2;
-                numericUpDownColWet.Value = 5;
-                comboBoxDirectUnit.SelectedItem = DirectionUnits.TextRP5.Description();
-                comboBoxPressUnit.SelectedItem = PressureUnits.mmHgArt.Description();
-                comboBoxWetUnit.SelectedItem = WetnessUnits.Percents.Description();
-                textBoxTrimmers.Text = "\"";
-                textBoxDelimeter.Text = ";";
-                writeImporter();
-                update();
-            }
-            catch (Exception)
-            { }
+            TextImporterState state = new TextImporterState();
+            state.DateColumn = 1;
+            state.DirectionColumn = 6;
+            state.PressColumn = 3;
+            state.SpeedColumn = 7;
+            state.TemperatureColumn = 2;
+            state.WetnessColumnm = 5;
+            state.DirectionUnits = DirectionUnits.TextRP5;
+            state.PressureUnits = PressureUnits.mmHgArt;
+            state.WetnessUnits = WetnessUnits.Percents;
+            state.Trimmers = "\"";
+            state.Delimeter = ";";
+            installControls(state);
+            writeImporter();
+            update();
         }
 
         #endregion

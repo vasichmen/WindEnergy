@@ -90,12 +90,26 @@ namespace WindEnergy.UI.Tools
         {
             SaveFileDialog sf = new SaveFileDialog();
             sf.InitialDirectory = Vars.Options.LastDirectory;
-            sf.Filter = "Файл MS Excel с разделителями-запятыми *.csv | *.csv";
+            sf.Filter = "Файл MS Excel *.xlsx | *.xlsx";
+            sf.Filter += "|Файл *.csv | *.csv";
+            sf.AddExtension = true;
+            sf.FileName = "Статистика наблюдений для  " + range.Name;
             sf.AddExtension = true;
             if (sf.ShowDialog(this) == DialogResult.OK)
             {
                 Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
-                new CSVFile().SaveRangeQualityInfo(sf.FileName, qualityInfo, range.Length);
+                FileProvider provider;
+                switch (Path.GetExtension(sf.FileName))
+                {
+                    case ".csv":
+                        provider = new CSVFile();
+                        break;
+                    case ".xlsx":
+                        provider = new ExcelFile();
+                        break;
+                    default: throw new Exception("Этот тип файла не реализован");
+                }
+                provider.SaveRangeQualityInfo(sf.FileName, qualityInfo, range.Length);
                 _ = Process.Start(sf.FileName);
             }
         }

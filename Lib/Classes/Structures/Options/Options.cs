@@ -41,6 +41,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             NormalLawPirsonCoefficientDiapason = new Diapason<double>(0, 5);
             CurrentSpeedGradationType = GradationTypes.Voeykow;
             UserSpeedGradation = new UserGradation();
+            TextImportState = new TextImporterState();
             CalculateAirDensity = false;
             ETOPO2Folder = Application.StartupPath + "\\Data\\ETOPO";
             RP5SearchEngine = RP5SearchEngine.OnlineAPI;
@@ -204,6 +205,11 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// настройки пользовательских градаций скорости
         /// </summary>
         public UserGradation UserSpeedGradation { get; set; }
+
+        /// <summary>
+        /// состояние импорта из тексстовых файлов
+        /// </summary>
+        public TextImporterState TextImportState { get;  set; }
 
         /// <summary>
         /// если истина, то в расчётах плотность воздуха будет рассчитываться по параметрам ряда и высоте над у. м.

@@ -167,6 +167,7 @@
     <Compile Include="Classes\Structures\BaseMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Diapason.cs" />
     <Compile Include="Classes\Structures\FlugerMeteostationInfo.cs" />
+    <Compile Include="Classes\Structures\Options\TextImporterState.cs" />
     <Compile Include="Classes\Structures\RP5MeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Options\Options.cs" />
     <Compile Include="Classes\Generic\PropertyComparer.cs" />
