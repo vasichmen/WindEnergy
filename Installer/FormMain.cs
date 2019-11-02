@@ -31,7 +31,7 @@ namespace Installer
         private void buttonGenerate_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.SelectedPath = Application.ExecutablePath;
+            fbd.SelectedPath = Application.StartupPath;
             fbd.Description = "Выберите папку для сохранения ключа";
             if (fbd.ShowDialog() == DialogResult.OK)
             {

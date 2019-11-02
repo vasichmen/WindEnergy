@@ -90,7 +90,10 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 RP5MeteostationInfo meteostation = null;
                 int start = title.IndexOf("ID=") + "ID=".Length;
                 string id_s = title.Substring(start);
-                meteostation = Vars.RP5Meteostations.GetByID(int.Parse(id_s));
+                if (id_s.ToLower() != "nasa" && id_s.ToLower() != "undefined")
+                    meteostation = Vars.RP5Meteostations.GetByID(int.Parse(id_s));
+                //else
+                    //meteostation = Vars.RP5Meteostations.GetNearestMS(coord, false); //для NASA ищем ближайшую МС
                 res.Meteostation = meteostation;
                 res.EndChange();
                 return res;
@@ -132,13 +135,13 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 int i = 3;
                 foreach (SinglePeriodInfo spi in years.Years)
                 {
-                    worksheet.Cells[i, 1].Value = spi.Year.ToString();
-                    worksheet.Cells[i, 2].Value = spi.Completness.ToString("0.0");
+                    worksheet.Cells[i, 1].Value = spi.Year;
+                    worksheet.Cells[i, 2].Value = Math.Round( spi.Completness,1);
                     worksheet.Cells[i, 3].Value = spi.Interval.Description();
-                    worksheet.Cells[i, 4].Value = spi.SpeedDeviation.ToString("0.00");
-                    worksheet.Cells[i, 5].Value = spi.SpeedDeviationPercent.ToString("0.00");
-                    worksheet.Cells[i, 6].Value = spi.ExpectancyDeviation.ToString("0.00");
-                    worksheet.Cells[i, 7].Value = spi.AverageSpeed.ToString("0.00");
+                    worksheet.Cells[i, 4].Value = Math.Round(spi.SpeedDeviation,2);
+                    worksheet.Cells[i, 5].Value = Math.Round(spi.SpeedDeviationPercent,2);
+                    worksheet.Cells[i, 6].Value = Math.Round(spi.ExpectancyDeviation,2);
+                    worksheet.Cells[i, 7].Value = Math.Round(spi.AverageSpeed,2);
                     i++;
                 }
                 //Save your file
@@ -258,22 +261,22 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
             }
 
             //  "Год;Месяц;кол-во изм;0.75;2.5;4.5;6.5;8.5;10.5;12.5;14.5;16.5;19;22.5;26.5;31.5;37.5;43.5;Vmin;Vmax;Vср.год;Cv(V);Nвал уд.;Эвал уд.;С;СВ;В;ЮВ;Ю;ЮЗ;З;СЗ;штиль";
-            List<string> values = new List<string>() { year, month, amount.ToString() };
+            List<object> values = new List<object>() { year, month, amount };
 
             //повторяемости скоростей ветра
             for (int j = 0; j < stat_speeds.Keys.Count; j++)
-                values.Add((stat_speeds.Values[j] * 100).ToString("0.00"));
+                values.Add(Math.Round((stat_speeds.Values[j] * 100),2));
 
             //по ряду наблюдений
-            values.AddRange(new List<string>() {
-                range_info.Vmin.ToString("0.00"),
-                range_info.Vmax.ToString("0.00"),
-                range_info.V0.ToString("0.00"),
-                range_info.Cv.ToString("0.00"),
-                range_info.VeybullGamma.ToString("0.00"),
-                range_info.VeybullBeta.ToString("0.00"),
-                range_info.PowerDensity.ToString("0.00"),
-                range_info.EnergyDensity.ToString("0.00")
+            values.AddRange(new List<object>() {
+               Math.Round( range_info.Vmin,2),
+              Math.Round(  range_info.Vmax,2),
+              Math.Round(range_info.V0,2),
+              Math.Round(range_info.Cv,2),
+              Math.Round(range_info.VeybullGamma,2),
+              Math.Round(range_info.VeybullBeta,2),
+              Math.Round(range_info.PowerDensity,2),
+               Math.Round(range_info.EnergyDensity,2)
             });
 
             //повторяемости направлений ветра
@@ -284,7 +287,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 int index = stat_directions.Keys.IndexOf(rhumb);
                 if (index == -1)
                     continue;
-                values.Add((stat_directions.Values[index] * 100).ToString("0.00"));
+                values.Add(Math.Round((stat_directions.Values[index] * 100),2));
             }
 
             //запись всех значений
@@ -391,9 +394,6 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 FileInfo fi = new FileInfo(filename);
                 excelPackage.SaveAs(fi);
             }
-
-
-
         }
     }
 }

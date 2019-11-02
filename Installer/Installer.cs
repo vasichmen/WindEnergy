@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WindEnergy.Lib;
 using IWshRuntimeLibrary;
 using System.Diagnostics;
+using WindEnergy;
 
 namespace Installer
 {

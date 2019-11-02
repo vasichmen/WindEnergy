@@ -75,11 +75,11 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// <returns></returns>
         private static double getMaxSpeed(RawRange input)
         {
-            double res = int.MinValue;
+            double res = double.MinValue;
             foreach (var l in input)
-                if (l.Speed > res)
+                if (l.Speed > res && !double.IsNaN(l.Speed))
                     res = l.Speed;
-            return res;
+            return res == double.MinValue ? double.NaN : res;
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace WindEnergy.Lib.Statistic.Calculations
         /// <returns></returns>
         private static double getMinSpeed(RawRange input)
         {
-            double res = int.MaxValue;
+            double res = double.MaxValue;
             foreach (var l in input)
-                if (l.Speed < res)
+                if (l.Speed < res && !double.IsNaN(l.Speed))
                     res = l.Speed;
-            return res;
+            return res == double.MaxValue ? double.NaN : res;
         }
 
         /// <summary>
@@ -105,11 +105,17 @@ namespace WindEnergy.Lib.Statistic.Calculations
         private static double getAveragePower(RawRange input, double density)
         {
             double sum = 0;
+            int c = 0;
             foreach (var l in input)
             {
-                sum += 0.5d * density * Math.Pow(l.Speed, 3);
+                if (!double.IsNaN(l.Speed))
+                {
+                    sum += 0.5d * density * Math.Pow(l.Speed, 3);
+                    c++;
+                }
             }
-            return sum / (input.Count);
+            double res = c==0?double.NaN: sum / c;
+            return res;
         }
 
 
@@ -122,11 +128,17 @@ namespace WindEnergy.Lib.Statistic.Calculations
         private static double getSigmV(double average, RawRange input)
         {
             double sum = 0;
+            int c = 0;
             foreach (var l in input)
             {
-                sum += Math.Pow(l.Speed - average, 2);
+                if (!double.IsNaN(l.Speed))
+                {
+                    sum += Math.Pow(l.Speed - average, 2);
+                    c++;
+                }
             }
-            return Math.Sqrt(sum / (input.Count - 1));
+            double res = c-1<=0?double.NaN:  Math.Sqrt(sum / (c - 1));
+            return res;
 
         }
 
@@ -141,20 +153,27 @@ namespace WindEnergy.Lib.Statistic.Calculations
             if (year == -1)
             {
                 double sum = 0;
+                int c = 0;
                 foreach (var l in input)
+                    if(!double.IsNaN(l.Speed))
+                {
                     sum += l.Speed;
-                return sum / input.Count;
+                    c++;
+                }
+                if (c == 0) return double.NaN;
+                return sum / c;
             }
             else
             {
                 double sum = 0;
                 int c = 0;
                 foreach (var l in input)
-                    if (l.Date.Year == year)
+                    if (l.Date.Year == year && !double.IsNaN(l.Speed))
                     {
                         sum += l.Speed;
                         c++;
                     }
+                if (c == 0) return double.NaN;
                 return sum / c;
             }
         }

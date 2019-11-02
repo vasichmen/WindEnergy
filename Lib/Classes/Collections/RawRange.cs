@@ -234,7 +234,7 @@ namespace WindEnergy.Lib.Classes.Collections
             if (isPeriod)
             {
                 res = new RawRange((from ttt in this
-                                    where ttt.Date > fromDate && ttt.Date < toDate
+                                    where ttt.Date >= fromDate && ttt.Date <= toDate
                                     orderby ttt.Date
                                     select ttt).ToList());
             }
