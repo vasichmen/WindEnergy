@@ -30,6 +30,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             StaticMeteostationCoordinatesSourceFile = Application.StartupPath + "\\Data\\staticMeteostationCoordinates.txt";
             StaticAMSDatabaseSourceFile = Application.StartupPath + "\\Data\\AMS.database.txt";
             StaticFlugerDatabaseSourceFile = Application.StartupPath + "\\Data\\Fluger.database.txt";
+            StaticEquipmentDatabaseSourceFile = Application.StartupPath + "\\Data\\Equipment.database.txt";
             QualifierSectionLength = 20; //20 измерений
             QualifierDaysToNewInterval = 60; //2 месяца
             QualifierDaysToBeginMissing = 30; //1 месяца
@@ -96,6 +97,11 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// адрес файла коэффициентов местности
         /// </summary>
         public string StaticFlugerDatabaseSourceFile { get; set; }
+
+        /// <summary>
+        /// адрес файла БД оборудования
+        /// </summary>
+        public string StaticEquipmentDatabaseSourceFile { get; set; }
 
         /// <summary>
         /// длина отрезка (количество измерений) при разбиении на промежутки для поиска разделов интервалов наблюдений

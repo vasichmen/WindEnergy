@@ -128,5 +128,20 @@ namespace WindEnergy
             set { _FlugerMeteostations = value; }
         }
         private static FlugerMeteostationDatabase _FlugerMeteostations = null;
+
+        /// <summary>
+        /// БД оборудования
+        /// </summary>
+        public static EquipmentDatabase EquipmentDatabase
+        {
+            get
+            {
+                if (_EquipmentDatabase == null)
+                    _EquipmentDatabase = new EquipmentDatabase(Options.StaticEquipmentDatabaseSourceFile);
+                return _EquipmentDatabase;
+            }
+            set { _EquipmentDatabase = value; }
+        }
+        private static EquipmentDatabase _EquipmentDatabase = null;
     }
 }

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace WindEnergy.Lib.Classes.Structures
 {
+    /// <summary>
+    /// Универсальная информация о МС
+    /// </summary>
    public abstract class BaseMeteostationInfo
     {
         /// <summary>

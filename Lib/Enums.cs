@@ -462,6 +462,7 @@ namespace WindEnergy
     /// <summary>
     /// типы градаций для повторяемости скорости ветра
     /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<GradationTypes>))]
     public enum GradationTypes
     {
         [Description("NASA")]
@@ -506,7 +507,8 @@ namespace WindEnergy
     /// единицы измерения давления
     /// </summary>
     [TypeConverter(typeof(EnumTypeConverter<PressureUnits>))]
-    public enum PressureUnits {
+    public enum PressureUnits
+    {
         /// <summary>
         /// КПа
         /// </summary>
@@ -589,4 +591,23 @@ namespace WindEnergy
 
     }
     #endregion
+
+    /// <summary>
+    /// Типы регулирования турбин
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<TurbineRegulations>))]
+    public enum TurbineRegulations
+    {
+        [Description("Pitch")]
+        Pitch,
+
+        [Description("Stall")]
+        Stall,
+
+        [Description("Fixed")]
+        Fixed,
+
+        [Description("Неизвестно")]
+        None,
+    }
 }
