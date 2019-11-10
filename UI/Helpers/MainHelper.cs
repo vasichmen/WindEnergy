@@ -29,7 +29,7 @@ namespace WindEnergy.UI.Helpers
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        internal RawRange OpenFile(Form form=null)
+        internal RawRange OpenFile(Form form = null)
         {
             if (form == null)
                 form = f;
@@ -53,8 +53,7 @@ namespace WindEnergy.UI.Helpers
                     }
                     catch (Exception ex)
                     {
-                        _ = MessageBox.Show(form, ex.Message, "Открытие файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return null;
+                        _ = MessageBox.Show(form, ex.Message, "Открытие файла " + file, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -68,30 +67,39 @@ namespace WindEnergy.UI.Helpers
         /// <param name="rang"></param>
         internal string SaveAsFile(RawRange rang, string fileName = null)
         {
-            if (fileName == null)
+            try
             {
-                SaveFileDialog sf = new SaveFileDialog();
-                sf.InitialDirectory = Vars.Options.LastDirectory;
-                sf.AddExtension = true;
-                sf.FileName = rang.Name;
-                sf.Filter = "Файл Excel (*.xlsx)|*.xlsx";
-                sf.Filter += "|Файл csv (*.csv)|*.csv";
-
-                if (sf.ShowDialog(f) == DialogResult.OK)
+                if (fileName == null)
                 {
-                    Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
-                    RawRangeSerializer.SerializeFile(rang, sf.FileName);
-                    rang.FilePath = sf.FileName;
-                    return sf.FileName;
+                    SaveFileDialog sf = new SaveFileDialog();
+                    sf.InitialDirectory = Vars.Options.LastDirectory;
+                    sf.AddExtension = true;
+                    sf.FileName = rang.Name;
+                    sf.Filter = "Файл Excel (*.xlsx)|*.xlsx";
+                    sf.Filter += "|Файл csv (*.csv)|*.csv";
+
+                    if (sf.ShowDialog(f) == DialogResult.OK)
+                    {
+                        Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
+                        RawRangeSerializer.SerializeFile(rang, sf.FileName);
+                        rang.FilePath = sf.FileName;
+                        return sf.FileName;
+                    }
+                    sf.Dispose();
+                    return null;
                 }
-                sf.Dispose();
-                return null;
+                else
+                {
+                    RawRangeSerializer.SerializeFile(rang, fileName);
+                    rang.FilePath = fileName;
+                    return fileName;
+                }
             }
-            else
+            catch (Exception e)
             {
-                RawRangeSerializer.SerializeFile(rang, fileName);
-                rang.FilePath = fileName;
-                return fileName;
+                string msg = e.InnerException.InnerException != null ? e.InnerException.InnerException.Message : e.Message;
+                _ = MessageBox.Show(this.f, $"Не удалось сохранить файл, причина:\r\n{msg}", "Сохранение файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
         }
 

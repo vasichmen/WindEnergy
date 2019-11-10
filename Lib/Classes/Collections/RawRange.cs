@@ -47,14 +47,26 @@ namespace WindEnergy.Lib.Classes.Collections
         /// <summary>
         /// статистика ряда (полнота, количество элементов, интервалы измерений)
         /// </summary>
-        public QualityInfo Quality { get {
+        public QualityInfo Quality
+        {
+            get
+            {
                 if (_quality != null) return _quality;
-                else { _quality = Qualifier.ProcessRange(this); return _quality; } } }
+                else { _quality = Qualifier.ProcessRange(this); return _quality; }
+            }
+        }
 
         /// <summary>
         /// название
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get => _name; set
+            {
+                _name = value.Replace("\\", "").Replace("/", "").Replace("?", "").Replace(":", "").Replace("*", "").Replace("\"", "").Replace("<", "").Replace(">", "").Replace("|", "");
+            }
+        }
+        private string _name;
 
         /// <summary>
         /// информация об метеостанции, откуда получены данные

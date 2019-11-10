@@ -51,6 +51,7 @@
             this.labelBeta = new System.Windows.Forms.Label();
             this.labelVmax = new System.Windows.Forms.Label();
             this.labelVmin = new System.Windows.Forms.Label();
+            this.labelAirDensity = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -60,6 +61,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.zedGraphControlSpeed = new ZedGraph.ZedGraphControl();
             this.dateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerTo = new System.Windows.Forms.DateTimePicker();
@@ -73,8 +75,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonSaveAs = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
-            this.labelAirDensity = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -111,7 +111,7 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 141F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 178F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(557, 624);
@@ -121,7 +121,7 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.zedGraphControlDirection, 3);
             this.zedGraphControlDirection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zedGraphControlDirection.Location = new System.Drawing.Point(3, 385);
+            this.zedGraphControlDirection.Location = new System.Drawing.Point(3, 404);
             this.zedGraphControlDirection.Name = "zedGraphControlDirection";
             this.zedGraphControlDirection.ScrollGrace = 0D;
             this.zedGraphControlDirection.ScrollMaxX = 0D;
@@ -130,7 +130,7 @@
             this.zedGraphControlDirection.ScrollMinX = 0D;
             this.zedGraphControlDirection.ScrollMinY = 0D;
             this.zedGraphControlDirection.ScrollMinY2 = 0D;
-            this.zedGraphControlDirection.Size = new System.Drawing.Size(551, 236);
+            this.zedGraphControlDirection.Size = new System.Drawing.Size(551, 217);
             this.zedGraphControlDirection.TabIndex = 4;
             this.zedGraphControlDirection.UseExtendedPrintDialog = true;
             // 
@@ -147,7 +147,7 @@
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(356, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(198, 135);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(198, 172);
             this.flowLayoutPanel3.TabIndex = 2;
             // 
             // label11
@@ -229,7 +229,7 @@
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(152, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(198, 135);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(198, 172);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // label10
@@ -313,6 +313,15 @@
             this.labelVmin.TabIndex = 18;
             this.labelVmin.Text = "label6";
             // 
+            // labelAirDensity
+            // 
+            this.labelAirDensity.AutoSize = true;
+            this.labelAirDensity.Location = new System.Drawing.Point(3, 117);
+            this.labelAirDensity.Name = "labelAirDensity";
+            this.labelAirDensity.Size = new System.Drawing.Size(35, 13);
+            this.labelAirDensity.TabIndex = 19;
+            this.labelAirDensity.Text = "label6";
+            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.label9);
@@ -329,7 +338,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 13, 0, 0);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(143, 135);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(143, 172);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // label9
@@ -404,11 +413,20 @@
             this.label14.TabIndex = 17;
             this.label14.Text = "Минимальная скорость";
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(3, 117);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(104, 13);
+            this.label15.TabIndex = 18;
+            this.label15.Text = "Плотность воздуха";
+            // 
             // zedGraphControlSpeed
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.zedGraphControlSpeed, 3);
             this.zedGraphControlSpeed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zedGraphControlSpeed.Location = new System.Drawing.Point(3, 144);
+            this.zedGraphControlSpeed.Location = new System.Drawing.Point(3, 181);
             this.zedGraphControlSpeed.Name = "zedGraphControlSpeed";
             this.zedGraphControlSpeed.ScrollGrace = 0D;
             this.zedGraphControlSpeed.ScrollMaxX = 0D;
@@ -417,7 +435,7 @@
             this.zedGraphControlSpeed.ScrollMinX = 0D;
             this.zedGraphControlSpeed.ScrollMinY = 0D;
             this.zedGraphControlSpeed.ScrollMinY2 = 0D;
-            this.zedGraphControlSpeed.Size = new System.Drawing.Size(551, 235);
+            this.zedGraphControlSpeed.Size = new System.Drawing.Size(551, 217);
             this.zedGraphControlSpeed.TabIndex = 3;
             this.zedGraphControlSpeed.UseExtendedPrintDialog = true;
             // 
@@ -552,24 +570,6 @@
             this.buttonSaveAs.Text = "Соранить результаты в файл";
             this.buttonSaveAs.UseVisualStyleBackColor = true;
             this.buttonSaveAs.Click += new System.EventHandler(this.buttonSaveAs_Click);
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(3, 117);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(104, 13);
-            this.label15.TabIndex = 18;
-            this.label15.Text = "Плотность воздуха";
-            // 
-            // labelAirDensity
-            // 
-            this.labelAirDensity.AutoSize = true;
-            this.labelAirDensity.Location = new System.Drawing.Point(3, 117);
-            this.labelAirDensity.Name = "labelAirDensity";
-            this.labelAirDensity.Size = new System.Drawing.Size(35, 13);
-            this.labelAirDensity.TabIndex = 19;
-            this.labelAirDensity.Text = "label6";
             // 
             // FormEnergyInfo
             // 

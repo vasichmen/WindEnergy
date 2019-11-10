@@ -4,11 +4,13 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Operations.Structures;
@@ -25,6 +27,56 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
     /// </summary>
     public class ExcelFile : FileProvider
     {
+        private static string DateTimeFormat = DateTimeFormatInfo.CurrentInfo.ShortDatePattern + " " + DateTimeFormatInfo.CurrentInfo.LongTimePattern;
+
+        /// <summary>
+        /// Преобразовать значение ячейки в double
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
+        private double getDouble(ExcelRange cell)
+        {
+            if (cell == null || cell.Value == null)
+                return double.NaN;
+
+            if (cell.Value.GetType() == typeof(double))
+                return (double)cell.Value;
+            else
+            {
+                string val = cell.Value.ToString();
+                try { return double.Parse(val); }
+                catch (Exception)
+                { throw new WindEnergyException($"Не удалось распознать значение \"{val}\" как double"); }
+            }
+        }
+
+        /// <summary>
+        /// преобразовать значение ячейки в DateTime
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
+        private DateTime getDateTime(ExcelRange cell)
+        {
+            if (cell == null)
+                throw new ArgumentNullException(nameof(cell));
+            try
+            {
+                try
+                {
+                    double val = getDouble(cell);
+                    return DateTime.FromOADate(val);
+                }
+                catch (WindEnergyException)
+                {
+                    return DateTime.Parse(cell.Value.ToString());
+                }
+            }
+            catch (WindEnergyException)
+            { throw new WindEnergyException($"Не удалось распознать значение \"{cell.Value.ToString()}\" как DateTime"); }
+            catch (FormatException ex)
+            { throw new WindEnergyException($"Не удалось распознать значение \"{cell.Value.ToString()}\" как DateTime\r\n({ex.Message})"); }
+        }
+
         /// <summary>
         /// Загрузка ряда из файла xlsx
         /// </summary>
@@ -59,32 +111,21 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 res.Position = coord;
                 res.BeginChange();
 
+                var arr = worksheet.Cells;
                 for (int i = 5; i <= worksheet.Dimension.Rows; i++)
                 {
-                    List<string> elems = new List<string>();
-                    for (int j = 1; j <= worksheet.Dimension.Columns; j++)
-                        if (worksheet.Cells[i, j] != null && worksheet.Cells[i, j].Value != null)
-                            elems.Add(worksheet.Cells[i, j].Value.ToString());
+                    DateTime dt = getDateTime(arr[i, 1]);
+                    double temp = getDouble(arr[i, 2]);
+                    double spd = getDouble(arr[i, 5]);
+                    double press = getDouble(arr[i, 6]);
+                    double wet = getDouble(arr[i, 3]);
+                    double dirs = getDouble(arr[i, 4]);
 
-                    if (elems.Count < 6)
-                        continue;
-                    if (elems[3] == "")
-                        continue;
-                    if (elems[4] == "")
-                        continue;
-
-                    double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Vars.DecimalSeparator));
-                    DateTime dt = DateTime.Parse(elems[0]);
-                    double spd = double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
-                    double press = double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
-                    double wet = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
-                    double dirs = double.Parse(elems[3].Replace('.', Vars.DecimalSeparator));
                     try
                     { res.Add(new RawItem() { Date = dt, Direction = dirs, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press }); }
                     catch (Exception)
                     { continue; }
                 }
-
 
                 //поиск информации о МС
                 RP5MeteostationInfo meteostation = null;
@@ -93,7 +134,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 if (id_s.ToLower() != "nasa" && id_s.ToLower() != "undefined")
                     meteostation = Vars.RP5Meteostations.GetByID(int.Parse(id_s));
                 //else
-                    //meteostation = Vars.RP5Meteostations.GetNearestMS(coord, false); //для NASA ищем ближайшую МС
+                //meteostation = Vars.RP5Meteostations.GetNearestMS(coord, false); //для NASA ищем ближайшую МС
                 res.Meteostation = meteostation;
                 res.EndChange();
                 return res;
@@ -136,12 +177,12 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 foreach (SinglePeriodInfo spi in years.Years)
                 {
                     worksheet.Cells[i, 1].Value = spi.Year;
-                    worksheet.Cells[i, 2].Value = Math.Round( spi.Completness,1);
+                    worksheet.Cells[i, 2].Value = Math.Round(spi.Completness, 1);
                     worksheet.Cells[i, 3].Value = spi.Interval.Description();
-                    worksheet.Cells[i, 4].Value = Math.Round(spi.SpeedDeviation,2);
-                    worksheet.Cells[i, 5].Value = Math.Round(spi.SpeedDeviationPercent,2);
-                    worksheet.Cells[i, 6].Value = Math.Round(spi.ExpectancyDeviation,2);
-                    worksheet.Cells[i, 7].Value = Math.Round(spi.AverageSpeed,2);
+                    worksheet.Cells[i, 4].Value = Math.Round(spi.SpeedDeviation, 2);
+                    worksheet.Cells[i, 5].Value = Math.Round(spi.SpeedDeviationPercent, 2);
+                    worksheet.Cells[i, 6].Value = Math.Round(spi.ExpectancyDeviation, 2);
+                    worksheet.Cells[i, 7].Value = Math.Round(spi.AverageSpeed, 2);
                     i++;
                 }
                 //Save your file
@@ -265,7 +306,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
 
             //повторяемости скоростей ветра
             for (int j = 0; j < stat_speeds.Keys.Count; j++)
-                values.Add(Math.Round((stat_speeds.Values[j] * 100),2));
+                values.Add(Math.Round((stat_speeds.Values[j] * 100), 2));
 
             //по ряду наблюдений
             values.AddRange(new List<object>() {
@@ -287,7 +328,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 int index = stat_directions.Keys.IndexOf(rhumb);
                 if (index == -1)
                     continue;
-                values.Add(Math.Round((stat_directions.Values[index] * 100),2));
+                values.Add(Math.Round((stat_directions.Values[index] * 100), 2));
             }
 
             //запись всех значений
@@ -380,7 +421,9 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 {
                     if (double.IsNaN(item.Direction) || double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections.Undefined)
                         continue;
-                    worksheet.Cells[i, 1].Value = item.Date.ToString("dd.MM.yyyy HH:mm");
+                    worksheet.Cells[i, 1].Style.Numberformat.Format = DateTimeFormat;
+                    worksheet.Cells[i, 1].Value = item.Date;
+
                     worksheet.Cells[i, 2].Value = item.Temperature;
                     worksheet.Cells[i, 3].Value = item.Wetness;
                     worksheet.Cells[i, 4].Value = item.Direction;
@@ -393,6 +436,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 //Save your file
                 FileInfo fi = new FileInfo(filename);
                 excelPackage.SaveAs(fi);
+                excelPackage.Dispose();
             }
         }
     }
