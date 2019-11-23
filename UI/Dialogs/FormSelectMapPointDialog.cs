@@ -39,7 +39,9 @@ namespace WindEnergy.UI.Dialogs
             ConfigureGMapControl();
             this.initialPoint = initialPoint;
             if (!initialPoint.IsEmpty)
+            {
                 gmapControlMap.Position = initialPoint;
+            }
             else
                 gmapControlMap.Position = new PointLatLng(55, 37);
             DialogResult = DialogResult.None;
@@ -258,6 +260,28 @@ namespace WindEnergy.UI.Dialogs
                 PointLatLng point = adressess[addr];
                 gmapControlMap.Position = point;
             }
+        }
+
+        private void toolStripTextBoxLat_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                double lat = double.Parse(toolStripTextBoxLat.Text.Replace('.', Vars.DecimalSeparator).Replace('.', Vars.DecimalSeparator));
+                double lon = double.Parse(toolStripTextBoxLon.Text.Replace('.', Vars.DecimalSeparator).Replace('.', Vars.DecimalSeparator));
+                gmapControlMap.Position = new PointLatLng(lat, lon);
+            }
+            catch (Exception)
+            { }
+        }
+
+
+        /// <summary>
+        /// изменение подписей при движении карты
+        /// </summary>
+        /// <param name="point"></param>
+        private void gmapControlMap_OnPositionChanged(PointLatLng point)
+        {
+            toolStripStatusLabelCoordinates.Text = $"Широта: {point.Lat.ToString("0.00000")}, долгота: {point.Lng.ToString("0.00000")}";
         }
     }
 }

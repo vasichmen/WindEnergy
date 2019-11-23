@@ -1,4 +1,5 @@
-﻿using GMap.NET;
+﻿using Fizzler.Systems.HtmlAgilityPack;
+using GMap.NET;
 using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 using System;
@@ -278,71 +279,101 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                 throw new Exception("При загрузке страницы произошла ошибка " + code.ToString());
 
             //поиск ссылок на метеостанции
-            List<HtmlNode> archives = new List<HtmlNode>();
-            string[] ids = new string[3] {
-                "archive_link",//архив погоды на метеостанции
-                "wug_link", //на неофициальной метеостанции
-                "metar_link" //аэропорт
-            };
-            foreach (string i in ids)
-            {
-                var a = point_page.DocumentNode.SelectNodes($".//a[@id='{i}']");
-                if (a != null)
-                    archives.AddRange(a);
-            }
-
+            Dictionary<string, IEnumerable<HtmlNode>> archives = new Dictionary<string, IEnumerable<HtmlNode>>();
             List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
-            foreach (HtmlNode some_link in archives)
-                if (some_link != null)
+            Dictionary<string, string> selectors = new Dictionary<string, string>()  {
+                { "a[id='archive_link']","list"},//архив погоды на метеостанции (старый вариант страницы)
+                { "div.ArchiveInfo a.ArchiveStrLink" ,"block"},//архив погоды на метеостанции (новый вариант страницы)
+                { "a[id='wug_link']" ,"list"}, //на неофициальной метеостанции (этот архив пока что качать нельзя, но селектор оставим)
+                { "a[id='metar_link']" ,"list"} //аэропорт 
+            };
+            foreach (string i in selectors.Keys)
+            {
+                var a = point_page.DocumentNode.QuerySelectorAll(i); //получаем все теги по такому селекторы
+                if (a != null && a.Count() > 0) //если что-то нашлось, то парсим дальше
                 {
-                    RP5MeteostationInfo nm = new RP5MeteostationInfo();
-                    nm.Name = wmoInfo.name; //искомая точка
-                    nm.Link = some_link.Attributes["href"].Value; //ссылка на страницу
-
-                    //название
-                    int s1 = some_link.InnerText.IndexOf(" (");
-                    string onmouseover = some_link.Attributes["onmouseover"].Value; //значение атрибута вывода подсказки
-                    string nmm = onmouseover.Replace("tooltip(this, '", "").Replace("' , 'hint')", "");
-                    nm.Name = some_link.InnerText.Substring(0, s1) + " (" + nmm + ")";
-
-                    //расстояние до точки
-                    string content = some_link.InnerText;
-                    int start = content.IndexOf("( ");
-                    int end = content.IndexOf(" км");
-                    if (start == -1 || end == -1)
-                        nm.OwnerDistance = 0;
-                    else
+                    foreach (HtmlNode some_link in a)
                     {
-                        int l = end - (start + 2);
-                        string dist = content.Substring(start + 2, l);
-                        nm.OwnerDistance = double.Parse(dist.Replace('.', Vars.DecimalSeparator));
-                    }
+                        RP5MeteostationInfo nm = new RP5MeteostationInfo();
+                        nm.Name = wmoInfo.name; //искомая точка
+                        nm.Link = some_link.Attributes["href"].Value; //ссылка на страницу
 
-                    //тип источника
-                    string a_id = some_link.Attributes["id"].Value;
-                    switch (a_id)
-                    {
-                        case "archive_link":
-                            nm.MeteoSourceType = MeteoSourceType.Meteostation;
-                            break;
-                        case "metar_link":
-                            nm.MeteoSourceType = MeteoSourceType.Airport;
-                            break;
-                        case "wug_link":
-                            continue; //для неофициальных метеостанций нельзя получить архив погоды =( 
-                                      //nm.MeteoSourceType = MeteoSourceType.UnofficialMeteostation;
-                                      //break;
-                        default: throw new Exception("Этот тип метеостанции не реализован");
-                    }
-                    if (loadExtInfo)
-                        try
+                        //дальнейшее зависит от типа блока
+                        switch (selectors[i])
                         {
-                            GetMeteostationExtInfo(ref nm); //запись информации об id метеостанции, дате начала наблюдений
+                            case "list": //СТАРЫЕ ВАРИАНТЫ БЛОКОВ ССЫЛОК НА МЕТЕОСТАНЦИИ И АЭРОПОРТЫ
+                                //название
+                                int s1 = some_link.InnerText.IndexOf(" (");
+                                string onmouseover = some_link.Attributes["onmouseover"].Value; //значение атрибута вывода подсказки
+                                string nmm = onmouseover.Replace("tooltip(this, '", "").Replace("' , 'hint')", "");
+                                nm.Name = some_link.InnerText.Substring(0, s1) + " (" + nmm + ")";
+
+                                //расстояние до точки
+                                string content = some_link.InnerText;
+                                int start = content.IndexOf("( ");
+                                int end = content.IndexOf(" км");
+                                if (start == -1 || end == -1)
+                                    nm.OwnerDistance = 0;
+                                else
+                                {
+                                    int l = end - (start + 2);
+                                    string dist = content.Substring(start + 2, l);
+                                    nm.OwnerDistance = double.Parse(dist.Replace('.', Vars.DecimalSeparator));
+                                }
+
+                                //тип источника
+                                string a_id = some_link.Attributes["id"].Value;
+                                switch (a_id)
+                                {
+                                    case "archive_link":
+                                        nm.MeteoSourceType = MeteoSourceType.Meteostation;
+                                        break;
+                                    case "metar_link":
+                                        nm.MeteoSourceType = MeteoSourceType.Airport;
+                                        break;
+                                    case "wug_link":
+                                        continue; //для неофициальных метеостанций нельзя получить архив погоды =( 
+                                                  //nm.MeteoSourceType = MeteoSourceType.UnofficialMeteostation;
+                                                  //break;
+                                    default: throw new Exception("Этот тип метеостанции не реализован");
+                                }
+                                break;
+
+
+                            case "block": //НОВЫЙ ТИП ССЫЛОК В ВИДЕ БЛОКА С ИНФОРМАЦИЕЙ
+                                //название
+                                onmouseover = some_link.Attributes["onmouseover"].Value; //значение атрибута вывода подсказки
+                                nmm = onmouseover.Replace("tooltip(this, '", "").Replace("' , 'hint')", "");
+                                nm.Name = nmm;
+
+                                //расстояние до источника не указывается, значит 0
+                                nm.OwnerDistance = 0;
+
+                                //пока в таких блоках только метеостанции
+                                nm.MeteoSourceType = MeteoSourceType.Meteostation;
+
+                                break;
+                            default: throw new Exception("Этот тип блока ещё не реализован");
                         }
-                        catch (Exception) { continue; }
-                    if (nm != null)
-                        res.Add(nm);
+
+
+
+
+                        if (loadExtInfo)
+                            try
+                            {
+                                GetMeteostationExtInfo(ref nm); //запись информации об id метеостанции, дате начала наблюдений
+                            }
+                            catch (Exception) { continue; }
+                        if (nm != null)
+                            res.Add(nm);
+
+                    }
+
+
+
                 }
+            }
             return res;
         }
 

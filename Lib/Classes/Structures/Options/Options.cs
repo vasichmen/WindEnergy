@@ -45,7 +45,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             TextImportState = new TextImporterState();
             CalculateAirDensity = false;
             ETOPO2Folder = Application.StartupPath + "\\Data\\ETOPO";
-            RP5SearchEngine = RP5SearchEngine.OnlineAPI;
+            RP5SearchEngine = RP5SearchEngine.DBSearch;
         }
 
         /// <summary>

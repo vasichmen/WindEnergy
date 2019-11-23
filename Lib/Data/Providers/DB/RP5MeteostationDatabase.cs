@@ -173,7 +173,7 @@ namespace WindEnergy.Lib.Data.Providers.DB
         {
             List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
             foreach (var m in List)
-                if (m.Name.ToLower().Contains(query.ToLower()))
+                if (m.Name.ToLower().Contains(query.ToLower()) || m.Address.ToLower().Contains(query.ToLower()))
                     res.Add(m);
             return res;
         }
