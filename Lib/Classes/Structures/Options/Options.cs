@@ -32,7 +32,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             StaticFlugerDatabaseSourceFile = Application.StartupPath + "\\Data\\Fluger.database.txt";
             StaticEquipmentDatabaseSourceFile = Application.StartupPath + "\\Data\\Equipment.database.txt";
             QualifierSectionLength = 20; //20 измерений
-            QualifierDaysToNewInterval = 60; //2 месяца
+            QualifierDaysToNewInterval = 30; //1 месяц
             QualifierDaysToBeginMissing = 30; //1 месяца
             AirDensity = 1.226;
             MinimalSpeedDeviation = 0.1d;

@@ -38,6 +38,8 @@ namespace WindEnergy.UI
                 if (cur_key.Length == file_key.Length)
                     for (int i = cur_key.Length - 1; i >= 0; i--)
                         is_accept &= cur_key[i] == file_key[i];
+                else
+                    is_accept = false;
             }
             if (!is_accept)
             {

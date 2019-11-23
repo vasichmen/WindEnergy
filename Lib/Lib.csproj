@@ -178,6 +178,7 @@
     <Compile Include="Classes\Exceptions.cs" />
     <Compile Include="Classes\VersionInfo.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Convoluter.cs" />
     <Compile Include="Data\Interfaces\IGeoInfoProvider.cs" />
     <Compile Include="Data\Providers\DB\AMSMeteostationDatabase.cs" />
     <Compile Include="Data\Providers\DB\BaseFileDatabase.cs" />

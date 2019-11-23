@@ -9,11 +9,17 @@ using System.Threading.Tasks;
 
 namespace WindEnergy
 {
-    class Creator : HMACSHA512
+    class Creator : Convoluter
     {
-        public Creator(byte[] key) : base(key) { }
+        private readonly int key;
+
+        public Creator(int key) { this.key = key; }
         public byte[] Create(byte[] buff)
-        { return base.ComputeHash(buff); }
+        {
+            int res = key;
+            Cript31(buff, buff.Length, ref res);
+            return BitConverter.GetBytes(res);
+        }
     }
 
     public class Driver
@@ -23,24 +29,26 @@ namespace WindEnergy
             string proc = GetID1();
             string mother = GetID2();
             string data = proc + mother;
-            byte[] key = keygen();
+            int key = keygen();
             byte[] buffer = Encoding.UTF8.GetBytes(data);
-            using (var c = new Creator(key))
-            {
-                return c.ComputeHash(buffer);
-            }
+            var c = new Creator(key);
+            var res = c.Create(buffer);
+            return res;
+
         }
 
-        private static byte[] keygen()
+        private static int keygen()
         {
             int[] buf = new int[] { Encoding.ASCII.GetBytes("*")[0] };
             var n = thunder(buf);
             List<byte> res = new List<byte>();
             foreach (var ff in n)
                 res.AddRange(BitConverter.GetBytes(ff));
+            int resS = 0;
+            foreach (var i in res)
+                resS += i;
 
-
-            return res.ToArray();
+            return resS;
 
         }
 
@@ -48,8 +56,8 @@ namespace WindEnergy
         {
             if (init.Length > 1)
             {
-                int mask = init[init.Length-1];
-                int[] res = new int[init.Length+1];
+                int mask = init[init.Length - 1];
+                int[] res = new int[init.Length + 1];
                 int nkey = init[1] << mask;
                 res[0] = nkey;
                 for (int i = 1; i < init.Length; i++)
@@ -79,7 +87,7 @@ namespace WindEnergy
                     if (line.Length > 0)
                         res.Add(byte.Parse(line));
                 }
-                var result= res.ToArray();
+                var result = res.ToArray();
                 sr.Close();
                 return result;
             }
