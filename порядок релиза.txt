@@ -1,0 +1,8 @@
+1. Проверить версию сборки в проекте UI
+2. Актуализировать changelog.txt в проекте
+3. Пересобрать решение в Release
+4. make_zip.bat
+5. Удалить из созданного архива Installer.exe, WindEnergy.exe, \libs\Lib.dll
+6. Запустить сборку проекта в Spices.Net
+7. Заменить собранные WindEnergy.exe, \libs\Lib.dll в архиве (Installer.exe не добавлять!!)
+8. Опубликовать новую версию на сайте

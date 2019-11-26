@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -46,8 +47,13 @@ namespace WindEnergy.UI.Common.Dialogs
         {
             if (checkBoxRemember.Checked)
                 Vars.Options.UpdateMode = UpdateDialogAnswer.AlwaysAccept;
-            _ = Process.Start(Vars.Options.SiteAddress + vi.DownloadLink); 
-            this.Close();
+            if (File.Exists(Application.StartupPath + "\\Updater.exe"))
+                _ = Process.Start(Application.StartupPath + "\\Updater.exe", "\"" + Vars.Options.SiteAddress + vi.DownloadLink + "\"");
+            else
+            {
+                _ = Process.Start(Vars.Options.SiteAddress + vi.DownloadLink);
+                this.Close();
+            }
         }
 
         /// <summary>

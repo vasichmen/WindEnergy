@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,7 @@ using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Providers;
+using WindEnergy.Lib.Data.Providers.InternetServices;
 using WindEnergy.Lib.Operations;
 using WindEnergy.Lib.Operations.Interpolation;
 using WindEnergy.Lib.Operations.Structures;
@@ -447,14 +449,16 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var dd = Vars.EquipmentDatabase.List;
+            Velomapa site = new Velomapa();
+            var vi = site.GetVersion();
+            _ = Process.Start(Application.StartupPath + "\\Updater.exe", "\"" + Vars.Options.SiteAddress + vi.DownloadLink + "\"");
             //обновление БД АМС
             //Scripts.ConvertMCoefficientsFromFile(Application.StartupPath+"\\m.csv",Application.StartupPath+"\\amsdatabase.csv");
             //Scripts.ConvertMSIDFromFile(Application.StartupPath+"\\coords.csv",Application.StartupPath+"\\amsdatabase.csv");
 
             //обновление БД Флюгер
-           // Scripts.ConvertFlugerFromFile(Application.StartupPath+"\\coords.csv",Application.StartupPath+"\\flugerDatabase.csv");
-           // Scripts.ConvertFlugerDataFromFile(Application.StartupPath+"\\data.csv",Application.StartupPath+"\\flugerDatabase.csv");
+            // Scripts.ConvertFlugerFromFile(Application.StartupPath+"\\coords.csv",Application.StartupPath+"\\flugerDatabase.csv");
+            // Scripts.ConvertFlugerDataFromFile(Application.StartupPath+"\\data.csv",Application.StartupPath+"\\flugerDatabase.csv");
 
 
         }

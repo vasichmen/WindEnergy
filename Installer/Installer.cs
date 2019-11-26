@@ -32,11 +32,13 @@ namespace Installer
             //КОПИРОВАНИЕ ФАЙЛОВ
             CopyDir(from + "\\Data", dest + "\\Data");
             CopyDir(from + "\\libs", dest + "\\libs");
-            System.IO.File.Copy(from + "\\WindEnergy.exe.config", dest + "\\WindEnergy.exe.config");
-            System.IO.File.Copy(from + "\\System.Data.SQLite.dll.config", dest + "\\System.Data.SQLite.dll.config");
-            System.IO.File.Copy(from + "\\Lib.dll.config", dest + "\\Lib.dll.config");
-            System.IO.File.Copy(from + "\\WindEnergy.exe", dest + "\\WindEnergy.exe");
-            System.IO.File.Copy(from + "\\changelog.txt", dest + "\\changelog.txt");
+            System.IO.File.Copy(from + "\\WindEnergy.exe.config", dest + "\\WindEnergy.exe.config", true);
+            System.IO.File.Copy(from + "\\Updater.exe.config", dest + "\\Updater.exe.config", true);
+            System.IO.File.Copy(from + "\\System.Data.SQLite.dll.config", dest + "\\System.Data.SQLite.dll.config", true);
+            System.IO.File.Copy(from + "\\Lib.dll.config", dest + "\\Lib.dll.config", true);
+            System.IO.File.Copy(from + "\\WindEnergy.exe", dest + "\\WindEnergy.exe", true);
+            System.IO.File.Copy(from + "\\Updater.exe", dest + "\\Updater.exe", true);
+            System.IO.File.Copy(from + "\\changelog.txt", dest + "\\changelog.txt", true);
 
             //ГЕНЕРАЦИЯ КЛЮЧА
             GenerateKey(dest + "\\id.key");
@@ -79,7 +81,7 @@ namespace Installer
             foreach (string s1 in Directory.GetFiles(FromDir))
             {
                 string s2 = ToDir + "\\" + Path.GetFileName(s1);
-                System.IO.File.Copy(s1, s2);
+                System.IO.File.Copy(s1, s2, true);
             }
             foreach (string s in Directory.GetDirectories(FromDir))
             {
