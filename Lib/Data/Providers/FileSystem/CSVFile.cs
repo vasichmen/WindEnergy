@@ -285,6 +285,23 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                     saveEnergyInfoLine(filename, ri, ei, sd, ss, null, year.ToString(), month.Description(), rn.Count, true);
                 }
             }
+
+            //запись данных по месяцам
+            saveEnergyInfoLine(filename, null, null, null, null, ";", "", "", 0, true);
+            saveEnergyInfoLine(filename, null, null, null, null, ";", "", "", 0, true);
+            saveEnergyInfoLine(filename, null, null, null, null, ";", "", "", 0, true);
+            for (int mt = 1; mt <= 12; mt++)//по месяцам, начиная со всех
+            {
+                Months month = (Months)mt;
+                RawRange rn = range.GetRange(false, true, DateTime.Now, DateTime.Now, "Все", month.Description());
+                if (rn == null || rn.Count == 0)
+                    continue;
+                EnergyInfo ri = StatisticEngine.ProcessRange(rn);
+                StatisticalRange<WindDirections> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections>.Rhumb16Gradations);
+                StatisticalRange<GradationItem> ss = StatisticEngine.GetExpectancy(rn, Vars.Options.CurrentSpeedGradation);
+                EnergyInfo ei = StatisticEngine.ProcessRange(ss);
+                saveEnergyInfoLine(filename, ri, ei, sd, ss, null, "Все года", month.Description(), rn.Count, true);
+            }
         }
 
         /// <summary>

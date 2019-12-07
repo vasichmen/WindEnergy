@@ -228,6 +228,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 worksheet.Cells[1, 1, 1, cap.Count].Style.Font.Bold = true;
                 worksheet.Cells[1, 1, 1, cap.Count].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 worksheet.Cells[1, 1, 1, cap.Count].Style.Fill.BackgroundColor.SetColor(Color.Gray);
+                worksheet.View.FreezePanes(2, 3);
 
                 //запись данных обо всём периоде
                 EnergyInfo ri1 = StatisticEngine.ProcessRange(range);
@@ -244,7 +245,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 foreach (int year in years) //цикл по годам
                 {
                     //для каждого месяца в году
-                    for (int mt = 0; mt <= 12; mt++)//по месяцам, начиная со всех
+                    for (int mt = 0; mt <= 12; mt++) //по месяцам, начиная со всех
                     {
                         Months month = (Months)mt;
                         RawRange rn = range.GetRange(false, true, DateTime.Now, DateTime.Now, year, month.Description());
@@ -267,6 +268,30 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                         line++;
                     }
                 }
+
+                //запись данных для каждого месяца отдельно
+                line += 3;
+                //для каждого месяца в году
+                for (int mt = 1; mt <= 12; mt++) //по месяцам
+                {
+                    Months month = (Months)mt;
+                    RawRange rn = range.GetRange(false, true, DateTime.Now, DateTime.Now, "Все", month.Description());
+                    if (rn == null || rn.Count == 0)
+                        continue;
+                    EnergyInfo ri = StatisticEngine.ProcessRange(rn);
+                    StatisticalRange<WindDirections> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections>.Rhumb16Gradations);
+                    StatisticalRange<GradationItem> ss = StatisticEngine.GetExpectancy(rn, Vars.Options.CurrentSpeedGradation);
+                    EnergyInfo ei = StatisticEngine.ProcessRange(ss);
+                    cells = saveEnergyInfoLine(worksheet, line, ri, ei, sd, ss, "Все года", month.Description(), rn.Count);
+                    if (Math.IEEERemainder(mt + 1, 2) == 0 || mt == 0) //на нечетных строках добавляем серый фон
+                    {
+                        worksheet.Cells[line, 1, line, cells].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        worksheet.Cells[line, 1, line, cells].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                    }
+                    line++;
+                }
+
+
                 //Save your file
                 FileInfo fi = new FileInfo(filename);
                 excelPackage.SaveAs(fi);
