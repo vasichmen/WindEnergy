@@ -71,6 +71,7 @@
             this.gmapControlMap.ShowTileGridLines = false;
             this.gmapControlMap.Size = new System.Drawing.Size(806, 443);
             this.gmapControlMap.TabIndex = 0;
+            this.gmapControlMap.TabStop = false;
             this.gmapControlMap.Zoom = 0D;
             this.gmapControlMap.OnPositionChanged += new GMap.NET.PositionChanged(this.gmapControlMap_OnPositionChanged);
             this.gmapControlMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gmapControlMap_MouseClick);

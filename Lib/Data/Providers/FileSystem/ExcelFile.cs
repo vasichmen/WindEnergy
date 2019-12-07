@@ -440,6 +440,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 worksheet.Cells[4, 1, 4, caption.Length].Style.Font.Bold = true;
                 worksheet.Cells[4, 1, 4, caption.Length].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 worksheet.Cells[4, 1, 4, caption.Length].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.View.FreezePanes(5, 1);
 
                 int i = 5;
                 foreach (RawItem item in rang)
@@ -448,7 +449,6 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                         continue;
                     worksheet.Cells[i, 1].Style.Numberformat.Format = DateTimeFormat;
                     worksheet.Cells[i, 1].Value = item.Date;
-
                     worksheet.Cells[i, 2].Value = item.Temperature;
                     worksheet.Cells[i, 3].Value = item.Wetness;
                     worksheet.Cells[i, 4].Value = item.Direction;

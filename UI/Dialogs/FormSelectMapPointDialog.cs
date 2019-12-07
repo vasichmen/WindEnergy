@@ -39,11 +39,13 @@ namespace WindEnergy.UI.Dialogs
             ConfigureGMapControl();
             this.initialPoint = initialPoint;
             if (!initialPoint.IsEmpty)
-            {
                 gmapControlMap.Position = initialPoint;
-            }
             else
-                gmapControlMap.Position = new PointLatLng(55, 37);
+                gmapControlMap.Position = new PointLatLng(55.75, 37.62);
+
+            gmapControlMap_OnPositionChanged(gmapControlMap.Position);
+            toolStripTextBoxLat.Text = gmapControlMap.Position.Lat.ToString();
+            toolStripTextBoxLon.Text = gmapControlMap.Position.Lng.ToString();
             DialogResult = DialogResult.None;
             searcher = new Arcgis(Vars.Options.CacheFolder + "\\arcgis");
         }
@@ -132,6 +134,8 @@ namespace WindEnergy.UI.Dialogs
         private void gmapControlMap_MouseClick(object sender, MouseEventArgs e)
         {
             PointLatLng cled = gmapControlMap.FromLocalToLatLng(e.X, e.Y);
+            toolStripTextBoxLat.Text = cled.Lat.ToString();
+            toolStripTextBoxLon.Text = cled.Lng.ToString();
             ShowMarker(cled);
         }
 
@@ -161,6 +165,7 @@ namespace WindEnergy.UI.Dialogs
         {
             if (cPoint.IsEmpty)
             {
+                _ = MessageBox.Show("Выберите точку на карте!");
                 return;
             }
             Result = cPoint;
