@@ -45,7 +45,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <param name="point_info"></param>
         /// <param name="onPercentChange">Метод, вызываемый при изменении процента выполнения</param>
         /// <returns></returns>
-        public RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo point_info, Action<double> onPercentChange = null)
+        public RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo point_info, Action<double> onPercentChange = null,Func<bool> checkStop = null)
         {
             PointLatLng coord = point_info.Position;
 

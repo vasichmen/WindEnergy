@@ -60,7 +60,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <summary>
         /// количество лет в одной загрузке данных 
         /// </summary>
-        private const int LOAD_STEP_YEARS = 3;
+        private const double LOAD_STEP_YEARS = 2.5;
 
         /// <summary>
         /// данные cookie для этого экземпляра
@@ -117,7 +117,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <param name="info">Метеостанция, с которой загружается ряд</param>
         /// <param name="onPercentChange"></param>
         /// <returns></returns>
-        public RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo info, Action<double> onPercentChange = null)
+        public RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo info, Action<double> onPercentChange = null, Func<bool> checkStop=null)
         {
             if (toDate < fromDate)
                 throw new WindEnergyException("Даты указаны неверно");
@@ -132,12 +132,16 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                 int total = (int)(span.TotalDays / (365 * LOAD_STEP_YEARS));
                 for (dt = fromDate; dt <= toDate; dt += TimeSpan.FromDays(365 * LOAD_STEP_YEARS))
                 {
+                    if(checkStop != null)
+                        if (checkStop.Invoke())
+                            break;
+
                     if (onPercentChange != null)
                     {
                         double pc = ((i / (double)total) * 100d);
                         onPercentChange.Invoke(pc);
                     }
-                    RawRange r = GetRange(dt, dt + TimeSpan.FromDays(365 * LOAD_STEP_YEARS), info);
+                    RawRange r = GetRange(dt, dt + TimeSpan.FromDays(365 * LOAD_STEP_YEARS), info, onPercentChange, checkStop);
                     res1.Add(r);
                     res1.Name = r.Name;
                     res1.Position = r.Position;

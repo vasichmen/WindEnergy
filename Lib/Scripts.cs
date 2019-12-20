@@ -14,6 +14,7 @@ using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Interfaces;
 using WindEnergy.Lib.Data.Providers;
 using WindEnergy.Lib.Data.Providers.DB;
+using WindEnergy.Lib.Data.Providers.FileSystem;
 using WindEnergy.Lib.Data.Providers.InternetServices;
 using WindEnergy.Lib.Operations.Limits;
 
@@ -198,7 +199,7 @@ namespace WindEnergy.Lib
                 {
                     string[] arr = line.Split(';');
                     int id = int.Parse(arr[0]);
-                    mLines.Add(id,arr.Skip(1).ToArray());
+                    mLines.Add(id, arr.Skip(1).ToArray());
                     line = sr.ReadLine();
                 }
             }
@@ -499,6 +500,45 @@ namespace WindEnergy.Lib
             sw.Close();
         }
 
+
+        /// <summary>
+        /// загрузка всей БД рп5
+        /// </summary>
+        /// <param name="directoryOut">в папку сохраняется БД</param>
+        /// <param name="act">действие при смене прогресса</param>
+        /// <param name="checkStop">проверка остановки</param>
+        public static void LoadAllRP5Database(string directoryOut, Action<int, string> act, Func<bool> checkStop)
+        {
+            if (!Directory.Exists(directoryOut))
+                Directory.CreateDirectory(directoryOut);
+
+            var meteostations = Vars.RP5Meteostations.List;
+            var engine = new RP5ru(null, 0); //нет смысла использовать кэш при загрузке БД
+            var saver = new ExcelFile();
+
+            int i = 0;
+            foreach (var mts in meteostations)
+            {
+                if (checkStop.Invoke())
+                    break;
+
+                double perc = ++i / meteostations.Count; //текцщий процент выполнения
+
+                Action<double> loadAction = new Action<double>((loadPercent) => // действие при частичной загрузке
+                    {
+                        act.Invoke((int)perc, $"Загружается {i} из {meteostations.Count} ({perc.ToString("0.00")})%, загрузка по частям: {loadPercent.ToString("0.0")}%");
+                    });
+
+                string filename = directoryOut + "\\file_" + mts.ID + ".xlsx";
+                if (!File.Exists(filename)) //если файл не существует, то скачиваем эту МС
+                {
+                    var range = engine.GetRange(mts.MonitoringFrom, DateTime.Now, mts, loadAction,checkStop);
+                    act.Invoke((int)perc, $"Загружается {i} из {meteostations.Count} ({perc.ToString("0.00")})%, сохранение файла...");
+                    saver.SaveRange(range, filename);
+                }
+            }
+
+        }
         #endregion
 
 

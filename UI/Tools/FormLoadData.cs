@@ -16,8 +16,9 @@ namespace WindEnergy.UI.Tools
     /// </summary>
     public partial class FormLoadData : Form
     {
-        bool stopMS = false;
-        bool stopMaxSpeed = false;
+        private bool stopMS = false;
+        private bool stopMaxSpeed = false;
+        private bool stopRP5 = false;
 
         public FormLoadData()
         {
@@ -73,7 +74,8 @@ namespace WindEnergy.UI.Tools
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-
+            stopMS = true;
+            buttonStopMS.Enabled = false;
         }
 
         #endregion
@@ -94,13 +96,13 @@ namespace WindEnergy.UI.Tools
                 if (this.InvokeRequired)
                     _ = this.Invoke(new Action(() =>
                       {
-                          progressBarStatusMaxSpeed.Value = (int)(((double)processedRegions / (double)totalRegions) * 100d);
+                          progressBarStatusMaxSpeed.Value = (int)((processedRegions / (double)totalRegions) * 100d);
                           labelStatusMaxSpeed.Text = $"Обработано: {processedRegions} регионов из {totalRegions}, текущий регион \"{currentRegion}\", готов на {processedCurrentRegion}/{totalCurrentRegion}";
                           Application.DoEvents();
                       }));
                 else
                 {
-                    progressBarStatusMaxSpeed.Value = (int)(((double)processedRegions / (double)totalRegions) * 100d);
+                    progressBarStatusMaxSpeed.Value = (int)((processedRegions / (double)totalRegions) * 100d);
                     labelStatusMaxSpeed.Text = $"Обработано: {processedRegions} регионов из {totalRegions}, текущий регион \"{currentRegion}\", готов на {processedCurrentRegion}/{totalCurrentRegion}";
                     Application.DoEvents();
                 }
@@ -132,5 +134,63 @@ namespace WindEnergy.UI.Tools
         }
 
         #endregion
+
+        #region Загрузка БД РП5
+
+
+        private void buttonStartRP5_Click(object sender, EventArgs e)
+        {
+            buttonStartRP5.Enabled = false;
+            buttonStopRP5.Enabled = true;
+            progressBarStatusRP5.Value = 0;
+            progressBarStatusRP5.Maximum = 100;
+            progressBarStatusRP5.Step = 1;
+            stopRP5 = false;
+
+            Action<int, string> act = new Action<int, string>((perc, text) =>
+            {
+                if (this.InvokeRequired)
+                    _ = this.Invoke(new Action(() =>
+                    {
+                        progressBarStatusRP5.Value = perc;
+                        labelStatusRP5.Text = text;
+
+                        Application.DoEvents();
+                    }));
+                else
+                {
+                    progressBarStatusRP5.Value = perc;
+                    labelStatusRP5.Text = text;
+                    Application.DoEvents();
+                }
+            });
+            Func<bool> checkStop = new Func<bool>(() => { return stopRP5; });
+
+            _ = Task.Run(() =>
+            {
+                Scripts.LoadAllRP5Database(Application.StartupPath + "\\Data\\rp5.Database", act, checkStop);
+
+                if (InvokeRequired)
+                    _ = this.Invoke(new Action(() =>
+                    {
+                        _ = MessageBox.Show("Операция завершена!");
+                        buttonStartRP5.Enabled = true;
+                    }));
+                else
+                {
+                    _ = MessageBox.Show("Операция завершена!");
+                    buttonStartRP5.Enabled = true;
+                }
+            });
+        }
+
+        private void buttonStopRP5_Click(object sender, EventArgs e)
+        {
+            stopRP5 = true;
+            buttonStopRP5.Enabled = false;
+        }
+
+        #endregion
+
     }
 }

@@ -16,7 +16,8 @@ namespace WindEnergy.Lib.Data.Interfaces
         /// <param name="toDate">конец</param>
         /// <param name="point_info">информация о точке (объект класса PointInfo конкретного класса)</param>
         /// <param name="onPercentChange">метод, вызываемый при изменении процесса прогресса выполнения</param>
+        /// <param name="checkStop">функция проверки прерывания процесаа. Возвращает true, если надо прервать загрузку</param>
         /// <returns></returns>
-        RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo point_info, Action<double> onPercentChange = null);
+        RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo point_info, Action<double> onPercentChange = null, Func<bool> checkStop = null);
     }
 }

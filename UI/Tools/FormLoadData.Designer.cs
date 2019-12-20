@@ -39,8 +39,14 @@
             this.buttonStopMaxSpeed = new System.Windows.Forms.Button();
             this.labelStatusMaxSpeed = new System.Windows.Forms.Label();
             this.buttonStartMaxSpeed = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.progressBarStatusRP5 = new System.Windows.Forms.ProgressBar();
+            this.buttonStopRP5 = new System.Windows.Forms.Button();
+            this.labelStatusRP5 = new System.Windows.Forms.Label();
+            this.buttonStartRP5 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -151,11 +157,66 @@
             this.buttonStartMaxSpeed.UseVisualStyleBackColor = true;
             this.buttonStartMaxSpeed.Click += new System.EventHandler(this.buttonStartMaxSpeed_Click);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.progressBarStatusRP5);
+            this.groupBox3.Controls.Add(this.buttonStopRP5);
+            this.groupBox3.Controls.Add(this.labelStatusRP5);
+            this.groupBox3.Controls.Add(this.buttonStartRP5);
+            this.groupBox3.Location = new System.Drawing.Point(12, 204);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(620, 90);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Загрузка БД Расписание погоды";
+            // 
+            // progressBarStatusRP5
+            // 
+            this.progressBarStatusRP5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBarStatusRP5.Location = new System.Drawing.Point(90, 48);
+            this.progressBarStatusRP5.Name = "progressBarStatusRP5";
+            this.progressBarStatusRP5.Size = new System.Drawing.Size(524, 23);
+            this.progressBarStatusRP5.TabIndex = 3;
+            // 
+            // buttonStopRP5
+            // 
+            this.buttonStopRP5.Enabled = false;
+            this.buttonStopRP5.Location = new System.Drawing.Point(6, 48);
+            this.buttonStopRP5.Name = "buttonStopRP5";
+            this.buttonStopRP5.Size = new System.Drawing.Size(75, 23);
+            this.buttonStopRP5.TabIndex = 2;
+            this.buttonStopRP5.Text = "Остановить";
+            this.buttonStopRP5.UseVisualStyleBackColor = true;
+            this.buttonStopRP5.Click += new System.EventHandler(this.buttonStopRP5_Click);
+            // 
+            // labelStatusRP5
+            // 
+            this.labelStatusRP5.AutoSize = true;
+            this.labelStatusRP5.Location = new System.Drawing.Point(87, 24);
+            this.labelStatusRP5.Name = "labelStatusRP5";
+            this.labelStatusRP5.Size = new System.Drawing.Size(70, 13);
+            this.labelStatusRP5.TabIndex = 1;
+            this.labelStatusRP5.Text = "Состояние...";
+            // 
+            // buttonStartRP5
+            // 
+            this.buttonStartRP5.Location = new System.Drawing.Point(6, 19);
+            this.buttonStartRP5.Name = "buttonStartRP5";
+            this.buttonStartRP5.Size = new System.Drawing.Size(75, 23);
+            this.buttonStartRP5.TabIndex = 0;
+            this.buttonStartRP5.Text = "Начать";
+            this.buttonStartRP5.UseVisualStyleBackColor = true;
+            this.buttonStartRP5.Click += new System.EventHandler(this.buttonStartRP5_Click);
+            // 
             // FormLoadData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 267);
+            this.ClientSize = new System.Drawing.Size(644, 309);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -166,6 +227,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -182,5 +245,10 @@
         private System.Windows.Forms.Button buttonStopMaxSpeed;
         private System.Windows.Forms.Label labelStatusMaxSpeed;
         private System.Windows.Forms.Button buttonStartMaxSpeed;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ProgressBar progressBarStatusRP5;
+        private System.Windows.Forms.Button buttonStopRP5;
+        private System.Windows.Forms.Label labelStatusRP5;
+        private System.Windows.Forms.Button buttonStartRP5;
     }
 }
