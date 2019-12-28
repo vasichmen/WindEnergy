@@ -268,10 +268,10 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <param name="cookies"></param>
         /// <returns></returns>
         /// <exception cref="WebException">Если произошла ошибка при подключении</exception>
-        protected JObject SendJsonGetRequest(string url, bool gzip = true, string referer = "", string contentType = "application/json", string cookies = null)
+        protected JObject SendJsonGetRequest(string url, out HttpStatusCode code, bool gzip = true, string referer = "", string contentType = "application/json", string cookies = null)
         {
             JObject jobj;
-            string json = SendStringGetRequest(url, out HttpStatusCode code, gzip, referer, contentType, "XMLHttpRequest", cookies);
+            string json = SendStringGetRequest(url, out  code, gzip, referer, contentType, "XMLHttpRequest", cookies);
             try
             {
                 if (json == "")
@@ -363,8 +363,13 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             }
             catch (WebException we)
             {
-                if ((we.Response as HttpWebResponse).StatusCode == HttpStatusCode.InternalServerError)
-                    throw new ApplicationException("Внутрення ошибка сервера", we);
+                if(we.Status == WebExceptionStatus.NameResolutionFailure)
+                    throw new WebException("Ошибка подключения к DNS, проверьте соединение с интернетом", we);
+                if (we.Response == null)
+                    throw new WebException("Сервер не отвечает, попробуйте позже", we);
+                var Hcode = (we.Response as HttpWebResponse).StatusCode;
+                if ((int)Hcode >= 500 && (int)Hcode <= 505)
+                    throw new ApplicationException("Внутрення ошибка сервера. Попробуйте позже", we);
                 throw new WebException("Ошибка подключения.\r\n" + url, we);
             }
         }
@@ -432,7 +437,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                 //Получаем ответ от интернет-ресурса. 
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                //string lng = response.Headers[HttpRequestHeader.var];
+
                 //Экземпляр класса System.IO.Stream 
                 //для чтения данных из интернет-ресурса.
                 Stream dataStream = response.GetResponseStream();
@@ -479,7 +484,17 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
 
                 return responsereader;
             }
-            catch (WebException we) { throw new WebException("Ошибка подключения.\r\n" + url, we, we.Status, null); }
+            catch (WebException we)
+            {
+                if (we.Status == WebExceptionStatus.NameResolutionFailure)
+                    throw new WebException("Ошибка подключения к DNS, проверьте соединение с интернетом", we);
+                if (we.Response == null)
+                    throw new WebException("Сервер не отвечает, попробуйте позже", we);
+                var Hcode = (we.Response as HttpWebResponse).StatusCode;
+                if ((int)Hcode >= 500 && (int)Hcode <= 505)
+                    throw new ApplicationException("Внутрення ошибка сервера. Попробуйте позже", we);
+                throw new WebException("Ошибка подключения.\r\n" + url, we);
+            }
         }
 
         #endregion

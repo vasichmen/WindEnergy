@@ -57,8 +57,8 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void formLoadFromRP5_Shown(object sender, EventArgs e)
         {
-            dateTimePickerFromDate.Value = DateTime.Now.AddDays(-2);
-            dateTimePickerToDate.Value = DateTime.Now;
+            dateTimePickerToDate.Value = DateTime.Now.AddDays(-5);
+            dateTimePickerFromDate.Value = DateTime.Now.AddDays(-20);
 
             if (selectedMeteostation != null)
             {

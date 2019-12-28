@@ -53,7 +53,15 @@ namespace WindEnergy.UI.Tools
                 spoint.Position = spt.Result;
                 point = spt.Result;
                 labelPointCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";
-                labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(spt.Result);
+                try
+                {
+                    labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(spt.Result);
+                }
+                catch (WebException we)
+                {
+                    _ = MessageBox.Show(this, we.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 buttonDownload.Enabled = true;
                 dateTimePickerFromDate.Enabled = true;
@@ -82,10 +90,10 @@ namespace WindEnergy.UI.Tools
                 DialogResult = DialogResult.OK;
                 Close();
             }
-            catch (WebException)
+            catch (WebException we)
             {
                 buttonDownload.Enabled = true;
-                _ = MessageBox.Show(this, "Ошибка подключения, проверьте соединение с Интернет", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, we.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             catch (ApplicationException exx)
@@ -125,8 +133,8 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void formLoadFromNASA_Shown(object sender, EventArgs e)
         {
-            dateTimePickerFromDate.Value = DateTime.Now.AddDays(-4);
-            dateTimePickerToDate.Value = DateTime.Now.AddDays(-1);
+            dateTimePickerToDate.Value = DateTime.Now.AddDays(-5);
+            dateTimePickerFromDate.Value = DateTime.Now.AddDays(-20);
         }
 
         private void dateTimePickerDate_ValueChanged(object sender, EventArgs e)

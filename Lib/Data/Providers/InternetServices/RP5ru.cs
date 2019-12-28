@@ -58,6 +58,42 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         }
 
         /// <summary>
+        /// типы ошибок при загрузке данных
+        /// </summary>
+        public enum ErrorReason
+        {
+            /// <summary>
+            /// Для этого id нет архива погоды
+            /// </summary>
+            FS004,
+
+            /// <summary>
+            /// Ошибка в исходных данных
+            /// </summary>
+            FS002,
+
+            /// <summary>
+            /// Ошибка авторизации
+            /// </summary>
+            FS000,
+
+            /// <summary>
+            /// Неправильный метод запроса. Ожидается POST
+            /// </summary>
+            FS001,
+
+            /// <summary>
+            /// Время жизни статистики истекло для этой сессии
+            /// </summary>
+            FM000,
+
+            /// <summary>
+            /// Превышено количество запросов
+            /// </summary>
+            FM004
+        }
+
+        /// <summary>
         /// количество лет в одной загрузке данных 
         /// </summary>
         private const double LOAD_STEP_YEARS = 2.5;
@@ -117,7 +153,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         /// <param name="info">Метеостанция, с которой загружается ряд</param>
         /// <param name="onPercentChange"></param>
         /// <returns></returns>
-        public RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo info, Action<double> onPercentChange = null, Func<bool> checkStop=null)
+        public RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo info, Action<double> onPercentChange = null, Func<bool> checkStop = null)
         {
             if (toDate < fromDate)
                 throw new WindEnergyException("Даты указаны неверно");
@@ -129,10 +165,10 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                 RawRange res1 = new RawRange();
                 DateTime dt;
                 int i = 0;
-                int total = (int)(span.TotalDays / (365 * LOAD_STEP_YEARS));
+                int total = (int)(span.TotalDays / (365 * LOAD_STEP_YEARS))+1;
                 for (dt = fromDate; dt <= toDate; dt += TimeSpan.FromDays(365 * LOAD_STEP_YEARS))
                 {
-                    if(checkStop != null)
+                    if (checkStop != null)
                         if (checkStop.Invoke())
                             break;
 
@@ -227,15 +263,17 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             //S000 Ошибка авторизации
             //FM000 Время жизни статистики истекло для этой сессии
             if (str.Contains("FS004"))
-                throw new Exception("Для этого id нет архива погоды");
+                throw new WindEnergyException("Для этого id нет архива погоды",ErrorReason.FS004);
             if (str.Contains("FS002"))
-                throw new Exception("Ошибка в исходных данных");
+                throw new WindEnergyException("Ошибка в исходных данных", ErrorReason.FS002);
             if (str.Contains("FS000"))
-                throw new Exception("Ошибка авторизации");
+                throw new WindEnergyException("Ошибка авторизации", ErrorReason.FS000);
             if (str.Contains("FS001-"))
-                throw new Exception("Неправильный метод запроса. Ожидается POST");
+                throw new WindEnergyException("Неправильный метод запроса. Ожидается POST", ErrorReason.FS001);
             if (str.Contains("FM000"))
-                throw new Exception("Время жизни статистики истекло для этой сессии");
+                throw new WindEnergyException("Время жизни статистики истекло для этой сессии", ErrorReason.FM000);
+            if (str.Contains("FM004"))
+                throw new WindEnergyException("Внутренняя ошибка. Архив недоступен или не существует", ErrorReason.FM004);
             int start = str.IndexOf("href=") + 5;
             str = str.Substring(start);
             int end = str.IndexOf(">");
@@ -474,7 +512,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             //query = HttpUtility.UrlEncode(query);
             url = string.Format(url, query, timestamp);
 
-            JToken ans = SendJsonGetRequest(url, true, "https://rp5.ru/", cookies: this.CookieData);
+            JToken ans = SendJsonGetRequest(url, out HttpStatusCode code, true, "https://rp5.ru/", cookies: this.CookieData);
             if (ans == null)
                 return new List<WmoInfo>();
             List<WmoInfo> res = new List<WmoInfo>();

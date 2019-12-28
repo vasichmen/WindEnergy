@@ -18,6 +18,8 @@ namespace WindEnergy.Lib.Classes
         /// </summary>
         public string ToolTip { get; }
 
+        public object Reason { get; set; }
+
         /// <summary>
         /// Простое исключение с сообщением
         /// </summary>
@@ -34,6 +36,16 @@ namespace WindEnergy.Lib.Classes
         public WindEnergyException(string message, string tooltip) : base(message)
         {
             this.ToolTip = tooltip;
+        }
+
+        /// <summary>
+        /// сообщение и описание
+        /// </summary>
+        /// <param name="message">сообщение </param>
+        /// <param name="reason">причина проблемы</param>
+        public WindEnergyException(string message, object reason) : base(message)
+        {
+            this.Reason = reason;
         }
     }
 

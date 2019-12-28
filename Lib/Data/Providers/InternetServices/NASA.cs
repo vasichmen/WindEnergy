@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -64,7 +65,8 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                 coord.Lat.ToString("00.00").Replace(Vars.DecimalSeparator, '.'),
                 coord.Lng.ToString("00.00").Replace(Vars.DecimalSeparator, '.'));
 
-            JToken ans = SendJsonGetRequest(url, false);
+            JToken ans = SendJsonGetRequest(url, out HttpStatusCode code, false);
+
 
             if (ans["messages"].HasValues) //если есть ошибки, то выход с ошибкой
             {

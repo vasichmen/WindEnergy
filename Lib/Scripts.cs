@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.Lib.Classes;
+using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Structures;
 using WindEnergy.Lib.Data;
 using WindEnergy.Lib.Data.Interfaces;
@@ -505,24 +507,43 @@ namespace WindEnergy.Lib
         /// загрузка всей БД рп5
         /// </summary>
         /// <param name="directoryOut">в папку сохраняется БД</param>
+        /// <param name="skipErrors">пропускатьизвестные проблеммные МС</param>
         /// <param name="act">действие при смене прогресса</param>
         /// <param name="checkStop">проверка остановки</param>
-        public static void LoadAllRP5Database(string directoryOut, Action<int, string> act, Func<bool> checkStop)
+        public static void LoadAllRP5Database(string directoryOut, bool skipErrors, Action<int, string> act, Func<bool> checkStop)
         {
+            const int AUTH_COUNT = 3;
+            const int CONNECT_COUNT = 10;
+
             if (!Directory.Exists(directoryOut))
                 Directory.CreateDirectory(directoryOut);
 
             var meteostations = Vars.RP5Meteostations.List;
             var engine = new RP5ru(null, 0); //нет смысла использовать кэш при загрузке БД
             var saver = new ExcelFile();
+            List<string> errors = new List<string>();
 
+            //загрузка известных ошибок
+            if (File.Exists(directoryOut + "\\errors.txt"))
+            {
+                StreamReader sr = new StreamReader(directoryOut + "\\errors.txt");
+                while (!sr.EndOfStream)
+                    errors.Add(sr.ReadLine());
+                sr.Close();
+            }
+
+            bool stop = false;
             int i = 0;
             foreach (var mts in meteostations)
             {
-                if (checkStop.Invoke())
+                if (checkStop.Invoke() || stop) //если остановка внешняя или внутренняя то выход
                     break;
 
-                double perc = ++i / meteostations.Count; //текцщий процент выполнения
+                if (skipErrors && errors.Contains(mts.ID)) //если включен пропуск ошибок, то проверяем
+                    continue;
+
+
+                double perc = ((double)++i / meteostations.Count) * 100d; //текцщий процент выполнения
 
                 Action<double> loadAction = new Action<double>((loadPercent) => // действие при частичной загрузке
                     {
@@ -532,12 +553,59 @@ namespace WindEnergy.Lib
                 string filename = directoryOut + "\\file_" + mts.ID + ".xlsx";
                 if (!File.Exists(filename)) //если файл не существует, то скачиваем эту МС
                 {
-                    var range = engine.GetRange(mts.MonitoringFrom, DateTime.Now, mts, loadAction,checkStop);
-                    act.Invoke((int)perc, $"Загружается {i} из {meteostations.Count} ({perc.ToString("0.00")})%, сохранение файла...");
-                    saver.SaveRange(range, filename);
+                    //по три попытки на загрузку каждого ряда
+                    int step = 0;
+                    RawRange range = null;
+                    while (true)
+                    {
+                        try
+                        {
+                            step++;
+                            range = engine.GetRange(mts.MonitoringFrom, DateTime.Now, mts, loadAction, checkStop);
+                            break; //ряд скачался, выходим из цикла
+                        }
+                        catch (WindEnergyException excep) //если ошибку вернкл сервер, то ждем 1с и пробуем ещё раз
+                        {
+                            if (step <= AUTH_COUNT)
+                            {
+                                Thread.Sleep(1000);
+                                continue;
+                            }
+                            else { range = null; break; } //если больше 3 раз не вышло, то следующая МС, а ату отменяем
+                        }
+                        catch (WebException wex) //если нет сети, то ждем 30с
+                        {
+                            if (step <= CONNECT_COUNT)
+                            {
+                                act.Invoke((int)perc, $"Загружается {i} из {meteostations.Count} ({perc.ToString("0.00")})%, отсутствует подключение к интернету, жду 30с...");
+                                Thread.Sleep(30000);//ждем 30 с до следующего подключения, если нет интернета
+                                continue;
+                            }
+                            else //если за 10 раз не появилась связь, то прекращаем загрузку
+                            {
+                                stop = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (range != null) // если ряд всё-таки скачался, то сохраняем
+                    {
+                        new Task(new Action(() =>
+                        {
+                            saver.SaveRange(range, filename);
+                        })).Start();
+                    }
+                    else
+                    {
+                        errors.Add(mts.ID);
+                    }
                 }
             }
 
+            StreamWriter sw = new StreamWriter(directoryOut + "\\errors.txt");
+            foreach (string error in errors)
+                sw.WriteLine(error);
+            sw.Close();
         }
         #endregion
 

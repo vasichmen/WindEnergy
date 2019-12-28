@@ -44,6 +44,7 @@
             this.buttonStopRP5 = new System.Windows.Forms.Button();
             this.labelStatusRP5 = new System.Windows.Forms.Label();
             this.buttonStartRP5 = new System.Windows.Forms.Button();
+            this.checkBoxSkipErrors = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -161,13 +162,14 @@
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.checkBoxSkipErrors);
             this.groupBox3.Controls.Add(this.progressBarStatusRP5);
             this.groupBox3.Controls.Add(this.buttonStopRP5);
             this.groupBox3.Controls.Add(this.labelStatusRP5);
             this.groupBox3.Controls.Add(this.buttonStartRP5);
             this.groupBox3.Location = new System.Drawing.Point(12, 204);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(620, 90);
+            this.groupBox3.Size = new System.Drawing.Size(620, 96);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Загрузка БД Расписание погоды";
@@ -211,11 +213,23 @@
             this.buttonStartRP5.UseVisualStyleBackColor = true;
             this.buttonStartRP5.Click += new System.EventHandler(this.buttonStartRP5_Click);
             // 
+            // checkBoxSkipErrors
+            // 
+            this.checkBoxSkipErrors.AutoSize = true;
+            this.checkBoxSkipErrors.Checked = true;
+            this.checkBoxSkipErrors.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSkipErrors.Location = new System.Drawing.Point(6, 73);
+            this.checkBoxSkipErrors.Name = "checkBoxSkipErrors";
+            this.checkBoxSkipErrors.Size = new System.Drawing.Size(110, 17);
+            this.checkBoxSkipErrors.TabIndex = 4;
+            this.checkBoxSkipErrors.Text = "Пропуск ошибок";
+            this.checkBoxSkipErrors.UseVisualStyleBackColor = true;
+            // 
             // FormLoadData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 309);
+            this.ClientSize = new System.Drawing.Size(644, 322);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -250,5 +264,6 @@
         private System.Windows.Forms.Button buttonStopRP5;
         private System.Windows.Forms.Label labelStatusRP5;
         private System.Windows.Forms.Button buttonStartRP5;
+        private System.Windows.Forms.CheckBox checkBoxSkipErrors;
     }
 }

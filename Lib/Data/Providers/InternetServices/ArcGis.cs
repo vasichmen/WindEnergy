@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -55,7 +56,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                 coordinate.Lat.ToString().Replace(Vars.DecimalSeparator, '.'),
                 Token
                 );
-            JToken ans = SendJsonGetRequest(url);
+            JToken ans = SendJsonGetRequest(url, out HttpStatusCode code);
 
             JToken err = ans["error"];
             if (err != null)
@@ -79,7 +80,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             string data = $"f=pjson&address={HttpUtility.UrlEncode( query)}&category=City&maxLocations=30&langCode=ru&preferredLabelValues=matchedCity&token={Token}";
 
 
-            JToken ans = SendJsonGetRequest(url+data);
+            JToken ans = SendJsonGetRequest(url+data, out HttpStatusCode code);
             JToken err = ans["error"];
             if (err != null)
                 throw new Exception(err["message"].ToString());
@@ -110,7 +111,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             //http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=Москва&category=&forStorage=false&f=pjson
             string url = "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine={0}&category=&forStorage=false&f=pjson&token={1}";
             url = string.Format(url, address, Token);
-            JToken ans = SendJsonGetRequest(url);
+            JToken ans = SendJsonGetRequest(url, out HttpStatusCode code);
 
             JToken err = ans["error"];
             if (err != null)

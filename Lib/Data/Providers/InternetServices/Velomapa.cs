@@ -71,7 +71,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
         {
             string site = Vars.Options.SiteAddress;
             string url = string.Format("{0}/receiver.php?mode=version&owner_version={1}&program=windenergy", site, Vars.Options.VersionInt);
-            JObject jobj = SendJsonGetRequest(url);
+            JObject jobj = SendJsonGetRequest(url, out HttpStatusCode code);
             int version_int = int.Parse(jobj["version_int"].ToString());
             string version_text = jobj["version_text"].ToString();
             string chang = jobj["changes"].ToString().Replace("\n", "\r\n");

@@ -168,7 +168,7 @@ namespace WindEnergy.UI.Tools
 
             _ = Task.Run(() =>
             {
-                Scripts.LoadAllRP5Database(Application.StartupPath + "\\Data\\rp5.Database", act, checkStop);
+                Scripts.LoadAllRP5Database(Application.StartupPath + "\\Data\\rp5.Database",checkBoxSkipErrors.Checked, act, checkStop);
 
                 if (InvokeRequired)
                     _ = this.Invoke(new Action(() =>
