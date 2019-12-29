@@ -294,6 +294,39 @@ namespace WindEnergy.Lib.Classes.Collections
             return res;
         }
 
+        /// <summary>
+        /// возвращает ряд без последнего дня
+        /// </summary>
+        /// <returns></returns>
+        public RawRange Trim()
+        {
+            var res = from t in this
+                           where t.Date < this.Last().Date
+                           select t;
+            return new RawRange(res);
+        }
+
+
+        /// <summary>
+        /// объединение рядов (добавляются только уникальные даты)
+        /// </summary>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public RawRange  Concat(RawRange range)
+        {
+            this.BeginChange();
+            foreach(RawItem ri in range)
+            {
+                var r = from t in this
+                        where t.DateArgument == ri.DateArgument
+                        select t;
+                if (r.Count() == 0)
+                    this.Add(ri);
+
+            }
+            this.EndChange();
+            return this;
+        }
 
         /// <summary>
         /// при изменении коллекции перерасчёт параметров

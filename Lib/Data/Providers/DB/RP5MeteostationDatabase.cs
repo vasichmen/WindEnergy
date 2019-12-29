@@ -243,11 +243,10 @@ namespace WindEnergy.Lib.Data.Providers.DB
         /// </summary>
         /// <param name="id">wmo_id</param>
         /// <returns></returns>
-        internal RP5MeteostationInfo GetByID(int id)
+        internal RP5MeteostationInfo GetByID(string id)
         {
-            string id_str = id.ToString();
             var res = from t in List
-                      where t.ID == id_str
+                      where t.ID == id
                       select t;
             if (res.Count() > 0)
                 return res.First();

@@ -19,6 +19,7 @@ namespace WindEnergy.UI.Tools
         private bool stopMS = false;
         private bool stopMaxSpeed = false;
         private bool stopRP5 = false;
+        private object RP5locker = new object();
 
         public FormLoadData()
         {
@@ -141,6 +142,7 @@ namespace WindEnergy.UI.Tools
         private void buttonStartRP5_Click(object sender, EventArgs e)
         {
             buttonStartRP5.Enabled = false;
+            buttonUpdateRP5.Enabled = false;
             buttonStopRP5.Enabled = true;
             progressBarStatusRP5.Value = 0;
             progressBarStatusRP5.Maximum = 100;
@@ -168,17 +170,19 @@ namespace WindEnergy.UI.Tools
 
             _ = Task.Run(() =>
             {
-                Scripts.LoadAllRP5Database(Application.StartupPath + "\\Data\\rp5.Database",checkBoxSkipErrors.Checked, act, checkStop);
+                Scripts.LoadAllRP5Database(Vars.Options.StaticRP5DatabaseSourceDirectory, checkBoxSkipErrors.Checked, act, checkStop);
 
                 if (InvokeRequired)
                     _ = this.Invoke(new Action(() =>
                     {
                         _ = MessageBox.Show("Операция завершена!");
                         buttonStartRP5.Enabled = true;
+                        buttonUpdateRP5.Enabled = true;
                     }));
                 else
                 {
                     _ = MessageBox.Show("Операция завершена!");
+                    buttonUpdateRP5.Enabled = true;
                     buttonStartRP5.Enabled = true;
                 }
             });
@@ -188,8 +192,62 @@ namespace WindEnergy.UI.Tools
         {
             stopRP5 = true;
             buttonStopRP5.Enabled = false;
+            buttonUpdateRP5.Enabled = false;
         }
 
+        /// <summary>
+        /// обновление рп5
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonUpdateRP5_Click(object sender, EventArgs e)
+        {
+            buttonStartRP5.Enabled = false;
+            buttonUpdateRP5.Enabled = false;
+            buttonStopRP5.Enabled = true;
+            progressBarStatusRP5.Value = 0;
+            progressBarStatusRP5.Maximum = 100;
+            progressBarStatusRP5.Step = 1;
+            stopRP5 = false;
+
+            Action<int, string> act = new Action<int, string>((perc, text) =>
+            {
+                if (this.InvokeRequired)
+                    _ = this.Invoke(new Action(() =>
+                    {
+                        progressBarStatusRP5.Value = perc;
+                        labelStatusRP5.Text = text;
+
+                        Application.DoEvents();
+                    }));
+                else
+                {
+                    progressBarStatusRP5.Value = perc;
+                    labelStatusRP5.Text = text;
+                    Application.DoEvents();
+                }
+            });
+            Func<bool> checkStop = new Func<bool>(() => { lock (RP5locker) { return stopRP5; } });
+
+            _ = Task.Run(() =>
+            {
+                Scripts.UpdateAllRP5Database(Vars.Options.StaticRP5DatabaseSourceDirectory, act, checkStop);
+
+                if (InvokeRequired)
+                    _ = this.Invoke(new Action(() =>
+                    {
+                        _ = MessageBox.Show("Операция завершена!");
+                        buttonStartRP5.Enabled = true;
+                        buttonUpdateRP5.Enabled = true;
+                    }));
+                else
+                {
+                    _ = MessageBox.Show("Операция завершена!");
+                    buttonUpdateRP5.Enabled = true;
+                    buttonStartRP5.Enabled = true;
+                }
+            });
+        }
         #endregion
 
     }

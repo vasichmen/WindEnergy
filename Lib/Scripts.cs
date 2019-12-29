@@ -1,6 +1,7 @@
 ﻿using GMap.NET;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -607,6 +608,59 @@ namespace WindEnergy.Lib
                 sw.WriteLine(error);
             sw.Close();
         }
+
+        /// <summary>
+        /// обновление всей БД рп5
+        /// </summary>
+        /// <param name="directoryOut">папка с БД</param>
+        /// <param name="act">действие при изменении прогресса</param>
+        /// <param name="checkStop">проверка остановки</param>
+        public static void UpdateAllRP5Database(string directoryOut, Action<int, string> act, Func<bool> checkStop)
+        {
+            var files = new DirectoryInfo(directoryOut).GetFiles("*.xlsx");
+            var engine = new RP5ru(null);
+            var saver = new ExcelFile();
+            bool completed = false;
+
+            ConcurrentBag<FileInfo> progress = new ConcurrentBag<FileInfo>();
+
+            //таск обновления прогресса
+            Task progressor = new Task(() => {
+                while (!completed)
+                {
+                    Thread.Sleep(500);
+                    double perc = ((double)progress.Count / files.Count())*100d;
+                    act.Invoke((int)perc, $"Файл {progress.Count} из {files.Count()}");
+                }
+            });
+            progressor.Start();
+
+            var task = Parallel.ForEach(files, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, new Action<FileInfo, ParallelLoopState>((file, state) =>
+                 {
+                     if (checkStop.Invoke())
+                         state.Stop();
+                     progress.Add(file);
+                     RawRange range = saver.LoadRange(file.FullName);
+                     if (range == null)
+                         return;
+                     if (DateTime.Now - range.Last().Date < TimeSpan.FromDays(2))
+                         return;
+                     var mts = range.Meteostation;
+                     try
+                     {
+                         RawRange newRange = engine.GetRange(range.Last().Date, DateTime.Now, mts);
+
+                         var r = range.Concat(newRange);
+                         saver.SaveRange(r, file.FullName);
+                     }
+                     catch (Exception)
+                     {
+                     }
+                 }));
+            completed = true;
+        }
+
+
         #endregion
 
 

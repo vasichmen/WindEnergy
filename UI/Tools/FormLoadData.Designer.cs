@@ -40,11 +40,12 @@
             this.labelStatusMaxSpeed = new System.Windows.Forms.Label();
             this.buttonStartMaxSpeed = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxSkipErrors = new System.Windows.Forms.CheckBox();
             this.progressBarStatusRP5 = new System.Windows.Forms.ProgressBar();
             this.buttonStopRP5 = new System.Windows.Forms.Button();
             this.labelStatusRP5 = new System.Windows.Forms.Label();
             this.buttonStartRP5 = new System.Windows.Forms.Button();
-            this.checkBoxSkipErrors = new System.Windows.Forms.CheckBox();
+            this.buttonUpdateRP5 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -162,6 +163,7 @@
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.buttonUpdateRP5);
             this.groupBox3.Controls.Add(this.checkBoxSkipErrors);
             this.groupBox3.Controls.Add(this.progressBarStatusRP5);
             this.groupBox3.Controls.Add(this.buttonStopRP5);
@@ -173,6 +175,18 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Загрузка БД Расписание погоды";
+            // 
+            // checkBoxSkipErrors
+            // 
+            this.checkBoxSkipErrors.AutoSize = true;
+            this.checkBoxSkipErrors.Checked = true;
+            this.checkBoxSkipErrors.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSkipErrors.Location = new System.Drawing.Point(6, 73);
+            this.checkBoxSkipErrors.Name = "checkBoxSkipErrors";
+            this.checkBoxSkipErrors.Size = new System.Drawing.Size(110, 17);
+            this.checkBoxSkipErrors.TabIndex = 4;
+            this.checkBoxSkipErrors.Text = "Пропуск ошибок";
+            this.checkBoxSkipErrors.UseVisualStyleBackColor = true;
             // 
             // progressBarStatusRP5
             // 
@@ -197,7 +211,7 @@
             // labelStatusRP5
             // 
             this.labelStatusRP5.AutoSize = true;
-            this.labelStatusRP5.Location = new System.Drawing.Point(87, 24);
+            this.labelStatusRP5.Location = new System.Drawing.Point(171, 24);
             this.labelStatusRP5.Name = "labelStatusRP5";
             this.labelStatusRP5.Size = new System.Drawing.Size(70, 13);
             this.labelStatusRP5.TabIndex = 1;
@@ -213,17 +227,15 @@
             this.buttonStartRP5.UseVisualStyleBackColor = true;
             this.buttonStartRP5.Click += new System.EventHandler(this.buttonStartRP5_Click);
             // 
-            // checkBoxSkipErrors
+            // buttonUpdateRP5
             // 
-            this.checkBoxSkipErrors.AutoSize = true;
-            this.checkBoxSkipErrors.Checked = true;
-            this.checkBoxSkipErrors.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxSkipErrors.Location = new System.Drawing.Point(6, 73);
-            this.checkBoxSkipErrors.Name = "checkBoxSkipErrors";
-            this.checkBoxSkipErrors.Size = new System.Drawing.Size(110, 17);
-            this.checkBoxSkipErrors.TabIndex = 4;
-            this.checkBoxSkipErrors.Text = "Пропуск ошибок";
-            this.checkBoxSkipErrors.UseVisualStyleBackColor = true;
+            this.buttonUpdateRP5.Location = new System.Drawing.Point(90, 19);
+            this.buttonUpdateRP5.Name = "buttonUpdateRP5";
+            this.buttonUpdateRP5.Size = new System.Drawing.Size(75, 23);
+            this.buttonUpdateRP5.TabIndex = 5;
+            this.buttonUpdateRP5.Text = "Обновить";
+            this.buttonUpdateRP5.UseVisualStyleBackColor = true;
+            this.buttonUpdateRP5.Click += new System.EventHandler(this.buttonUpdateRP5_Click);
             // 
             // FormLoadData
             // 
@@ -265,5 +277,6 @@
         private System.Windows.Forms.Label labelStatusRP5;
         private System.Windows.Forms.Button buttonStartRP5;
         private System.Windows.Forms.CheckBox checkBoxSkipErrors;
+        private System.Windows.Forms.Button buttonUpdateRP5;
     }
 }

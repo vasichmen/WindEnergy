@@ -31,6 +31,7 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             StaticAMSDatabaseSourceFile = Application.StartupPath + "\\Data\\AMS.database.txt";
             StaticFlugerDatabaseSourceFile = Application.StartupPath + "\\Data\\Fluger.database.txt";
             StaticEquipmentDatabaseSourceFile = Application.StartupPath + "\\Data\\Equipment.database.txt";
+            StaticRP5DatabaseSourceDirectory = Application.StartupPath + "\\Data\\rp5.Database";
             QualifierSectionLength = 20; //20 измерений
             QualifierDaysToNewInterval = 30; //1 месяц
             QualifierDaysToBeginMissing = 30; //1 месяца
@@ -102,6 +103,11 @@ namespace WindEnergy.Lib.Classes.Structures.Options
         /// адрес файла БД оборудования
         /// </summary>
         public string StaticEquipmentDatabaseSourceFile { get; set; }
+
+        /// <summary>
+        /// адрес папки БД рп5
+        /// </summary>
+        public string StaticRP5DatabaseSourceDirectory { get; set; }
 
         /// <summary>
         /// длина отрезка (количество измерений) при разбиении на промежутки для поиска разделов интервалов наблюдений

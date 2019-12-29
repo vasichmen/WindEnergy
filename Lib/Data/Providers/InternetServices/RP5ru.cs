@@ -684,7 +684,7 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                             int start = title.IndexOf("WMO_ID=") + "WMO_ID=".Length;
                             int end = title.IndexOf(',', start);
                             string id_s = title.Substring(start, end - start);
-                            meteostation = Vars.RP5Meteostations.GetByID(int.Parse(id_s));
+                            meteostation = Vars.RP5Meteostations.GetByID(id_s);
                         }
                         break;
                     case MeteoSourceType.Airport: //загрузка архива с аэропорта

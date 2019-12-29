@@ -88,7 +88,8 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
             using (ExcelPackage excelPackage = new ExcelPackage(fi))
             {
                 ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[1];
-
+                if( worksheet.Cells[3, 1].Value == null)
+                    return null;
                 string title = worksheet.Cells[1, 1].Value.ToString();
                 string coordinates = worksheet.Cells[2, 1].Value.ToString();
                 string name = worksheet.Cells[3, 1].Value.ToString();
@@ -132,7 +133,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 int start = title.IndexOf("ID=") + "ID=".Length;
                 string id_s = title.Substring(start);
                 if (id_s.ToLower() != "nasa" && id_s.ToLower() != "undefined")
-                    meteostation = Vars.RP5Meteostations.GetByID(int.Parse(id_s));
+                    meteostation = Vars.RP5Meteostations.GetByID(id_s);
                 //else
                 //meteostation = Vars.RP5Meteostations.GetNearestMS(coord, false); //для NASA ищем ближайшую МС
                 res.Meteostation = meteostation;

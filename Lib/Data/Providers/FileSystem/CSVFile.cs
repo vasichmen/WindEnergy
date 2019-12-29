@@ -182,7 +182,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
             RP5MeteostationInfo meteostation = null;
             int start = title.IndexOf("ID=") + "ID=".Length;
             string id_s = title.Substring(start);
-            meteostation = Vars.RP5Meteostations.GetByID(int.Parse(id_s));
+            meteostation = Vars.RP5Meteostations.GetByID(id_s);
             res.Meteostation = meteostation;
 
 
