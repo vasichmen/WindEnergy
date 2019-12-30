@@ -401,6 +401,7 @@ namespace WindEnergy.UI
             Thread.Sleep(500);
             if (DateTime.Now - Vars.LastCheckEngine < TimeSpan.FromSeconds(30))
             {
+                //TODO: добавить проверку ключа
             }
         }
 

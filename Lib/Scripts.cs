@@ -551,7 +551,7 @@ namespace WindEnergy.Lib
                         act.Invoke((int)perc, $"Загружается {i} из {meteostations.Count} ({perc.ToString("0.00")})%, загрузка по частям: {loadPercent.ToString("0.0")}%");
                     });
 
-                string filename = directoryOut + "\\file_" + mts.ID + ".xlsx";
+                string filename = directoryOut + "\\" + RP5Database.PREFIX + mts.ID + ".xlsx";
                 if (!File.Exists(filename)) //если файл не существует, то скачиваем эту МС
                 {
                     //по три попытки на загрузку каждого ряда
@@ -625,38 +625,39 @@ namespace WindEnergy.Lib
             ConcurrentBag<FileInfo> progress = new ConcurrentBag<FileInfo>();
 
             //таск обновления прогресса
-            Task progressor = new Task(() => {
+            Task progressor = new Task(() =>
+            {
                 while (!completed)
                 {
                     Thread.Sleep(500);
-                    double perc = ((double)progress.Count / files.Count())*100d;
+                    double perc = ((double)progress.Count / files.Count()) * 100d;
                     act.Invoke((int)perc, $"Файл {progress.Count} из {files.Count()}");
                 }
             });
             progressor.Start();
 
-            var task = Parallel.ForEach(files, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, new Action<FileInfo, ParallelLoopState>((file, state) =>
-                 {
-                     if (checkStop.Invoke())
-                         state.Stop();
-                     progress.Add(file);
-                     RawRange range = saver.LoadRange(file.FullName);
-                     if (range == null)
-                         return;
-                     if (DateTime.Now - range.Last().Date < TimeSpan.FromDays(2))
-                         return;
-                     var mts = range.Meteostation;
-                     try
-                     {
-                         RawRange newRange = engine.GetRange(range.Last().Date, DateTime.Now, mts);
+            var task = Parallel.ForEach(files, new ParallelOptions() { MaxDegreeOfParallelism = 5 }, new Action<FileInfo, ParallelLoopState>((file, state) =>
+                  {
+                      if (checkStop.Invoke())
+                          state.Stop();
+                      progress.Add(file);
+                      RawRange range = saver.LoadRange(file.FullName);
+                      if (range == null || range.Count == 0)
+                          return;
+                      if (DateTime.Now - range.Last().Date < TimeSpan.FromDays(2))
+                          return;
+                      var mts = range.Meteostation;
+                      try
+                      {
+                          RawRange newRange = engine.GetRange(range.Last().Date, DateTime.Now, mts);
 
-                         var r = range.Concat(newRange);
-                         saver.SaveRange(r, file.FullName);
-                     }
-                     catch (Exception)
-                     {
-                     }
-                 }));
+                          var r = range.Concat(newRange);
+                          saver.SaveRange(r, file.FullName);
+                      }
+                      catch (Exception)
+                      {
+                      }
+                  }));
             completed = true;
         }
 

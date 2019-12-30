@@ -47,9 +47,12 @@ namespace WindEnergy
         }
 
         /// <summary>
-        /// подключение к базе данных ETOPO
+        /// дата последней проверки параметров компьютера
         /// </summary>
-        private static ETOPOProvider _ETOPOdatabase = null;
+        public static DateTime LastCheckEngine = DateTime.MinValue;
+
+
+        #region локальные БД
 
         /// <summary>
         /// подключение к базе данных ETOPO
@@ -62,12 +65,11 @@ namespace WindEnergy
                     _ETOPOdatabase = new ETOPOProvider(Options.ETOPO2Folder);
                 return _ETOPOdatabase;
             }
-        }
-
+        }        
         /// <summary>
-        /// дата последней проверки параметров компьютера
+        /// подключение к базе данных ETOPO
         /// </summary>
-        public static DateTime LastCheckEngine = DateTime.MinValue;
+        private static ETOPOProvider _ETOPOdatabase = null;
 
         /// <summary>
         /// Список метеостанций из БД Метеостанции мира
@@ -143,5 +145,23 @@ namespace WindEnergy
             set { _EquipmentDatabase = value; }
         }
         private static EquipmentDatabase _EquipmentDatabase = null;
+
+        /// <summary>
+        /// локальная БД Расписание погоды
+        /// </summary>
+        public static RP5Database RP5Database
+        {
+            get
+            {
+                if (_RP5Database == null)
+                    _RP5Database = new RP5Database(Options.StaticRP5DatabaseSourceDirectory);
+                return _RP5Database;
+            }
+            set { _RP5Database = value; }
+        }
+        private static RP5Database _RP5Database = null;
+
+        #endregion
+
     }
 }

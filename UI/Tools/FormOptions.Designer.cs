@@ -33,6 +33,18 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.labelRP5Folder = new System.Windows.Forms.Label();
+            this.labelFlugerFile = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.SelectRP5Folder = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.SelectFlugerFile = new System.Windows.Forms.Button();
+            this.labelEquipmentFile = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.buttonSelectEquipmentFile = new System.Windows.Forms.Button();
+            this.labelAMSFile = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.buttonSelectAMSFile = new System.Windows.Forms.Button();
             this.labelRegionLimitsFile = new System.Windows.Forms.Label();
             this.labelCoordinatesMSFile = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -82,6 +94,9 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonAccept = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.radioButtonRP5TypeLocal = new System.Windows.Forms.RadioButton();
+            this.radioButtonRP5TypeAPI = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -95,6 +110,7 @@
             this.tabPage4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -105,7 +121,7 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -121,7 +137,7 @@
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(2, 2);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(484, 335);
@@ -130,6 +146,18 @@
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.labelRP5Folder);
+            this.tabPage1.Controls.Add(this.labelFlugerFile);
+            this.tabPage1.Controls.Add(this.label20);
+            this.tabPage1.Controls.Add(this.SelectRP5Folder);
+            this.tabPage1.Controls.Add(this.label19);
+            this.tabPage1.Controls.Add(this.SelectFlugerFile);
+            this.tabPage1.Controls.Add(this.labelEquipmentFile);
+            this.tabPage1.Controls.Add(this.label17);
+            this.tabPage1.Controls.Add(this.buttonSelectEquipmentFile);
+            this.tabPage1.Controls.Add(this.labelAMSFile);
+            this.tabPage1.Controls.Add(this.label15);
+            this.tabPage1.Controls.Add(this.buttonSelectAMSFile);
             this.tabPage1.Controls.Add(this.labelRegionLimitsFile);
             this.tabPage1.Controls.Add(this.labelCoordinatesMSFile);
             this.tabPage1.Controls.Add(this.label12);
@@ -139,13 +167,125 @@
             this.tabPage1.Controls.Add(this.comboBoxMapProvider);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage1.Size = new System.Drawing.Size(476, 309);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // labelRP5Folder
+            // 
+            this.labelRP5Folder.AutoSize = true;
+            this.labelRP5Folder.Location = new System.Drawing.Point(86, 283);
+            this.labelRP5Folder.Name = "labelRP5Folder";
+            this.labelRP5Folder.Size = new System.Drawing.Size(92, 13);
+            this.labelRP5Folder.TabIndex = 16;
+            this.labelRP5Folder.Text = "Файл не выбран";
+            // 
+            // labelFlugerFile
+            // 
+            this.labelFlugerFile.AutoSize = true;
+            this.labelFlugerFile.Location = new System.Drawing.Point(88, 241);
+            this.labelFlugerFile.Name = "labelFlugerFile";
+            this.labelFlugerFile.Size = new System.Drawing.Size(92, 13);
+            this.labelFlugerFile.TabIndex = 16;
+            this.labelFlugerFile.Text = "Файл не выбран";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(4, 262);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(208, 13);
+            this.label20.TabIndex = 15;
+            this.label20.Text = "Выбрать папку БД Расписание Погоды";
+            // 
+            // SelectRP5Folder
+            // 
+            this.SelectRP5Folder.Location = new System.Drawing.Point(5, 278);
+            this.SelectRP5Folder.Name = "SelectRP5Folder";
+            this.SelectRP5Folder.Size = new System.Drawing.Size(75, 23);
+            this.SelectRP5Folder.TabIndex = 14;
+            this.SelectRP5Folder.Text = "Обзор";
+            this.SelectRP5Folder.UseVisualStyleBackColor = true;
+            this.SelectRP5Folder.Click += new System.EventHandler(this.buttonSelectRP5Folder_Click);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(6, 220);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(144, 13);
+            this.label19.TabIndex = 15;
+            this.label19.Text = "Выбрать файл БД Флюгер";
+            // 
+            // SelectFlugerFile
+            // 
+            this.SelectFlugerFile.Location = new System.Drawing.Point(7, 236);
+            this.SelectFlugerFile.Name = "SelectFlugerFile";
+            this.SelectFlugerFile.Size = new System.Drawing.Size(75, 23);
+            this.SelectFlugerFile.TabIndex = 14;
+            this.SelectFlugerFile.Text = "Обзор";
+            this.SelectFlugerFile.UseVisualStyleBackColor = true;
+            this.SelectFlugerFile.Click += new System.EventHandler(this.buttonSelectFlugerFile_Click);
+            // 
+            // labelEquipmentFile
+            // 
+            this.labelEquipmentFile.AutoSize = true;
+            this.labelEquipmentFile.Location = new System.Drawing.Point(88, 199);
+            this.labelEquipmentFile.Name = "labelEquipmentFile";
+            this.labelEquipmentFile.Size = new System.Drawing.Size(92, 13);
+            this.labelEquipmentFile.TabIndex = 13;
+            this.labelEquipmentFile.Text = "Файл не выбран";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(6, 178);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(175, 13);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "Выбрать файл БД Оборудование";
+            // 
+            // buttonSelectEquipmentFile
+            // 
+            this.buttonSelectEquipmentFile.Location = new System.Drawing.Point(7, 194);
+            this.buttonSelectEquipmentFile.Name = "buttonSelectEquipmentFile";
+            this.buttonSelectEquipmentFile.Size = new System.Drawing.Size(75, 23);
+            this.buttonSelectEquipmentFile.TabIndex = 11;
+            this.buttonSelectEquipmentFile.Text = "Обзор";
+            this.buttonSelectEquipmentFile.UseVisualStyleBackColor = true;
+            this.buttonSelectEquipmentFile.Click += new System.EventHandler(this.buttonSelectEquipmentFile_Click);
+            // 
+            // labelAMSFile
+            // 
+            this.labelAMSFile.AutoSize = true;
+            this.labelAMSFile.Location = new System.Drawing.Point(88, 157);
+            this.labelAMSFile.Name = "labelAMSFile";
+            this.labelAMSFile.Size = new System.Drawing.Size(92, 13);
+            this.labelAMSFile.TabIndex = 10;
+            this.labelAMSFile.Text = "Файл не выбран";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(6, 136);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(125, 13);
+            this.label15.TabIndex = 9;
+            this.label15.Text = "Выбрать файл БД АМС";
+            // 
+            // buttonSelectAMSFile
+            // 
+            this.buttonSelectAMSFile.Location = new System.Drawing.Point(7, 152);
+            this.buttonSelectAMSFile.Name = "buttonSelectAMSFile";
+            this.buttonSelectAMSFile.Size = new System.Drawing.Size(75, 23);
+            this.buttonSelectAMSFile.TabIndex = 8;
+            this.buttonSelectAMSFile.Text = "Обзор";
+            this.buttonSelectAMSFile.UseVisualStyleBackColor = true;
+            this.buttonSelectAMSFile.Click += new System.EventHandler(this.buttonSelectAMSFile_Click);
             // 
             // labelRegionLimitsFile
             // 
@@ -170,9 +310,9 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(6, 94);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(203, 13);
+            this.label12.Size = new System.Drawing.Size(266, 13);
             this.label12.TabIndex = 5;
-            this.label12.Text = "Выбрать файл ограничений скоростей";
+            this.label12.Text = "Выбрать файл БД Экстремальные скорости ветра";
             // 
             // buttonSelectRegionLimitsFile
             // 
@@ -189,9 +329,9 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(4, 52);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(211, 13);
+            this.label11.Size = new System.Drawing.Size(204, 13);
             this.label11.TabIndex = 3;
-            this.label11.Text = "Выбрать файл координат метеостанций";
+            this.label11.Text = "Выбрать файл БД Метеостанции мира";
             // 
             // buttonSelectCoordinatesMSFile
             // 
@@ -207,7 +347,7 @@
             // 
             this.comboBoxMapProvider.FormattingEnabled = true;
             this.comboBoxMapProvider.Location = new System.Drawing.Point(7, 19);
-            this.comboBoxMapProvider.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxMapProvider.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxMapProvider.Name = "comboBoxMapProvider";
             this.comboBoxMapProvider.Size = new System.Drawing.Size(134, 21);
             this.comboBoxMapProvider.TabIndex = 1;
@@ -248,8 +388,8 @@
             this.tabPage2.Controls.Add(this.textBoxAirDensity);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage2.Size = new System.Drawing.Size(476, 310);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(476, 309);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Расчёты";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -491,8 +631,8 @@
             this.tabPage3.Controls.Add(this.comboBoxSpeedGradations);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage3.Size = new System.Drawing.Size(476, 310);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(476, 309);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Градации";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -613,11 +753,12 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.groupBox2);
             this.tabPage4.Controls.Add(this.groupBox1);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage4.Size = new System.Drawing.Size(476, 309);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Источники данных";
@@ -630,9 +771,9 @@
             this.groupBox1.Controls.Add(this.radioButtonSearchTypeDB);
             this.groupBox1.Controls.Add(this.radioButtonSearchTypeAPI);
             this.groupBox1.Location = new System.Drawing.Point(4, 5);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(467, 67);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -642,7 +783,7 @@
             // 
             this.radioButtonSearchTypeDB.AutoSize = true;
             this.radioButtonSearchTypeDB.Location = new System.Drawing.Point(4, 39);
-            this.radioButtonSearchTypeDB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonSearchTypeDB.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonSearchTypeDB.Name = "radioButtonSearchTypeDB";
             this.radioButtonSearchTypeDB.Size = new System.Drawing.Size(193, 17);
             this.radioButtonSearchTypeDB.TabIndex = 1;
@@ -656,7 +797,7 @@
             // 
             this.radioButtonSearchTypeAPI.AutoSize = true;
             this.radioButtonSearchTypeAPI.Location = new System.Drawing.Point(4, 17);
-            this.radioButtonSearchTypeAPI.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonSearchTypeAPI.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonSearchTypeAPI.Name = "radioButtonSearchTypeAPI";
             this.radioButtonSearchTypeAPI.Size = new System.Drawing.Size(118, 17);
             this.radioButtonSearchTypeAPI.TabIndex = 0;
@@ -677,7 +818,7 @@
             this.tableLayoutPanel2.Controls.Add(this.buttonAccept, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 341);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -721,6 +862,49 @@
             this.buttonAccept.UseVisualStyleBackColor = true;
             this.buttonAccept.Click += new System.EventHandler(this.buttonAccept_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.radioButtonRP5TypeLocal);
+            this.groupBox2.Controls.Add(this.radioButtonRP5TypeAPI);
+            this.groupBox2.Location = new System.Drawing.Point(4, 76);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Size = new System.Drawing.Size(467, 67);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "БД Расписание Погоды";
+            // 
+            // radioButtonRP5TypeLocal
+            // 
+            this.radioButtonRP5TypeLocal.AutoSize = true;
+            this.radioButtonRP5TypeLocal.Location = new System.Drawing.Point(4, 39);
+            this.radioButtonRP5TypeLocal.Margin = new System.Windows.Forms.Padding(2);
+            this.radioButtonRP5TypeLocal.Name = "radioButtonRP5TypeLocal";
+            this.radioButtonRP5TypeLocal.Size = new System.Drawing.Size(175, 17);
+            this.radioButtonRP5TypeLocal.TabIndex = 1;
+            this.radioButtonRP5TypeLocal.TabStop = true;
+            this.radioButtonRP5TypeLocal.Text = "Использовать локальную БД";
+            this.toolTip1.SetToolTip(this.radioButtonRP5TypeLocal, "Быстрый способ. Необходимо указать папку БД Расписание погоды на вкладке Основные" +
+        "");
+            this.radioButtonRP5TypeLocal.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonRP5TypeAPI
+            // 
+            this.radioButtonRP5TypeAPI.AutoSize = true;
+            this.radioButtonRP5TypeAPI.Location = new System.Drawing.Point(4, 17);
+            this.radioButtonRP5TypeAPI.Margin = new System.Windows.Forms.Padding(2);
+            this.radioButtonRP5TypeAPI.Name = "radioButtonRP5TypeAPI";
+            this.radioButtonRP5TypeAPI.Size = new System.Drawing.Size(118, 17);
+            this.radioButtonRP5TypeAPI.TabIndex = 0;
+            this.radioButtonRP5TypeAPI.TabStop = true;
+            this.radioButtonRP5TypeAPI.Text = "Использовать API";
+            this.toolTip1.SetToolTip(this.radioButtonRP5TypeAPI, "Более долгий способ, но при этом загружаются самые актуальные данные с сайта rp5." +
+        "ru");
+            this.radioButtonRP5TypeAPI.UseVisualStyleBackColor = true;
+            // 
             // FormOptions
             // 
             this.AcceptButton = this.buttonSave;
@@ -730,7 +914,7 @@
             this.ClientSize = new System.Drawing.Size(488, 367);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormOptions";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Настройки";
@@ -752,6 +936,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -810,5 +996,20 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButtonSearchTypeDB;
         private System.Windows.Forms.RadioButton radioButtonSearchTypeAPI;
+        private System.Windows.Forms.Label labelRP5Folder;
+        private System.Windows.Forms.Label labelFlugerFile;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button SelectRP5Folder;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button SelectFlugerFile;
+        private System.Windows.Forms.Label labelEquipmentFile;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button buttonSelectEquipmentFile;
+        private System.Windows.Forms.Label labelAMSFile;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Button buttonSelectAMSFile;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RadioButton radioButtonRP5TypeLocal;
+        private System.Windows.Forms.RadioButton radioButtonRP5TypeAPI;
     }
 }

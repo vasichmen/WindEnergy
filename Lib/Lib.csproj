@@ -184,6 +184,7 @@
     <Compile Include="Data\Providers\DB\BaseFileDatabase.cs" />
     <Compile Include="Data\Providers\DB\EquipmentDatabase.cs" />
     <Compile Include="Data\Providers\DB\FlugerMeteostationDatabase.cs" />
+    <Compile Include="Data\Providers\DB\RP5Database.cs" />
     <Compile Include="Data\Providers\DB\SpeedLimitsDatabase.cs" />
     <Compile Include="Data\Providers\FileSystem\FileProvider.cs" />
     <Compile Include="Data\Providers\FileSystem\TextImporter.cs" />

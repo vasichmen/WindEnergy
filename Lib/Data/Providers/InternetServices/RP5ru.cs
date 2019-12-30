@@ -158,151 +158,159 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
             if (toDate < fromDate)
                 throw new WindEnergyException("Даты указаны неверно");
 
-            if (toDate - fromDate > TimeSpan.FromDays(365 * LOAD_STEP_YEARS)) // если надо скачать больше трёх лет, то скачиваем по частям
+            switch (Vars.Options.RP5SourceEngine)
             {
-                TimeSpan span = toDate - fromDate;
-
-                RawRange res1 = new RawRange();
-                DateTime dt;
-                int i = 0;
-                int total = (int)(span.TotalDays / (365 * LOAD_STEP_YEARS))+1;
-                for (dt = fromDate; dt <= toDate; dt += TimeSpan.FromDays(365 * LOAD_STEP_YEARS))
-                {
-                    if (checkStop != null)
-                        if (checkStop.Invoke())
-                            break;
-
-                    if (onPercentChange != null)
+                case RP5SourceType.LocalDBSearch:
+                    return Vars.RP5Database.GetRange(fromDate, toDate, info, onPercentChange, checkStop);
+                case RP5SourceType.OnlineAPI:
+                    if (toDate - fromDate > TimeSpan.FromDays(365 * LOAD_STEP_YEARS)) // если надо скачать больше трёх лет, то скачиваем по частям
                     {
-                        double pc = ((i / (double)total) * 100d);
-                        onPercentChange.Invoke(pc);
+                        TimeSpan span = toDate - fromDate;
+
+                        RawRange res1 = new RawRange();
+                        DateTime dt;
+                        int i = 0;
+                        int total = (int)(span.TotalDays / (365 * LOAD_STEP_YEARS)) + 1;
+                        for (dt = fromDate; dt <= toDate; dt += TimeSpan.FromDays(365 * LOAD_STEP_YEARS))
+                        {
+                            if (checkStop != null)
+                                if (checkStop.Invoke())
+                                    break;
+
+                            if (onPercentChange != null)
+                            {
+                                double pc = ((i / (double)total) * 100d);
+                                onPercentChange.Invoke(pc);
+                            }
+                            RawRange r = GetRange(dt, dt + TimeSpan.FromDays(365 * LOAD_STEP_YEARS), info, onPercentChange, checkStop);
+                            res1.Add(r);
+                            res1.Name = r.Name;
+                            res1.Position = r.Position;
+                            res1.Meteostation = r.Meteostation;
+                            i++;
+                        }
+                        //DateTime fr = dt - TimeSpan.FromDays(365 * LOAD_STEP_YEARS);
+                        //RawRange r1 = GetRange(fr, toDate, info);
+                        return res1;
                     }
-                    RawRange r = GetRange(dt, dt + TimeSpan.FromDays(365 * LOAD_STEP_YEARS), info, onPercentChange, checkStop);
-                    res1.Add(r);
-                    res1.Name = r.Name;
-                    res1.Position = r.Position;
-                    res1.Meteostation = r.Meteostation;
-                    i++;
-                }
-                //DateTime fr = dt - TimeSpan.FromDays(365 * LOAD_STEP_YEARS);
-                //RawRange r1 = GetRange(fr, toDate, info);
-                return res1;
+
+                    #region отправка статистики загрузки
+
+                    //string dataS, linkS;
+                    //switch (info.MeteoSourceType)
+                    //{
+                    //    case MeteoSourceType.Airport:
+                    //        dataS = "cc_id={0}&cc_str={1}&stat_p=1&s_date1={2}&s_ed3={4}&s_ed4={4}&s_ed5={5}&s_date2={3}&s_ed9=0&s_ed10=-1&s_pe=1&lng_id=2&s_dtimehi=-Период---";
+                    //        linkS = "https://rp5.ru/responses/reStatistMetar.php";
+                    //        dataS = string.Format(dataS,
+                    //            info.ID, //cc_id
+                    //            info.CC_Code, //cc_str
+                    //            fromDate.Date.ToString("dd.MM.yyyy"), //from
+                    //            toDate.Date.ToString("dd.MM.yyyy"), //to
+                    //            DateTime.Now.Month, //f_ed3 - только месяц
+                    //            DateTime.Now.Day //f_ed5 - только день
+                    //        );
+                    //        break;
+                    //    case MeteoSourceType.Meteostation:
+                    //        dataS = "wmo_id={0}&stat_p=1&s_date1={1}&s_ed3={3}&s_ed4={3}&s_ed5={4}&s_date2={2}&s_ed9=0&s_ed10=-1&s_pe=1&lng_id=2&s_dtimehi=-срок---";
+                    //        linkS = "https://rp5.ru/responses/reStatistSynop.php";
+                    //        dataS = string.Format(dataS,
+                    //            info.ID, //wmo_id
+                    //            fromDate.Date.ToString("dd.MM.yyyy"), //from
+                    //            toDate.Date.ToString("dd.MM.yyyy"), //to
+                    //            DateTime.Now.Month, //f_ed3 - только месяц
+                    //            DateTime.Now.Day //f_ed5 - только день
+                    //        );
+                    //        break;
+                    //    default: throw new Exception("Этот тип метеостанций не реализован");
+                    //}
+                    // string strS = this.SendStringPostRequest(linkS, dataS, referer: "https://rp5.ru/", cookies: this.CookieData, customHeaders: this.Headers);
+
+                    #endregion
+
+                    #region получение ссылки на файл
+                    string data, link;
+                    //получение ссылки на файл
+                    switch (info.MeteoSourceType)
+                    {
+                        case MeteoSourceType.Airport:
+                            data = "metar={0}&a_date1={1}&a_date2={2}&f_ed3={3}&f_ed4={4}&f_ed5={5}&f_pe={6}&f_pe1={7}&lng_id=2";
+                            link = "https://rp5.ru/responses/reFileMetar.php";
+                            break;
+                        case MeteoSourceType.Meteostation:
+                            data = "wmo_id={0}&a_date1={1}&a_date2={2}&f_ed3={3}&f_ed4={4}&f_ed5={5}&f_pe={6}&f_pe1={7}&lng_id=2";
+                            link = "https://rp5.ru/responses/reFileSynop.php";
+                            break;
+                        default: throw new Exception("Этот тип метеостанций не реализован");
+                    }
+
+                    data = string.Format(data,
+                        info.ID, //id
+                        fromDate.Date.ToString("dd.MM.yyyy"), //from
+                        toDate.Date.ToString("dd.MM.yyyy"), //to
+                        DateTime.Now.Month, //f_ed3 - только месяц
+                        DateTime.Now.Month, //f_ed4 - только месяц
+                        DateTime.Now.Day, //f_ed5 - только день
+                        1, //f_pe
+                        2 //f_pe1- кодировка (1 - ansi, 2 - utf8, 3 - Unicode)
+                        );
+
+                    string str = this.SendStringPostRequest(link, data, referer: "https://rp5.ru/", cookies: this.CookieData, customHeaders: this.Headers);
+
+
+                    //ОШИБКИ rp5.ru
+                    //запросы к reFileSynop.php
+                    //FS004 несуществующий wmo_id
+                    //FS002 ошибки в исходных данных (параметрах запроса)
+                    //FS000 Ошибка авторизации 
+                    //FS001-
+                    //запросы к reStatistSynop.php
+                    //S000 Ошибка авторизации
+                    //FM000 Время жизни статистики истекло для этой сессии
+                    if (str.Contains("FS004"))
+                        throw new WindEnergyException("Для этого id нет архива погоды", ErrorReason.FS004);
+                    if (str.Contains("FS002"))
+                        throw new WindEnergyException("Ошибка в исходных данных", ErrorReason.FS002);
+                    if (str.Contains("FS000"))
+                        throw new WindEnergyException("Ошибка авторизации", ErrorReason.FS000);
+                    if (str.Contains("FS001-"))
+                        throw new WindEnergyException("Неправильный метод запроса. Ожидается POST", ErrorReason.FS001);
+                    if (str.Contains("FM000"))
+                        throw new WindEnergyException("Время жизни статистики истекло для этой сессии", ErrorReason.FM000);
+                    if (str.Contains("FM004"))
+                        throw new WindEnergyException("Внутренняя ошибка. Архив недоступен или не существует", ErrorReason.FM004);
+                    int start = str.IndexOf("href=") + 5;
+                    str = str.Substring(start);
+                    int end = str.IndexOf(">");
+                    string lnk = str.Substring(0, end);
+
+                    #endregion
+
+                    #region  загрузка файла с сервера
+
+                    string tmp_dl_file = Vars.LocalFileSystem.GetTempFileName();
+                    WebClient webcl = new WebClient();
+                    webcl.DownloadFile(lnk, tmp_dl_file);
+                    webcl.Dispose();
+
+                    //распаковка
+                    string tmp_unpack_file = tmp_dl_file + ".csv";
+                    LocalFileSystem.UnGZip(tmp_dl_file, tmp_unpack_file);
+
+                    //открытие файла
+                    RawRange res = LoadCSV(tmp_unpack_file, info);
+
+                    res = new RawRange(res.OrderBy(x => x.Date).ToList());
+                    res.Name = info.Name;
+                    res.Position = info.Position;
+                    res.Meteostation = info;
+                    Vars.RP5Meteostations.TryAddMeteostation(info); //если такой метеостанции нет в БД, то добавляем
+                    return res;
+
+                #endregion
+
+                default: throw new Exception("Этот тип БД не реализован");
             }
-
-            #region отправка статистики загрузки
-
-            //string dataS, linkS;
-            //switch (info.MeteoSourceType)
-            //{
-            //    case MeteoSourceType.Airport:
-            //        dataS = "cc_id={0}&cc_str={1}&stat_p=1&s_date1={2}&s_ed3={4}&s_ed4={4}&s_ed5={5}&s_date2={3}&s_ed9=0&s_ed10=-1&s_pe=1&lng_id=2&s_dtimehi=-Период---";
-            //        linkS = "https://rp5.ru/responses/reStatistMetar.php";
-            //        dataS = string.Format(dataS,
-            //            info.ID, //cc_id
-            //            info.CC_Code, //cc_str
-            //            fromDate.Date.ToString("dd.MM.yyyy"), //from
-            //            toDate.Date.ToString("dd.MM.yyyy"), //to
-            //            DateTime.Now.Month, //f_ed3 - только месяц
-            //            DateTime.Now.Day //f_ed5 - только день
-            //        );
-            //        break;
-            //    case MeteoSourceType.Meteostation:
-            //        dataS = "wmo_id={0}&stat_p=1&s_date1={1}&s_ed3={3}&s_ed4={3}&s_ed5={4}&s_date2={2}&s_ed9=0&s_ed10=-1&s_pe=1&lng_id=2&s_dtimehi=-срок---";
-            //        linkS = "https://rp5.ru/responses/reStatistSynop.php";
-            //        dataS = string.Format(dataS,
-            //            info.ID, //wmo_id
-            //            fromDate.Date.ToString("dd.MM.yyyy"), //from
-            //            toDate.Date.ToString("dd.MM.yyyy"), //to
-            //            DateTime.Now.Month, //f_ed3 - только месяц
-            //            DateTime.Now.Day //f_ed5 - только день
-            //        );
-            //        break;
-            //    default: throw new Exception("Этот тип метеостанций не реализован");
-            //}
-            // string strS = this.SendStringPostRequest(linkS, dataS, referer: "https://rp5.ru/", cookies: this.CookieData, customHeaders: this.Headers);
-
-            #endregion
-
-            #region получение ссылки на файл
-            string data, link;
-            //получение ссылки на файл
-            switch (info.MeteoSourceType)
-            {
-                case MeteoSourceType.Airport:
-                    data = "metar={0}&a_date1={1}&a_date2={2}&f_ed3={3}&f_ed4={4}&f_ed5={5}&f_pe={6}&f_pe1={7}&lng_id=2";
-                    link = "https://rp5.ru/responses/reFileMetar.php";
-                    break;
-                case MeteoSourceType.Meteostation:
-                    data = "wmo_id={0}&a_date1={1}&a_date2={2}&f_ed3={3}&f_ed4={4}&f_ed5={5}&f_pe={6}&f_pe1={7}&lng_id=2";
-                    link = "https://rp5.ru/responses/reFileSynop.php";
-                    break;
-                default: throw new Exception("Этот тип метеостанций не реализован");
-            }
-
-            data = string.Format(data,
-                info.ID, //id
-                fromDate.Date.ToString("dd.MM.yyyy"), //from
-                toDate.Date.ToString("dd.MM.yyyy"), //to
-                DateTime.Now.Month, //f_ed3 - только месяц
-                DateTime.Now.Month, //f_ed4 - только месяц
-                DateTime.Now.Day, //f_ed5 - только день
-                1, //f_pe
-                2 //f_pe1- кодировка (1 - ansi, 2 - utf8, 3 - Unicode)
-                );
-
-            string str = this.SendStringPostRequest(link, data, referer: "https://rp5.ru/", cookies: this.CookieData, customHeaders: this.Headers);
-
-
-            //ОШИБКИ rp5.ru
-            //запросы к reFileSynop.php
-            //FS004 несуществующий wmo_id
-            //FS002 ошибки в исходных данных (параметрах запроса)
-            //FS000 Ошибка авторизации 
-            //FS001-
-            //запросы к reStatistSynop.php
-            //S000 Ошибка авторизации
-            //FM000 Время жизни статистики истекло для этой сессии
-            if (str.Contains("FS004"))
-                throw new WindEnergyException("Для этого id нет архива погоды",ErrorReason.FS004);
-            if (str.Contains("FS002"))
-                throw new WindEnergyException("Ошибка в исходных данных", ErrorReason.FS002);
-            if (str.Contains("FS000"))
-                throw new WindEnergyException("Ошибка авторизации", ErrorReason.FS000);
-            if (str.Contains("FS001-"))
-                throw new WindEnergyException("Неправильный метод запроса. Ожидается POST", ErrorReason.FS001);
-            if (str.Contains("FM000"))
-                throw new WindEnergyException("Время жизни статистики истекло для этой сессии", ErrorReason.FM000);
-            if (str.Contains("FM004"))
-                throw new WindEnergyException("Внутренняя ошибка. Архив недоступен или не существует", ErrorReason.FM004);
-            int start = str.IndexOf("href=") + 5;
-            str = str.Substring(start);
-            int end = str.IndexOf(">");
-            string lnk = str.Substring(0, end);
-
-            #endregion
-
-            #region  загрузка файла с сервера
-
-            string tmp_dl_file = Vars.LocalFileSystem.GetTempFileName();
-            WebClient webcl = new WebClient();
-            webcl.DownloadFile(lnk, tmp_dl_file);
-            webcl.Dispose();
-
-            //распаковка
-            string tmp_unpack_file = tmp_dl_file + ".csv";
-            LocalFileSystem.UnGZip(tmp_dl_file, tmp_unpack_file);
-
-            //открытие файла
-            RawRange res = LoadCSV(tmp_unpack_file, info);
-
-            res = new RawRange(res.OrderBy(x => x.Date).ToList());
-            res.Name = info.Name;
-            res.Position = info.Position;
-            res.Meteostation = info;
-            Vars.RP5Meteostations.TryAddMeteostation(info); //если такой метеостанции нет в БД, то добавляем
-            return res;
-
-            #endregion
         }
 
         /// <summary>

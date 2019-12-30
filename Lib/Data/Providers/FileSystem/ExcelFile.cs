@@ -442,6 +442,7 @@ namespace WindEnergy.Lib.Data.Providers.FileSystem
                 worksheet.Cells[4, 1, 4, caption.Length].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 worksheet.Cells[4, 1, 4, caption.Length].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
                 worksheet.View.FreezePanes(5, 1);
+                worksheet.Column(1).Width = 20;
 
                 int i = 5;
                 foreach (RawItem item in rang)

@@ -21,6 +21,10 @@ namespace WindEnergy.UI.Tools
     {
         private string coordinateMSFile;
         private string regionLimitsFile;
+        private string AMSFile;
+        private string equipmentFile;
+        private string flugerFile;
+        private string RP5Folder;
 
         public FormOptions()
         {
@@ -61,10 +65,21 @@ namespace WindEnergy.UI.Tools
 
             //ОСНОВНЫЕ
             comboBoxMapProvider.Items.AddRange(MapProviders.GoogleSatellite.GetItems().ToArray());
+
+            //локальные БД
             labelCoordinatesMSFile.Text = Path.GetFileName(Vars.Options.StaticMeteostationCoordinatesSourceFile);
             coordinateMSFile = Vars.Options.StaticMeteostationCoordinatesSourceFile;
-            regionLimitsFile = Vars.Options.StaticRegionLimitsSourceFile;
             labelRegionLimitsFile.Text = Path.GetFileName(Vars.Options.StaticRegionLimitsSourceFile);
+            regionLimitsFile = Vars.Options.StaticRegionLimitsSourceFile;
+            labelAMSFile.Text = Path.GetFileName(Vars.Options.StaticAMSDatabaseSourceFile);
+            AMSFile = Vars.Options.StaticAMSDatabaseSourceFile;
+            labelEquipmentFile.Text = Path.GetFileName(Vars.Options.StaticEquipmentDatabaseSourceFile);
+            equipmentFile = Vars.Options.StaticEquipmentDatabaseSourceFile;
+            labelFlugerFile.Text = Path.GetFileName(Vars.Options.StaticFlugerDatabaseSourceFile);
+            flugerFile = Vars.Options.StaticFlugerDatabaseSourceFile;
+            labelRP5Folder.Text = Vars.Options.StaticRP5DatabaseSourceDirectory;
+            RP5Folder = Vars.Options.StaticRP5DatabaseSourceDirectory;
+
             comboBoxMapProvider.SelectedItem = Vars.Options.MapProvider.Description();
 
             //РАСЧЁТ
@@ -94,51 +109,10 @@ namespace WindEnergy.UI.Tools
             //ИСТОЧНИКИ ДАННЫХ
             radioButtonSearchTypeAPI.Checked = Vars.Options.RP5SearchEngine == RP5SearchEngine.OnlineAPI;
             radioButtonSearchTypeDB.Checked = Vars.Options.RP5SearchEngine == RP5SearchEngine.DBSearch;
+            radioButtonRP5TypeAPI.Checked = Vars.Options.RP5SourceEngine == RP5SourceType.OnlineAPI;
+            radioButtonRP5TypeLocal.Checked = Vars.Options.RP5SourceEngine == RP5SourceType.LocalDBSearch;
         }
 
-        /// <summary>
-        /// выбор файла координат метеостанций
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonSelectCoordinatesMSFile_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Текстовые файлы *.txt|*.txt";
-            if (of.ShowDialog(this) == DialogResult.OK)
-            {
-                bool f = new RP5MeteostationDatabase(of.FileName).CheckDatabaseFile();
-                if (!f)
-                {
-                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла координат метеостанций", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                this.coordinateMSFile = of.FileName;
-                labelCoordinatesMSFile.Text = Path.GetFileName(coordinateMSFile);
-            }
-        }
-
-        /// <summary>
-        /// выбор файла ограничений
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonSelectRegionLimitsFile_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Текстовые файлы *.txt|*.txt";
-            if (of.ShowDialog(this) == DialogResult.OK)
-            {
-                bool f = Vars.SpeedLimits.CheckRegionLimitsFile(of.FileName);
-                if (!f)
-                {
-                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла ограничений скоростей", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                this.regionLimitsFile = of.FileName;
-                labelRegionLimitsFile.Text = Path.GetFileName(regionLimitsFile);
-            }
-        }
 
         /// <summary>
         /// обновление активности пользовательского шага градаций
@@ -173,6 +147,10 @@ namespace WindEnergy.UI.Tools
             Vars.Options.MapProvider = (MapProviders)(new EnumTypeConverter<MapProviders>().ConvertFrom(comboBoxMapProvider.SelectedItem));
             Vars.Options.StaticMeteostationCoordinatesSourceFile = coordinateMSFile;
             Vars.Options.StaticRegionLimitsSourceFile = regionLimitsFile;
+            Vars.Options.StaticAMSDatabaseSourceFile = AMSFile;
+            Vars.Options.StaticEquipmentDatabaseSourceFile = equipmentFile;
+            Vars.Options.StaticFlugerDatabaseSourceFile = flugerFile;
+            Vars.Options.StaticRP5DatabaseSourceDirectory = RP5Folder;
 
             //РАСЧЁТ
             try
@@ -230,6 +208,10 @@ namespace WindEnergy.UI.Tools
                     Vars.Options.RP5SearchEngine = RP5SearchEngine.OnlineAPI;
                 if (radioButtonSearchTypeDB.Checked)
                     Vars.Options.RP5SearchEngine = RP5SearchEngine.DBSearch;
+                if (radioButtonRP5TypeAPI.Checked)
+                    Vars.Options.RP5SourceEngine = RP5SourceType.OnlineAPI;
+                if (radioButtonRP5TypeLocal.Checked)
+                    Vars.Options.RP5SourceEngine = RP5SourceType.LocalDBSearch;
             }
             catch (Exception ex)
             {
@@ -237,5 +219,122 @@ namespace WindEnergy.UI.Tools
                 return;
             }
         }
+
+        #region Выбор локальных БД
+
+        /// <summary>
+        /// выбор файла координат метеостанций
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSelectCoordinatesMSFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Текстовые файлы *.txt|*.txt";
+            if (of.ShowDialog(this) == DialogResult.OK)
+            {
+                bool f = new RP5MeteostationDatabase(of.FileName).CheckDatabaseFile();
+                if (!f)
+                {
+                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла координат метеостанций", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.coordinateMSFile = of.FileName;
+                labelCoordinatesMSFile.Text = Path.GetFileName(coordinateMSFile);
+            }
+        }
+
+        /// <summary>
+        /// выбор файла ограничений
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSelectRegionLimitsFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Текстовые файлы *.txt|*.txt";
+            if (of.ShowDialog(this) == DialogResult.OK)
+            {
+                bool f = Vars.SpeedLimits.CheckRegionLimitsFile(of.FileName);
+                if (!f)
+                {
+                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла ограничений скоростей", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.regionLimitsFile = of.FileName;
+                labelRegionLimitsFile.Text = Path.GetFileName(regionLimitsFile);
+            }
+        }
+
+        private void buttonSelectAMSFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Текстовые файлы *.txt|*.txt";
+            if (of.ShowDialog(this) == DialogResult.OK)
+            {
+                bool f = new AMSMeteostationDatabase(of.FileName).CheckDatabaseFile();
+                if (!f)
+                {
+                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла БД АМС", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.AMSFile = of.FileName;
+                labelAMSFile.Text = Path.GetFileName(AMSFile);
+            }
+        }
+
+        private void buttonSelectEquipmentFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Текстовые файлы *.txt|*.txt";
+            if (of.ShowDialog(this) == DialogResult.OK)
+            {
+                bool f = new EquipmentDatabase(of.FileName).CheckDatabaseFile();
+                if (!f)
+                {
+                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла БД Оборудование", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.equipmentFile = of.FileName;
+                labelEquipmentFile.Text = Path.GetFileName(equipmentFile);
+            }
+        }
+
+        private void buttonSelectFlugerFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Текстовые файлы *.txt|*.txt";
+            if (of.ShowDialog(this) == DialogResult.OK)
+            {
+                bool f = new FlugerMeteostationDatabase(of.FileName).CheckDatabaseFile();
+                if (!f)
+                {
+                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла БД Флюгер", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.flugerFile = of.FileName;
+                labelFlugerFile.Text = Path.GetFileName(flugerFile);
+            }
+        }
+
+        private void buttonSelectRP5Folder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog of = new FolderBrowserDialog();
+            of.SelectedPath = RP5Folder;
+            if (of.ShowDialog(this) == DialogResult.OK)
+            {
+                bool f = new RP5Database(of.SelectedPath).CheckDatabaseFolder();
+                if (!f)
+                {
+                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение папки БД Расписание Погоды", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.RP5Folder = of.SelectedPath;
+                labelRP5Folder.Text = RP5Folder;
+            }
+        }
+
+        #endregion
+
     }
 }

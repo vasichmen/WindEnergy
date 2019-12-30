@@ -47,12 +47,18 @@ namespace WindEnergy.Lib.Classes.Structures.Options
             CalculateAirDensity = false;
             ETOPO2Folder = Application.StartupPath + "\\Data\\ETOPO";
             RP5SearchEngine = RP5SearchEngine.DBSearch;
+            RP5SourceEngine = RP5SourceType.OnlineAPI;
         }
 
         /// <summary>
         /// источник поиска по метеостанциям РП5
         /// </summary>
         public RP5SearchEngine RP5SearchEngine { get; set; }
+
+        /// <summary>
+        /// источник поиска по метеостанциям РП5
+        /// </summary>
+        public RP5SourceType RP5SourceEngine { get; set; }
 
         /// <summary>
         /// адрес файла настроек

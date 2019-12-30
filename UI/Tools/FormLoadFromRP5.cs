@@ -115,7 +115,7 @@ namespace WindEnergy.UI.Tools
             Action<Exception> error1 = new Action<Exception>((ex) =>
             {
                 buttonDownload.Enabled = true;
-                _ = MessageBox.Show(this, ex.Message + "\r\n" + ex.InnerException != null ? ex.InnerException.Message : "", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, ex.Message + "\r\n" + (ex.InnerException != null ? ex.InnerException.Message : ""), "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             });
             Action<Exception> error2 = new Action<Exception>((ae) =>
@@ -152,6 +152,13 @@ namespace WindEnergy.UI.Tools
                         _ = Invoke(error2, ae);
                     else
                         error2.Invoke(ae);
+                }
+                catch (Exception ee)
+                {
+                    if (this.InvokeRequired)
+                        _ = Invoke(error1, ee);
+                    else
+                        error1.Invoke(ee);
                 }
             }).Start();
 
