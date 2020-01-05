@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindEnergy.Lib.Classes;
 using WindEnergy.Lib.Classes.Collections;
 using WindEnergy.Lib.Classes.Generic;
 using WindEnergy.Lib.Classes.Structures;
@@ -25,7 +26,7 @@ namespace WindEnergy.Lib.Statistic.Calculations
         public static CalculateYearInfo ProcessRange(RawRange Range)
         {
             if (Range == null || Range.Count < 3)
-                throw new ArgumentException("Ряд не может быть null или длиной меньше трёх значений");
+                throw new ArgumentException("Ряд не может быть null или длиной меньше трёх наблюдений");
             List<RawItem> range = new List<RawItem>(Range);
             range.Sort(new DateTimeComparerRawItem());
             if (range[range.Count - 1].Date - range[0].Date < TimeSpan.FromDays(366))
@@ -34,6 +35,9 @@ namespace WindEnergy.Lib.Statistic.Calculations
 
             //среднемноголетняя скорость
             double averSpeed = range.Average((i) => i.Speed);
+
+            if (double.IsNaN(averSpeed))
+                throw new WindEnergyException("Ряд содержит недопустимые для расчета значения скорости");
 
             //разделяем исходный ряд по годам
             var years = range.GroupBy((i) => i.Date.Year).ToList().ConvertAll((gr) => new RawRange(gr.ToList())); 

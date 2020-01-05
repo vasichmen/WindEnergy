@@ -94,8 +94,10 @@ namespace WindEnergy.Lib.Data.Providers.InternetServices
                 double WD10M = double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
                 double T10M = double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
                 double RH2M = double.Parse(elems[6].Replace('.', Vars.DecimalSeparator));
-                double PS = double.Parse(elems[7].Replace('.', Vars.DecimalSeparator)); //по API про ходят данные в кПа
+                double PS = double.Parse(elems[7].Replace('.', Vars.DecimalSeparator)); //по API приходят данные в кПа
                 PS *= Constants.MMHGART_IN_1KPA; //переводим в мм рт. ст.
+                if (WS10M == -999 || WD10M == -999)
+                    continue;
                 res.Add(new RawItem() {
                     Date = dt,
                     Direction = WD10M == -999 ? double.NaN : WD10M,
