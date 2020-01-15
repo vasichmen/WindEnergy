@@ -54,11 +54,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>del /s/q $(SolutionDir)\UI\bin\Release\Updater.exe
-del /s/q $(SolutionDir)\UI\bin\Release\Updater.exe.config</PreBuildEvent>
+    <PreBuildEvent>del /s/q $(SolutionDir)\WindEnergy\bin\Release\Updater.exe
+del /s/q $(SolutionDir)\WindEnergy\bin\Release\Updater.exe.config</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetDir)Updater.exe $(SolutionDir)UI\bin\Release\Updater.exe
-copy $(TargetDir)Updater.exe.config $(SolutionDir)UI\bin\Release\Updater.exe.config</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetDir)Updater.exe $(SolutionDir)WindEnergy\bin\Release\Updater.exe
+copy $(TargetDir)Updater.exe.config $(SolutionDir)WindEnergy\bin\Release\Updater.exe.config</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -96,12 +96,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lib\Lib.csproj">
-      <Project>{E9DA177C-C6DA-445F-A067-2634B0BBFB96}</Project>
-      <Name>Lib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
       <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -124,13 +118,19 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindLib\WindLib.csproj">
+      <Project>{e9da177c-c6da-445f-a067-2634b0bbfb96}</Project>
+      <Name>WindLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>del /s/q $(SolutionDir)\UI\bin\Release\Installer.exe
-del /s/q $(SolutionDir)\UI\bin\Release\Installer.exe.config</PreBuildEvent>
+    <PreBuildEvent>del /s/q $(SolutionDir)\WindEnergy\bin\Release\Installer.exe
+del /s/q $(SolutionDir)\WindEnergy\bin\Release\Installer.exe.config</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetDir)Installer.exe $(SolutionDir)UI\bin\Release\Installer.exe
-copy $(TargetDir)Installer.exe.config $(SolutionDir)UI\bin\Release\Installer.exe.config</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetDir)Installer.exe $(SolutionDir)WindEnergy\bin\Release\Installer.exe
+copy $(TargetDir)Installer.exe.config $(SolutionDir)WindEnergy\bin\Release\Installer.exe.config</PostBuildEvent>
   </PropertyGroup>
 </Project>

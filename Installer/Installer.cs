@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindEnergy.Lib;
 using IWshRuntimeLibrary;
 using System.Diagnostics;
 using WindEnergy;
