@@ -161,6 +161,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Exceptions.cs" />
     <Compile Include="Classes\Structures\AMSMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\BaseMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Diapason.cs" />
