@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonLib.Classes.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace WindEnergy.WindLib.Classes.Structures
     /// <summary>
     /// представление данных одного элемента ряда наблюдений
     /// </summary>
-    public class RawItem
+    public class RawItem:RawItemBase
     {
         private double direction = double.NaN;
         private double wetness;

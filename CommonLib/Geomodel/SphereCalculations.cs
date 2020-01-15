@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindEnergy.WindLib.Geomodel
+namespace CommonLib.Geomodel
 {
     /// <summary>
     /// математические функции расчётов на сфере

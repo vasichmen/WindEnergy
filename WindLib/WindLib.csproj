@@ -161,7 +161,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Generic\DateTimeComparer.cs" />
     <Compile Include="Classes\MapMarker.cs" />
     <Compile Include="Classes\Structures\AMSMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\BaseMeteostationInfo.cs" />
@@ -171,8 +170,6 @@
     <Compile Include="Classes\Structures\Options\TextImporterState.cs" />
     <Compile Include="Classes\Structures\RP5MeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Options\Options.cs" />
-    <Compile Include="Classes\Generic\PropertyComparer.cs" />
-    <Compile Include="Classes\Generic\SortableBindingList.cs" />
     <Compile Include="Classes\Structures\Options\UserGradation.cs" />
     <Compile Include="Classes\Structures\RangeInterval.cs" />
     <Compile Include="Classes\Exceptions.cs" />
@@ -221,8 +218,6 @@
     <Compile Include="Scripts.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EnumExtensions.cs" />
-    <Compile Include="Geomodel\EarthModel.cs" />
-    <Compile Include="Geomodel\SphereCalculations.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Operations\Checker.cs" />
     <Compile Include="Operations\Interpolation\IInterpolateMethod.cs" />
@@ -269,6 +264,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonLib\CommonLib.csproj">
+      <Project>{6796e0d1-5887-40f1-83a0-b8e4000ad164}</Project>
+      <Name>CommonLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

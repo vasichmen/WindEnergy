@@ -1,4 +1,5 @@
-﻿using GMap.NET;
+﻿using CommonLib.Geomodel;
+using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
-using WindEnergy.WindLib.Geomodel;
 
 namespace WindEnergy.WindLib.Data.Providers.DB
 {
