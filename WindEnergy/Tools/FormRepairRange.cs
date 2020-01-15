@@ -20,6 +20,7 @@ using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.WindLib.Statistic.Structures;
 using WindEnergy.UI.Dialogs;
+using CommonLib;
 
 namespace WindEnergy.UI.Tools
 {

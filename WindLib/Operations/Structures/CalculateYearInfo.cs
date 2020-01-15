@@ -1,10 +1,10 @@
-﻿using System;
+﻿using CommonLib.Classes.Collections.Generic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Classes.Collections.Generic;
 
 namespace WindEnergy.WindLib.Operations.Structures
 {

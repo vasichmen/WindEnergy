@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindEnergy
+namespace CommonLib
 {
     /// <summary>
     /// расширения типов перечислений

@@ -1,4 +1,6 @@
-﻿using GMap.NET;
+﻿using CommonLib;
+using CommonLib.Classes.Collections.Generic;
+using GMap.NET;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,9 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindEnergy.WindLib.Classes.Collections.Generic;
-using WindEnergy.WindLib.Classes.Generic;
 using WindEnergy.WindLib.Classes.Structures;
+using WindEnergy.WindLib.Data.Interfaces;
 using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.WindLib.Statistic.Structures;
@@ -117,7 +118,7 @@ namespace WindEnergy.WindLib.Classes.Collections
                 if (double.IsNaN(airDensity))
                     //получаем плотность воздуха в зависимости от настроек
                     if (Vars.Options.CalculateAirDensity)
-                        airDensity = PowerFunctions.GetAirDensity(this);
+                        airDensity =this.GetAirDensity();
                     else
                         airDensity = Vars.Options.AirDensity;
                 return airDensity;
@@ -292,6 +293,35 @@ namespace WindEnergy.WindLib.Classes.Collections
                 }
             }
             return res;
+        }
+
+        /// <summary>
+        /// рассчитать плотность воздуха для этого ряда в кг/м3. В ряду должны быть координаты точки и данные о температуре
+        /// </summary>
+        /// <param name="provider">источник данных о высотах точек</param>
+        /// <returns></returns>
+        public  double GetAirDensity(IGeoInfoProvider provider = null)
+        {
+            if (this.Position.IsEmpty)
+                throw new WindEnergyException("Для вычисления плотности воздуха необходимы координаты точки");
+
+            if(provider==null)
+             provider = Vars.ETOPOdatabase;
+            double alt = provider.GetElevation(this.Position);
+            double pressure = 101.29 - 0.011837 * alt + 4.793e-7 * Math.Pow(alt, 2);
+
+            double temp_aver = 0;
+            int c = 0;
+            foreach (var i in this)
+                if (!double.IsNaN(i.Temperature))
+                {
+                    c++;
+                    temp_aver += i.Temperature;
+                }
+            temp_aver /= c;
+            temp_aver += 273; //градусы Кельвина
+            double dens = 3.4837 * (pressure / temp_aver);
+            return dens;
         }
 
         /// <summary>

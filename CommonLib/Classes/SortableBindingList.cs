@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace WindEnergy.WindLib.Classes.Collections.Generic
+namespace CommonLib.Classes.Collections.Generic
 {
     /// <summary>
     /// список с возможностью сортировки для привязки данных

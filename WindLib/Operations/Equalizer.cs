@@ -4,9 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using WindEnergy.WindLib.Classes.Generic;
 
 namespace WindEnergy.WindLib.Operations
 {

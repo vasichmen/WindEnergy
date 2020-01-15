@@ -1,11 +1,11 @@
-﻿using CommonLib.Classes.Interfaces;
+﻿using CommonLib.Classes.Generic;
+using CommonLib.Classes.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Classes.Generic;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Structures;

@@ -41,7 +41,7 @@ using System;
  *
  * @version $Revision: 1.8 $, $Date: 2005/09/12 09:52:34 $
  */
-namespace WindEnergy.WindLib
+namespace CommonLib
 {
     /// <summary>
     /// Математические функции и константы
