@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommonLib.Classes.Generic
+namespace CommonLib.Classes.Collections.Generic
 {
     /// <summary>
     /// компаратор DataItem для упорядочивания по возрастанию дат ряда

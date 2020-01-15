@@ -1,4 +1,5 @@
-﻿using CommonLib.Classes.Generic;
+﻿using CommonLib.Classes;
+using CommonLib.Classes.Collections.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -161,7 +161,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\MapMarker.cs" />
     <Compile Include="Classes\Structures\AMSMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\BaseMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Diapason.cs" />
@@ -172,8 +171,6 @@
     <Compile Include="Classes\Structures\Options\Options.cs" />
     <Compile Include="Classes\Structures\Options\UserGradation.cs" />
     <Compile Include="Classes\Structures\RangeInterval.cs" />
-    <Compile Include="Classes\Exceptions.cs" />
-    <Compile Include="Classes\VersionInfo.cs" />
     <Compile Include="Data\Interfaces\IGeoInfoProvider.cs" />
     <Compile Include="Data\Providers\DB\AMSMeteostationDatabase.cs" />
     <Compile Include="Data\Providers\DB\BaseFileDatabase.cs" />

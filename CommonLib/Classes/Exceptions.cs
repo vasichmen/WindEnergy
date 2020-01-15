@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindEnergy.WindLib.Classes
+namespace CommonLib.Classes
 {
     /// <summary>
     /// Исключения для WindEnergy

@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using IWshRuntimeLibrary;
 using System.Diagnostics;
-using WindEnergy;
 using CommonLib;
 
 namespace Installer

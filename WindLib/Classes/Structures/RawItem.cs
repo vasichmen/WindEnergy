@@ -1,4 +1,5 @@
-﻿using CommonLib.Classes.Interfaces;
+﻿using CommonLib.Classes;
+using CommonLib.Classes.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,6 @@ namespace WindEnergy.WindLib.Classes.Structures
         private double direction = double.NaN;
         private double wetness;
 
-        /// <summary>
-        /// дата и время наблюдения
-        /// </summary>
-        public DateTime Date { get; set; }
 
         /// <summary>
         /// направление ветра в градусах

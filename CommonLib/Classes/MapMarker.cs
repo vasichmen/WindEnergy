@@ -3,7 +3,7 @@ using System.Drawing;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 
-namespace WindEnergy.WindLib.Classes
+namespace CommonLib.Classes
 {
 
     /// <summary>

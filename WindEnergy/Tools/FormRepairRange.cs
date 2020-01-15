@@ -21,6 +21,7 @@ using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.WindLib.Statistic.Structures;
 using WindEnergy.UI.Dialogs;
 using CommonLib;
+using CommonLib.Classes;
 
 namespace WindEnergy.UI.Tools
 {

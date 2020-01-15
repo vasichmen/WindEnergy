@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WindEnergy.WindLib.Classes
+namespace CommonLib.Classes
 {
     /// <summary>
     /// информация о версии программы
@@ -13,22 +13,22 @@ namespace WindEnergy.WindLib.Classes
         /// <summary>
         /// список изменений
         /// </summary>
-        public string Changes { get; internal set; }
+        public string Changes { get;  set; }
 
         /// <summary>
         /// дата публикации
         /// </summary>
-        public DateTime ReleaseDate { get; internal set; }
+        public DateTime ReleaseDate { get;  set; }
 
         /// <summary>
         /// номер версии
         /// </summary>
-        public int VersionInt { get; internal set; }
+        public int VersionInt { get;  set; }
 
         /// <summary>
         /// текстовое представление весрии
         /// </summary>
-        public string VersionText { get; internal set; }
+        public string VersionText { get;  set; }
 
         /// <summary>
         /// ссылка для скачаивания

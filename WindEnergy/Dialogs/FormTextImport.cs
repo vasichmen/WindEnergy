@@ -17,6 +17,7 @@ using WindEnergy.WindLib.Classes.Structures.Options;
 using WindEnergy.WindLib.Data.Providers.FileSystem;
 using WindEnergy.UI.Ext;
 using CommonLib;
+using CommonLib.Classes;
 
 namespace WindEnergy.UI.Dialogs
 {

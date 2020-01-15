@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using CommonLib;
+using CommonLib.Classes;
 using Newtonsoft.Json.Linq;
 using WindEnergy.WindLib.Classes;
 

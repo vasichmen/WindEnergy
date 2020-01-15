@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
 using WindEnergy.UI.Properties;
+using CommonLib.Classes;
 
 namespace WindEnergy.UI.Dialogs
 {
