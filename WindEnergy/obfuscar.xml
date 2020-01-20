@@ -1,0 +1,17 @@
+<?xml version='1.0'?>
+<Obfuscator>
+  <Var name="InPath" value="D:\Clouds\Projects\CS\WindEnergy\WindEnergy\bin\Release" />
+  <Var name="OutPath" value=".\obfuscated" />
+  <Var name="HidePrivateApi" value="true" />
+  <Var name="KeyFile" value="$(InPath)\key.snk" />
+
+  <Module file="$(InPath)\WindEnergy.exe" />
+  <Module file="$(InPath)\CommonLib.dll" />
+  <Module file="$(InPath)\WindLib.dll" />
+  <Module file="$(InPath)\Installer.exe" />
+  <Module file="$(InPath)\postinstall.exe" />
+  <Module file="$(InPath)\preinstall.exe" />
+  <Module file="$(InPath)\SolarEnergy.exe" />
+  <Module file="$(InPath)\Updater.exe" />
+  <Module file="$(InPath)\SolarLib.dll" />
+</Obfuscator>
