@@ -58,8 +58,7 @@ namespace Installer
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, "Копирование файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    MessageBox.Show(e.Message, "Копирование файла", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
 

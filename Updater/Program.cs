@@ -29,18 +29,9 @@ namespace Updater
 
             //список файлов программы для обновления
             string[] files = {
-                "WindEnergy.exe.config",
-                "SolarEnergy.exe.config",
-                "System.Data.SQLite.dll.config",
-                "CommonLib.dll.config",
-                "WindLib.dll.config",
-                "SolarLib.dll.config",
-                "postinstall.exe.config",
-                "preinstall.exe.config",
-                "WindEnergy.exe",
-                "SolarEnergy.exe",
-                Path.GetFileName(postinstallFile),
-                Path.GetFileName(preinstallFile),
+                "*.exe.config",
+                "*.dll.config",
+                "*.exe",
                 "changelog.txt",
             };
 
@@ -86,12 +77,14 @@ namespace Updater
             {
                 try
                 {
-                    if (File.Exists(from + "\\" + file))
-                        File.Copy(from + "\\" + file, dest + "\\" + file, true);
+                    foreach (string file_path in Directory.EnumerateFiles(from, file))
+                        if (File.Exists(file_path) && Path.GetFileName(Application.ExecutablePath) != Path.GetFileName(file_path))
+                            File.Copy(file_path, dest + "\\" + Path.GetFileName(file_path), true);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("ОШИБКА!! " + e.Message);
+                    Console.ReadLine();
                     return;
                 }
             }
@@ -117,14 +110,16 @@ namespace Updater
 
         private static void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            lock(locker){
+            lock (locker)
+            {
                 if (DateTime.Now - LastPrint > TimeSpan.FromSeconds(1))
                 {
                     Console.SetCursorPosition(0, 1);
                     Console.Write($"Загрузка файла обновления: {e.ProgressPercentage}% {((double)e.BytesReceived / (1024 * 1024)).ToString("0.000")} MБ из {((double)e.TotalBytesToReceive / (1024 * 1024)).ToString("0.000")} MБ");
                     Thread.Sleep(50);
                     LastPrint = DateTime.Now;
-                } }
+                }
+            }
         }
 
         /// <summary>
