@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCheckRange));
             this.buttonCheckRange = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.labeldirectDiap = new System.Windows.Forms.Label();
             this.labelspeedDiap = new System.Windows.Forms.Label();
             this.buttonEnterDirectionDiapason = new System.Windows.Forms.Button();
@@ -42,7 +43,6 @@
             this.radioButtonEnterLimits = new System.Windows.Forms.RadioButton();
             this.radioButtonSelectLimitsProvider = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +80,15 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Проверка ряда";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(9, 218);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(290, 23);
+            this.progressBar1.TabIndex = 13;
             // 
             // labeldirectDiap
             // 
@@ -179,15 +188,6 @@
             this.radioButtonSelectLimitsProvider.Text = "Автоматический поиск ограничений";
             this.radioButtonSelectLimitsProvider.UseVisualStyleBackColor = true;
             this.radioButtonSelectLimitsProvider.CheckedChanged += new System.EventHandler(this.radioButtonLimits_CheckedChanged);
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(9, 218);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(290, 23);
-            this.progressBar1.TabIndex = 13;
             // 
             // FormCheckRange
             // 

@@ -40,12 +40,12 @@
             this.labelStatusMaxSpeed = new System.Windows.Forms.Label();
             this.buttonStartMaxSpeed = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonUpdateRP5 = new System.Windows.Forms.Button();
             this.checkBoxSkipErrors = new System.Windows.Forms.CheckBox();
             this.progressBarStatusRP5 = new System.Windows.Forms.ProgressBar();
             this.buttonStopRP5 = new System.Windows.Forms.Button();
             this.labelStatusRP5 = new System.Windows.Forms.Label();
             this.buttonStartRP5 = new System.Windows.Forms.Button();
-            this.buttonUpdateRP5 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -176,6 +176,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Загрузка БД Расписание погоды";
             // 
+            // buttonUpdateRP5
+            // 
+            this.buttonUpdateRP5.Location = new System.Drawing.Point(90, 19);
+            this.buttonUpdateRP5.Name = "buttonUpdateRP5";
+            this.buttonUpdateRP5.Size = new System.Drawing.Size(75, 23);
+            this.buttonUpdateRP5.TabIndex = 5;
+            this.buttonUpdateRP5.Text = "Обновить";
+            this.buttonUpdateRP5.UseVisualStyleBackColor = true;
+            this.buttonUpdateRP5.Click += new System.EventHandler(this.buttonUpdateRP5_Click);
+            // 
             // checkBoxSkipErrors
             // 
             this.checkBoxSkipErrors.AutoSize = true;
@@ -226,16 +236,6 @@
             this.buttonStartRP5.Text = "Начать";
             this.buttonStartRP5.UseVisualStyleBackColor = true;
             this.buttonStartRP5.Click += new System.EventHandler(this.buttonStartRP5_Click);
-            // 
-            // buttonUpdateRP5
-            // 
-            this.buttonUpdateRP5.Location = new System.Drawing.Point(90, 19);
-            this.buttonUpdateRP5.Name = "buttonUpdateRP5";
-            this.buttonUpdateRP5.Size = new System.Drawing.Size(75, 23);
-            this.buttonUpdateRP5.TabIndex = 5;
-            this.buttonUpdateRP5.Text = "Обновить";
-            this.buttonUpdateRP5.UseVisualStyleBackColor = true;
-            this.buttonUpdateRP5.Click += new System.EventHandler(this.buttonUpdateRP5_Click);
             // 
             // FormLoadData
             // 

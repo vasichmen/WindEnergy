@@ -86,6 +86,9 @@
             this.label13 = new System.Windows.Forms.Label();
             this.comboBoxSpeedGradations = new System.Windows.Forms.ComboBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.radioButtonRP5TypeLocal = new System.Windows.Forms.RadioButton();
+            this.radioButtonRP5TypeAPI = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButtonSearchTypeDB = new System.Windows.Forms.RadioButton();
             this.radioButtonSearchTypeAPI = new System.Windows.Forms.RadioButton();
@@ -94,9 +97,6 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonAccept = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButtonRP5TypeLocal = new System.Windows.Forms.RadioButton();
-            this.radioButtonRP5TypeAPI = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -108,9 +108,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradTo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradFrom)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -764,6 +764,49 @@
             this.tabPage4.Text = "Источники данных";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.radioButtonRP5TypeLocal);
+            this.groupBox2.Controls.Add(this.radioButtonRP5TypeAPI);
+            this.groupBox2.Location = new System.Drawing.Point(4, 76);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Size = new System.Drawing.Size(467, 67);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "БД Расписание Погоды";
+            // 
+            // radioButtonRP5TypeLocal
+            // 
+            this.radioButtonRP5TypeLocal.AutoSize = true;
+            this.radioButtonRP5TypeLocal.Location = new System.Drawing.Point(4, 39);
+            this.radioButtonRP5TypeLocal.Margin = new System.Windows.Forms.Padding(2);
+            this.radioButtonRP5TypeLocal.Name = "radioButtonRP5TypeLocal";
+            this.radioButtonRP5TypeLocal.Size = new System.Drawing.Size(175, 17);
+            this.radioButtonRP5TypeLocal.TabIndex = 1;
+            this.radioButtonRP5TypeLocal.TabStop = true;
+            this.radioButtonRP5TypeLocal.Text = "Использовать локальную БД";
+            this.toolTip1.SetToolTip(this.radioButtonRP5TypeLocal, "Быстрый способ. Необходимо указать папку БД Расписание погоды на вкладке Основные" +
+        "");
+            this.radioButtonRP5TypeLocal.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonRP5TypeAPI
+            // 
+            this.radioButtonRP5TypeAPI.AutoSize = true;
+            this.radioButtonRP5TypeAPI.Location = new System.Drawing.Point(4, 17);
+            this.radioButtonRP5TypeAPI.Margin = new System.Windows.Forms.Padding(2);
+            this.radioButtonRP5TypeAPI.Name = "radioButtonRP5TypeAPI";
+            this.radioButtonRP5TypeAPI.Size = new System.Drawing.Size(118, 17);
+            this.radioButtonRP5TypeAPI.TabIndex = 0;
+            this.radioButtonRP5TypeAPI.TabStop = true;
+            this.radioButtonRP5TypeAPI.Text = "Использовать API";
+            this.toolTip1.SetToolTip(this.radioButtonRP5TypeAPI, "Более долгий способ, но при этом загружаются самые актуальные данные с сайта rp5." +
+        "ru");
+            this.radioButtonRP5TypeAPI.UseVisualStyleBackColor = true;
+            // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -862,49 +905,6 @@
             this.buttonAccept.UseVisualStyleBackColor = true;
             this.buttonAccept.Click += new System.EventHandler(this.buttonAccept_Click);
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.radioButtonRP5TypeLocal);
-            this.groupBox2.Controls.Add(this.radioButtonRP5TypeAPI);
-            this.groupBox2.Location = new System.Drawing.Point(4, 76);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(467, 67);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "БД Расписание Погоды";
-            // 
-            // radioButtonRP5TypeLocal
-            // 
-            this.radioButtonRP5TypeLocal.AutoSize = true;
-            this.radioButtonRP5TypeLocal.Location = new System.Drawing.Point(4, 39);
-            this.radioButtonRP5TypeLocal.Margin = new System.Windows.Forms.Padding(2);
-            this.radioButtonRP5TypeLocal.Name = "radioButtonRP5TypeLocal";
-            this.radioButtonRP5TypeLocal.Size = new System.Drawing.Size(175, 17);
-            this.radioButtonRP5TypeLocal.TabIndex = 1;
-            this.radioButtonRP5TypeLocal.TabStop = true;
-            this.radioButtonRP5TypeLocal.Text = "Использовать локальную БД";
-            this.toolTip1.SetToolTip(this.radioButtonRP5TypeLocal, "Быстрый способ. Необходимо указать папку БД Расписание погоды на вкладке Основные" +
-        "");
-            this.radioButtonRP5TypeLocal.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonRP5TypeAPI
-            // 
-            this.radioButtonRP5TypeAPI.AutoSize = true;
-            this.radioButtonRP5TypeAPI.Location = new System.Drawing.Point(4, 17);
-            this.radioButtonRP5TypeAPI.Margin = new System.Windows.Forms.Padding(2);
-            this.radioButtonRP5TypeAPI.Name = "radioButtonRP5TypeAPI";
-            this.radioButtonRP5TypeAPI.Size = new System.Drawing.Size(118, 17);
-            this.radioButtonRP5TypeAPI.TabIndex = 0;
-            this.radioButtonRP5TypeAPI.TabStop = true;
-            this.radioButtonRP5TypeAPI.Text = "Использовать API";
-            this.toolTip1.SetToolTip(this.radioButtonRP5TypeAPI, "Более долгий способ, но при этом загружаются самые актуальные данные с сайта rp5." +
-        "ru");
-            this.radioButtonRP5TypeAPI.UseVisualStyleBackColor = true;
-            // 
             // FormOptions
             // 
             this.AcceptButton = this.buttonSave;
@@ -933,11 +933,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradTo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGradFrom)).EndInit();
             this.tabPage4.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }

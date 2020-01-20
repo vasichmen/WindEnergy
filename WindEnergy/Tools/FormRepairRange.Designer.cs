@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRepairRange));
             this.groupBoxMain = new System.Windows.Forms.GroupBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.labelInterval = new System.Windows.Forms.Label();
             this.labelRangeLength = new System.Windows.Forms.Label();
             this.labelMaxEmptySpace = new System.Windows.Forms.Label();
@@ -44,7 +45,6 @@
             this.buttonRepairRange = new System.Windows.Forms.Button();
             this.comboBoxRepairInterval = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBoxMain.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -69,6 +69,15 @@
             this.groupBoxMain.TabIndex = 4;
             this.groupBoxMain.TabStop = false;
             this.groupBoxMain.Text = "Восстановление ряда";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(6, 300);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(293, 23);
+            this.progressBar1.TabIndex = 10;
             // 
             // labelInterval
             // 
@@ -195,15 +204,6 @@
             this.comboBoxRepairInterval.Name = "comboBoxRepairInterval";
             this.comboBoxRepairInterval.Size = new System.Drawing.Size(293, 21);
             this.comboBoxRepairInterval.TabIndex = 0;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(6, 300);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(293, 23);
-            this.progressBar1.TabIndex = 10;
             // 
             // FormRepairRange
             // 
