@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using IWshRuntimeLibrary;
 using System.Diagnostics;
 using CommonLib;
+using System.Windows.Forms;
 
 namespace Installer
 {
@@ -14,9 +15,12 @@ namespace Installer
     {
         public static void Install(string from, string dest)
         {
-            //скопировать файлы
-            //сгенерировать ключ
-            //создать ярлык на рабочем столе
+            //завершить все экземпляры программы
+            foreach (Process proc in Process.GetProcessesByName("WindEnergy"))
+                proc.Kill();
+            foreach (Process proc in Process.GetProcessesByName("SolarEnergy"))
+                proc.Kill();
+
             if (!dest.EndsWith("WindEnergy") && !dest.EndsWith("WindEnergy\\"))
             {
                 if (dest.EndsWith("\\"))
@@ -31,31 +35,59 @@ namespace Installer
             //КОПИРОВАНИЕ ФАЙЛОВ
             CopyDir(from + "\\Data", dest + "\\Data");
             CopyDir(from + "\\libs", dest + "\\libs");
-            System.IO.File.Copy(from + "\\WindEnergy.exe.config", dest + "\\WindEnergy.exe.config", true);
-            System.IO.File.Copy(from + "\\Updater.exe.config", dest + "\\Updater.exe.config", true);
-            System.IO.File.Copy(from + "\\System.Data.SQLite.dll.config", dest + "\\System.Data.SQLite.dll.config", true);
-            System.IO.File.Copy(from + "\\Lib.dll.config", dest + "\\Lib.dll.config", true);
-            System.IO.File.Copy(from + "\\WindEnergy.exe", dest + "\\WindEnergy.exe", true);
-            System.IO.File.Copy(from + "\\Updater.exe", dest + "\\Updater.exe", true);
-            System.IO.File.Copy(from + "\\changelog.txt", dest + "\\changelog.txt", true);
+            string[] files = {
+                "WindEnergy.exe.config",
+                "SolarEnergy.exe.config",
+                "Updater.exe.config",
+                "System.Data.SQLite.dll.config",
+                "CommonLib.dll.config",
+                "WindLib.dll.config",
+                "SolarLib.dll.config",
+                "postinstall.exe.config",
+                "preinstall.exe.config",
+                "WindEnergy.exe",
+                "SolarEnergy.exe",
+                "Updater.exe",
+                "changelog.txt",
+            };
+            foreach (string file in files)
+            {
+                try
+                {
+                    System.IO.File.Copy(from + "\\" + file, dest + "\\" + file, true);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Копирование файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
             //ГЕНЕРАЦИЯ КЛЮЧА
             GenerateKey(dest + "\\id.key");
 
+            //СОЗДАНИЕ ЯРЛЫКОВ
+            createShortcut(dest + "\\WindEnergy.exe", "Ветроэнергетический кадастр");
+            createShortcut(dest + "\\SolarEnergy.exe", "");
+
+
+            MessageBox.Show("Установка завершена");
+            Process.Start(dest + "\\WindEnergy.exe");
+        }
+
+        private static void createShortcut(string targetFile, string description)
+        {
             //СОЗДАНИЕ ЯРЛЫКА
             WshShell shell = new WshShell();
-            string shortcutPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\WindEnergy.lnk";
+            string shortcutPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Path.GetFileNameWithoutExtension(targetFile) + @".lnk";
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
             //задаем свойства для ярлыка
             //описание ярлыка в всплывающей подсказке
-            shortcut.Description = "Ветроэнергетический кадастр";
+            shortcut.Description = description;
             //путь к самой программе
-            shortcut.TargetPath = dest + "\\WindEnergy.exe";
+            shortcut.TargetPath = targetFile;
             //Создаем ярлык
             shortcut.Save();
-
-            System.Windows.Forms.MessageBox.Show("Установка завершена");
-            Process.Start(dest + "\\WindEnergy.exe");
         }
 
         internal static void GenerateKey(string selectedPath)

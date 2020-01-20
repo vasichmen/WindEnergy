@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace CommonLib.Classes.Interfaces
+namespace postinstall
 {
-    public class RawItemBase
+    class Program
     {
-        public DateTime Date { get; set; }
+        static void Main(string[] args)
+        {
+        }
     }
 }

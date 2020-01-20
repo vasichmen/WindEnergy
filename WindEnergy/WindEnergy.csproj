@@ -379,6 +379,10 @@
       <Project>{6796e0d1-5887-40f1-83a0-b8e4000ad164}</Project>
       <Name>CommonLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SolarEnergy\SolarEnergy.csproj">
+      <Project>{bcfccd1f-f443-4548-a815-f418466bc845}</Project>
+      <Name>SolarEnergy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindLib\WindLib.csproj">
       <Project>{e9da177c-c6da-445f-a067-2634b0bbfb96}</Project>
       <Name>WindLib</Name>

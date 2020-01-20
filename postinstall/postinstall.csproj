@@ -4,14 +4,29 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{23F7F95D-A53B-4353-9756-D12B10A4C438}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Updater</RootNamespace>
-    <AssemblyName>Updater</AssemblyName>
+    <ProjectGuid>{9539125B-706E-4A3A-9364-53FD2BE435F9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>postinstall</RootNamespace>
+    <AssemblyName>postinstall</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,12 +47,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Windows" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,22 +68,24 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\postinstall\postinstall.csproj">
-      <Project>{9539125b-706e-4a3a-9364-53fd2be435f9}</Project>
-      <Name>postinstall</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\preinstall\preinstall.csproj">
-      <Project>{dee69ace-b1ac-4f26-9538-9ae7186b1a55}</Project>
-      <Name>preinstall</Name>
-    </ProjectReference>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>del /s/q $(SolutionDir)\WindEnergy\bin\Release\Updater.exe
-del /s/q $(SolutionDir)\WindEnergy\bin\Release\Updater.exe.config</PreBuildEvent>
+    <PreBuildEvent>del /s/q $(SolutionDir)\WindEnergy\bin\Release\postinstall.exe
+del /s/q $(SolutionDir)\WindEnergy\bin\Release\postinstall.exe.config</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetDir)Updater.exe $(SolutionDir)WindEnergy\bin\Release\Updater.exe
-copy $(TargetDir)Updater.exe.config $(SolutionDir)WindEnergy\bin\Release\Updater.exe.config</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetDir)postinstall.exe $(SolutionDir)WindEnergy\bin\Release\postinstall.exe
+copy $(TargetDir)postinstall.exe.config $(SolutionDir)WindEnergy\bin\Release\postinstall.exe.config</PostBuildEvent>
   </PropertyGroup>
 </Project>

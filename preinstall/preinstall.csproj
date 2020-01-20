@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6796E0D1-5887-40F1-83A0-B8E4000AD164}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommonLib</RootNamespace>
-    <AssemblyName>CommonLib</AssemblyName>
+    <ProjectGuid>{DEE69ACE-B1AC-4F26-9538-9AE7186B1A55}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>preinstall</RootNamespace>
+    <AssemblyName>preinstall</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,17 +32,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GMap.NET.Core, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
-      <HintPath>..\packages\GMap.NET.WindowsForms.1.7.5\lib\net40\GMap.NET.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="GMap.NET.WindowsForms, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
-      <HintPath>..\packages\GMap.NET.WindowsForms.1.7.5\lib\net40\GMap.NET.WindowsForms.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,25 +46,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Collections\Generic\DateTimeComparer.cs" />
-    <Compile Include="Classes\Collections\Generic\PropertyComparer.cs" />
-    <Compile Include="Classes\Collections\Generic\SortableBindingList.cs" />
-    <Compile Include="Classes\Exceptions.cs" />
-    <Compile Include="Classes\Base\RawItemBase.cs" />
-    <Compile Include="Classes\MapMarker.cs" />
-    <Compile Include="Classes\VersionInfo.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="Convoluter.cs" />
-    <Compile Include="Driver.cs" />
-    <Compile Include="EnumExtensions.cs" />
-    <Compile Include="Geomodel\EarthModel.cs" />
-    <Compile Include="Geomodel\SphereCalculations.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpecialFunction.cs" />
-    <Compile Include="TimeSpanExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>del /s/q $(SolutionDir)\WindEnergy\bin\Release\preinstall.exe
+del /s/q $(SolutionDir)\WindEnergy\bin\Release\preinstall.exe.config</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetDir)preinstall.exe $(SolutionDir)WindEnergy\bin\Release\preinstall.exe
+copy $(TargetDir)preinstall.exe.config $(SolutionDir)WindEnergy\bin\Release\preinstall.exe.config</PostBuildEvent>
+  </PropertyGroup>
 </Project>

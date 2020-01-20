@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{23F7F95D-A53B-4353-9756-D12B10A4C438}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Updater</RootNamespace>
-    <AssemblyName>Updater</AssemblyName>
+    <ProjectGuid>{BCFCCD1F-F443-4548-A815-F418466BC845}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SolarEnergy</RootNamespace>
+    <AssemblyName>SolarEnergy</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,43 +32,68 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Windows" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\postinstall\postinstall.csproj">
-      <Project>{9539125b-706e-4a3a-9364-53fd2be435f9}</Project>
-      <Name>postinstall</Name>
+    <ProjectReference Include="..\CommonLib\CommonLib.csproj">
+      <Project>{6796e0d1-5887-40f1-83a0-b8e4000ad164}</Project>
+      <Name>CommonLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\preinstall\preinstall.csproj">
-      <Project>{dee69ace-b1ac-4f26-9538-9ae7186b1a55}</Project>
-      <Name>preinstall</Name>
+    <ProjectReference Include="..\SolarLib\SolarLib.csproj">
+      <Project>{9bce8965-3956-4616-aa37-fcc199ed313d}</Project>
+      <Name>SolarLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>del /s/q $(SolutionDir)\WindEnergy\bin\Release\Updater.exe
-del /s/q $(SolutionDir)\WindEnergy\bin\Release\Updater.exe.config</PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>copy $(TargetDir)Updater.exe $(SolutionDir)WindEnergy\bin\Release\Updater.exe
-copy $(TargetDir)Updater.exe.config $(SolutionDir)WindEnergy\bin\Release\Updater.exe.config</PostBuildEvent>
-  </PropertyGroup>
 </Project>

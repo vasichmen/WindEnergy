@@ -16,17 +16,44 @@ namespace Updater
     class Program
     {
         static string TempFolder = Application.StartupPath + "\\update_tmp";
+        static string postinstallFile = Application.StartupPath + "\\postinstall.exe";
+        static string preinstallFile = Application.StartupPath + "\\preinstall.exe";
         static string TmpFile;
         static DateTime LastPrint;
+        static object locker = new object();
 
         static void Main(string[] args)
         {
             if (args.Length == 0)
                 return;
 
+            //список файлов программы для обновления
+            string[] files = {
+                "WindEnergy.exe.config",
+                "SolarEnergy.exe.config",
+                "System.Data.SQLite.dll.config",
+                "CommonLib.dll.config",
+                "WindLib.dll.config",
+                "SolarLib.dll.config",
+                "postinstall.exe.config",
+                "preinstall.exe.config",
+                "WindEnergy.exe",
+                "SolarEnergy.exe",
+                Path.GetFileName(postinstallFile),
+                Path.GetFileName(preinstallFile),
+                "changelog.txt",
+            };
+
+            Console.WriteLine("Подготовка к обновлению...");
             //завершить все экземпляры программы
             foreach (Process proc in Process.GetProcessesByName("WindEnergy"))
                 proc.Kill();
+            foreach (Process proc in Process.GetProcessesByName("SolarEnergy"))
+                proc.Kill();
+
+            //запуск скрипта после обновления
+            if (File.Exists(preinstallFile))
+                Process.Start(preinstallFile).WaitForExit(); //дожидаемся окончания работы процесса
 
             //скачать архив с сайта   
             TmpFile = GetTempFileName();
@@ -48,38 +75,56 @@ namespace Updater
             ZipFile.ExtractToDirectory(TmpFile, TempFolder);
 
 
-            //заменить файлы в папке lib, windEnergy.exe
+            //заменить файлы в папке lib, Data и по списку файлов
             Console.WriteLine("Обновление...");
             string from = TempFolder + "\\Release", dest = Application.StartupPath;
-            File.Copy(from + "\\WindEnergy.exe", dest + "\\WindEnergy.exe", true);
-            File.Copy(from + "\\WindEnergy.exe.config", dest + "\\WindEnergy.exe.config", true);
-            File.Copy(from + "\\System.Data.SQLite.dll.config", dest + "\\System.Data.SQLite.dll.config", true);
-            File.Copy(from + "\\Lib.dll.config", dest + "\\Lib.dll.config", true);
-            File.Copy(from + "\\WindEnergy.exe", dest + "\\WindEnergy.exe", true);
-            File.Copy(from + "\\changelog.txt", dest + "\\changelog.txt", true);
+
+            CopyDir(from + "\\Data", dest + "\\Data");
             CopyDir(from + "\\libs", dest + "\\libs");
+
+            foreach (string file in files)
+            {
+                try
+                {
+                    if (File.Exists(from + "\\" + file))
+                        File.Copy(from + "\\" + file, dest + "\\" + file, true);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("ОШИБКА!! " + e.Message);
+                    return;
+                }
+            }
 
             //удаление временной папки
             Directory.Delete(TempFolder, true);
 
+            //запуск скрипта после обновления
+            if (File.Exists(postinstallFile))
+                Process.Start(postinstallFile).WaitForExit(); //дожидаемся окончания работы процесса
+
+
             //запустить программу
-            Process.Start(Application.StartupPath + "\\WindEnergy.exe");
+            if (args.Length == 2 && File.Exists(args[1]))
+                Process.Start(args[1]); //если есть аргумент, то запускаем нужный процесс
+            else
+                Process.Start(Application.StartupPath + "\\WindEnergy.exe"); //если нет, то по умолчанию
 
             Console.WriteLine("Обновление завершено!");
             Thread.Sleep(1000);
-
         }
 
 
         private static void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            //Console.Clear();
-            if (DateTime.Now - LastPrint > TimeSpan.FromSeconds(1))
-            {
-                Console.SetCursorPosition(0, 0);
-                Console.Write($"Загрузка файла обновления: {e.ProgressPercentage}% {e.BytesReceived / (1024 * 1024)}MБ из {e.TotalBytesToReceive / (1024 * 1024)}MБ");
-                LastPrint = DateTime.Now;
-            }
+            lock(locker){
+                if (DateTime.Now - LastPrint > TimeSpan.FromSeconds(1))
+                {
+                    Console.SetCursorPosition(0, 1);
+                    Console.Write($"Загрузка файла обновления: {e.ProgressPercentage}% {((double)e.BytesReceived / (1024 * 1024)).ToString("0.000")} MБ из {((double)e.TotalBytesToReceive / (1024 * 1024)).ToString("0.000")} MБ");
+                    Thread.Sleep(50);
+                    LastPrint = DateTime.Now;
+                } }
         }
 
         /// <summary>
