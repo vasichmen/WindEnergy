@@ -78,7 +78,7 @@ namespace Installer
         {
             //СОЗДАНИЕ ЯРЛЫКА
             WshShell shell = new WshShell();
-            string shortcutPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Path.GetFileNameWithoutExtension(targetFile) + @".lnk";
+            string shortcutPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\"+Path.GetFileNameWithoutExtension(targetFile) + @".lnk";
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
             //задаем свойства для ярлыка
             //описание ярлыка в всплывающей подсказке
