@@ -1,9 +1,7 @@
-1. Проверить версию сборки в проекте UI, Lib
+1. Проверить версию сборки в проектах WindEnergy, WinLib, SolarLib, CommonLib, SolarEnergy
 2. Актуализировать changelog.txt в проекте
 3. Пересобрать решение в Release
 4. сделать коммит релиза Release <version>
-5. make_zip.bat
-6. Удалить из созданного архива WindEnergy.exe, \libs\Lib.dll
-7. Запустить сборку проекта в Spices.Net
-8. Заменить собранные WindEnergy.exe, \libs\Lib.dll в архиве
-9. Опубликовать новую версию на сайте
+5. make_release.bat
+6. make_zip.bat
+7. Опубликовать новую версию на сайте

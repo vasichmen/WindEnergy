@@ -1,0 +1,6 @@
+.pdb
+obfuscated
+key.snk
+cache
+.xml
+id.key
