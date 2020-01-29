@@ -13,6 +13,9 @@ using System.Windows.Forms;
 
 namespace SolarEnergy.Tools
 {
+    /// <summary>
+    /// окно расчета среднесуточных графиков по месяцам
+    /// </summary>
     public partial class FormDailyAverageGraphs : Form
     {
         public FormDailyAverageGraphs()
@@ -30,6 +33,7 @@ namespace SolarEnergy.Tools
                 if (of.FileNames.Length == 0) return;
                 Vars.Options.LastDirectory = Path.GetDirectoryName(of.FileNames[0]);
                 Averager.ProcessRanges(of.FileNames.ToList());
+                MessageBox.Show("Обработка завершена!");
             }
 
             of.Dispose();

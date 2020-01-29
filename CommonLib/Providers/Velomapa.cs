@@ -20,9 +20,9 @@ namespace CommonLib.Data.Providers.InternetServices
     /// </summary>
     public class Velomapa : BaseConnection
     {
-        private const string  SiteAddress = "";
+        public const string  SITE_ADDRESS = "https://velomapa.ru/";
 
-        public Velomapa() : base(SiteAddress,null) { }
+        public Velomapa() : base(SITE_ADDRESS,null) { }
 
         /// <summary>
         /// минимальное время между запросами
@@ -54,7 +54,7 @@ namespace CommonLib.Data.Providers.InternetServices
         /// <param name="guid">guid экземпляра</param>
         private void AttachGuid(string guid)
         {
-            string site = SiteAddress;
+            string site = SITE_ADDRESS;
             string userkey = "";
             byte[] arr = Driver.LoadID(Application.StartupPath+"\\id.key");
             foreach (var c in arr)
@@ -72,7 +72,7 @@ namespace CommonLib.Data.Providers.InternetServices
         /// <returns></returns>
         public VersionInfo GetVersion()
         {
-            string site = SiteAddress;
+            string site = SITE_ADDRESS;
             string url = string.Format("{0}/receiver.php?mode=version&owner_version={1}&program=windenergy", site, Convert.ToSingle(Application.ProductVersion.Replace(".", "")));
             JObject jobj = SendJsonGetRequest(url, out HttpStatusCode code);
             int version_int = int.Parse(jobj["version_int"].ToString());

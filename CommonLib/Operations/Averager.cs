@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 namespace CommonLib.Operations
 {
     /// <summary>
-    /// Получение средних значений по часам для каждого месяца
+    /// Получение средних значений по часам для каждого месяца. 
+    /// НА входе файл со столбцами: месяц, день, час, данные1[, данные2[, данные3]...]
+    /// Заголовки столбцов обязательны!
     /// </summary>
     public static class Averager
     {
@@ -115,11 +117,11 @@ namespace CommonLib.Operations
             Range range = Range.Import(fname);
 
             //обработка
-            using (StreamWriter sw = new StreamWriter(Path.GetDirectoryName(fname) + "\\" + Path.GetFileNameWithoutExtension(fname) + "_averaged.csv"))
+            using (StreamWriter sw = new StreamWriter(Path.GetDirectoryName(fname) + "\\" + Path.GetFileNameWithoutExtension(fname) + "_averaged.csv",false,Encoding.UTF8))
             {
                 for (int m = 1; m <= 12; m++)
                 {
-                    List<List<double>> graph = new List<List<double>>();
+                    Dictionary<int,List<double>> graph = new Dictionary<int,List<double>>();
                     for (int h = 0; h <= 23; h++)
                     {
                         var items = from item in range.Values
@@ -132,13 +134,25 @@ namespace CommonLib.Operations
                             double average = items.Average((item) => { return item.Values[i]; });
                             averages.Add(average);
                         }
-                        graph.Add(averages);
+                        graph.Add(h,averages);
                     }
 
-                    foreach (List<double> param in graph)
+                    //запись в файл
+                    sw.WriteLine(((Months)m).Description());
+                    string line = "час;";
+                    for (int h = 1; h <= 24; h++)
+                        line += h + ";";
+                    sw.WriteLine(line);
+                    for (int i = 0; i < range.header.Count; i++)
                     {
-
+                        line = range.header[i] + ";";
+                        for (int h = 0; h <= 23; h++)
+                        {
+                            line += graph[h][i].ToString("0.0000000")+";";
+                        }
+                        sw.WriteLine(line);
                     }
+                    sw.WriteLine();
                 }
 
 

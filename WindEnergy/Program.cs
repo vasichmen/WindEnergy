@@ -59,7 +59,7 @@ namespace WindEnergy.UI
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                Vars.Options = Options.Load(Application.StartupPath + "\\options.xml");
+                Vars.Options = Options.Load(Application.StartupPath + "\\windOptions.xml");
                 if (Vars.Options == null)
                 {
                     throw new Exception("Файлы программы повреждены, запуск невозможен");
@@ -126,7 +126,7 @@ namespace WindEnergy.UI
             finally { Debug.Print("Temp directory removed"); }
 
             //сохранение настроек
-            Vars.Options.Save(Application.StartupPath + "\\options.xml");
+            Vars.Options.Save(Application.StartupPath + "\\windOptions.xml");
         }
     }
 }

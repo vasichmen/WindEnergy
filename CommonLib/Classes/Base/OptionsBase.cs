@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonLib.Data.Providers.InternetServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace CommonLib.Classes.Base
         /// <summary>
         /// адрес сайта
         /// </summary>
-        public string SiteAddress { get { return "https://velomapa.ru/"; } }
+        public string SiteAddress { get { return Velomapa.SITE_ADDRESS; } }
 
         /// <summary>
         /// адрес файла настроек

@@ -35,7 +35,7 @@
             // 
             // buttonSelectFiles
             // 
-            this.buttonSelectFiles.Location = new System.Drawing.Point(12, 96);
+            this.buttonSelectFiles.Location = new System.Drawing.Point(16, 118);
             this.buttonSelectFiles.Name = "buttonSelectFiles";
             this.buttonSelectFiles.Size = new System.Drawing.Size(113, 23);
             this.buttonSelectFiles.TabIndex = 0;
@@ -50,10 +50,11 @@
             this.textBox1.BackColor = System.Drawing.SystemColors.Control;
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(1, 4);
+            this.textBox1.Location = new System.Drawing.Point(16, 16);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(7);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(548, 86);
+            this.textBox1.Size = new System.Drawing.Size(768, 92);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
@@ -61,7 +62,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 147);
+            this.ClientSize = new System.Drawing.Size(800, 153);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonSelectFiles);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

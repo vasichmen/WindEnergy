@@ -52,7 +52,7 @@ namespace SolarEnergy
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Vars.Options = Options.Load(Application.StartupPath + "\\options.xml");
+            Vars.Options = Options.Load(Application.StartupPath + "\\solarOptions.xml");
             if (Vars.Options == null)
             {
                 throw new Exception("Файлы программы повреждены, запуск невозможен");
@@ -119,7 +119,7 @@ namespace SolarEnergy
             finally { Debug.Print("Temp directory removed"); }
 
             //сохранение настроек
-            Vars.Options.Save(Application.StartupPath + "\\options.xml");
+            Vars.Options.Save(Application.StartupPath + "\\solarOptions.xml");
         }
     }
 }
