@@ -20,6 +20,7 @@ using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.UI.Dialogs;
 using WindEnergy.UI.Ext;
 using CommonLibLib.Data.Providers.InternetServices;
+using WindLib;
 
 namespace WindEnergy.UI.Tools
 {

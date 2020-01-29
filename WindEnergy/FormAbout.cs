@@ -9,6 +9,7 @@ using WindEnergy.UI.Common.Dialogs;
 using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
+using WindLib;
 
 namespace WindEnergy.UI
 {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WindEnergy.WindLib.Properties {
+namespace CommonLib.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WindEnergy.WindLib.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WindEnergy.WindLib.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CommonLib.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,24 @@ namespace WindEnergy.WindLib.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ivYp9cOAW0LL08JO.
+        /// </summary>
+        internal static string ArcgisAppId {
+            get {
+                return ResourceManager.GetString("ArcgisAppId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 5ea245306f7b4e4a87fe435db410fa1d.
+        /// </summary>
+        internal static string ArcgisSecret {
+            get {
+                return ResourceManager.GetString("ArcgisSecret", resourceCulture);
             }
         }
     }

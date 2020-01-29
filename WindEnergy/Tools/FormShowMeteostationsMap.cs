@@ -19,6 +19,7 @@ using WindEnergy.UI.Ext;
 using WindEnergy.UI.Properties;
 using CommonLib.Classes;
 using CommonLib;
+using WindLib;
 
 namespace WindEnergy.UI.Tools
 {

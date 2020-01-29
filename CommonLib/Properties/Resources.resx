@@ -117,4 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ArcgisAppId" xml:space="preserve">
+    <value>ivYp9cOAW0LL08JO</value>
+  </data>
+  <data name="ArcgisSecret" xml:space="preserve">
+    <value>5ea245306f7b4e4a87fe435db410fa1d</value>
+  </data>
 </root>

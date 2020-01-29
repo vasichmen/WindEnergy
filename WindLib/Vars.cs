@@ -12,7 +12,7 @@ using WindEnergy.WindLib.Data.Providers.DB;
 using WindEnergy.WindLib.Data.Providers.DB.ETOPO;
 using WindEnergy.WindLib.Data.Providers.FileSystem;
 
-namespace WindEnergy
+namespace WindLib
 {
     /// <summary>
     /// глобальные переменные

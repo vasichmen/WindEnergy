@@ -19,6 +19,7 @@ using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.WindLib.Statistic.Collections;
 using WindEnergy.WindLib.Statistic.Structures;
+using WindLib;
 using ZedGraph;
 
 namespace WindEnergy.UI.Tools

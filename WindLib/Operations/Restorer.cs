@@ -9,6 +9,7 @@ using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Operations.Interpolation;
 using WindEnergy.WindLib.Operations.Structures;
+using WindLib;
 
 namespace WindEnergy.WindLib.Operations
 {

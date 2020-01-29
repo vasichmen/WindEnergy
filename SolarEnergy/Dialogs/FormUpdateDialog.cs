@@ -1,5 +1,6 @@
 ﻿using CommonLib;
 using CommonLib.Classes;
+using SolarLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,11 +11,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using WindEnergy;
-using WindEnergy.WindLib.Classes;
-using WindLib;
 
-namespace WindEnergy.UI.Common.Dialogs
+namespace SolarEnergy.UI.Common.Dialogs
 {
     /// <summary>
     /// Окно информации о новой версии

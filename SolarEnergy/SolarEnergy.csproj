@@ -51,6 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\FormUpdateDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FormUpdateDialog.designer.cs">
+      <DependentUpon>FormUpdateDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +71,9 @@
     <Compile Include="Tools\FormDailyAverageGraphs.Designer.cs">
       <DependentUpon>FormDailyAverageGraphs.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Dialogs\FormUpdateDialog.resx">
+      <DependentUpon>FormUpdateDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

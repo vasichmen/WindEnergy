@@ -17,6 +17,7 @@ using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.UI.Ext;
 using CommonLib;
+using WindLib;
 
 namespace WindEnergy.UI.Tools
 {

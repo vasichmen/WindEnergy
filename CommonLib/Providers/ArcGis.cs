@@ -147,7 +147,7 @@ namespace CommonLibLib.Data.Providers.InternetServices
             string url = "https://www.arcgis.com/sharing/rest/oauth2/token/";
 
             int expMinutes = 1440; //время жизни токена сутки
-            string data = $"client_id={Properties.Resources.ArcgisAppId}&client_secret={Properties.Resources.ArcgisSecret}&grant_type=client_credentials&expiration={expMinutes}";
+            string data = $"client_id={CommonLib.Properties.Resources.ArcgisAppId}&client_secret={CommonLib.Properties.Resources.ArcgisSecret}&grant_type=client_credentials&expiration={expMinutes}";
             JToken ans = SendJsonPostRequest(url, data);
             JToken err = ans["error"];
             if (err != null)

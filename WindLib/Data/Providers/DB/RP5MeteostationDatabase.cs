@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
+using WindLib;
 
 namespace WindEnergy.WindLib.Data.Providers.DB
 {

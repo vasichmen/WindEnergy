@@ -16,6 +16,7 @@ using WindEnergy.WindLib.Data.Interfaces;
 using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.WindLib.Statistic.Structures;
+using WindLib;
 
 namespace WindEnergy.WindLib.Classes.Collections
 {

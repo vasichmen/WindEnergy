@@ -11,10 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WindEnergy;
-using WindEnergy.WindLib.Classes;
-using WindLib;
 
-namespace WindEnergy.UI.Common.Dialogs
+namespace CommonLib.Dialogs
 {
     /// <summary>
     /// Окно информации о новой версии

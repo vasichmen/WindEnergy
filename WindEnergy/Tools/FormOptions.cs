@@ -12,6 +12,7 @@ using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Providers.DB;
 using WindEnergy.UI.Dialogs;
 using CommonLib;
+using WindLib;
 
 namespace WindEnergy.UI.Tools
 {

@@ -18,6 +18,7 @@ using WindEnergy.WindLib.Data.Providers.InternetServices;
 using WindEnergy.UI.Dialogs;
 using CommonLibLib.Data.Interfaces;
 using CommonLibLib.Data.Providers.InternetServices;
+using WindLib;
 
 namespace WindEnergy.UI.Tools
 {

@@ -20,6 +20,7 @@ using WindEnergy.UI.Properties;
 using CommonLib.Classes;
 using CommonLib;
 using CommonLibLib.Data.Providers.InternetServices;
+using WindLib;
 
 namespace WindEnergy.UI.Dialogs
 {

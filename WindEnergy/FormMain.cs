@@ -25,6 +25,7 @@ using WindEnergy.UI.Dialogs;
 using WindEnergy.UI.Ext;
 using WindEnergy.UI.Helpers;
 using WindEnergy.UI.Tools;
+using WindLib;
 
 namespace WindEnergy.UI
 {
