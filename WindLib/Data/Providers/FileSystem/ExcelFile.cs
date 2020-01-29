@@ -105,8 +105,8 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 if (isMatch)
                 {
                     string[] s = coordinates.Split(' ');
-                    double lat = double.Parse(s[0].Trim().Replace('.', Vars.DecimalSeparator));
-                    double lon = double.Parse(s[1].Trim().Replace('.', Vars.DecimalSeparator));
+                    double lat = double.Parse(s[0].Trim().Replace('.', Constants.DecimalSeparator));
+                    double lon = double.Parse(s[1].Trim().Replace('.', Constants.DecimalSeparator));
                     coord = new PointLatLng(lat, lon);
                 }
                 else

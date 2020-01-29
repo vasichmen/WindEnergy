@@ -18,6 +18,8 @@ using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
 using WindEnergy.UI.Properties;
 using CommonLib.Classes;
+using CommonLib;
+using CommonLibLib.Data.Providers.InternetServices;
 
 namespace WindEnergy.UI.Dialogs
 {
@@ -272,8 +274,8 @@ namespace WindEnergy.UI.Dialogs
         {
             try
             {
-                double lat = double.Parse(toolStripTextBoxLat.Text.Replace('.', Vars.DecimalSeparator).Replace('.', Vars.DecimalSeparator));
-                double lon = double.Parse(toolStripTextBoxLon.Text.Replace('.', Vars.DecimalSeparator).Replace('.', Vars.DecimalSeparator));
+                double lat = double.Parse(toolStripTextBoxLat.Text.Replace('.', Constants.DecimalSeparator).Replace('.', Constants.DecimalSeparator));
+                double lon = double.Parse(toolStripTextBoxLon.Text.Replace('.', Constants.DecimalSeparator).Replace('.', Constants.DecimalSeparator));
                 gmapControlMap.Position = new PointLatLng(lat, lon);
             }
             catch (Exception)

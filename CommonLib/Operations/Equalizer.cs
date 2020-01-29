@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace WindEnergy.WindLib.Operations
+namespace CommonLib.Operations
 {
     /// <summary>
     /// приведение двух рядов к одному интервалу

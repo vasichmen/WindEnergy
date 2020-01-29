@@ -1,4 +1,5 @@
-﻿using GMap.NET;
+﻿using CommonLib;
+using GMap.NET;
 using System.Collections.Generic;
 using System.IO;
 using WindEnergy.WindLib.Classes.Structures;
@@ -35,16 +36,16 @@ namespace WindEnergy.WindLib.Data.Providers.DB
 
                 int id = int.Parse(arr[0]);
                 string name = arr[1];
-                double lat = double.Parse(arr[2].Replace(',', Vars.DecimalSeparator));
-                double lon = double.Parse(arr[3].Replace(',', Vars.DecimalSeparator));
+                double lat = double.Parse(arr[2].Replace(',', Constants.DecimalSeparator));
+                double lon = double.Parse(arr[3].Replace(',', Constants.DecimalSeparator));
                 PointLatLng p = new PointLatLng(lat, lon);
-                double averM = double.Parse(arr[28].Replace(',', Vars.DecimalSeparator));
+                double averM = double.Parse(arr[28].Replace(',', Constants.DecimalSeparator));
 
                 //скорости на высоте 10м
                 Dictionary<Months, double> speeds = new Dictionary<Months, double>();
                 for (int i = 1; i <= 12; i++)
                 {
-                    double spd = double.Parse(arr[3 + i].Replace(',', Vars.DecimalSeparator));
+                    double spd = double.Parse(arr[3 + i].Replace(',', Constants.DecimalSeparator));
                     Months month = (Months)i;
                     speeds.Add(month, spd);
                 }
@@ -53,7 +54,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                 Dictionary<Months, double> Ms = new Dictionary<Months, double>();
                 for (int i = 1; i <= 12; i++)
                 {
-                    double m = double.Parse(arr[15 + i].Replace(',', Vars.DecimalSeparator));
+                    double m = double.Parse(arr[15 + i].Replace(',', Constants.DecimalSeparator));
                     Months month = (Months)i;
                     Ms.Add(month, m);
                 }

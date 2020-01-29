@@ -1,4 +1,7 @@
-﻿using GMap.NET;
+﻿using CommonLib;
+using CommonLib.Data.Providers.InternetServices;
+using CommonLibLib.Data.Interfaces;
+using GMap.NET;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,9 +10,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using WindEnergy.WindLib.Data.Interfaces;
 
-namespace WindEnergy.WindLib.Data.Providers.InternetServices
+namespace CommonLibLib.Data.Providers.InternetServices
 {
     /// <summary>
     /// Связь с сервисом ArcGis.com
@@ -52,8 +54,8 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
             //https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?outSR=4326&returnIntersection=false&location=37.715334892272956%2C55.759359885308086&f=json
             string url = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?outSR=4326&returnIntersection=false&location={0}%2C{1}&f=json&token={2}";
             url = string.Format(url,
-                coordinate.Lng.ToString().Replace(Vars.DecimalSeparator, '.'),
-                coordinate.Lat.ToString().Replace(Vars.DecimalSeparator, '.'),
+                coordinate.Lng.ToString().Replace(Constants.DecimalSeparator, '.'),
+                coordinate.Lat.ToString().Replace(Constants.DecimalSeparator, '.'),
                 Token
                 );
             JToken ans = SendJsonGetRequest(url, out HttpStatusCode code);
@@ -91,8 +93,8 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
             {
                 if (!res.ContainsKey(addr["address"].ToString()))
                 {
-                    double lng = double.Parse(addr["location"]["x"].ToString().Replace(',',Vars.DecimalSeparator));
-                    double lat = double.Parse(addr["location"]["y"].ToString().Replace(',',Vars.DecimalSeparator));
+                    double lng = double.Parse(addr["location"]["x"].ToString().Replace(',', Constants.DecimalSeparator));
+                    double lat = double.Parse(addr["location"]["y"].ToString().Replace(',', Constants.DecimalSeparator));
                     res.Add(addr["address"].ToString(),new PointLatLng(lat,lng));
                 }
             }

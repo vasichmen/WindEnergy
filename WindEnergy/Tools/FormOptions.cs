@@ -156,13 +156,13 @@ namespace WindEnergy.UI.Tools
             //РАСЧЁТ
             try
             {
-                Vars.Options.AirDensity = double.Parse(textBoxAirDensity.Text.Replace('.', Vars.DecimalSeparator));
+                Vars.Options.AirDensity = double.Parse(textBoxAirDensity.Text.Replace('.', Constants.DecimalSeparator));
                 Vars.Options.CalculateAirDensity = checkBoxCalculateAirDensity.Checked;
                 Vars.Options.QualifierDaysToNewInterval = int.Parse(textBoxDaysToNewInterval.Text);
-                Vars.Options.MinimalSpeedDeviation = double.Parse(textBoxMinimalSpeedDeviation.Text.Replace('.', Vars.DecimalSeparator));
+                Vars.Options.MinimalSpeedDeviation = double.Parse(textBoxMinimalSpeedDeviation.Text.Replace('.', Constants.DecimalSeparator));
                 Vars.Options.QualifierSectionLength = int.Parse(textBoxSectionLength.Text);
-                Vars.Options.MinimalCorrelationCoeff = double.Parse(textBoxMinimalCoeffCorrel.Text.Replace('.', Vars.DecimalSeparator));
-                Vars.Options.NearestMSRadius = double.Parse(textBoxNearestMSRadius.Text.Replace('.', Vars.DecimalSeparator));
+                Vars.Options.MinimalCorrelationCoeff = double.Parse(textBoxMinimalCoeffCorrel.Text.Replace('.', Constants.DecimalSeparator));
+                Vars.Options.NearestMSRadius = double.Parse(textBoxNearestMSRadius.Text.Replace('.', Constants.DecimalSeparator));
 
                 //диапазон критерия Пирсона
                 double fr = (double)numericUpDownNormalLawFrom.Value;

@@ -12,6 +12,9 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Windows.Forms;
 using WindEnergy.WindLib.Data.Providers;
+using CommonLib.Data.Providers.InternetServices;
+using CommonLibLib.Data.Interfaces;
+using CommonLib;
 
 namespace WindEnergy.WindLib.Data.Providers.InternetServices
 {
@@ -81,8 +84,8 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
             //https://maps.googleapis.com/maps/api/elevation/json?locations=39.7391536,-104.9847034&api_key=
 
             string url = string.Format("https://maps.googleapis.com/maps/api/elevation/xml?locations={0},{1}&api_key={2}",
-                coordinate.Lat.ToString().Replace(Vars.DecimalSeparator, '.'),
-                coordinate.Lng.ToString().Replace(Vars.DecimalSeparator, '.'),
+                coordinate.Lat.ToString().Replace(Constants.DecimalSeparator, '.'),
+                coordinate.Lng.ToString().Replace(Constants.DecimalSeparator, '.'),
                 "AIzaSyD_HQaeF2zZDgK7V22BJ_cI-iczZQD-ODo");
 
             XmlDocument xml = SendXmlGetRequest(url);
@@ -90,7 +93,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
             if (status.InnerText == "OK")
             {
                 string el = xml.GetElementsByTagName("elevation")[0].InnerText;
-                double ell = double.Parse(el.Replace('.', Vars.DecimalSeparator));
+                double ell = double.Parse(el.Replace('.', Constants.DecimalSeparator));
                 return ell;
             }
             else

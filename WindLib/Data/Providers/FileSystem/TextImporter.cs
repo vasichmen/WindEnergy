@@ -144,7 +144,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                                 switch (DirectionUnit)
                                 {
                                     case DirectionUnits.Degrees:
-                                        item.Direction = double.Parse(value.Replace('.', Vars.DecimalSeparator));
+                                        item.Direction = double.Parse(value.Replace('.', Constants.DecimalSeparator));
                                         break;
                                     case DirectionUnits.TextRP5:
                                         item.DirectionRhumb = RP5ru.GetWindDirectionFromString(value);
@@ -159,10 +159,10 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                                 switch (PressureUnit)
                                 {
                                     case PressureUnits.KPa:
-                                        item.Pressure = double.Parse(value.Replace('.', Vars.DecimalSeparator)) * Constants.MMHGART_IN_1KPA; //перевод в мм рт. ст.
+                                        item.Pressure = double.Parse(value.Replace('.', Constants.DecimalSeparator)) * Constants.MMHGART_IN_1KPA; //перевод в мм рт. ст.
                                         break;
                                     case PressureUnits.mmHgArt:
-                                        item.Pressure = double.Parse(value.Replace('.', Vars.DecimalSeparator));
+                                        item.Pressure = double.Parse(value.Replace('.', Constants.DecimalSeparator));
                                         break;
                                     case PressureUnits.None:
                                         throw new ArgumentException("Не заданы единицы измерения для давления");
@@ -174,10 +174,10 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                                 switch (WetnessUnit)
                                 {
                                     case WetnessUnits.Percents:
-                                        item.Wetness = double.Parse(value.Replace('.', Vars.DecimalSeparator));
+                                        item.Wetness = double.Parse(value.Replace('.', Constants.DecimalSeparator));
                                         break;
                                     case WetnessUnits.Parts:
-                                        item.Wetness = double.Parse(value.Replace('.', Vars.DecimalSeparator)) * 100d;//перевод в %
+                                        item.Wetness = double.Parse(value.Replace('.', Constants.DecimalSeparator)) * 100d;//перевод в %
                                         break;
                                     case WetnessUnits.None:
                                         throw new ArgumentException("Не заданы единицы измерения для влажности");
@@ -186,10 +186,10 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                                 }
                                 break;
                             case ImportFields.Temperature:
-                                item.Temperature = double.Parse(value.Replace('.', Vars.DecimalSeparator));
+                                item.Temperature = double.Parse(value.Replace('.', Constants.DecimalSeparator));
                                 break;
                             case ImportFields.Speed:
-                                item.Speed = double.Parse(value.Replace('.', Vars.DecimalSeparator));
+                                item.Speed = double.Parse(value.Replace('.', Constants.DecimalSeparator));
                                 break;
                             default: throw new WindEnergyException("Этот параметр не реализован");
                         }

@@ -147,8 +147,8 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             if (isMatch)
             {
                 string[] s = coordinates.Split(' ');
-                double lat = double.Parse(s[0].Trim().Replace('.', Vars.DecimalSeparator));
-                double lon = double.Parse(s[1].Trim().Replace('.', Vars.DecimalSeparator));
+                double lat = double.Parse(s[0].Trim().Replace('.', Constants.DecimalSeparator));
+                double lon = double.Parse(s[1].Trim().Replace('.', Constants.DecimalSeparator));
                 coord = new PointLatLng(lat, lon);
             }
             else
@@ -168,12 +168,12 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 if (elems[4] == "")
                     continue;
 
-                double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Vars.DecimalSeparator));
+                double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Constants.DecimalSeparator));
                 DateTime dt = DateTime.Parse(elems[0]);
-                double spd = double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
-                double press = double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
-                double wet = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
-                double dirs = double.Parse(elems[3].Replace('.', Vars.DecimalSeparator));
+                double spd = double.Parse(elems[4].Replace('.', Constants.DecimalSeparator));
+                double press = double.Parse(elems[5].Replace('.', Constants.DecimalSeparator));
+                double wet = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Constants.DecimalSeparator));
+                double dirs = double.Parse(elems[3].Replace('.', Constants.DecimalSeparator));
                 try
                 { res.Add(new RawItem() { Date = dt, Direction = dirs, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press }); }
                 catch (Exception)

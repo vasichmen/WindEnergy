@@ -1,4 +1,7 @@
-﻿using CommonLib.Classes;
+﻿using CommonLib;
+using CommonLib.Classes;
+using CommonLib.Data.Providers.InternetServices;
+using CommonLibLib.Data.Providers.FileSystem;
 using Fizzler.Systems.HtmlAgilityPack;
 using GMap.NET;
 using HtmlAgilityPack;
@@ -368,7 +371,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                                 {
                                     int l = end - (start + 2);
                                     string dist = content.Substring(start + 2, l);
-                                    nm.OwnerDistance = double.Parse(dist.Replace('.', Vars.DecimalSeparator));
+                                    nm.OwnerDistance = double.Parse(dist.Replace('.', Constants.DecimalSeparator));
                                 }
 
                                 //тип источника
@@ -498,8 +501,8 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
             string coordinates = pg2.Substring(start2, end2 - 1 - start2);
             //55.833333333333, 37.616666666667
             string[] ar = coordinates.Split(',');
-            double lat = double.Parse(ar[0].Trim().Replace('.', Vars.DecimalSeparator));
-            double lon = double.Parse(ar[1].Trim().Replace('.', Vars.DecimalSeparator));
+            double lat = double.Parse(ar[0].Trim().Replace('.', Constants.DecimalSeparator));
+            double lon = double.Parse(ar[1].Trim().Replace('.', Constants.DecimalSeparator));
             info.Position = new PointLatLng(lat, lon);
 
         }
@@ -673,11 +676,11 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                             if (elems[7] == "")
                                 continue;
 
-                            double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Vars.DecimalSeparator));
+                            double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Constants.DecimalSeparator));
                             DateTime dt = DateTime.Parse(elems[0]);
-                            double spd = double.Parse(elems[7].Replace('.', Vars.DecimalSeparator));
-                            double wet = elems[5] == "" ? double.NaN : double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
-                            double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
+                            double spd = double.Parse(elems[7].Replace('.', Constants.DecimalSeparator));
+                            double wet = elems[5] == "" ? double.NaN : double.Parse(elems[5].Replace('.', Constants.DecimalSeparator));
+                            double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Constants.DecimalSeparator));
                             string dirs = elems[6];
                             WindDirections direct = GetWindDirectionFromString(dirs);
                             try
@@ -710,11 +713,11 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                             if (elems[6] == "")
                                 continue;
 
-                            double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Vars.DecimalSeparator));
+                            double temp = elems[1] == "" ? double.NaN : double.Parse(elems[1].Replace('.', Constants.DecimalSeparator));
                             DateTime dt = DateTime.Parse(elems[0]);
-                            double spd = double.Parse(elems[6].Replace('.', Vars.DecimalSeparator));
-                            double wet = elems[4] == "" ? double.NaN : double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
-                            double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Vars.DecimalSeparator));
+                            double spd = double.Parse(elems[6].Replace('.', Constants.DecimalSeparator));
+                            double wet = elems[4] == "" ? double.NaN : double.Parse(elems[4].Replace('.', Constants.DecimalSeparator));
+                            double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Constants.DecimalSeparator));
                             string dirs = elems[5];
                             WindDirections direct = RP5ru.GetWindDirectionFromString(dirs);
                             res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press });

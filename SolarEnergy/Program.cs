@@ -1,6 +1,12 @@
 ﻿using CommonLib;
+using CommonLib.Classes;
+using CommonLib.Data.Providers.InternetServices;
+using CommonLibLib.Data.Providers.FileSystem;
+using SolarLib;
+using SolarLib.Classes.Options;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,14 +14,19 @@ using System.Windows.Forms;
 
 namespace SolarEnergy
 {
-    static class Program
+    internal static class Program
     {
+        public static FormMain winMain { get; set; }
+
+
+
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main(string[] args)
         {
+
             bool is_accept = File.Exists(Application.StartupPath + "\\id.key");
             if (is_accept)
             {
@@ -32,11 +43,82 @@ namespace SolarEnergy
                 MessageBox.Show("Ошибка при проверке файла ключа, программа будет закрыта\r\n");
                 return;
             }
-
+#if (!DEBUG)
+            try
+            {
+#endif
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain());
+
+            Vars.Options = Options.Load(Application.StartupPath + "\\options.xml");
+            if (Vars.Options == null)
+            {
+                throw new Exception("Файлы программы повреждены, запуск невозможен");
+            }
+            Vars.LocalFileSystem = new LocalFileSystem(Vars.Options.TempFolder);
+
+            winMain = new FormMain();
+
+
+            //обработчик выхода из приложения
+            Application.ApplicationExit += application_ApplicationExit;
+
+
+            #region запись статистики, проверка версии
+
+            new Task(new Action(() =>
+            {
+                Velomapa site = new Velomapa(); //связь с сайтом
+                site.SendStatisticAsync(Vars.Options.ApplicationGuid); //статистика
+
+                //действие при проверке версии
+                Action<VersionInfo> action = new Action<VersionInfo>((vi) =>
+                {
+                    float curVer = Vars.Options.VersionInt;
+                    if (vi.VersionInt > curVer)
+                    {
+                        FormUpdateDialog fud = new FormUpdateDialog(vi);
+                        if (Vars.Options.UpdateMode != UpdateDialogAnswer.AlwaysIgnore)
+                            winMain.Invoke(new Action(() => fud.ShowDialog()));
+                    }
+                });
+                site.GetVersionAsync(action); //проверка версии
+            })
+            ).Start();
+
+            #endregion
+
+            Application.Run(winMain);
+#if (!DEBUG)
+            }
+            catch (Exception e)
+            {
+                StreamWriter sw = new StreamWriter("exceptions.log", true, Encoding.UTF8);
+                sw.WriteLine("{0}\r\n{1}", e.Message, e.StackTrace);
+                sw.Close();
+            }
+#endif
+        }
+
+        /// <summary>
+        /// выход и приложения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void application_ApplicationExit(object sender, EventArgs e)
+        {
+            //очистка времнной папки
+            try
+            {
+                if (Directory.Exists(Vars.Options.TempFolder))
+                    Directory.Delete(Vars.Options.TempFolder, true);
+            }
+            catch (Exception exxx) { Debug.Print(exxx.Message); }
+            finally { Debug.Print("Temp directory removed"); }
+
+            //сохранение настроек
+            Vars.Options.Save(Application.StartupPath + "\\options.xml");
         }
     }
 }

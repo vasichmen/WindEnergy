@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using CommonLibLib.Data.Providers;
+using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace WindEnergy.WindLib.Data.Providers.InternetServices
+namespace CommonLib.Data.Providers.InternetServices
 {
     /// <summary>
     /// базовый класс HTTP запросов к серверу
@@ -74,42 +75,8 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
         private readonly string ProxyHost = "127.0.0.1";
         private readonly int ProxyPort = 8118;
         private FileSystemCache cache;
+        private string TempFolder = null;
 
-        /// <summary>
-        /// загрузка изображения по заданной ссылке
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="operation">метод установки прогресса загрузки файла</param>
-        /// <param name="afterLoadComplete">действие, выполняемое по окончании загрузки файла</param>
-        /// <returns></returns>
-        public static void GetFileAsync(string url, Action<string> operation = null, Action<string> afterLoadComplete = null)
-        {
-            int i = 0;
-            string tmp_file = Vars.Options.TempFolder + "\\" + i + ".tmp";
-            Directory.CreateDirectory(Path.GetDirectoryName(tmp_file));
-            while (File.Exists(tmp_file))
-                tmp_file = Vars.Options.TempFolder + "\\" + ++i + ".tmp";
-
-            using (WebClient client = new WebClient())
-            {
-                client.DownloadProgressChanged +=
-                    new DownloadProgressChangedEventHandler((sender, e) =>
-                    {
-                        if (operation != null)
-                        {
-                            operation.Invoke("Загрузка изображения, завершено " + (e as DownloadProgressChangedEventArgs).ProgressPercentage + "%");
-                        }
-                    }
-                    );
-                client.DownloadFileCompleted += new AsyncCompletedEventHandler((sender, e) =>
-                {
-                    if (afterLoadComplete != null)
-                        afterLoadComplete.Invoke(tmp_file);
-                    client.Dispose();
-                });
-                client.DownloadFileAsync(new Uri(url), tmp_file);
-            }
-        }
 
         /// <summary>
         /// получить изображение по ссылке

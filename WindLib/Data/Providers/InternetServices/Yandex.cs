@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using CommonLib;
+using CommonLib.Data.Providers.InternetServices;
+using CommonLibLib.Data.Interfaces;
 using GMap.NET;
 using WindEnergy.WindLib.Data.Interfaces;
 
@@ -39,8 +42,8 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
             string cd = nd["pos"].InnerText;
 
             string[] ar = cd.Split(' ');
-            double lat = double.Parse(ar[1].Replace('.', Vars.DecimalSeparator));
-            double lon = double.Parse(ar[0].Replace('.', Vars.DecimalSeparator));
+            double lat = double.Parse(ar[1].Replace('.', Constants.DecimalSeparator));
+            double lon = double.Parse(ar[0].Replace('.', Constants.DecimalSeparator));
 
             PointLatLng res = new PointLatLng(lat, lon);
             return res;
@@ -66,7 +69,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
         {
             string url = string.Format(
                "https://geocode-maps.yandex.ru/1.x/?geocode={0}&results=1",
-               coordinate.Lng.ToString().Replace(Vars.DecimalSeparator, '.') + "," + coordinate.Lat.ToString().Replace(Vars.DecimalSeparator, '.'));
+               coordinate.Lng.ToString().Replace(Constants.DecimalSeparator, '.') + "," + coordinate.Lat.ToString().Replace(Constants.DecimalSeparator, '.'));
             XmlDocument dc = SendXmlGetRequest(url);
 
             XmlNode found = dc.GetElementsByTagName("found")[0];
@@ -117,7 +120,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                     string coords = geoobj["Point"]["pos"].InnerText;
                     string lon = coords.Split(' ')[0];
                     string lat = coords.Split(' ')[1];
-                    PointLatLng crd = new PointLatLng(double.Parse(lat.Replace('.',Vars.DecimalSeparator)), double.Parse(lon.Replace('.', Vars.DecimalSeparator)));
+                    PointLatLng crd = new PointLatLng(double.Parse(lat.Replace('.',Constants.DecimalSeparator)), double.Parse(lon.Replace('.', Constants.DecimalSeparator)));
                     if (!res.ContainsKey(title))
                         res.Add(title, crd);
                 }

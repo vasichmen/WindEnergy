@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CommonLib
@@ -13,6 +14,28 @@ namespace CommonLib
         /// </summary>
         public const double MMHGART_IN_1KPA = 7.50063755419211;
 
+
+        #region Системные константы
+
+        /// <summary>
+        /// разделитель десятичных разрядов при текущих настройках ОС
+        /// </summary>
+        private static char decimalSeparator = char.MinValue;
+
+        /// <summary>
+        /// разделитель десятичных разрядов в этой операционной системе
+        /// </summary>
+        public static char DecimalSeparator
+        {
+            get
+            {
+                if (decimalSeparator == char.MinValue)
+                    decimalSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+                return decimalSeparator;
+            }
+        }
+
+        #endregion
 
         #region Физические константы в единицах СИ
 

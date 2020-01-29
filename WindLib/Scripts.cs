@@ -1,4 +1,7 @@
-﻿using CommonLib.Classes;
+﻿using CommonLib;
+using CommonLib.Classes;
+using CommonLibLib.Data.Interfaces;
+using CommonLibLib.Data.Providers.InternetServices;
 using GMap.NET;
 using Newtonsoft.Json.Linq;
 using System;
@@ -293,7 +296,7 @@ namespace WindEnergy.WindLib
                     PointLatLng coordinates = coder.GetCoordinate(adr);
                     if (coordinates.IsEmpty)
                         continue;
-                    sw.WriteLine(string.Format("{0};{1};{2};{3};{4}", adr, coordinates.Lat.ToString().Replace(Vars.DecimalSeparator, '.'), coordinates.Lng.ToString().Replace(Vars.DecimalSeparator, '.'), 0, limit));
+                    sw.WriteLine(string.Format("{0};{1};{2};{3};{4}", adr, coordinates.Lat.ToString().Replace(Constants.DecimalSeparator, '.'), coordinates.Lng.ToString().Replace(Constants.DecimalSeparator, '.'), 0, limit));
                 }
                 catch (Exception)
                 { continue; }
@@ -500,7 +503,7 @@ namespace WindEnergy.WindLib
             StreamWriter sw = new StreamWriter(fileOutput, false, Encoding.UTF8);
             sw.WriteLine("название;широта;долгота;минимальная скорость м/с;максимальная скорость м/с");
             foreach (ManualLimits lim in result)
-                sw.WriteLine($"{lim.Name};{lim.Position.Lat.ToString().Replace(Vars.DecimalSeparator, '.')};{lim.Position.Lng.ToString().Replace(Vars.DecimalSeparator, '.')};{lim.GetMinimal(MeteorologyParameters.Speed)};{lim.GetMaximal(MeteorologyParameters.Speed)}");
+                sw.WriteLine($"{lim.Name};{lim.Position.Lat.ToString().Replace(Constants.DecimalSeparator, '.')};{lim.Position.Lng.ToString().Replace(Constants.DecimalSeparator, '.')};{lim.GetMinimal(MeteorologyParameters.Speed)};{lim.GetMaximal(MeteorologyParameters.Speed)}");
             sw.Close();
         }
 

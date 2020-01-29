@@ -1,4 +1,5 @@
 ﻿using CommonLib;
+using CommonLib.Data.Providers.InternetServices;
 using GMap.NET;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -63,8 +64,8 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                 fields,
                 fromDate.ToString("yyyyMMdd"),
                 toDate.ToString("yyyyMMdd"),
-                coord.Lat.ToString("00.00").Replace(Vars.DecimalSeparator, '.'),
-                coord.Lng.ToString("00.00").Replace(Vars.DecimalSeparator, '.'));
+                coord.Lat.ToString("00.00").Replace(Constants.DecimalSeparator, '.'),
+                coord.Lng.ToString("00.00").Replace(Constants.DecimalSeparator, '.'));
 
             JToken ans = SendJsonGetRequest(url, out HttpStatusCode code, false);
 
@@ -91,11 +92,11 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
 
                
                 DateTime dt = DateTime.Parse(elems[0] + "." + elems[1] + "." + elems[2]);
-                double WS10M = double.Parse(elems[3].Replace('.', Vars.DecimalSeparator));
-                double WD10M = double.Parse(elems[4].Replace('.', Vars.DecimalSeparator));
-                double T10M = double.Parse(elems[5].Replace('.', Vars.DecimalSeparator));
-                double RH2M = double.Parse(elems[6].Replace('.', Vars.DecimalSeparator));
-                double PS = double.Parse(elems[7].Replace('.', Vars.DecimalSeparator)); //по API приходят данные в кПа
+                double WS10M = double.Parse(elems[3].Replace('.', Constants.DecimalSeparator));
+                double WD10M = double.Parse(elems[4].Replace('.', Constants.DecimalSeparator));
+                double T10M = double.Parse(elems[5].Replace('.', Constants.DecimalSeparator));
+                double RH2M = double.Parse(elems[6].Replace('.', Constants.DecimalSeparator));
+                double PS = double.Parse(elems[7].Replace('.', Constants.DecimalSeparator)); //по API приходят данные в кПа
                 PS *= Constants.MMHGART_IN_1KPA; //переводим в мм рт. ст.
                 if (WS10M == -999 || WD10M == -999)
                     continue;

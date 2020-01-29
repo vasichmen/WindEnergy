@@ -16,6 +16,8 @@ using WindEnergy.WindLib.Data.Providers.InternetServices;
 using WindEnergy.WindLib;
 using CommonLib;
 using CommonLib.Classes;
+using CommonLibLib.Data.Providers.FileSystem;
+using CommonLib.Data.Providers.InternetServices;
 
 namespace WindEnergy.UI
 {
@@ -61,7 +63,7 @@ namespace WindEnergy.UI
                 {
                     throw new Exception("Файлы программы повреждены, запуск невозможен");
                 }
-                Vars.LocalFileSystem = new LocalFileSystem();
+                Vars.LocalFileSystem = new LocalFileSystem(Vars.Options.TempFolder);
 
                 winMain = new FormMain();
 
@@ -75,7 +77,7 @@ namespace WindEnergy.UI
                 new Task(new Action(() =>
                 {
                     Velomapa site = new Velomapa(); //связь с сайтом
-                site.SendStatisticAsync(); //статистика
+                site.SendStatisticAsync(Vars.Options.ApplicationGuid); //статистика
 
                 //действие при проверке версии
                 Action<VersionInfo> action = new Action<VersionInfo>((vi) =>

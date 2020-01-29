@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindEnergy.WindLib.Data.Providers
+namespace CommonLibLib.Data.Providers
 {
     /// <summary>
     /// кэш в файловой системе

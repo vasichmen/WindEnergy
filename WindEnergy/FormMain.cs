@@ -450,17 +450,18 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Velomapa site = new Velomapa();
-            var vi = site.GetVersion();
-            _ = Process.Start(Application.StartupPath + "\\Updater.exe", "\"" + Vars.Options.SiteAddress + vi.DownloadLink + "\"");
-            //обновление БД АМС
-            //Scripts.ConvertMCoefficientsFromFile(Application.StartupPath+"\\m.csv",Application.StartupPath+"\\amsdatabase.csv");
-            //Scripts.ConvertMSIDFromFile(Application.StartupPath+"\\coords.csv",Application.StartupPath+"\\amsdatabase.csv");
-
-            //обновление БД Флюгер
-            // Scripts.ConvertFlugerFromFile(Application.StartupPath+"\\coords.csv",Application.StartupPath+"\\flugerDatabase.csv");
-            // Scripts.ConvertFlugerDataFromFile(Application.StartupPath+"\\data.csv",Application.StartupPath+"\\flugerDatabase.csv");
-
+            var files = Directory.EnumerateFiles("D:\\Clouds\\Projects\\CS\\WindEnergy\\", "*.cs",SearchOption.AllDirectories);
+            StreamWriter sw = new StreamWriter(Application.StartupPath + "\\source_text.txt",true, Encoding.UTF8);
+            foreach (string file in files)
+            {
+                StreamReader sr = new StreamReader(file);
+                string content = sr.ReadToEnd();
+                sw.WriteLine(Path.GetFileName(file));
+                sw.WriteLine(content);
+                sw.WriteLine();
+                sr.Close();
+            }
+            sw.Close();
 
         }
 

@@ -1,4 +1,6 @@
-﻿using CommonLib.Geomodel;
+﻿using CommonLib;
+using CommonLib.Geomodel;
+using CommonLibLib.Data.Providers.InternetServices;
 using GMap.NET;
 using System;
 using System.Collections.Generic;
@@ -97,14 +99,14 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                 string cc_code = arr[1];
                 string name = arr[2];
                 string address = arr[3];
-                double lat = double.Parse(arr[4].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
-                double lon = double.Parse(arr[5].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
+                double lat = double.Parse(arr[4].Replace('.', Constants.DecimalSeparator).Replace(',', Constants.DecimalSeparator));
+                double lon = double.Parse(arr[5].Replace('.', Constants.DecimalSeparator).Replace(',', Constants.DecimalSeparator));
 
                 double alt = double.NaN;
                 DateTime mfrom = DateTime.MinValue;
                 if (arr.Length > 6)
                 {
-                    alt = double.Parse(arr[6].Replace('.', Vars.DecimalSeparator).Replace(',', Vars.DecimalSeparator));
+                    alt = double.Parse(arr[6].Replace('.', Constants.DecimalSeparator).Replace(',', Constants.DecimalSeparator));
                     mfrom = DateTime.Parse(arr[7]);
                 }
                 PointLatLng position = new PointLatLng(lat, lon);
@@ -157,9 +159,9 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                     ms.CC_Code + ";" +
                     ms.Name + ";" +
                     ms.Address + ";" +
-                    ms.Position.Lat.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
-                    ms.Position.Lng.ToString().Replace(Vars.DecimalSeparator, ',') + ";" +
-                    ms.Altitude.ToString("0.00").Replace(Vars.DecimalSeparator, ',') + ";" +
+                    ms.Position.Lat.ToString().Replace(Constants.DecimalSeparator, ',') + ";" +
+                    ms.Position.Lng.ToString().Replace(Constants.DecimalSeparator, ',') + ";" +
+                    ms.Altitude.ToString("0.00").Replace(Constants.DecimalSeparator, ',') + ";" +
                     ms.MonitoringFrom.ToString());
             sw.Close();
         }

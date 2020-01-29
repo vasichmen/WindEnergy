@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GMap.NET;
 
-namespace WindEnergy.WindLib.Data.Interfaces
+namespace CommonLibLib.Data.Interfaces
 {
     /// <summary>
     /// геокодер

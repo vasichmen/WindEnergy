@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonLib;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -39,18 +40,18 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                     int st = 13, length = 30;
                     for (int i = st; i < st + length; i++)
                     {
-                        bool exist = double.TryParse(arr[i].Trim().Replace('.', Vars.DecimalSeparator), out double val);
+                        bool exist = double.TryParse(arr[i].Trim().Replace('.', Constants.DecimalSeparator), out double val);
                         if (exist)
                             perf.Add(i - st + 1, val);
                     }
 
                     //диаметр
                     double d = double.NaN;
-                    double.TryParse(arr[3].Trim().Replace('.', Vars.DecimalSeparator), out d);
+                    double.TryParse(arr[3].Trim().Replace('.', Constants.DecimalSeparator), out d);
 
                     //мощность
                     double power = double.NaN;
-                    double.TryParse(arr[2].Trim().Replace('.', Vars.DecimalSeparator), out power);
+                    double.TryParse(arr[2].Trim().Replace('.', Constants.DecimalSeparator), out power);
 
                     //максимальная скорость
                     string[] arrMaxSpeed = arr[12].Split('/');
@@ -58,17 +59,17 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                     foreach (string v in arrMaxSpeed)
                     {
                         double h = double.NaN;
-                        if (double.TryParse(v.Trim().Replace('.', Vars.DecimalSeparator), out h))
+                        if (double.TryParse(v.Trim().Replace('.', Constants.DecimalSeparator), out h))
                             maxSpeed.Add(h);
                     }
 
                     //минимальная скорость
                     double minSpeed = double.NaN;
-                    double.TryParse(arr[10].Trim().Replace('.', Vars.DecimalSeparator), out minSpeed);
+                    double.TryParse(arr[10].Trim().Replace('.', Constants.DecimalSeparator), out minSpeed);
 
                     //номинальная скорость
                     double nomSpeed = double.NaN;
-                    double.TryParse(arr[11].Trim().Replace('.', Vars.DecimalSeparator), out nomSpeed);
+                    double.TryParse(arr[11].Trim().Replace('.', Constants.DecimalSeparator), out nomSpeed);
 
                     //высота башни 
                     string[] arrH = arr[9].Trim().Split('/');
@@ -76,7 +77,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                     foreach (string v in arrH)
                     {
                         double h = double.NaN;
-                        if (double.TryParse(v.Replace('.', Vars.DecimalSeparator), out h))
+                        if (double.TryParse(v.Replace('.', Constants.DecimalSeparator), out h))
                             height.Add(h);
                     }
 

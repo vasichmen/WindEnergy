@@ -7,16 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.WindLib.Operations.Limits;
 
-namespace WindEnergy.WindLib.Data.Providers.FileSystem
+namespace CommonLibLib.Data.Providers.FileSystem
 {
     /// <summary>
     /// методы работы с файловой системой и файловыми БД
     /// </summary>
     public class LocalFileSystem
     {
+        private string tempFolder = null;
+
+        public LocalFileSystem(string tempFolder)
+        {
+            this.tempFolder = tempFolder;
+        }
 
         /// <summary>
         /// создание временного файла
@@ -24,11 +28,11 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
         /// <returns></returns>
         public string GetTempFileName()
         {
-            if (!Directory.Exists(Vars.Options.TempFolder))
-                Directory.CreateDirectory(Vars.Options.TempFolder);
-            string res = Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString() + ".tmp";
+            if (!Directory.Exists(tempFolder))
+                Directory.CreateDirectory(tempFolder);
+            string res = tempFolder + "\\" + Guid.NewGuid().ToString() + ".tmp";
             while (File.Exists(res))
-                res = Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString() + ".tmp";
+                res = tempFolder + "\\" + Guid.NewGuid().ToString() + ".tmp";
             return res;
         }
 
@@ -38,9 +42,9 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
         /// <returns></returns>
         public string GetTempFolderName()
         {
-            string res = Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString();
+            string res = tempFolder + "\\" + Guid.NewGuid().ToString();
             while (Directory.Exists(res))
-                res = Vars.Options.TempFolder + "\\" + Guid.NewGuid().ToString();
+                res = tempFolder + "\\" + Guid.NewGuid().ToString();
             Directory.CreateDirectory(res);
             return res;
         }

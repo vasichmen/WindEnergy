@@ -1,4 +1,6 @@
-﻿using CommonLib.Classes;
+﻿using CommonLib;
+using CommonLib.Classes;
+using CommonLib.Classes.Base;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -16,17 +18,13 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
     /// Настройки программы
     /// </summary>
     [Serializable]
-    public class Options
+    public class Options : OptionsBase
     {
         /// <summary>
         /// создает новый экземпляр
         /// </summary>
         public Options()
         {
-            TempFolder = Application.StartupPath + "\\tmp";
-            LastDirectory = Application.StartupPath;
-            CacheFolder = Application.StartupPath + "\\cache";
-            MapProvider = MapProviders.YandexMap;
             StaticRegionLimitsSourceFile = Application.StartupPath + "\\Data\\staticRegionLimits.txt";
             StaticMeteostationCoordinatesSourceFile = Application.StartupPath + "\\Data\\staticMeteostationCoordinates.txt";
             StaticAMSDatabaseSourceFile = Application.StartupPath + "\\Data\\AMS.database.txt";
@@ -60,31 +58,6 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
         /// источник поиска по метеостанциям РП5
         /// </summary>
         public RP5SourceType RP5SourceEngine { get; set; }
-
-        /// <summary>
-        /// адрес файла настроек
-        /// </summary>
-        public string FilePath { get; set; }
-
-        /// <summary>
-        /// временная папка 
-        /// </summary>
-        public string TempFolder { get; }
-
-        /// <summary>
-        /// папка кэша программы
-        /// </summary>
-        public string CacheFolder { get; set; }
-
-        /// <summary>
-        /// последняя папка сохранения или открытия файла
-        /// </summary>
-        public string LastDirectory { get; set; }
-
-        /// <summary>
-        /// тип карты при выборе точек
-        /// </summary>
-        public MapProviders MapProvider { get; set; }
 
         /// <summary>
         /// адрес файла с данными об ограничениях скоростей ветра по регионам
@@ -184,30 +157,6 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
             }
         }
 
-        /// <summary>
-        /// GUID экземпляра программы
-        /// </summary>
-        public string ApplicationGuid
-        {
-            get
-            {
-#if (DEBUG)
-                return "debug";
-#else
-                RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\WindEnergy");
-                object guido = key.GetValue("Guid");
-                string guid;
-                if (guido == null)
-                {
-                    guid = Guid.NewGuid().ToString();
-                    key.SetValue("Guid", guid);
-                }
-                else
-                    guid = (string)guido;
-                return guid;
-#endif
-            }
-        }
 
         /// <summary>
         /// пользовательские градации скоростей
@@ -228,7 +177,7 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
         /// <summary>
         /// состояние импорта из тексстовых файлов
         /// </summary>
-        public TextImporterState TextImportState { get;  set; }
+        public TextImporterState TextImportState { get; set; }
 
         /// <summary>
         /// если истина, то в расчётах плотность воздуха будет рассчитываться по параметрам ряда и высоте над у. м.
@@ -238,66 +187,13 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
         /// <summary>
         /// папка с базой данных ETOPO2
         /// </summary>
-        public string ETOPO2Folder { get;  set; }
+        public string ETOPO2Folder { get; set; }
 
-        /// <summary>
-        /// адрес сайта
-        /// </summary>
-        public string SiteAddress { get { return "https://velomapa.ru/"; } }
 
         /// <summary>
         /// минимальное количество дней, после которого считается пропуск данных как отдельный интервал
         /// </summary>
         public double QualifierDaysToBeginMissing { get; set; }
-
-        /// <summary>
-        /// версия приложения число
-        /// </summary>
-        public float VersionInt
-        {
-            get
-            {
-                return Convert.ToSingle(Application.ProductVersion.Replace(".", ""));
-            }
-        }
-
-        /// <summary>
-        /// версия приложения в виде текста
-        /// </summary>
-        public string VersionText
-        {
-            get
-            {
-                return Application.ProductVersion;
-            }
-        }
-
-
-        /// <summary>
-        /// поведение диалога обновления программы
-        /// </summary>
-        public UpdateDialogAnswer UpdateMode { get; set; }
-
-        /// <summary>
-        /// адрес для связи в Telegram
-        /// </summary>
-        public string TelegramAddress { get { return "tg://resolve?domain=vasichmen"; } }
-
-        /// <summary>
-        /// адрес репозитория гитхаб
-        /// </summary>
-        public string GitHubRepository { get { return "https://github.com/vasichmen/WindEnergy"; } }
-
-        /// <summary>
-        /// сохранение настроек в файл
-        /// </summary>
-        /// <param name="filename">адрес папки, куда сохранить файл</param>
-        public void Save(string filename)
-        {
-            if (File.Exists(filename))
-                File.Delete(filename);
-            xmlSerialize(filename);
-        }
 
         /// <summary>
         /// Загрузка файла настроек
@@ -308,66 +204,12 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
         {
             try
             {
-                return xmlDeserialize(filename);
+                OptionsBase res = xmlDeserialize(filename);
+                return res == null ? new Options() : (Options)res;
             }
             catch (Exception) { return new Options(); }
         }
 
-        #region сериализация
-
-        /// <summary>
-        /// сериализация в XML
-        /// </summary>
-        /// <param name="FilePath">путь к файлу</param>
-        private void xmlSerialize(string FilePath)
-        {
-            File.Delete(FilePath);
-            XmlSerializer se = new XmlSerializer(typeof(Options));
-            FileStream fs = new FileStream(FilePath, FileMode.Create);
-            se.Serialize(fs, this);
-            fs.Close();
-        }
-
-        /// <summary>
-        /// десериализация XML
-        /// </summary>
-        /// <param name="FilePath">путь к файлу</param>
-        /// <returns></returns>
-        private static Options xmlDeserialize(string FilePath)
-        {
-            if (!File.Exists(FilePath))
-                return new Options();
-
-
-            FileStream fs = new FileStream(FilePath, FileMode.Open);
-            XmlSerializer se = new XmlSerializer(typeof(Options));
-            try
-            {
-                Options res = (Options)se.Deserialize(fs);
-                res.FilePath = FilePath;
-                return res;
-            }
-            catch (Exception)
-            {
-                return new Options();
-            }
-            finally
-            {
-                fs.Close();
-            }
-        }
-
-
-        #endregion
-
-        /// <summary>
-        /// получить параметры компьютера
-        /// </summary>
-        /// <returns></returns>
-        public static string GetEngineParams()
-        {
-            return "valid";
-        }
 
     }
 }

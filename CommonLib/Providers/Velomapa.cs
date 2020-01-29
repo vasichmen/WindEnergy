@@ -12,16 +12,17 @@ using System.Xml;
 using CommonLib;
 using CommonLib.Classes;
 using Newtonsoft.Json.Linq;
-using WindEnergy.WindLib.Classes;
 
-namespace WindEnergy.WindLib.Data.Providers.InternetServices
+namespace CommonLib.Data.Providers.InternetServices
 {
     /// <summary>
     /// Взаимодействие с сайтом TrackConverter
     /// </summary>
     public class Velomapa : BaseConnection
     {
-        public Velomapa() : base(Vars.Options.SiteAddress,null) { }
+        private const string  SiteAddress = "";
+
+        public Velomapa() : base(SiteAddress,null) { }
 
         /// <summary>
         /// минимальное время между запросами
@@ -53,12 +54,12 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
         /// <param name="guid">guid экземпляра</param>
         private void AttachGuid(string guid)
         {
-            string site = Vars.Options.SiteAddress;
+            string site = SiteAddress;
             string userkey = "";
             byte[] arr = Driver.LoadID(Application.StartupPath+"\\id.key");
             foreach (var c in arr)
                 userkey += c + " ";
-            string ver = "WindEnergy " + Vars.Options.VersionText;
+            string ver = "WindEnergy " + Application.ProductVersion;
             string url = string.Format("{0}/receiver.php?mode=attach&program_guid={1}&version={2}&user_name={3}", site, guid, ver,userkey);
             string ans = this.SendStringGetRequest(url, false);
             if (ans != "OK")
@@ -71,8 +72,8 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
         /// <returns></returns>
         public VersionInfo GetVersion()
         {
-            string site = Vars.Options.SiteAddress;
-            string url = string.Format("{0}/receiver.php?mode=version&owner_version={1}&program=windenergy", site, Vars.Options.VersionInt);
+            string site = SiteAddress;
+            string url = string.Format("{0}/receiver.php?mode=version&owner_version={1}&program=windenergy", site, Convert.ToSingle(Application.ProductVersion.Replace(".", "")));
             JObject jobj = SendJsonGetRequest(url, out HttpStatusCode code);
             int version_int = int.Parse(jobj["version_int"].ToString());
             string version_text = jobj["version_text"].ToString();
@@ -116,7 +117,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
         /// <summary>
         /// отправить статистику на сервер
         /// </summary>
-        public void SendStatisticAsync()
+        public void SendStatisticAsync(string guid)
         {
             Action act = new Action(() =>
             {
@@ -127,7 +128,6 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                     try
                     {
                         i++;
-                        string guid = Vars.Options.ApplicationGuid;
                         AttachGuid(guid);
                         f = false;
                     }

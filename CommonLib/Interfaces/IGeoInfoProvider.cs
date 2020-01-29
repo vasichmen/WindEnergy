@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-namespace WindEnergy.WindLib.Data.Interfaces
+namespace CommonLibLib.Data.Interfaces
 {
     /// <summary>
     /// поставщик данных о высоте точек

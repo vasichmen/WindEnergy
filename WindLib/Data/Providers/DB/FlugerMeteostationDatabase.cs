@@ -1,4 +1,5 @@
-﻿using GMap.NET;
+﻿using CommonLib;
+using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,15 +42,15 @@ namespace WindEnergy.WindLib.Data.Providers.DB
 
                 int id = int.Parse(arr[0]);
                 string name = arr[1];
-                double lat = double.Parse(arr[2].Replace(',', Vars.DecimalSeparator));
-                double lon = double.Parse(arr[3].Replace(',', Vars.DecimalSeparator));
+                double lat = double.Parse(arr[2].Replace(',', Constants.DecimalSeparator));
+                double lon = double.Parse(arr[3].Replace(',', Constants.DecimalSeparator));
                 PointLatLng p = new PointLatLng(lat, lon);
 
                 //скорости на высоте 10м
                 Dictionary<WindDirections, double> km = new Dictionary<WindDirections, double>();
                 for (int i = 1; i <= 8; i++)
                 {
-                    double k = double.Parse(arr[3+i].Replace(',', Vars.DecimalSeparator));
+                    double k = double.Parse(arr[3+i].Replace(',', Constants.DecimalSeparator));
                     WindDirections dir;
                     switch (i)
                     {

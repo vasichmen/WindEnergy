@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonLibLib.Data.Providers.FileSystem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,23 +29,7 @@ namespace WindEnergy
         /// </summary>
         public static LocalFileSystem LocalFileSystem { get; set; }
 
-        /// <summary>
-        /// разделитель десятичных разрядов при текущих настройках ОС
-        /// </summary>
-        private static char decimalSeparator = char.MinValue;
 
-        /// <summary>
-        /// разделитель десятичных разрядов в этой операционной системе
-        /// </summary>
-        public static char DecimalSeparator
-        {
-            get
-            {
-                if (decimalSeparator == char.MinValue)
-                    decimalSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
-                return decimalSeparator;
-            }
-        }
 
         /// <summary>
         /// дата последней проверки параметров компьютера
@@ -164,4 +149,5 @@ namespace WindEnergy
         #endregion
 
     }
+
 }

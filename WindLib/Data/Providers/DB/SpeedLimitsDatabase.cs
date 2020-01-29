@@ -1,4 +1,5 @@
-﻿using GMap.NET;
+﻿using CommonLib;
+using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -62,8 +63,8 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                 string[] arr = line.Split(';'); //название;широта;долгота;минимальная скорость;максимальная скорость
                 if (arr.Length < 5)
                     continue;
-                Diapason<double> d = new Diapason<double>(double.Parse(arr[3].Replace('.', Vars.DecimalSeparator)), double.Parse(arr[4].Replace('.', Vars.DecimalSeparator)));
-                PointLatLng p = new PointLatLng(double.Parse(arr[1].Replace('.', Vars.DecimalSeparator)), double.Parse(arr[2].Replace('.', Vars.DecimalSeparator)));
+                Diapason<double> d = new Diapason<double>(double.Parse(arr[3].Replace('.', Constants.DecimalSeparator)), double.Parse(arr[4].Replace('.', Constants.DecimalSeparator)));
+                PointLatLng p = new PointLatLng(double.Parse(arr[1].Replace('.', Constants.DecimalSeparator)), double.Parse(arr[2].Replace('.', Constants.DecimalSeparator)));
                 ManualLimits ml = new ManualLimits(new List<Diapason<double>>(), new List<Diapason<double>>() { d }) { Position = p, Name = arr[0] };
                 if (!limits.ContainsKey(p))
                     limits.Add(p, ml);
