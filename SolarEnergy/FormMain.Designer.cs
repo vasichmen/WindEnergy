@@ -32,10 +32,11 @@
             this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.операцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.операцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dailyAverageGraphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,6 +69,12 @@
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
+            // правкаToolStripMenuItem
+            // 
+            this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
+            this.правкаToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.правкаToolStripMenuItem.Text = "Правка";
+            // 
             // операцииToolStripMenuItem
             // 
             this.операцииToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -76,24 +83,27 @@
             this.операцииToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
             this.операцииToolStripMenuItem.Text = "Операции";
             // 
-            // правкаToolStripMenuItem
-            // 
-            this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
-            this.правкаToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.правкаToolStripMenuItem.Text = "Правка";
-            // 
-            // помощьToolStripMenuItem
-            // 
-            this.помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
-            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
-            this.помощьToolStripMenuItem.Text = "Помощь";
-            // 
             // dailyAverageGraphsToolStripMenuItem
             // 
             this.dailyAverageGraphsToolStripMenuItem.Name = "dailyAverageGraphsToolStripMenuItem";
             this.dailyAverageGraphsToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.dailyAverageGraphsToolStripMenuItem.Text = "Среднесуточные графики";
             this.dailyAverageGraphsToolStripMenuItem.Click += new System.EventHandler(this.dailyAverageGraphsToolStripMenuItem_Click);
+            // 
+            // помощьToolStripMenuItem
+            // 
+            this.помощьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.оПрограммеToolStripMenuItem});
+            this.помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
+            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
+            this.помощьToolStripMenuItem.Text = "Помощь";
+            // 
+            // оПрограммеToolStripMenuItem
+            // 
+            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.оПрограммеToolStripMenuItem.Text = "О программе";
+            this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -122,6 +132,7 @@
         private System.Windows.Forms.ToolStripMenuItem правкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dailyAverageGraphsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
     }
 }
 

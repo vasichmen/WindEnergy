@@ -76,6 +76,8 @@ namespace WindEnergy.UI.Dialogs
             //информация о масштабе карты
             gmapControlMap.MapScaleInfoEnabled = false;
 
+            gmapControlMap.DisableFocusOnMouseEnter = true;
+
             //включение кэша карт, маршрутов итд
             gmapControlMap.Manager.UseDirectionsCache = true;
             gmapControlMap.Manager.UseGeocoderCache = true;

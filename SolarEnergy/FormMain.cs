@@ -1,4 +1,5 @@
 ﻿using SolarEnergy.Tools;
+using SolarEnergy.UI;
 using SolarLib;
 using System;
 using System.Collections.Generic;
@@ -18,15 +19,30 @@ namespace SolarEnergy
         {
             InitializeComponent();
         }
+        #region Главное меню
+
+        #region Опериции
+        private void dailyAverageGraphsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormDailyAverageGraphs().Show();
+        }
+
+        #endregion
+
+        #region Помощь
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormAbout().Show();
+        }
+
+        #endregion
+
+        #endregion
 
         private void button1_Click(object sender, EventArgs e)
         {
             Vars.Options = new SolarLib.Classes.Options.Options();
-        }
-
-        private void dailyAverageGraphsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new FormDailyAverageGraphs().Show();
         }
     }
 }
