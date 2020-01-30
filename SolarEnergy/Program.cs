@@ -2,6 +2,7 @@
 using CommonLib.Classes;
 using CommonLib.Data.Providers.InternetServices;
 using CommonLibLib.Data.Providers.FileSystem;
+using SolarEnergy.UI;
 using SolarEnergy.UI.Common.Dialogs;
 using SolarLib;
 using SolarLib.Classes.Options;

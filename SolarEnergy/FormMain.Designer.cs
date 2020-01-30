@@ -1,4 +1,4 @@
-﻿namespace SolarEnergy
+﻿namespace SolarEnergy.UI
 {
     partial class FormMain
     {

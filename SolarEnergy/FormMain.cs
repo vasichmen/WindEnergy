@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SolarEnergy
+namespace SolarEnergy.UI
 {
     public partial class FormMain : Form
     {
