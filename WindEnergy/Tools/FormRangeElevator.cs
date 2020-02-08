@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.UI.Dialogs;
 using WindEnergy.WindLib.Classes.Collections;
+using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Transformation.Altitude;
 using WindLib;
 
@@ -60,12 +61,13 @@ namespace WindEnergy.UI.Tools
                 catch (Exception) { }
             });
 
-            Action<RawRange> actionAfter = new Action<RawRange>((rawRange) =>
+            Action<RawRange, AMSMeteostationInfo> actionAfter = new Action<RawRange,AMSMeteostationInfo>((rawRange, AMS) =>
             {
                 _ = this.Invoke(new Action(() =>
                 {
+                    string AMStext = AMS != null ?$"На основе данных АМС {AMS.Name} {AMS.Position.ToString()}":"";
                     rawRange.Name = "Ряд на высоте " + new_height + " м";
-                    _ = MessageBox.Show(this, $"Ряд поднят на высоту {new_height} м", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _ = MessageBox.Show(this, $"Скорости ветра пересчитаны на высоту {new_height} м\r\n{((!string.IsNullOrWhiteSpace(AMStext)) ?AMStext:"")}", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     if (rawRange == null)
                         DialogResult = DialogResult.Cancel;

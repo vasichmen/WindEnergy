@@ -22,7 +22,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// <param name="param">настройки</param>
         /// <param name="actionPercent">действие при изменении процента выполнения</param>
         /// <param name="actionAfter">действие по окончании выполнения</param>
-        public static void ProcessRange(RawRange Range, ElevatorParameters param, Action<int> actionPercent, Action<RawRange> actionAfter)
+        public static void ProcessRange(RawRange Range, ElevatorParameters param, Action<int> actionPercent, Action<RawRange, AMSMeteostationInfo> actionAfter)
         {
             //найти подходящую АМС
             //получить из неё параметры m по месяцам
@@ -31,8 +31,12 @@ namespace WindEnergy.WindLib.Transformation.Altitude
 
             //выбор варианта расчета m: через БД АМС или введенный вручную
             Dictionary<Months, double> coeffs = null;
+            AMSMeteostationInfo AMS = null;
             if (double.IsNaN(param.CustomMCoefficient))
-                coeffs = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis).m;
+            {
+                AMS = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis);
+                coeffs = AMS.m; ;
+            }
             else
             {
                 coeffs = new Dictionary<Months, double>();
@@ -60,7 +64,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
                     res.Add(ni);
                 }
                 res.EndChange();
-                actionAfter.Invoke(res);
+                actionAfter.Invoke(res,AMS);
             });
             tsk.Start();
             return;
