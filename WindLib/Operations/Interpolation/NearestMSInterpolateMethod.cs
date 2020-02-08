@@ -180,7 +180,7 @@ namespace WindEnergy.WindLib.Operations.Interpolation
                 }
             }
             if (res == null) {
-                RP5MeteostationInfo mi = Vars.RP5Meteostations.GetNearestMS(coordinates, false);
+                RP5MeteostationInfo mi = Vars.RP5Meteostations.GetNearestMS(coordinates);
                 double l = EarthModel.CalculateDistance(mi.Position, coordinates);
                 throw new GetBaseRangeException(total_rmax, Vars.Options.MinimalCorrelationCoeff, l, mts.Count, Vars.Options.NearestMSRadius, coordinates);
                     

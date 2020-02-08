@@ -72,6 +72,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.button1 = new System.Windows.Forms.Button();
+            this.ToolStripMenuItemRangeElevator = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -240,6 +241,7 @@
             this.equalizeRangesToolStripMenuItem,
             this.calculateEnergyInfoToolStripMenuItem,
             this.ToolStripMenuItemCalcYear,
+            this.ToolStripMenuItemRangeElevator,
             this.toolStripSeparator1,
             this.optionsToolStripMenuItem,
             this.loadDataToolStripMenuItem});
@@ -449,6 +451,13 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // ToolStripMenuItemRangeElevator
+            // 
+            this.ToolStripMenuItemRangeElevator.Name = "ToolStripMenuItemRangeElevator";
+            this.ToolStripMenuItemRangeElevator.Size = new System.Drawing.Size(266, 22);
+            this.ToolStripMenuItemRangeElevator.Text = "Пересчет ряда на высоту";
+            this.ToolStripMenuItemRangeElevator.Click += new System.EventHandler(this.ToolStripMenuItemRangeElevator_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -522,6 +531,7 @@
         private System.Windows.Forms.ToolStripMenuItem loadDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemRangeElevator;
     }
 }
 

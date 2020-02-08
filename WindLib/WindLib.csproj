@@ -174,6 +174,7 @@
     <Compile Include="Classes\Structures\RangeInterval.cs" />
     <Compile Include="Data\Providers\DB\AMSMeteostationDatabase.cs" />
     <Compile Include="Data\Providers\DB\BaseFileDatabase.cs" />
+    <Compile Include="Data\Providers\DB\BaseMeteostationDatabase.cs" />
     <Compile Include="Data\Providers\DB\EquipmentDatabase.cs" />
     <Compile Include="Data\Providers\DB\FlugerMeteostationDatabase.cs" />
     <Compile Include="Data\Providers\DB\RP5Database.cs" />
@@ -231,6 +232,9 @@
     <Compile Include="Statistic\Structures\EnergyInfo.cs" />
     <Compile Include="Statistic\Collections\StatisticalRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transformation\Altitude\AMSSupport.cs" />
+    <Compile Include="Transformation\Altitude\ElevatorParameters.cs" />
+    <Compile Include="Transformation\Altitude\RangeElevator.cs" />
     <Compile Include="Vars.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -239,7 +243,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Transformation\Altitude\" />
     <Folder Include="Transformation\Terrain\" />
   </ItemGroup>
   <ItemGroup>

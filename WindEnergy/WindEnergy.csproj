@@ -226,6 +226,12 @@
     <Compile Include="Tools\FormOptions.Designer.cs">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\FormRangeElevator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FormRangeElevator.Designer.cs">
+      <DependentUpon>FormRangeElevator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\FormRangeProperties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -304,6 +310,9 @@
     </Compile>
     <EmbeddedResource Include="Tools\FormOptions.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FormRangeElevator.resx">
+      <DependentUpon>FormRangeElevator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormRangeProperties.resx">
       <DependentUpon>FormRangeProperties.cs</DependentUpon>

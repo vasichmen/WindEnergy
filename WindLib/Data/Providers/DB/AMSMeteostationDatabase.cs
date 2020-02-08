@@ -2,13 +2,14 @@
 using GMap.NET;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using WindEnergy.WindLib.Classes.Structures;
 namespace WindEnergy.WindLib.Data.Providers.DB
 {
     /// <summary>
     /// База данных коэффициентов пересчета на высоту по данным АМС
     /// </summary>
-    public class AMSMeteostationDatabase:BaseFileDatabase<PointLatLng,AMSMeteostationInfo>
+    public class AMSMeteostationDatabase: BaseMeteostationDatabase<PointLatLng,AMSMeteostationInfo>
     {
         /// <summary>
         /// создает объект для этого файла, не загружая данные
@@ -74,6 +75,31 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             }
             sr.Close();
             return items;
+        }
+
+        /// <summary>
+        /// найти ближайшую МС для заданных координат и в заданном радиусе от точки 
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <param name="maxRadius">радиус поиска в метрах</param>
+        /// <returns></returns>
+        public new AMSMeteostationInfo GetNearestMS(PointLatLng coordinates, double maxRadius = double.MaxValue)
+        {
+            AMSMeteostationInfo res = base.GetNearestMS(coordinates, maxRadius) as AMSMeteostationInfo;
+            return res;
+        }
+
+        /// <summary>
+        /// найти все метеостанции из списка mts, которые находятся в радиусе radius от заданной точки coordinates
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <param name="radius"></param>
+        /// <param name="addOwn">Если истина, то если на coordinates есть МС, то она тоже будет добавлена</param>
+        /// <returns></returns>
+        public new List<AMSMeteostationInfo> GetNearestMS(PointLatLng coordinates, double radius, bool addOwn = false)
+        {
+            List<AMSMeteostationInfo> res = base.GetNearestMS(coordinates, radius, addOwn).Cast<AMSMeteostationInfo>() as List<AMSMeteostationInfo>;
+            return res;
         }
 
     }

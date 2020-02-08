@@ -205,7 +205,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             }
 
             if ((bool)BindNearestMS)
-                res.Meteostation = Vars.RP5Meteostations.GetNearestMS(this.Coordinates, false);
+                res.Meteostation = Vars.RP5Meteostations.GetNearestMS(this.Coordinates);
             res.Position = this.Coordinates;
             res.Name = Path.GetFileNameWithoutExtension(this.FilePath);
             res.FilePath = FilePath;

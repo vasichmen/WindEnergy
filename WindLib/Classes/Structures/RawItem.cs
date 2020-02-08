@@ -11,7 +11,7 @@ namespace WindEnergy.WindLib.Classes.Structures
     /// <summary>
     /// представление данных одного элемента ряда наблюдений
     /// </summary>
-    public class RawItem:RawItemBase
+    public class RawItem : RawItemBase
     {
         private double direction = double.NaN;
         private double wetness;
@@ -50,6 +50,15 @@ namespace WindEnergy.WindLib.Classes.Structures
                 direction = GetDirection(value);
 
             }
+        }
+
+        /// <summary>
+        /// клонирование объекта RawItem
+        /// </summary>
+        /// <returns></returns>
+        internal RawItem Clone()
+        {
+            return new RawItem(this.DateArgument, this.Speed, this.Direction, this.Temperature, this.Wetness, this.Pressure);
         }
 
         /// <summary>

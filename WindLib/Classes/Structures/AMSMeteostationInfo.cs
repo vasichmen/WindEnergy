@@ -27,5 +27,26 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// среднее значение коэффициента m за год
         /// </summary>
         public double AverageM { get; set; }
+
+        public Dictionary<Months, double> RelativeSpeeds { get {
+                if (_relativeSpeeds == null)
+                    _relativeSpeeds = CalcRelatives();
+                return _relativeSpeeds;
+            } }
+
+        private Dictionary<Months, double> _relativeSpeeds = null;
+
+        /// <summary>
+        /// расчет относительных скоростей
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<Months, double> CalcRelatives()
+        {
+            double aver = V10.Values.Average();
+            Dictionary<Months, double> res = new Dictionary<Months, double>();
+            foreach (Months month in V10.Keys)
+                res.Add(month, V10[month] / aver);
+            return res;
+        }
     }
 }

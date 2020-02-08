@@ -17,19 +17,13 @@ namespace WindEnergy.WindLib.Data.Providers.DB
     /// <summary>
     /// База данных метеостанций
     /// </summary>
-    public class RP5MeteostationDatabase : BaseFileDatabase<string, RP5MeteostationInfo>
+    public class RP5MeteostationDatabase : BaseMeteostationDatabase<string, RP5MeteostationInfo>
     {
         /// <summary>
         /// создает объект для этого файла, не загружая данные
         /// </summary>
         /// <param name="FileName">адрес файла БД</param>
         public RP5MeteostationDatabase(string FileName) : base(FileName) { }
-
-        /// <summary>
-        /// расстояние в метрах при котором координаты считаются совпадающими
-        /// </summary>
-        private const double COORDINATES_OVERLAP = 10;
-
 
         /// <summary>
         /// количество аэропортов в БД
@@ -185,40 +179,11 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         /// найти ближайшую МС для заданных координат и в заданном радиусе от точки 
         /// </summary>
         /// <param name="coordinates"></param>
-        /// <param name="useMaxRadius">если истина, то поиск будет идти только в максимальном радиусе из настроек Vars.Options.NearestMSRadius</param>
+        /// <param name="maxRadius">радиус поиска в метрах</param>
         /// <returns></returns>
-        public  RP5MeteostationInfo GetNearestMS(PointLatLng coordinates, bool useMaxRadius = true)
+        public new RP5MeteostationInfo GetNearestMS(PointLatLng coordinates, double maxRadius = double.MaxValue)
         {
-            RP5MeteostationInfo res = null;
-            double min = double.MaxValue;
-            foreach (var p in this.List)
-            {
-                double f = EarthModel.CalculateDistance(p.Position, coordinates);
-                if (f < COORDINATES_OVERLAP)
-                {
-                    //TODO: ближайшая метеостанция не должна быть той же самой 
-                    continue;
-                }
-                if (useMaxRadius)
-                {
-                    if (f < min && f > COORDINATES_OVERLAP && f < Vars.Options.NearestMSRadius)
-                    {
-                        min = f;
-                        res = p;
-                    }
-                }
-                else
-                {
-                    if (f < min)
-                    {
-                        min = f;
-                        res = p;
-                    }
-                }
-            }
-            if (min == double.MaxValue)
-                return null;
-            res.OwnerDistance = min;
+            RP5MeteostationInfo res = base.GetNearestMS(coordinates, maxRadius) as RP5MeteostationInfo;
             return res;
         }
 
@@ -229,15 +194,9 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         /// <param name="radius"></param>
         /// <param name="addOwn">Если истина, то если на coordinates есть МС, то она тоже будет добавлена</param>
         /// <returns></returns>
-        public  List<RP5MeteostationInfo> GetNearestMS(PointLatLng coordinates,  double radius, bool addOwn = false)
+        public new List<RP5MeteostationInfo> GetNearestMS(PointLatLng coordinates,  double radius, bool addOwn = false)
         {
-            List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
-            foreach (var ms in this.List)
-            {
-                double dist = EarthModel.CalculateDistance(ms.Position, coordinates);
-                if ((dist < radius && dist > COORDINATES_OVERLAP) || (dist < COORDINATES_OVERLAP && addOwn)) // если попадает в радиус и не совпадает или совпадает и надо добавлять 
-                    res.Add(ms);
-            }
+            List<RP5MeteostationInfo> res = base.GetNearestMS(coordinates, radius, addOwn).Cast<RP5MeteostationInfo>() as List<RP5MeteostationInfo>;
             return res;
         }
 

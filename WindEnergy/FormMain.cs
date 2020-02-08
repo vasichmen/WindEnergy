@@ -66,6 +66,7 @@ namespace WindEnergy.UI
             rangePropertiesToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             calculateEnergyInfoToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             ToolStripMenuItemCalcYear.Enabled = mainTabControl.SelectedTab != null;
+            ToolStripMenuItemRangeElevator.Enabled = mainTabControl.SelectedTab != null;
         }
 
         #region Файл
@@ -212,7 +213,7 @@ namespace WindEnergy.UI
             FormCheckRange frm = new FormCheckRange(rang);
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
-                mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
+                _ = mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
             }
             frm.Dispose();
         }
@@ -299,6 +300,22 @@ namespace WindEnergy.UI
             RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
             FormCalcYear fei = new FormCalcYear(rang);
             fei.Show(this);
+        }
+
+        /// <summary>
+        /// пересчет ряда на высоту
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripMenuItemRangeElevator_Click(object sender, EventArgs e)
+        {
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            FormRangeElevator frm = new FormRangeElevator(rang);
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                _ = mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
+            }
+            frm.Dispose();
         }
 
         /// <summary>
@@ -465,7 +482,6 @@ namespace WindEnergy.UI
             sw.Close();
 
         }
-
 
     }
 }
