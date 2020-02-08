@@ -38,9 +38,15 @@ namespace WindEnergy.UI.Tools
             Cursor = Cursors.WaitCursor;
 
             if (!double.TryParse(textBoxToHeight.Text.Trim().Replace('.', Constants.DecimalSeparator), out double new_height))
-            { _ = MessageBox.Show(this, $"Не удалось распознать {textBoxToHeight.Text} как число", "Пересчет ряда на высоту", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            { _ = MessageBox.Show(this, $"Не удалось распознать {textBoxToHeight.Text} как число", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (!double.TryParse(textBoxFromHeight.Text.Trim().Replace('.', Constants.DecimalSeparator), out double old_height))
-            { _ = MessageBox.Show(this, $"Не удалось распознать {textBoxFromHeight.Text} как число", "Пересчет ряда на высоту", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            { _ = MessageBox.Show(this, $"Не удалось распознать {textBoxFromHeight.Text} как число", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            if (!double.TryParse(textBoxRadius.Text.Trim().Replace('.', Constants.DecimalSeparator), out double radius))
+            { _ = MessageBox.Show(this, $"Не удалось распознать {textBoxRadius.Text} как число", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            if (!double.TryParse(textBoxCoeffM.Text.Trim().Replace('.', Constants.DecimalSeparator), out double m))
+            { _ = MessageBox.Show(this, $"Не удалось распознать {textBoxCoeffM.Text} как число", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+
+
 
             Action<int> action = new Action<int>((percent) =>
             {
@@ -59,7 +65,7 @@ namespace WindEnergy.UI.Tools
                 _ = this.Invoke(new Action(() =>
                 {
                     rawRange.Name = "Ряд на высоте " + new_height + " м";
-                    _ = MessageBox.Show(this, $"Ряд поднят на высоту {new_height} м", "Пересчет ряда на высоту", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _ = MessageBox.Show(this, $"Ряд поднят на высоту {new_height} м", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     if (rawRange == null)
                         DialogResult = DialogResult.Cancel;
@@ -85,27 +91,48 @@ namespace WindEnergy.UI.Tools
                         return;
                 }
 
-                RangeElevator.ProcessRange(range, new ElevatorParameters() { FromHeight = old_height, ToHeight = new_height, Coordinates = range.Position, SearchRaduis = double.NaN }, action, actionAfter);
+                RangeElevator.ProcessRange(range, new ElevatorParameters() { 
+                    FromHeight = old_height, 
+                    ToHeight = new_height, 
+                    Coordinates = range.Position, 
+                    SearchRaduis = checkBoxUseRadius.Checked? radius:double.NaN,
+                    CustomMCoefficient = checkBoxCustomCoeffM.Checked?m:double.NaN
+                }, action, actionAfter);
 
             }
             catch (WebException exc)
             {
                 Cursor = Cursors.Arrow;
-                _ = MessageBox.Show(this, exc.Message, "Пересчет ряда на высоту", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, exc.Message, "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
             catch (WindEnergyException wex)
             {
                 Cursor = Cursors.Arrow;
-                _ = MessageBox.Show(this, wex.Message, "Пересчет ряда на высоту", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, wex.Message, "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
             catch (ApplicationException exc)
             {
                 Cursor = Cursors.Arrow;
-                _ = MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Пересчет ряда на высоту", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
+        }
+
+        private void checkBoxCustomCoeffM_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxUseRadius.Enabled = !checkBoxCustomCoeffM.Checked;
+            textBoxRadius.Enabled = !checkBoxCustomCoeffM.Checked;
+            textBoxCoeffM.Enabled = checkBoxCustomCoeffM.Checked;
+            textBoxFromHeight.Enabled = checkBoxCustomCoeffM.Checked;
+
+        }
+
+        private void checkBoxUseRadius_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxRadius.Enabled = checkBoxUseRadius.Checked;
+            checkBoxCustomCoeffM.Enabled = !checkBoxUseRadius.Checked;
         }
     }
 }

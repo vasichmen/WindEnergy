@@ -31,5 +31,10 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// расстояние, на котором ищется АМС (NaN - неограниченное)
         /// </summary>
         public double SearchRaduis { get;  set; }
+
+        /// <summary>
+        /// коэффициент m, заданный вручную
+        /// </summary>
+        public double CustomMCoefficient { get; set; }
     }
 }

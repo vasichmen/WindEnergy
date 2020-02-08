@@ -37,6 +37,12 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.buttonElevate = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxRadius = new System.Windows.Forms.TextBox();
+            this.checkBoxUseRadius = new System.Windows.Forms.CheckBox();
+            this.checkBoxCustomCoeffM = new System.Windows.Forms.CheckBox();
+            this.textBoxCoeffM = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBoxFromHeight
@@ -64,7 +70,8 @@
             this.label1.Size = new System.Drawing.Size(124, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Высота наблюдений, м";
-            this.toolTip1.SetToolTip(this.label1, "Высота наблюдений выбранного ряда от уровня земли в метрах");
+            this.toolTip1.SetToolTip(this.label1, "Высота наблюдений выбранного ряда от уровня земли в метрах. Значение можно измени" +
+        "ть только если используется коэффициент m, заданный вручную");
             // 
             // label2
             // 
@@ -78,9 +85,10 @@
             // 
             // buttonElevate
             // 
-            this.buttonElevate.Location = new System.Drawing.Point(55, 100);
+            this.buttonElevate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonElevate.Location = new System.Drawing.Point(12, 169);
             this.buttonElevate.Name = "buttonElevate";
-            this.buttonElevate.Size = new System.Drawing.Size(127, 23);
+            this.buttonElevate.Size = new System.Drawing.Size(426, 23);
             this.buttonElevate.TabIndex = 4;
             this.buttonElevate.Text = "Пересчитать ряд";
             this.buttonElevate.UseVisualStyleBackColor = true;
@@ -88,17 +96,85 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 129);
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(12, 198);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(315, 23);
+            this.progressBar1.Size = new System.Drawing.Size(426, 23);
             this.progressBar1.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(118, 90);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(128, 13);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Радиус поиска АМС, км";
+            this.toolTip1.SetToolTip(this.label3, "Область поиска АМС для получения коэффициентов пересчета скорости ветра на высоту" +
+        "");
+            // 
+            // textBoxRadius
+            // 
+            this.textBoxRadius.Enabled = false;
+            this.textBoxRadius.Location = new System.Drawing.Point(12, 87);
+            this.textBoxRadius.Name = "textBoxRadius";
+            this.textBoxRadius.Size = new System.Drawing.Size(100, 20);
+            this.textBoxRadius.TabIndex = 12;
+            this.textBoxRadius.Text = "1000";
+            // 
+            // checkBoxUseRadius
+            // 
+            this.checkBoxUseRadius.AutoSize = true;
+            this.checkBoxUseRadius.Location = new System.Drawing.Point(12, 64);
+            this.checkBoxUseRadius.Name = "checkBoxUseRadius";
+            this.checkBoxUseRadius.Size = new System.Drawing.Size(188, 17);
+            this.checkBoxUseRadius.TabIndex = 14;
+            this.checkBoxUseRadius.Text = "Ограничить радиус поиска АМС";
+            this.checkBoxUseRadius.UseVisualStyleBackColor = true;
+            this.checkBoxUseRadius.CheckedChanged += new System.EventHandler(this.checkBoxUseRadius_CheckedChanged);
+            // 
+            // checkBoxCustomCoeffM
+            // 
+            this.checkBoxCustomCoeffM.AutoSize = true;
+            this.checkBoxCustomCoeffM.Location = new System.Drawing.Point(12, 113);
+            this.checkBoxCustomCoeffM.Name = "checkBoxCustomCoeffM";
+            this.checkBoxCustomCoeffM.Size = new System.Drawing.Size(194, 17);
+            this.checkBoxCustomCoeffM.TabIndex = 15;
+            this.checkBoxCustomCoeffM.Text = "Задать одно значение m вручную";
+            this.checkBoxCustomCoeffM.UseVisualStyleBackColor = true;
+            this.checkBoxCustomCoeffM.CheckedChanged += new System.EventHandler(this.checkBoxCustomCoeffM_CheckedChanged);
+            // 
+            // textBoxCoeffM
+            // 
+            this.textBoxCoeffM.Enabled = false;
+            this.textBoxCoeffM.Location = new System.Drawing.Point(12, 136);
+            this.textBoxCoeffM.Name = "textBoxCoeffM";
+            this.textBoxCoeffM.Size = new System.Drawing.Size(100, 20);
+            this.textBoxCoeffM.TabIndex = 12;
+            this.textBoxCoeffM.Text = "0.18";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(118, 139);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(144, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Значение коэффициента m";
             // 
             // FormRangeElevator
             // 
             this.AcceptButton = this.buttonElevate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(377, 189);
+            this.ClientSize = new System.Drawing.Size(450, 232);
+            this.Controls.Add(this.checkBoxCustomCoeffM);
+            this.Controls.Add(this.checkBoxUseRadius);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBoxCoeffM);
+            this.Controls.Add(this.textBoxRadius);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.buttonElevate);
             this.Controls.Add(this.label2);
@@ -107,7 +183,7 @@
             this.Controls.Add(this.textBoxFromHeight);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormRangeElevator";
-            this.Text = "Поднятие наблюдений на высоту башни";
+            this.Text = "Расчет скорости ветра на высоте башни ВЭУ";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,5 +198,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonElevate;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBoxRadius;
+        private System.Windows.Forms.CheckBox checkBoxUseRadius;
+        private System.Windows.Forms.CheckBox checkBoxCustomCoeffM;
+        private System.Windows.Forms.TextBox textBoxCoeffM;
+        private System.Windows.Forms.Label label4;
     }
 }

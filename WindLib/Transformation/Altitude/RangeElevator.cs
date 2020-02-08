@@ -28,7 +28,16 @@ namespace WindEnergy.WindLib.Transformation.Altitude
             //получить из неё параметры m по месяцам
             //поднять ряд Range на высоту
 
-            Dictionary<Months, double> coeffs = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations,param.SearchRaduis).m;
+
+            //выбор варианта расчета m: через БД АМС или введенный вручную
+            Dictionary<Months, double> coeffs = null;
+            if (double.IsNaN(param.CustomMCoefficient))
+                coeffs = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis).m;
+            else
+            {
+                coeffs = new Dictionary<Months, double>();
+                for (int i = 1; i <= 12; i++) coeffs.Add((Months)i, param.CustomMCoefficient);
+            }
 
             //поднять ряд  с учетом m по месяцам
             RawRange res = new RawRange();
