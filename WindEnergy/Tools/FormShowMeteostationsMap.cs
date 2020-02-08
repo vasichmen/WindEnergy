@@ -210,8 +210,24 @@ namespace WindEnergy.UI.Tools
 
                 //вывод на карту
                 lay.Clear();
+                showVisibleAMS();//вывод АМС без фильтрации, их мало
                 foreach (var a in res)
                     showMarker(a.Position, a.Name, a);
+            }
+        }
+
+        /// <summary>
+        /// вывод на карту всех АМС
+        /// </summary>
+        private void showVisibleAMS()
+        {
+            //выборка точек из БД
+            foreach (var ams in Vars.AMSMeteostations.List)
+            {
+                if (gmapControlMap.ViewArea.Contains(ams.Position))
+                {
+                    showMarker(ams.Position, "АМС " + ams.Name, ams);
+                }
             }
         }
 
@@ -221,8 +237,14 @@ namespace WindEnergy.UI.Tools
         /// <param name="cled">координаты нового маркера</param>
         private void showMarker(PointLatLng cled, string ttip, object tag)
         {
+            Icon mark = null;
+            if (tag.GetType() == typeof(RP5MeteostationInfo))
+                mark = Resources.rp5_marker;
+            else if (tag.GetType() == typeof(AMSMeteostationInfo))
+                mark = Resources.ams_marker;
+
             Point offsets = new Point(0, -16);
-            MapMarker mar = new MapMarker(cled, Resources.marker, offsets);
+            MapMarker mar = new MapMarker(cled, mark, offsets);
             mar.ToolTipText = ttip;
             mar.IsHitTestVisible = true;
             mar.Tag = tag;
@@ -247,6 +269,7 @@ namespace WindEnergy.UI.Tools
 
         private void gmapControlMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
+            if (item.Tag.GetType() != typeof(RP5MeteostationInfo)) return;
             item = item ?? throw new ArgumentNullException(nameof(item));
             RP5MeteostationInfo mi = (RP5MeteostationInfo)item.Tag;
             FormLoadFromRP5 frm = new FormLoadFromRP5(mi);

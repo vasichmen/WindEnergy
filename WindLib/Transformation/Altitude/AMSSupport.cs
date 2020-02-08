@@ -22,6 +22,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// <param name="range">ряд наблюдений на МС</param>
         /// <param name="coordinates">координаты ряда</param>
         /// <param name="MSMeteostations">БД АМС</param>
+        /// <param name="searchRadius">расстояние для фильтрации АМС в метрах. Если задано NaN, то фильтрация по расстоянию проводить не будет</param>
         /// <returns></returns>
         internal static AMSMeteostationInfo GetSuitAMS(RawRange range, PointLatLng coordinates, AMSMeteostationDatabase MSMeteostations,double searchRadius)
         {

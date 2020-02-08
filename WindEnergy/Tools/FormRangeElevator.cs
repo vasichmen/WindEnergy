@@ -61,26 +61,26 @@ namespace WindEnergy.UI.Tools
                 catch (Exception) { }
             });
 
-            Action<RawRange, AMSMeteostationInfo> actionAfter = new Action<RawRange,AMSMeteostationInfo>((rawRange, AMS) =>
-            {
-                _ = this.Invoke(new Action(() =>
-                {
-                    string AMStext = AMS != null ?$"На основе данных АМС {AMS.Name} {AMS.Position.ToString()}":"";
-                    rawRange.Name = "Ряд на высоте " + new_height + " м";
-                    _ = MessageBox.Show(this, $"Скорости ветра пересчитаны на высоту {new_height} м\r\n{((!string.IsNullOrWhiteSpace(AMStext)) ?AMStext:"")}", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Action<RawRange, AMSMeteostationInfo> actionAfter = new Action<RawRange, AMSMeteostationInfo>((rawRange, AMS) =>
+             {
+                 _ = this.Invoke(new Action(() =>
+                 {
+                     string AMStext = AMS != null ? $"На основе данных АМС {AMS.Name} {AMS.Position.ToString()}" : "";
+                     rawRange.Name = "Ряд на высоте " + new_height + " м";
+                     _ = MessageBox.Show(this, $"Скорости ветра пересчитаны на высоту {new_height} м\r\n{((!string.IsNullOrWhiteSpace(AMStext)) ? AMStext : "")}", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    if (rawRange == null)
-                        DialogResult = DialogResult.Cancel;
-                    else
-                    {
-                        DialogResult = DialogResult.OK;
-                        Result = rawRange;
-                    }
-                    Cursor = Cursors.Arrow;
-                    Result = rawRange;
-                    Close();
-                }));
-            });
+                     if (rawRange == null)
+                         DialogResult = DialogResult.Cancel;
+                     else
+                     {
+                         DialogResult = DialogResult.OK;
+                         Result = rawRange;
+                     }
+                     Cursor = Cursors.Arrow;
+                     Result = rawRange;
+                     Close();
+                 }));
+             });
 
             try
             {
@@ -93,12 +93,13 @@ namespace WindEnergy.UI.Tools
                         return;
                 }
 
-                RangeElevator.ProcessRange(range, new ElevatorParameters() { 
-                    FromHeight = old_height, 
-                    ToHeight = new_height, 
-                    Coordinates = range.Position, 
-                    SearchRaduis = checkBoxUseRadius.Checked? radius:double.NaN,
-                    CustomMCoefficient = checkBoxCustomCoeffM.Checked?m:double.NaN
+                RangeElevator.ProcessRange(range, new ElevatorParameters()
+                {
+                    FromHeight = old_height,
+                    ToHeight = new_height,
+                    Coordinates = range.Position,
+                    SearchRaduis = checkBoxUseRadius.Checked ? radius : double.NaN,
+                    CustomMCoefficient = checkBoxCustomCoeffM.Checked ? m : double.NaN
                 }, action, actionAfter);
 
             }

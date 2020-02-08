@@ -63,9 +63,9 @@ namespace WindEnergy.UI.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
-        internal static System.Drawing.Icon marker {
+        internal static System.Drawing.Icon ams_marker {
             get {
-                object obj = ResourceManager.GetObject("marker", resourceCulture);
+                object obj = ResourceManager.GetObject("ams_marker", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -77,6 +77,16 @@ namespace WindEnergy.UI.Properties {
             get {
                 object obj = ResourceManager.GetObject("page_close_button", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
+        /// </summary>
+        internal static System.Drawing.Icon rp5_marker {
+            get {
+                object obj = ResourceManager.GetObject("rp5_marker", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

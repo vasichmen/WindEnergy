@@ -152,7 +152,7 @@ namespace WindEnergy.UI.Dialogs
             lay.Clear();
             cPoint = cled;
             Point offsets = new Point(0, -16);
-            MapMarker mar = new MapMarker(cled, Resources.marker, offsets);
+            MapMarker mar = new MapMarker(cled, Resources.rp5_marker, offsets);
 
             mar.IsHitTestVisible = true;
 
