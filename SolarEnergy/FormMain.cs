@@ -18,6 +18,9 @@ namespace SolarEnergy.UI
         public FormMain()
         {
             InitializeComponent();
+#if DEBUG
+            button1.Visible = true;
+#endif
         }
         #region Главное меню
 
