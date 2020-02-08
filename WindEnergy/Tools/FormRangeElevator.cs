@@ -22,6 +22,8 @@ namespace WindEnergy.UI.Tools
     public partial class FormRangeElevator : Form
     {
         private RawRange range = null;
+        private Dictionary<Months, double> MonthsHellmanValues = null;
+        private HellmanCoefficientSource hellmanCoeffSource = HellmanCoefficientSource.AMSAnalog;
 
         /// <summary>
         /// результат работы диалогового окна (новый ряд данных)
@@ -32,6 +34,16 @@ namespace WindEnergy.UI.Tools
         {
             InitializeComponent();
             this.range = range;
+            refreshOptionsText();
+        }
+
+        private void refreshOptionsText()
+        {
+            if (hellmanCoeffSource == HellmanCoefficientSource.None)
+                labelCurrentOptions.ForeColor = Color.Red;
+            else
+                labelCurrentOptions.ForeColor = Color.Green;
+            labelCurrentOptions.Text = $"Режим: {hellmanCoeffSource.Description()}";
         }
 
         private void buttonElevate_Click(object sender, EventArgs e)
@@ -48,6 +60,9 @@ namespace WindEnergy.UI.Tools
             { _ = MessageBox.Show(this, $"Не удалось распознать {textBoxCoeffM.Text} как число", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
 
             radius *= 1000; //перевод км в метры
+
+            if (hellmanCoeffSource == HellmanCoefficientSource.None)
+                _ = MessageBox.Show(this, "Что-то пошло не так, попробуйте другие настройки", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             Action<int> action = new Action<int>((percent) =>
             {
@@ -99,7 +114,9 @@ namespace WindEnergy.UI.Tools
                     ToHeight = new_height,
                     Coordinates = range.Position,
                     SearchRaduis = checkBoxUseRadius.Checked ? radius : double.NaN,
-                    CustomMCoefficient = checkBoxCustomCoeffM.Checked ? m : double.NaN
+                    CustomMCoefficient = checkBoxCustomCoeffM.Checked ? m : double.NaN,
+                    CustomNCoefficientMonths = MonthsHellmanValues,
+                    HellmanCoefficientSource = hellmanCoeffSource
                 }, action, actionAfter);
 
             }
@@ -129,13 +146,31 @@ namespace WindEnergy.UI.Tools
             textBoxRadius.Enabled = !checkBoxCustomCoeffM.Checked;
             textBoxCoeffM.Enabled = checkBoxCustomCoeffM.Checked;
             textBoxFromHeight.Enabled = checkBoxCustomCoeffM.Checked;
-
+            buttonMonths.Enabled = checkBoxCustomCoeffM.Checked;
+            hellmanCoeffSource = checkBoxCustomCoeffM.Checked ? HellmanCoefficientSource.CustomOne : HellmanCoefficientSource.AMSAnalog;
+            refreshOptionsText();
         }
 
         private void checkBoxUseRadius_CheckedChanged(object sender, EventArgs e)
         {
             textBoxRadius.Enabled = checkBoxUseRadius.Checked;
             checkBoxCustomCoeffM.Enabled = !checkBoxUseRadius.Checked;
+            hellmanCoeffSource = checkBoxUseRadius.Checked ? HellmanCoefficientSource.AMSAnalog : (checkBoxCustomCoeffM.Checked? HellmanCoefficientSource.CustomOne: HellmanCoefficientSource.AMSAnalog);
+            refreshOptionsText();
+        }
+
+        private void buttonMonths_Click(object sender, EventArgs e)
+        {
+            FormMonthsValuesDialogs fmv = new FormMonthsValuesDialogs(MonthsHellmanValues, "Коэффициенты Хеллмана по месяцам");
+            if (fmv.ShowDialog() == DialogResult.OK)
+            {
+                this.MonthsHellmanValues = fmv.Result;
+                textBoxCoeffM.Enabled = false;
+                hellmanCoeffSource = HellmanCoefficientSource.CustomMonths;
+            }
+            else
+                hellmanCoeffSource = HellmanCoefficientSource.CustomOne;
+            refreshOptionsText();
         }
     }
 }

@@ -48,7 +48,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                 double f = EarthModel.CalculateDistance(p.Position, coordinates);
                 if (f < COORDINATES_OVERLAP)
                 {
-                    //TODO: ближайшая метеостанция не должна быть той же самой 
+                    // ближайшая метеостанция не должна быть той же самой 
                     continue;
                 }
                 if (useMaxRadius)

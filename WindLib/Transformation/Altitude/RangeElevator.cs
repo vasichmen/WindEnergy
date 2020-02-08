@@ -33,17 +33,24 @@ namespace WindEnergy.WindLib.Transformation.Altitude
             //выбор варианта расчета m: через БД АМС или введенный вручную
             Dictionary<Months, double> coeffs = null;
             AMSMeteostationInfo AMS = null;
-            if (double.IsNaN(param.CustomMCoefficient))
+
+            switch (param.HellmanCoefficientSource)
             {
-                AMS = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis);
-                if (AMS == null)
-                    throw new WindEnergyException("Не удалось найти АМС в заданном радиусе");
-                coeffs = AMS.m; ;
-            }
-            else
-            {
-                coeffs = new Dictionary<Months, double>();
-                for (int i = 1; i <= 12; i++) coeffs.Add((Months)i, param.CustomMCoefficient);
+                case HellmanCoefficientSource.AMSAnalog:
+                    AMS = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis);
+                    if (AMS == null)
+                        throw new WindEnergyException("Не удалось найти АМС в заданном радиусе");
+                    coeffs = AMS.m; ;
+                    break;
+                case HellmanCoefficientSource.CustomMonths:
+                    coeffs = param.CustomNCoefficientMonths;
+                    break;
+                case HellmanCoefficientSource.CustomOne:
+                    coeffs = new Dictionary<Months, double>();
+                    for (int i = 1; i <= 12; i++) coeffs.Add((Months)i, param.CustomMCoefficient);
+                    break;
+                default: throw new Exception("Этот источник данных не реализован");
+
             }
 
             //поднять ряд  с учетом m по месяцам
@@ -67,7 +74,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
                     res.Add(ni);
                 }
                 res.EndChange();
-                actionAfter.Invoke(res,AMS);
+                actionAfter.Invoke(res, AMS);
             });
             tsk.Start();
             return;

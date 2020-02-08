@@ -1,4 +1,5 @@
-﻿using GMap.NET;
+﻿using CommonLib;
+using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,5 +37,15 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// коэффициент m, заданный вручную
         /// </summary>
         public double CustomMCoefficient { get; set; }
+
+        /// <summary>
+        /// коэффициенты хеллмана по месяцам
+        /// </summary>
+        public Dictionary<Months, double> CustomNCoefficientMonths { get; set; }
+
+        /// <summary>
+        /// источник коэффициентов Хеллмана
+        /// </summary>
+        public HellmanCoefficientSource HellmanCoefficientSource { get; set; }
     }
 }

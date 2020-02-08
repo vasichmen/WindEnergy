@@ -127,6 +127,12 @@
     <Compile Include="Dialogs\FormChooseMeteostAirportDialog.Designer.cs">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\FormMonthsValuesDialogs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FormMonthsValuesDialogs.Designer.cs">
+      <DependentUpon>FormMonthsValuesDialogs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\FormTextImport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -258,6 +264,9 @@
     </Compile>
     <EmbeddedResource Include="Dialogs\FormChooseMeteostAirportDialog.resx">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FormMonthsValuesDialogs.resx">
+      <DependentUpon>FormMonthsValuesDialogs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FormTextImport.resx">
       <DependentUpon>FormTextImport.cs</DependentUpon>

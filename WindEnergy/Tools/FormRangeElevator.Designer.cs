@@ -43,6 +43,8 @@
             this.checkBoxCustomCoeffM = new System.Windows.Forms.CheckBox();
             this.textBoxCoeffM = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.buttonMonths = new System.Windows.Forms.Button();
+            this.labelCurrentOptions = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBoxFromHeight
@@ -97,7 +99,7 @@
             // buttonElevate
             // 
             this.buttonElevate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonElevate.Location = new System.Drawing.Point(12, 169);
+            this.buttonElevate.Location = new System.Drawing.Point(12, 215);
             this.buttonElevate.Name = "buttonElevate";
             this.buttonElevate.Size = new System.Drawing.Size(426, 23);
             this.buttonElevate.TabIndex = 4;
@@ -109,7 +111,7 @@
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(12, 198);
+            this.progressBar1.Location = new System.Drawing.Point(12, 244);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(426, 23);
             this.progressBar1.TabIndex = 11;
@@ -163,12 +165,33 @@
             this.label4.TabIndex = 13;
             this.label4.Text = "Значение коэффициента Хеллмана (m)";
             // 
+            // buttonMonths
+            // 
+            this.buttonMonths.Location = new System.Drawing.Point(328, 134);
+            this.buttonMonths.Name = "buttonMonths";
+            this.buttonMonths.Size = new System.Drawing.Size(110, 23);
+            this.buttonMonths.TabIndex = 16;
+            this.buttonMonths.Text = "По месяцам";
+            this.buttonMonths.UseVisualStyleBackColor = true;
+            this.buttonMonths.Click += new System.EventHandler(this.buttonMonths_Click);
+            // 
+            // labelCurrentOptions
+            // 
+            this.labelCurrentOptions.AutoSize = true;
+            this.labelCurrentOptions.Location = new System.Drawing.Point(12, 175);
+            this.labelCurrentOptions.Name = "labelCurrentOptions";
+            this.labelCurrentOptions.Size = new System.Drawing.Size(111, 13);
+            this.labelCurrentOptions.TabIndex = 17;
+            this.labelCurrentOptions.Text = "Текущие настройки:";
+            // 
             // FormRangeElevator
             // 
             this.AcceptButton = this.buttonElevate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(450, 232);
+            this.ClientSize = new System.Drawing.Size(450, 278);
+            this.Controls.Add(this.labelCurrentOptions);
+            this.Controls.Add(this.buttonMonths);
             this.Controls.Add(this.checkBoxCustomCoeffM);
             this.Controls.Add(this.checkBoxUseRadius);
             this.Controls.Add(this.label4);
@@ -204,5 +227,7 @@
         private System.Windows.Forms.CheckBox checkBoxCustomCoeffM;
         private System.Windows.Forms.TextBox textBoxCoeffM;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button buttonMonths;
+        private System.Windows.Forms.Label labelCurrentOptions;
     }
 }

@@ -468,6 +468,9 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
+            new FormMonthsValuesDialogs(null,"sd").Show();
+
+            return;
             var files = Directory.EnumerateFiles("D:\\Clouds\\Projects\\CS\\WindEnergy\\", "*.cs",SearchOption.AllDirectories);
             StreamWriter sw = new StreamWriter(Application.StartupPath + "\\source_text.txt",true, Encoding.UTF8);
             foreach (string file in files)

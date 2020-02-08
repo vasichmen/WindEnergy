@@ -29,6 +29,37 @@ namespace WindEnergy
     }
 
     /// <summary>
+    /// типы источников коэффициентов Хеллмана
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<HellmanCoefficientSource>))]
+    public enum HellmanCoefficientSource
+    {
+        /// <summary>
+        /// Поиск АМС-аналога
+        /// </summary>
+        [Description("Поиск АМС-аналога")]
+        AMSAnalog,
+
+        /// <summary>
+        /// заданный вручную, один
+        /// </summary>
+        [Description("Коэффициент m задан вручную")]
+        CustomOne,
+
+        /// <summary>
+        /// заданные вручную по месяцам
+        /// </summary>
+        [Description("Коэффициенты m заданы вручную по месяцам")]
+        CustomMonths,
+
+        /// <summary>
+        /// не задано
+        /// </summary>
+        [Description("Настройки не определены")]
+        None,
+    }
+
+    /// <summary>
     /// Способ поиска метеостанций (онлайн или из БД)
     /// </summary>
     [TypeConverter(typeof(EnumTypeConverter<RP5SourceType>))]
