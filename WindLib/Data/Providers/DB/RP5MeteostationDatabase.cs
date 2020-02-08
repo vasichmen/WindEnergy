@@ -196,7 +196,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         /// <returns></returns>
         public new List<RP5MeteostationInfo> GetNearestMS(PointLatLng coordinates,  double radius, bool addOwn = false)
         {
-            List<RP5MeteostationInfo> res = base.GetNearestMS(coordinates, radius, addOwn).Cast<RP5MeteostationInfo>() as List<RP5MeteostationInfo>;
+            List<RP5MeteostationInfo> res = base.GetNearestMS(coordinates, radius, addOwn).Cast<RP5MeteostationInfo>().ToList();
             return res;
         }
 

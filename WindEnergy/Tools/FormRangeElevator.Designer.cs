@@ -35,9 +35,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label3 = new System.Windows.Forms.Label();
             this.buttonElevate = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label3 = new System.Windows.Forms.Label();
             this.textBoxRadius = new System.Windows.Forms.TextBox();
             this.checkBoxUseRadius = new System.Windows.Forms.CheckBox();
             this.checkBoxCustomCoeffM = new System.Windows.Forms.CheckBox();
@@ -71,7 +71,7 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Высота наблюдений, м";
             this.toolTip1.SetToolTip(this.label1, "Высота наблюдений выбранного ряда от уровня земли в метрах. Значение можно измени" +
-        "ть только если используется коэффициент m, заданный вручную");
+        "ть только если используется коэффициент Хеллмана, заданный вручную");
             // 
             // label2
             // 
@@ -82,6 +82,17 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Высота башни ВЭУ, м";
             this.toolTip1.SetToolTip(this.label2, "Высота, на которую надо поднять ряд наблюдений от уровня земли в метрах");
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(118, 90);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(128, 13);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Радиус поиска АМС, км";
+            this.toolTip1.SetToolTip(this.label3, "Область поиска АМС для получения коэффициентов пересчета скорости ветра на высоту" +
+        "");
             // 
             // buttonElevate
             // 
@@ -102,17 +113,6 @@
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(426, 23);
             this.progressBar1.TabIndex = 11;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(118, 90);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(128, 13);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "Радиус поиска АМС, км";
-            this.toolTip1.SetToolTip(this.label3, "Область поиска АМС для получения коэффициентов пересчета скорости ветра на высоту" +
-        "");
             // 
             // textBoxRadius
             // 
@@ -139,9 +139,9 @@
             this.checkBoxCustomCoeffM.AutoSize = true;
             this.checkBoxCustomCoeffM.Location = new System.Drawing.Point(12, 113);
             this.checkBoxCustomCoeffM.Name = "checkBoxCustomCoeffM";
-            this.checkBoxCustomCoeffM.Size = new System.Drawing.Size(194, 17);
+            this.checkBoxCustomCoeffM.Size = new System.Drawing.Size(232, 17);
             this.checkBoxCustomCoeffM.TabIndex = 15;
-            this.checkBoxCustomCoeffM.Text = "Задать одно значение m вручную";
+            this.checkBoxCustomCoeffM.Text = "Задать коэффициент Хеллмана вручную";
             this.checkBoxCustomCoeffM.UseVisualStyleBackColor = true;
             this.checkBoxCustomCoeffM.CheckedChanged += new System.EventHandler(this.checkBoxCustomCoeffM_CheckedChanged);
             // 
@@ -159,9 +159,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(118, 139);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(144, 13);
+            this.label4.Size = new System.Drawing.Size(204, 13);
             this.label4.TabIndex = 13;
-            this.label4.Text = "Значение коэффициента m";
+            this.label4.Text = "Значение коэффициента Хеллмана (m)";
             // 
             // FormRangeElevator
             // 

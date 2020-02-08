@@ -1,4 +1,5 @@
 ﻿using CommonLib;
+using CommonLib.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,8 @@ namespace WindEnergy.WindLib.Transformation.Altitude
             if (double.IsNaN(param.CustomMCoefficient))
             {
                 AMS = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis);
+                if (AMS == null)
+                    throw new WindEnergyException("Не удалось найти АМС в заданном радиусе");
                 coeffs = AMS.m; ;
             }
             else

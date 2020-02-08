@@ -98,7 +98,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         /// <returns></returns>
         public new List<AMSMeteostationInfo> GetNearestMS(PointLatLng coordinates, double radius, bool addOwn = false)
         {
-            List<AMSMeteostationInfo> res = base.GetNearestMS(coordinates, radius, addOwn).Cast<AMSMeteostationInfo>() as List<AMSMeteostationInfo>;
+            List<AMSMeteostationInfo> res = base.GetNearestMS(coordinates, radius, addOwn).Cast<AMSMeteostationInfo>().ToList();
             return res;
         }
 

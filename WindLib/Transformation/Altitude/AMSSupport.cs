@@ -48,6 +48,9 @@ namespace WindEnergy.WindLib.Transformation.Altitude
             //выбор АМС в заданном радиусе
             List<AMSMeteostationInfo> amss = double.IsNaN(searchRadius)? MSMeteostations.List: MSMeteostations.GetNearestMS(coordinates, searchRadius, true); //выбираем все АМС в радиусе 1000 км
 
+            if (amss == null)
+                return null;
+
             //поиск АМС с минимальным среднеквадр отклонением относительных скоростей
             double min = double.MaxValue;
             AMSMeteostationInfo min_ams = null;

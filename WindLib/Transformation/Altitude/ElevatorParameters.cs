@@ -28,7 +28,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         public PointLatLng Coordinates { get; set; }
 
         /// <summary>
-        /// расстояние, на котором ищется АМС (NaN - неограниченное)
+        /// расстояние в метрах, на котором ищется АМС (NaN - неограниченное)
         /// </summary>
         public double SearchRaduis { get;  set; }
 

@@ -47,7 +47,7 @@ namespace WindEnergy.UI.Tools
             if (!double.TryParse(textBoxCoeffM.Text.Trim().Replace('.', Constants.DecimalSeparator), out double m))
             { _ = MessageBox.Show(this, $"Не удалось распознать {textBoxCoeffM.Text} как число", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
 
-
+            radius *= 1000; //перевод км в метры
 
             Action<int> action = new Action<int>((percent) =>
             {
