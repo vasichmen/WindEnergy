@@ -55,6 +55,8 @@
             this.textBoxFromHeight.Size = new System.Drawing.Size(100, 20);
             this.textBoxFromHeight.TabIndex = 0;
             this.textBoxFromHeight.Text = "10";
+            this.toolTip1.SetToolTip(this.textBoxFromHeight, "Высота наблюдений выбранного ряда от уровня земли в метрах. Значение можно измени" +
+        "ть только если используется коэффициент Хеллмана, заданный вручную");
             // 
             // textBoxToHeight
             // 
@@ -63,6 +65,7 @@
             this.textBoxToHeight.Size = new System.Drawing.Size(100, 20);
             this.textBoxToHeight.TabIndex = 1;
             this.textBoxToHeight.Text = "100";
+            this.toolTip1.SetToolTip(this.textBoxToHeight, "Высота, на которую надо поднять ряд наблюдений от уровня земли в метрах");
             // 
             // label1
             // 
@@ -124,6 +127,8 @@
             this.textBoxRadius.Size = new System.Drawing.Size(100, 20);
             this.textBoxRadius.TabIndex = 12;
             this.textBoxRadius.Text = "1000";
+            this.toolTip1.SetToolTip(this.textBoxRadius, "Область поиска АМС для получения коэффициентов пересчета скорости ветра на высоту" +
+        "");
             // 
             // checkBoxUseRadius
             // 
@@ -133,6 +138,8 @@
             this.checkBoxUseRadius.Size = new System.Drawing.Size(188, 17);
             this.checkBoxUseRadius.TabIndex = 14;
             this.checkBoxUseRadius.Text = "Ограничить радиус поиска АМС";
+            this.toolTip1.SetToolTip(this.checkBoxUseRadius, "Если выбрано, то при поиске АМС-аналога поиск будет производиться только в заданн" +
+        "ой области");
             this.checkBoxUseRadius.UseVisualStyleBackColor = true;
             this.checkBoxUseRadius.CheckedChanged += new System.EventHandler(this.checkBoxUseRadius_CheckedChanged);
             // 
@@ -155,6 +162,8 @@
             this.textBoxCoeffM.Size = new System.Drawing.Size(100, 20);
             this.textBoxCoeffM.TabIndex = 12;
             this.textBoxCoeffM.Text = "0.18";
+            this.toolTip1.SetToolTip(this.textBoxCoeffM, "Значение коэффициента Хеллмана для степенного преобразования скорости ветра на за" +
+        "данную высоту");
             // 
             // label4
             // 
@@ -164,6 +173,8 @@
             this.label4.Size = new System.Drawing.Size(204, 13);
             this.label4.TabIndex = 13;
             this.label4.Text = "Значение коэффициента Хеллмана (m)";
+            this.toolTip1.SetToolTip(this.label4, "Значение коэффициента Хеллмана для степенного преобразования скорости ветра на за" +
+        "данную высоту");
             // 
             // buttonMonths
             // 
@@ -172,6 +183,7 @@
             this.buttonMonths.Size = new System.Drawing.Size(110, 23);
             this.buttonMonths.TabIndex = 16;
             this.buttonMonths.Text = "По месяцам";
+            this.toolTip1.SetToolTip(this.buttonMonths, "Задать коэффициенты Хеллмана для каждого месяца отдельно");
             this.buttonMonths.UseVisualStyleBackColor = true;
             this.buttonMonths.Click += new System.EventHandler(this.buttonMonths_Click);
             // 

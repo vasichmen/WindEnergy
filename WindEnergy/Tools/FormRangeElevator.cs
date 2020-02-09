@@ -172,5 +172,6 @@ namespace WindEnergy.UI.Tools
                 hellmanCoeffSource = HellmanCoefficientSource.CustomOne;
             refreshOptionsText();
         }
+
     }
 }

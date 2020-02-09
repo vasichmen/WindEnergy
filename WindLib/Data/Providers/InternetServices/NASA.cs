@@ -61,7 +61,6 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
             //https://power.larc.nasa.gov/cgi-bin/v1/DataAccess.py?request=execute&identifier=SinglePoint&parameters=T2M,PS,ALLSKY_SFC_SW_DWN&startDate=20160301&endDate=20160331&userCommunity=SSE&tempAverage=DAILY&outputList=JSON,ASCII&lat=36&lon=45&user=anonymous
             string url = "https://power.larc.nasa.gov/cgi-bin/v1/DataAccess.py?request=execute&identifier=SinglePoint&parameters={0}&startDate={1}&endDate={2}&userCommunity=SSE&tempAverage=DAILY&outputList=ASCII&lat={3}&lon={4}&user=anonymous";
 
-
             url = string.Format(url,
                 fields,
                 fromDate.ToString("yyyyMMdd"),
@@ -70,7 +69,6 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                 coord.Lng.ToString("00.00").Replace(Constants.DecimalSeparator, '.'));
 
             JToken ans = SendJsonGetRequest(url, out HttpStatusCode code, false);
-
             if (checkStop != null && checkStop.Invoke()) //проверка остановки процесса
                 return null;
 
@@ -84,7 +82,6 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
             RawRange res = new RawRange();
             string txt_url = ans["outputs"]["ascii"].ToString();
             string data = SendStringGetRequest(txt_url, false);
-
             if (checkStop != null && checkStop.Invoke()) //проверка остановки процесса
                 return null;
 
