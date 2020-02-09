@@ -25,6 +25,8 @@ namespace WindEnergy.WindLib.Classes.Structures
             get => direction;
             set
             {
+                if (double.IsNaN(value))
+                { direction = value; return; }
                 if (value < 0 || value >= 360)
                     throw new ArgumentOutOfRangeException("Направление ветра должно быть от 0 до 360 градусов");
                 else
@@ -33,6 +35,7 @@ namespace WindEnergy.WindLib.Classes.Structures
         }
 
         public WindDirections directionRhumb = WindDirections.Undefined;
+
         /// <summary>
         /// направление ветра по румбам
         /// </summary>
@@ -134,6 +137,35 @@ namespace WindEnergy.WindLib.Classes.Structures
             Wetness = wet;
             Pressure = press;
             Date = DateTime.MinValue + TimeSpan.FromMinutes(dateArgumentp);
+        }
+
+        /// <summary>
+        /// создает новый обект на основе метеоданных и даты наблюдения
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="parameters"></param>
+        public RawItem(DateTime date, Dictionary<MeteorologyParameters, double> parameters)
+        {
+            if (!parameters.ContainsKey(MeteorologyParameters.Speed))
+                throw new ArgumentException(nameof(parameters));
+            Date = date;
+            Speed = parameters[MeteorologyParameters.Speed] == -999 ? double.NaN : parameters[MeteorologyParameters.Speed];
+
+            if (parameters.ContainsKey(MeteorologyParameters.Direction))
+                Direction = parameters[MeteorologyParameters.Direction] == -999 ? double.NaN : parameters[MeteorologyParameters.Direction];
+            else Direction = double.NaN;
+
+            if (parameters.ContainsKey(MeteorologyParameters.Temperature))
+                Temperature = parameters[MeteorologyParameters.Temperature] == -999 ? double.NaN : parameters[MeteorologyParameters.Temperature];
+            else Temperature = double.NaN;
+
+            if (parameters.ContainsKey(MeteorologyParameters.Pressure))
+                Pressure = parameters[MeteorologyParameters.Pressure] == -999 ? double.NaN : parameters[MeteorologyParameters.Pressure];
+            else Pressure = double.NaN;
+
+            if (parameters.ContainsKey(MeteorologyParameters.Wetness))
+                Wetness = parameters[MeteorologyParameters.Wetness] == -999 ? double.NaN : parameters[MeteorologyParameters.Wetness];
+            else Wetness = double.NaN;
         }
 
         /// <summary>
