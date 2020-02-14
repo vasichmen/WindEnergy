@@ -35,6 +35,7 @@ namespace WindEnergy.UI
         private static void Main(string[] args)
         {
 
+#if(!DEBUG)
             bool is_accept = File.Exists(Application.StartupPath + "\\id.key");
             if (is_accept)
             {
@@ -51,7 +52,10 @@ namespace WindEnergy.UI
                 MessageBox.Show("Ошибка при проверке файла ключа, программа будет закрыта\r\n");
                 return;
             }
-#if (!DEBUG)     
+#endif
+
+
+#if (!DEBUG)
             try
             {
 #endif

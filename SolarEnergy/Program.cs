@@ -29,7 +29,7 @@ namespace SolarEnergy
         [STAThread]
         private static void Main(string[] args)
         {
-
+#if (!DEBUG)
             bool is_accept = File.Exists(Application.StartupPath + "\\id.key");
             if (is_accept)
             {
@@ -46,6 +46,8 @@ namespace SolarEnergy
                 MessageBox.Show("Ошибка при проверке файла ключа, программа будет закрыта\r\n");
                 return;
             }
+#endif
+
 #if (!DEBUG)
             try
             {
