@@ -204,8 +204,8 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
         {
             try
             {
-                OptionsBase res = xmlDeserialize(filename);
-                return res == null ? new Options() : (Options)res;
+                Options res = xmlDeserialize<Options>(filename);
+                return res == null ? new Options() : res;
             }
             catch (Exception) { return new Options(); }
         }

@@ -45,6 +45,7 @@ namespace WindEnergy.WindLib.Operations
 
             RawRange res = new RawRange();
             res.Position = range.Position;
+            res.Meteostation = range.Meteostation;
             res.BeginChange();
             List<DateTime> dates = new List<DateTime>();
             int lims = 0, repeats = 0, other = 0;

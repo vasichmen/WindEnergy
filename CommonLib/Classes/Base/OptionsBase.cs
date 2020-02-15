@@ -33,11 +33,6 @@ namespace CommonLib.Classes.Base
         public string SiteAddress { get { return Velomapa.SITE_ADDRESS; } }
 
         /// <summary>
-        /// адрес файла настроек
-        /// </summary>
-        public string FilePath { get; set; }
-
-        /// <summary>
         /// временная папка 
         /// </summary>
         public string TempFolder { get; }
@@ -153,23 +148,22 @@ namespace CommonLib.Classes.Base
         /// </summary>
         /// <param name="FilePath">путь к файлу</param>
         /// <returns></returns>
-        protected static OptionsBase xmlDeserialize(string FilePath)
+        protected static T xmlDeserialize<T>(string FilePath)
         {
             if (!File.Exists(FilePath))
-                return null;
+                return default(T);
 
 
             FileStream fs = new FileStream(FilePath, FileMode.Open);
-            XmlSerializer se = new XmlSerializer(typeof(OptionsBase));
+            XmlSerializer se = new XmlSerializer(typeof(T));
             try
             {
-                OptionsBase res = (OptionsBase)se.Deserialize(fs);
-                res.FilePath = FilePath;
+                T res = (T)se.Deserialize(fs);
                 return res;
             }
             catch (Exception)
             {
-                return null;
+                return default(T);
             }
             finally
             {

@@ -120,7 +120,7 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         /// <param name="Range">ряд, для которого подбирается функция</param>
         /// <exception cref="GetBaseRangeException">Возвращает иснформацию о параметрах, мешающих получить ближайшую МС</exception>
         /// <returns></returns>
-        internal static RawRange TryGetBaseRange(RawRange Range, PointLatLng coordinates)
+        internal static RawRange TryGetBaseRange(RawRange Range, PointLatLng coordinates, out double r, Action<int> actionPercent)
         {
             bool nlaw = CheckNormalLaw(Range, Vars.Options.NormalLawPirsonCoefficientDiapason);
             if (!nlaw)
@@ -128,14 +128,17 @@ namespace WindEnergy.WindLib.Operations.Interpolation
 
             DateTime from = Range.Min((ri) => ri.Date).Date, to = Range.Max((ri) => ri.Date).Date;
 
-            List<RP5MeteostationInfo> mts = Vars.RP5Meteostations.GetNearestMS(coordinates,  Vars.Options.NearestMSRadius, false);
+            List<RP5MeteostationInfo> mts = Vars.RP5Meteostations.GetNearestMS(coordinates, Vars.Options.NearestMSRadius, false);
             Dictionary<double, double> funcSpeed = Range.GetFunction(MeteorologyParameters.Speed); //функция скорости на заданном ряде
             RawRange res = null;
-            double rmax = double.MinValue, total_rmax=double.MinValue;
+            double rmax = double.MinValue, total_rmax = double.MinValue;
             RP5ru provider = new RP5ru(Vars.Options.CacheFolder + "\\rp5.ru");
 
             for (int i = 0; i < mts.Count; i++)
             {
+                if ( actionPercent != null)
+                    actionPercent.Invoke((int)((i*1d / mts.Count) * 100d));
+
                 RP5MeteostationInfo m = mts[i];
 
                 //если нет диапазона измерений в БД, то загружаем с сайта
@@ -146,8 +149,16 @@ namespace WindEnergy.WindLib.Operations.Interpolation
                 if (m.MonitoringFrom > from)
                     continue;
 
-                RawRange curRange = provider.GetRange(from, to, m); //скачиваем ряд
+                //загрузка ряда с очередной МС
+                RawRange curRange = null;
+                try
+                { curRange = provider.GetRange(from, to, m); }
+                catch (WindEnergyException wex) // если не удалось получить ряд этой МС, то переходим к следующей
+                { continue; }
+
+
                 curRange = Checker.ProcessRange(curRange, new CheckerParameters(LimitsProviders.StaticLimits, curRange.Position), out CheckerInfo info, null); //исправляем ошибки
+
 
                 //СКОРОСТЬ
                 MeteorologyParameters parameter = MeteorologyParameters.Speed;
@@ -179,12 +190,14 @@ namespace WindEnergy.WindLib.Operations.Interpolation
                     }
                 }
             }
-            if (res == null) {
+            r = rmax;
+            if (res == null)
+            {
                 RP5MeteostationInfo mi = Vars.RP5Meteostations.GetNearestMS(coordinates);
                 double l = EarthModel.CalculateDistance(mi.Position, coordinates);
                 throw new GetBaseRangeException(total_rmax, Vars.Options.MinimalCorrelationCoeff, l, mts.Count, Vars.Options.NearestMSRadius, coordinates);
-                    
-                    }
+
+            }
             return res;
         }
 
@@ -260,7 +273,7 @@ namespace WindEnergy.WindLib.Operations.Interpolation
 
         #region вспомогательные методы
 
-       
+
 
         #region Рассчет коэффициента корреляции и параметров прямой
 

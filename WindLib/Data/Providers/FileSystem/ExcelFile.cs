@@ -137,8 +137,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 string id_s = title.Substring(start);
                 if (id_s.ToLower() != "nasa" && id_s.ToLower() != "undefined")
                     meteostation = Vars.RP5Meteostations.GetByID(id_s);
-                //else
-                //meteostation = Vars.RP5Meteostations.GetNearestMS(coord, false); //для NASA ищем ближайшую МС
+
                 res.Meteostation = meteostation;
                 res.EndChange();
                 return res;

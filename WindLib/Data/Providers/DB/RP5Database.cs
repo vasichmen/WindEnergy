@@ -71,7 +71,11 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             if (toDate > range.Last().Date)
                 throw new WindEnergyException($"Конечной даты нет в локальной БД (доступны данные до {range.Last().Date})");
             var res = range.Where(new Func<RawItem, bool>((item) => { return (item.Date >= fromDate) && (item.Date <= toDate); }));
-            return new RawRange(res);
+
+            RawRange result = new RawRange(res);
+            if (result.Meteostation == null)
+                result.Meteostation = point_info;
+            return result;
         }
     }
 }

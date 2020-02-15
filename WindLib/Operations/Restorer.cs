@@ -26,8 +26,12 @@ namespace WindEnergy.WindLib.Operations
         /// <param name="actionPercent">изменение процента выполнения</param>
         /// <param name="actionAfter">действие после обработки</param>
         /// <returns></returns>
-        public static void ProcessRange(RawRange Range, RestorerParameters param, Action<int> actionPercent, Action<RawRange> actionAfter)
+        public static void ProcessRange(RawRange Range, RestorerParameters param, Action<int> actionPercent, Action<RawRange, RawRange,double> actionAfter)
         {
+            RawRange baseRange =null;//ряд, на основе которого будет идти восстановление
+            double r = double.NaN; //коэффициент корреляции
+
+
             if (param.Method == InterpolateMethods.NearestMeteostation && param.Coordinates.IsEmpty)
                 throw new Exception("Для этого метода интерполяции необходимо указать расчетную точку на карте");
 
@@ -85,18 +89,18 @@ namespace WindEnergy.WindLib.Operations
                     methodPress = new LinearInterpolateMethod(pressFunc);
                     break;
                 case InterpolateMethods.NearestMeteostation:
-                    RawRange baseRange;//ряд, на основе которого будет идти восстановление
                     if (param.Coordinates.IsEmpty)
                     {
                         //проверяем заданный ряд на возможность восстановления с помощью него
                         bool f = NearestMSInterpolateMethod.CheckNormalLaw(param.BaseRange, Vars.Options.NormalLawPirsonCoefficientDiapason);
                         if (f) baseRange = param.BaseRange;
                         else throw new WindEnergyException("Этот ряд не может быть использован так как он не подчиняется нормальному закону распределения");
+                        
                     }
                     else
                     {
                         //ищем подходящую МС из ближайших и получаем её ряд. Если подходит, то ошибки нет
-                        baseRange = NearestMSInterpolateMethod.TryGetBaseRange(Range, param.Coordinates);
+                        baseRange = NearestMSInterpolateMethod.TryGetBaseRange(Range, param.Coordinates, out r,actionPercent );
                     }
 
                     methodSpeeds = new NearestMSInterpolateMethod(speedFunc, baseRange, MeteorologyParameters.Speed);
@@ -154,7 +158,7 @@ namespace WindEnergy.WindLib.Operations
                     res.Add(new RawItem(p, speed, direct, temp, wet,press));
                 }
                 res.EndChange();
-                actionAfter.Invoke(res);
+                actionAfter.Invoke(res, baseRange,r);
             });
             tsk.Start();
             return;

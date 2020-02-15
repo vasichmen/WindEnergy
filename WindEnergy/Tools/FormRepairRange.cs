@@ -82,25 +82,40 @@ namespace WindEnergy.UI.Tools
                 catch (Exception) { }
             });
 
-            Action<RawRange> actionAfter = new Action<RawRange>((rawRange) =>
-            {
-                _ = this.Invoke(new Action(() =>
-                  {
-                      rawRange.Name = "Восстановленный ряд до интервала" + interval.Description();
-                      _ = MessageBox.Show(this, $"Ряд восстановлен до интервала {interval.Description()}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Action<RawRange, RawRange, double> actionAfter = new Action<RawRange, RawRange, double>((resultRange, baseRange, r) =>
+              {
+                  _ = this.Invoke(new Action(() =>
+                    {
+                        string additionalText = "";
 
-                      if (rawRange == null)
-                          DialogResult = DialogResult.Cancel;
-                      else
-                      {
-                          DialogResult = DialogResult.OK;
-                          Result = rawRange;
-                      }
-                      Cursor = Cursors.Arrow;
-                      Result = rawRange;
-                      Close();
-                  }));
-            });
+                        if (method == InterpolateMethods.NearestMeteostation) //для восстановления ряда выводим доп. информацию
+                        {
+                            //Информация о коэфф корреляции и базовом ряде
+                            if (double.IsNaN(r))
+                                additionalText += "Восстановление проводилось на основе ряда наблюдений, заданного пользователем\r\n";
+                            else
+                                additionalText += $"Восстановление проводилось на основе ряда наблюдений {(baseRange.Meteostation != null ? $" на МС {baseRange.Meteostation.Name} " : "")}с коэффициентом корреляции {r.ToString("0.00")} \r\n";
+                            //предупреждение, что не все данные восстановлены
+                            RangeInterval baseInterval = baseRange.Quality.Intervals.OrderByDescending((i) => i.LengthMinutes).First(); //выбираем самый длинный интервал наблюдений в базовом ряде
+                            if (baseInterval.LengthMinutes > (int)interval) //если максимальный интервал базового ряда больше, чем требуемый интервал восстановления
+                                additionalText += $"\r\nВнимание!! Интервал наблюдений ряда, на основе которого производилось восстановление ({baseInterval.Interval.Description()}), больше, чем требуемый интервал. Поэтому не удалось восстановить все значения ряда до {interval.Description()}\r\n";
+                        }
+
+                        resultRange.Name = "Восстановленный ряд до интервала" + interval.Description();
+                        _ = MessageBox.Show(this, $"Ряд восстановлен до интервала {interval.Description()}\r\n{additionalText}", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        if (resultRange == null)
+                            DialogResult = DialogResult.Cancel;
+                        else
+                        {
+                            DialogResult = DialogResult.OK;
+                            Result = resultRange;
+                        }
+                        Cursor = Cursors.Arrow;
+                        Result = resultRange;
+                        Close();
+                    }));
+              });
 
             try
             {
@@ -122,14 +137,20 @@ namespace WindEnergy.UI.Tools
                             if (fsp.ShowDialog(this) == DialogResult.OK)
                                 range.Position = fsp.Result;
                             else
+                            {
+                                Cursor = Cursors.Arrow;
                                 return;
+                            }
                         }
                     }
                     else
                     {
-                        baseRange= Program.winMain.mainHelper.OpenFile(this);
+                        baseRange = Program.winMain.mainHelper.OpenFile(this);
                         if (baseRange == null)
+                        {
+                            Cursor = Cursors.Arrow;
                             return;
+                        }
                     }
                 }
                 Restorer.ProcessRange(range, new RestorerParameters() { Interval = interval, Method = method, Coordinates = range.Position, BaseRange = baseRange }, action, actionAfter);
