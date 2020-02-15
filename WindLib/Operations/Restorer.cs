@@ -26,9 +26,9 @@ namespace WindEnergy.WindLib.Operations
         /// <param name="actionPercent">изменение процента выполнения</param>
         /// <param name="actionAfter">действие после обработки</param>
         /// <returns></returns>
-        public static void ProcessRange(RawRange Range, RestorerParameters param, Action<int,string> actionPercent, Action<RawRange, RawRange,double> actionAfter)
+        public static void ProcessRange(RawRange range, RestorerParameters param, Action<int, string> actionPercent, Action<RawRange, RawRange, double> actionAfter)
         {
-            RawRange baseRange =null;//ряд, на основе которого будет идти восстановление
+            RawRange baseRange = null;//ряд, на основе которого будет идти восстановление
             double r = double.NaN; //коэффициент корреляции
 
 
@@ -44,7 +44,8 @@ namespace WindEnergy.WindLib.Operations
                 tempFunc = new Dictionary<double, double>(), //функция температуры
                 pressFunc = new Dictionary<double, double>(); //функция давления
 
-            Range = new RawRange(Range.OrderBy(x => x.Date).ToList());
+
+            RawRange Range = new RawRange(range.OrderBy(x => x.Date).ToList());
 
             //заполнение известными значениями функции
             foreach (var item in Range)
@@ -66,11 +67,11 @@ namespace WindEnergy.WindLib.Operations
 
             //ПОДГОТОВКА ИНТЕРПОЛЯТОРОВ
             //создание интерполяторов функций скорости, направления, температуры, влажности
-            IInterpolateMethod 
-                methodSpeeds, 
-                methodDirects, 
-                methodWet, 
-                methodTemp, 
+            IInterpolateMethod
+                methodSpeeds,
+                methodDirects,
+                methodWet,
+                methodTemp,
                 methodPress;
             switch (param.Method)
             {
@@ -95,12 +96,12 @@ namespace WindEnergy.WindLib.Operations
                         bool f = NearestMSInterpolateMethod.CheckNormalLaw(param.BaseRange, Vars.Options.NormalLawPirsonCoefficientDiapason);
                         if (f) baseRange = param.BaseRange;
                         else throw new WindEnergyException("Этот ряд не может быть использован так как он не подчиняется нормальному закону распределения");
-                        
+
                     }
                     else
                     {
                         //ищем подходящую МС из ближайших и получаем её ряд. Если подходит, то ошибки нет
-                        baseRange = NearestMSInterpolateMethod.TryGetBaseRange(Range, param.Coordinates, out r,actionPercent );
+                        baseRange = NearestMSInterpolateMethod.TryGetBaseRange(Range, param.Coordinates, out r, actionPercent);
                     }
 
                     methodSpeeds = new NearestMSInterpolateMethod(speedFunc, baseRange, MeteorologyParameters.Speed);
@@ -134,7 +135,8 @@ namespace WindEnergy.WindLib.Operations
 
             //расчет каждого значения
             RawRange res = new RawRange();
-            res.Position = Range.Position;
+            res.Position = range.Position;
+            res.Meteostation = range.Meteostation;
             res.BeginChange();
             Task tsk = new Task(() =>
             {
@@ -155,10 +157,10 @@ namespace WindEnergy.WindLib.Operations
                         double.IsNaN(press) ||
                         double.IsNaN(wet))
                         continue;
-                    res.Add(new RawItem(p, speed, direct, temp, wet,press));
+                    res.Add(new RawItem(p, speed, direct, temp, wet, press));
                 }
                 res.EndChange();
-                actionAfter.Invoke(res, baseRange,r);
+                actionAfter.Invoke(res, baseRange, r);
             });
             tsk.Start();
             return;
