@@ -90,6 +90,7 @@
             this.comboBoxPoint.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxPoint_DrawItem);
             this.comboBoxPoint.SelectionChangeCommitted += new System.EventHandler(this.comboBoxPoint_SelectionChangeCommitted);
             this.comboBoxPoint.TextUpdate += new System.EventHandler(this.comboBoxPoint_TextUpdate);
+            this.comboBoxPoint.DropDownClosed += new System.EventHandler(this.comboBoxPoint_DropDownClosed);
             // 
             // label1
             // 

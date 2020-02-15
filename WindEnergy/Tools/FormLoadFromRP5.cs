@@ -332,6 +332,11 @@ namespace WindEnergy.UI.Tools
 
         }
 
+        private void comboBoxPoint_DropDownClosed(object sender, EventArgs e)
+        {
+            this.toolTip1.Hide(comboBoxPoint);
+        }
+
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;

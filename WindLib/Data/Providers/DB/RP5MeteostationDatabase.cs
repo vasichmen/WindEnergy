@@ -170,7 +170,10 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         {
             List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
             var sel = from item in List
-                      where item.Name.ToLower().Contains(query.ToLower()) || item.Address.ToLower().Contains(query.ToLower())
+                      where item.Name.ToLower().Contains(query.ToLower()) ||
+                            item.Address.ToLower().Contains(query.ToLower()) ||
+                            item.Name.ToLower().Contains(query.InvertEn_Ru().ToLower()) || //с учетом рус-англ инверсии раскладки клавиатуры
+                            item.Address.ToLower().Contains(query.InvertEn_Ru().ToLower())
                       select item;
             return sel.ToList();
         }
@@ -194,7 +197,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         /// <param name="radius"></param>
         /// <param name="addOwn">Если истина, то если на coordinates есть МС, то она тоже будет добавлена</param>
         /// <returns></returns>
-        public new List<RP5MeteostationInfo> GetNearestMS(PointLatLng coordinates,  double radius, bool addOwn = false)
+        public new List<RP5MeteostationInfo> GetNearestMS(PointLatLng coordinates, double radius, bool addOwn = false)
         {
             List<RP5MeteostationInfo> res = base.GetNearestMS(coordinates, radius, addOwn).Cast<RP5MeteostationInfo>().ToList();
             return res;
@@ -246,7 +249,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             if (string.IsNullOrWhiteSpace(info.Address))
                 info.Address = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(info.Position);
 
-            _dictionary.Add(info.ID,info);
+            _dictionary.Add(info.ID, info);
             ExportMeteostationList(this.List, Vars.Options.StaticMeteostationCoordinatesSourceFile);
             return true;
         }
