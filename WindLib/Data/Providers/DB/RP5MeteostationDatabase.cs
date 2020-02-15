@@ -105,7 +105,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                     mfrom = DateTime.Parse(arr[7]);
                 }
                 PointLatLng position = new PointLatLng(lat, lon);
-                res.Add(wmo,new RP5MeteostationInfo()
+                res.Add(wmo, new RP5MeteostationInfo()
                 {
                     ID = wmo,
                     Position = position,
@@ -169,10 +169,10 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         public List<RP5MeteostationInfo> Search(string query)
         {
             List<RP5MeteostationInfo> res = new List<RP5MeteostationInfo>();
-            foreach (var m in List)
-                if (m.Name.ToLower().Contains(query.ToLower()) || m.Address.ToLower().Contains(query.ToLower()))
-                    res.Add(m);
-            return res;
+            var sel = from item in List
+                      where item.Name.ToLower().Contains(query.ToLower()) || item.Address.ToLower().Contains(query.ToLower())
+                      select item;
+            return sel.ToList();
         }
 
         /// <summary>
