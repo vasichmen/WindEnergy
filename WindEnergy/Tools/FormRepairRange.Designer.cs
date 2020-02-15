@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRepairRange));
             this.groupBoxMain = new System.Windows.Forms.GroupBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressBarStatus = new System.Windows.Forms.ProgressBar();
             this.labelInterval = new System.Windows.Forms.Label();
             this.labelRangeLength = new System.Windows.Forms.Label();
             this.labelMaxEmptySpace = new System.Windows.Forms.Label();
@@ -45,13 +45,15 @@
             this.buttonRepairRange = new System.Windows.Forms.Button();
             this.comboBoxRepairInterval = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.labelStatus = new System.Windows.Forms.Label();
             this.groupBoxMain.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxMain
             // 
-            this.groupBoxMain.Controls.Add(this.progressBar1);
+            this.groupBoxMain.Controls.Add(this.labelStatus);
+            this.groupBoxMain.Controls.Add(this.progressBarStatus);
             this.groupBoxMain.Controls.Add(this.labelInterval);
             this.groupBoxMain.Controls.Add(this.labelRangeLength);
             this.groupBoxMain.Controls.Add(this.labelMaxEmptySpace);
@@ -72,12 +74,12 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.progressBarStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(6, 300);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(293, 23);
-            this.progressBar1.TabIndex = 10;
+            this.progressBarStatus.Location = new System.Drawing.Point(6, 300);
+            this.progressBarStatus.Name = "progressBar1";
+            this.progressBarStatus.Size = new System.Drawing.Size(293, 23);
+            this.progressBarStatus.TabIndex = 10;
             // 
             // labelInterval
             // 
@@ -123,7 +125,7 @@
             this.groupBox3.Controls.Add(this.radioButtonSelPoint);
             this.groupBox3.Location = new System.Drawing.Point(9, 183);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(293, 82);
+            this.groupBox3.Size = new System.Drawing.Size(293, 62);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Выбор источника ряда";
@@ -187,7 +189,7 @@
             // 
             this.buttonRepairRange.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonRepairRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRepairRange.Location = new System.Drawing.Point(71, 271);
+            this.buttonRepairRange.Location = new System.Drawing.Point(68, 251);
             this.buttonRepairRange.Name = "buttonRepairRange";
             this.buttonRepairRange.Size = new System.Drawing.Size(139, 23);
             this.buttonRepairRange.TabIndex = 1;
@@ -204,6 +206,15 @@
             this.comboBoxRepairInterval.Name = "comboBoxRepairInterval";
             this.comboBoxRepairInterval.Size = new System.Drawing.Size(293, 21);
             this.comboBoxRepairInterval.TabIndex = 0;
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.Location = new System.Drawing.Point(6, 284);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(70, 13);
+            this.labelStatus.TabIndex = 11;
+            this.labelStatus.Text = "Состояние...";
             // 
             // FormRepairRange
             // 
@@ -240,6 +251,7 @@
         private System.Windows.Forms.Label labelMaxEmptySpace;
         private System.Windows.Forms.Label labelCompletness;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBarStatus;
+        private System.Windows.Forms.Label labelStatus;
     }
 }

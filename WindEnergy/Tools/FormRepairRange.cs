@@ -70,14 +70,21 @@ namespace WindEnergy.UI.Tools
             Cursor = Cursors.WaitCursor;
             InterpolateMethods method = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem));
             StandartIntervals interval = (StandartIntervals)(new EnumTypeConverter<StandartIntervals>().ConvertFrom(comboBoxRepairInterval.SelectedItem));
-            Action<int> action = new Action<int>((percent) =>
+            Action<int, string> action = new Action<int, string>((percent,text) =>
             {
                 try
                 {
                     if (this.InvokeRequired)
-                        _ = Invoke(new Action(() => { progressBar1.Value = percent; }));
+                        _ = Invoke(new Action(() =>
+                        {
+                            progressBarStatus.Value = percent;
+                            labelStatus.Text = text;
+                        }));
                     else
-                        progressBar1.Value = percent;
+                    {
+                        progressBarStatus.Value = percent;
+                        labelStatus.Text = text;
+                    }
                 }
                 catch (Exception) { }
             });
@@ -159,18 +166,21 @@ namespace WindEnergy.UI.Tools
             catch (WebException exc)
             {
                 Cursor = Cursors.Arrow;
+                labelStatus.Text = "Состояние...";
                 _ = MessageBox.Show(this, exc.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
             catch (WindEnergyException wex)
             {
                 Cursor = Cursors.Arrow;
+                labelStatus.Text = "Состояние...";
                 _ = MessageBox.Show(this, wex.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
             catch (ApplicationException exc)
             {
                 Cursor = Cursors.Arrow;
+                labelStatus.Text = "Состояние...";
                 _ = MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }

@@ -26,7 +26,7 @@ namespace WindEnergy.WindLib.Operations
         /// <param name="actionPercent">изменение процента выполнения</param>
         /// <param name="actionAfter">действие после обработки</param>
         /// <returns></returns>
-        public static void ProcessRange(RawRange Range, RestorerParameters param, Action<int> actionPercent, Action<RawRange, RawRange,double> actionAfter)
+        public static void ProcessRange(RawRange Range, RestorerParameters param, Action<int,string> actionPercent, Action<RawRange, RawRange,double> actionAfter)
         {
             RawRange baseRange =null;//ряд, на основе которого будет идти восстановление
             double r = double.NaN; //коэффициент корреляции
@@ -143,7 +143,7 @@ namespace WindEnergy.WindLib.Operations
                 {
                     c++;
                     if (Math.IEEERemainder(c, 100) == 0 && actionPercent != null)
-                        actionPercent.Invoke((int)((c / newRangeX.Count) * 100));
+                        actionPercent.Invoke((int)((c / newRangeX.Count) * 100), "Изменение интервала наблюдений...");
                     double speed = methodSpeeds.GetValue(p);
                     double direct = methodDirects.GetValue(p);
                     double temp = methodTemp.GetValue(p);

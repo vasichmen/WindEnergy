@@ -120,7 +120,7 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         /// <param name="Range">ряд, для которого подбирается функция</param>
         /// <exception cref="GetBaseRangeException">Возвращает иснформацию о параметрах, мешающих получить ближайшую МС</exception>
         /// <returns></returns>
-        internal static RawRange TryGetBaseRange(RawRange Range, PointLatLng coordinates, out double r, Action<int> actionPercent)
+        internal static RawRange TryGetBaseRange(RawRange Range, PointLatLng coordinates, out double r, Action<int, string> actionPercent)
         {
             bool nlaw = CheckNormalLaw(Range, Vars.Options.NormalLawPirsonCoefficientDiapason);
             if (!nlaw)
@@ -137,7 +137,7 @@ namespace WindEnergy.WindLib.Operations.Interpolation
             for (int i = 0; i < mts.Count; i++)
             {
                 if ( actionPercent != null)
-                    actionPercent.Invoke((int)((i*1d / mts.Count) * 100d));
+                    actionPercent.Invoke((int)((i*1d / mts.Count) * 100d), "Поиск подходящей МС...");
 
                 RP5MeteostationInfo m = mts[i];
 
