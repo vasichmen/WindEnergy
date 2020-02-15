@@ -1,4 +1,4 @@
-﻿using SolarEnergy.Tools;
+﻿using CommonLib.UITools;
 using SolarEnergy.UI;
 using SolarLib;
 using System;
@@ -25,9 +25,20 @@ namespace SolarEnergy.UI
         #region Главное меню
 
         #region Опериции
+
         private void dailyAverageGraphsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormDailyAverageGraphs().Show();
+            var w = new FormDailyAverageGraphs(Vars.Options.LastDirectory,  this.Icon);
+            w.Show();
+            Vars.Options.LastDirectory = w.Directory;
+        }
+
+
+        private void equalizeRangesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var w = new FormEqualizer(Vars.Options.LastDirectory,this.Icon);
+            w.Show(this);
+            Vars.Options.LastDirectory = w.Directory;
         }
 
         #endregion
@@ -47,5 +58,6 @@ namespace SolarEnergy.UI
         {
             Vars.Options = new SolarLib.Classes.Options.Options();
         }
+
     }
 }

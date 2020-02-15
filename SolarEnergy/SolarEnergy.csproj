@@ -71,12 +71,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\FormDailyAverageGraphs.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\FormDailyAverageGraphs.Designer.cs">
-      <DependentUpon>FormDailyAverageGraphs.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Dialogs\FormUpdateDialog.resx">
       <DependentUpon>FormUpdateDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -96,9 +90,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Tools\FormDailyAverageGraphs.resx">
-      <DependentUpon>FormDailyAverageGraphs.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

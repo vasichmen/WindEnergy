@@ -5,24 +5,27 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindEnergy.WindLib.Operations;
 
-namespace WindEnergy.UI.Tools
+namespace CommonLib.UITools
 {
     public partial class FormEqualizer : Form
     {
         List<string> files;
+        public string Directory;
         string folder;
 
-        public FormEqualizer()
+        public FormEqualizer(string directory, Icon icon)
         {
             InitializeComponent();
             labelFiles.Text = "Файлы не выбраны";
             labelFolder.Text = "Папка не выбрана";
+            Directory = directory;
+            this.Icon =icon;
         }
 
         private void buttonOpenFiles_Click(object sender, EventArgs e)
@@ -32,11 +35,12 @@ namespace WindEnergy.UI.Tools
                 DefaultExt = ".csv",
                 Filter = "*.csv|*.csv",
                 Multiselect = true,
-                InitialDirectory = Application.StartupPath
-            };
+                InitialDirectory =  Directory
+        };
             if (of.ShowDialog() == DialogResult.OK)
             {
                 files = of.FileNames.ToList();
+                Directory = Path.GetDirectoryName(of.FileNames[0]);
                 labelFiles.Text = $"Выбрано файлов: {files.Count}";
             }
         }

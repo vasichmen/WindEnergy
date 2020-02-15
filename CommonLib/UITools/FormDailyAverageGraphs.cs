@@ -1,5 +1,4 @@
 ﻿using CommonLib.Operations;
-using SolarLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,27 +10,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SolarEnergy.Tools
+namespace CommonLib.UITools
 {
     /// <summary>
     /// окно расчета среднесуточных графиков по месяцам
     /// </summary>
     public partial class FormDailyAverageGraphs : Form
     {
-        public FormDailyAverageGraphs()
+        public string Directory;
+
+        public FormDailyAverageGraphs(string directory, Icon icon)
         {
             InitializeComponent();
+            Directory = directory;
+            Icon = icon;
         }
 
         private void buttonSelectFiles_Click(object sender, EventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
-            of.InitialDirectory = Vars.Options.LastDirectory;
+            of.InitialDirectory = Directory;
             of.Multiselect = true;
             if (of.ShowDialog(this) == DialogResult.OK)
             {
                 if (of.FileNames.Length == 0) return;
-                Vars.Options.LastDirectory = Path.GetDirectoryName(of.FileNames[0]);
+                Directory = Path.GetDirectoryName(of.FileNames[0]);
                 Averager.ProcessRanges(of.FileNames.ToList());
                 MessageBox.Show("Обработка завершена!");
             }

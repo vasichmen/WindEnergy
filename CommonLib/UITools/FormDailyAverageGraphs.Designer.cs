@@ -1,4 +1,4 @@
-﻿namespace SolarEnergy.Tools
+﻿namespace CommonLib.UITools
 {
     partial class FormDailyAverageGraphs
     {

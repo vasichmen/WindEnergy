@@ -65,7 +65,7 @@ namespace CommonLib.Operations
                         List<double> vals = new List<double>();
                         for (int i = 3; i < arr.Length; i++) //первый три столбца это месяц, день, час. остальные -- данные
                         {
-                            bool isval = double.TryParse(arr[i], out double val);
+                            bool isval = double.TryParse(arr[i].Replace('.', Constants.DecimalSeparator), out double val);
                             vals.Add(isval ? val : double.NaN);
                         }
 
@@ -117,11 +117,11 @@ namespace CommonLib.Operations
             Range range = Range.Import(fname);
 
             //обработка
-            using (StreamWriter sw = new StreamWriter(Path.GetDirectoryName(fname) + "\\" + Path.GetFileNameWithoutExtension(fname) + "_averaged.csv",false,Encoding.UTF8))
+            using (StreamWriter sw = new StreamWriter(Path.GetDirectoryName(fname) + "\\" + Path.GetFileNameWithoutExtension(fname) + "_averaged.csv", false, Encoding.UTF8))
             {
                 for (int m = 1; m <= 12; m++)
                 {
-                    Dictionary<int,List<double>> graph = new Dictionary<int,List<double>>();
+                    Dictionary<int, List<double>> graph = new Dictionary<int, List<double>>();
                     for (int h = 0; h <= 23; h++)
                     {
                         var items = from item in range.Values
@@ -134,7 +134,7 @@ namespace CommonLib.Operations
                             double average = items.Average((item) => { return item.Values[i]; });
                             averages.Add(average);
                         }
-                        graph.Add(h,averages);
+                        graph.Add(h, averages);
                     }
 
                     //запись в файл
@@ -148,7 +148,7 @@ namespace CommonLib.Operations
                         line = range.header[i] + ";";
                         for (int h = 0; h <= 23; h++)
                         {
-                            line += graph[h][i].ToString("0.0000000")+";";
+                            line += graph[h][i].ToString("0.0000000") + ";";
                         }
                         sw.WriteLine(line);
                     }
@@ -165,7 +165,14 @@ namespace CommonLib.Operations
         public static void ProcessRanges(List<string> files)
         {
             foreach (string file in files)
-                ProcessRange(file);
+            {
+                try
+                {
+                    ProcessRange(file);
+                }
+                catch (Exception)
+                { continue; }
+            }
         }
     }
 }

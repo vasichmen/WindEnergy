@@ -26,6 +26,7 @@ using WindEnergy.UI.Ext;
 using WindEnergy.UI.Helpers;
 using WindEnergy.UI.Tools;
 using WindLib;
+using CommonLib.UITools;
 
 namespace WindEnergy.UI
 {
@@ -194,7 +195,7 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void showMeteostationsMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           new FormShowMeteostationsMap().Show();
+            new FormShowMeteostationsMap().Show();
 
         }
 
@@ -274,7 +275,21 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void equalizeRangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormEqualizer().Show(this);
+            var w = new FormEqualizer(Vars.Options.LastDirectory, this.Icon);
+            w.Show(this);
+            Vars.Options.LastDirectory = w.Directory;
+        }
+
+        /// <summary>
+        /// среднесуточные графики
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dailyAverageGraphsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var w = new FormDailyAverageGraphs(Vars.Options.LastDirectory, this.Icon);
+            w.Show();
+            Vars.Options.LastDirectory = w.Directory;
         }
 
         /// <summary>
@@ -468,11 +483,11 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new FormMonthsValuesDialogs(null,"sd").Show();
+            new FormMonthsValuesDialogs(null, "sd").Show();
 
             return;
-            var files = Directory.EnumerateFiles("D:\\Clouds\\Projects\\CS\\WindEnergy\\", "*.cs",SearchOption.AllDirectories);
-            StreamWriter sw = new StreamWriter(Application.StartupPath + "\\source_text.txt",true, Encoding.UTF8);
+            var files = Directory.EnumerateFiles("D:\\Clouds\\Projects\\CS\\WindEnergy\\", "*.cs", SearchOption.AllDirectories);
+            StreamWriter sw = new StreamWriter(Application.StartupPath + "\\source_text.txt", true, Encoding.UTF8);
             foreach (string file in files)
             {
                 StreamReader sr = new StreamReader(file);
@@ -486,5 +501,6 @@ namespace WindEnergy.UI
 
         }
 
+       
     }
 }

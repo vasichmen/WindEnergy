@@ -162,6 +162,18 @@
     <Compile Include="Providers\Velomapa.cs" />
     <Compile Include="SpecialFunction.cs" />
     <Compile Include="TimeSpanExtensions.cs" />
+    <Compile Include="UITools\FormDailyAverageGraphs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UITools\FormDailyAverageGraphs.Designer.cs">
+      <DependentUpon>FormDailyAverageGraphs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UITools\FormEqualizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UITools\FormEqualizer.Designer.cs">
+      <DependentUpon>FormEqualizer.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -171,6 +183,12 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UITools\FormDailyAverageGraphs.resx">
+      <DependentUpon>FormDailyAverageGraphs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UITools\FormEqualizer.resx">
+      <DependentUpon>FormEqualizer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

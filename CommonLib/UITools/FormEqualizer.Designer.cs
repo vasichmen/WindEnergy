@@ -1,4 +1,4 @@
-﻿namespace WindEnergy.UI.Tools
+﻿namespace CommonLib.UITools
 {
     partial class FormEqualizer
     {
