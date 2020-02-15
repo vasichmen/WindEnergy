@@ -170,7 +170,7 @@ namespace WindEnergy.UI.Tools
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void comboBoxWMO_TextUpdate(object sender, EventArgs e)
+        private void comboBoxPoint_TextUpdate(object sender, EventArgs e)
         {
             buttonDownload.Enabled = false;
             selectedMeteostation = null;
@@ -190,6 +190,30 @@ namespace WindEnergy.UI.Tools
                     updateWMOListAsync(curTextBox);
                     break;
             }
+        }
+
+        /// <summary>
+        /// отрисовка элемента списка и вывод подсказки, если он выбран
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void comboBoxPoint_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            string text = this.comboBoxPoint.GetItemText(comboBoxPoint.Items[e.Index]);
+            e.DrawBackground();
+            using (SolidBrush br = new SolidBrush(e.ForeColor))
+            {
+                e.Graphics.DrawString(text, e.Font, br, e.Bounds);
+            }
+
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+            {
+                if (text.Length > Math.Round(Convert.ToDecimal(this.comboBoxPoint.Size.Width / 8)))
+                    this.toolTip1.Show(text, comboBoxPoint, e.Bounds.Right, e.Bounds.Bottom);
+            }
+            else
+                this.toolTip1.Hide(comboBoxPoint);
+            e.DrawFocusRectangle();
         }
 
         /// <summary>
@@ -253,7 +277,7 @@ namespace WindEnergy.UI.Tools
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void comboBoxWMO_SelectionChangeCommitted(object sender, EventArgs e)
+        private void comboBoxPoint_SelectionChangeCommitted(object sender, EventArgs e)
         {
             //после того, как из поиска выбрана точка, надо проверить, есть ли на ней архив погоды. и вывести предупреждение, если ближайший архив далеко
 

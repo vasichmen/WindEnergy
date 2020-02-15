@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLoadFromRP5));
             this.dateTimePickerFromDate = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerToDate = new System.Windows.Forms.DateTimePicker();
@@ -40,6 +41,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.progressBarProgress = new System.Windows.Forms.ProgressBar();
             this.linkLabelShowOnMap = new System.Windows.Forms.LinkLabel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // dateTimePickerFromDate
@@ -79,13 +81,15 @@
             // 
             this.comboBoxPoint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxPoint.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxPoint.FormattingEnabled = true;
             this.comboBoxPoint.Location = new System.Drawing.Point(12, 25);
             this.comboBoxPoint.Name = "comboBoxPoint";
             this.comboBoxPoint.Size = new System.Drawing.Size(374, 21);
             this.comboBoxPoint.TabIndex = 3;
-            this.comboBoxPoint.SelectionChangeCommitted += new System.EventHandler(this.comboBoxWMO_SelectionChangeCommitted);
-            this.comboBoxPoint.TextUpdate += new System.EventHandler(this.comboBoxWMO_TextUpdate);
+            this.comboBoxPoint.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBoxPoint_DrawItem);
+            this.comboBoxPoint.SelectionChangeCommitted += new System.EventHandler(this.comboBoxPoint_SelectionChangeCommitted);
+            this.comboBoxPoint.TextUpdate += new System.EventHandler(this.comboBoxPoint_TextUpdate);
             // 
             // label1
             // 
@@ -202,5 +206,6 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.ProgressBar progressBarProgress;
         private System.Windows.Forms.LinkLabel linkLabelShowOnMap;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
