@@ -248,6 +248,7 @@ namespace WindEnergy.UI.Dialogs
         /// <param name="e"></param>
         private void controlUpdate_Event(object sender, EventArgs e)
         {
+            if (sender == null) return;
             //установка изменившегося параметра
             string name = (sender as Control).Name;
             switch (name)
@@ -476,6 +477,10 @@ namespace WindEnergy.UI.Dialogs
             numericUpDownColPress.Enabled = checkBoxUsePressure.Checked;
             comboBoxPressUnit.Enabled = checkBoxUsePressure.Checked;
 
+            labelDirect.Enabled = checkBoxUseDirection.Checked;
+            numericUpDownColDirect.Enabled = checkBoxUseDirection.Checked;
+            comboBoxDirectUnit.Enabled = checkBoxUseDirection.Checked;
+
             object numeric = null;
             switch (((Control)sender).Name)
             {
@@ -487,6 +492,9 @@ namespace WindEnergy.UI.Dialogs
                     break;
                 case "checkBoxUseWetness":
                     numeric = numericUpDownColWet;
+                    break;
+                case "checkBoxUseDirection":
+                    numeric = numericUpDownColDirect;
                     break;
                 default: throw new Exception("Неизвестный контрол");
 

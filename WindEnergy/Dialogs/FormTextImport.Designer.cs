@@ -57,7 +57,7 @@ namespace WindEnergy.UI.Dialogs
             this.numericUpDownColTemper = new System.Windows.Forms.NumericUpDown();
             this.comboBoxDirectUnit = new System.Windows.Forms.ComboBox();
             this.comboBoxPressUnit = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
+            this.labelDirect = new System.Windows.Forms.Label();
             this.numericUpDownColDirect = new System.Windows.Forms.NumericUpDown();
             this.labelWet = new System.Windows.Forms.Label();
             this.numericUpDownColWet = new System.Windows.Forms.NumericUpDown();
@@ -75,6 +75,7 @@ namespace WindEnergy.UI.Dialogs
             this.установкиПоУмолчаниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultRP5wmoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultRP5metarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBoxUseDirection = new System.Windows.Forms.CheckBox();
             this.dataGridViewImported = new WindEnergy.UI.Ext.DataGridViewExt();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLine)).BeginInit();
@@ -256,6 +257,7 @@ namespace WindEnergy.UI.Dialogs
             // 
             this.groupBoxColumns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxColumns.Controls.Add(this.checkBoxUseDirection);
             this.groupBoxColumns.Controls.Add(this.checkBoxUseWetness);
             this.groupBoxColumns.Controls.Add(this.checkBoxUsePressure);
             this.groupBoxColumns.Controls.Add(this.checkBoxUseTemperature);
@@ -267,7 +269,7 @@ namespace WindEnergy.UI.Dialogs
             this.groupBoxColumns.Controls.Add(this.numericUpDownColTemper);
             this.groupBoxColumns.Controls.Add(this.comboBoxDirectUnit);
             this.groupBoxColumns.Controls.Add(this.comboBoxPressUnit);
-            this.groupBoxColumns.Controls.Add(this.label9);
+            this.groupBoxColumns.Controls.Add(this.labelDirect);
             this.groupBoxColumns.Controls.Add(this.numericUpDownColDirect);
             this.groupBoxColumns.Controls.Add(this.labelWet);
             this.groupBoxColumns.Controls.Add(this.numericUpDownColWet);
@@ -380,6 +382,7 @@ namespace WindEnergy.UI.Dialogs
             // comboBoxDirectUnit
             // 
             this.comboBoxDirectUnit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxDirectUnit.Enabled = false;
             this.comboBoxDirectUnit.FormattingEnabled = true;
             this.comboBoxDirectUnit.Location = new System.Drawing.Point(483, 12);
             this.comboBoxDirectUnit.Name = "comboBoxDirectUnit";
@@ -398,19 +401,21 @@ namespace WindEnergy.UI.Dialogs
             this.comboBoxPressUnit.TabIndex = 10;
             this.comboBoxPressUnit.SelectedIndexChanged += new System.EventHandler(this.controlUpdate_Event);
             // 
-            // label9
+            // labelDirect
             // 
-            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(346, 15);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(75, 13);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Направление";
+            this.labelDirect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDirect.AutoSize = true;
+            this.labelDirect.Enabled = false;
+            this.labelDirect.Location = new System.Drawing.Point(346, 15);
+            this.labelDirect.Name = "labelDirect";
+            this.labelDirect.Size = new System.Drawing.Size(75, 13);
+            this.labelDirect.TabIndex = 9;
+            this.labelDirect.Text = "Направление";
             // 
             // numericUpDownColDirect
             // 
             this.numericUpDownColDirect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDownColDirect.Enabled = false;
             this.numericUpDownColDirect.Location = new System.Drawing.Point(427, 13);
             this.numericUpDownColDirect.Minimum = new decimal(new int[] {
             1,
@@ -615,6 +620,18 @@ namespace WindEnergy.UI.Dialogs
             this.defaultRP5metarToolStripMenuItem.Text = "Расписание погоды (аэропорт)";
             this.defaultRP5metarToolStripMenuItem.Click += new System.EventHandler(this.defaultRP5metarToolStripMenuItem_Click);
             // 
+            // checkBoxUseDirection
+            // 
+            this.checkBoxUseDirection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxUseDirection.AutoSize = true;
+            this.checkBoxUseDirection.Location = new System.Drawing.Point(325, 15);
+            this.checkBoxUseDirection.Name = "checkBoxUseDirection";
+            this.checkBoxUseDirection.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxUseDirection.TabIndex = 21;
+            this.checkBoxUseDirection.Tag = "";
+            this.checkBoxUseDirection.UseVisualStyleBackColor = true;
+            this.checkBoxUseDirection.CheckedChanged += new System.EventHandler(this.checkBoxUse_CheckedChanged);
+            // 
             // dataGridViewImported
             // 
             this.dataGridViewImported.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -699,7 +716,7 @@ namespace WindEnergy.UI.Dialogs
         private System.Windows.Forms.NumericUpDown numericUpDownColSpeed;
         private System.Windows.Forms.ComboBox comboBoxDirectUnit;
         private System.Windows.Forms.ComboBox comboBoxPressUnit;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label labelDirect;
         private System.Windows.Forms.NumericUpDown numericUpDownColDirect;
         private System.Windows.Forms.Label labelTemp;
         private System.Windows.Forms.NumericUpDown numericUpDownColTemper;
@@ -717,5 +734,6 @@ namespace WindEnergy.UI.Dialogs
         private System.Windows.Forms.CheckBox checkBoxUseWetness;
         private System.Windows.Forms.CheckBox checkBoxUsePressure;
         private System.Windows.Forms.CheckBox checkBoxUseTemperature;
+        private System.Windows.Forms.CheckBox checkBoxUseDirection;
     }
 }
