@@ -272,10 +272,10 @@ namespace WindEnergy.WindLib.Statistic.Calculations
         /// <param name="tempr"></param>
         /// <param name="rhumb16Gradations"></param>
         /// <returns></returns>
-        public static StatisticalRange<WindDirections> GetDirectionExpectancy(RawRange tempr, GradationInfo<WindDirections> rhumb16Gradations)
+        public static StatisticalRange<WindDirections16> GetDirectionExpectancy(RawRange tempr, GradationInfo<WindDirections16> rhumb16Gradations)
         {
             List<double> spds = new List<double>(from t in tempr select t.Direction);
-            StatisticalRange<WindDirections> r = new StatisticalRange<WindDirections>(spds, rhumb16Gradations);
+            StatisticalRange<WindDirections16> r = new StatisticalRange<WindDirections16>(spds, rhumb16Gradations);
             return r;
         }
     }

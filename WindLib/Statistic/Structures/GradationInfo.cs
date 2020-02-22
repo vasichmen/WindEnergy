@@ -28,11 +28,11 @@ namespace WindEnergy.WindLib.Statistic.Structures
         private GradationInfo()
         {
             items = new List<object>();
-            if (typeof(T) == typeof(WindDirections))
+            if (typeof(T) == typeof(WindDirections16))
             {
-                var r = WindDirections.Calm.GetEnumItems();
+                var r = WindDirections16.Calm.GetEnumItems();
                 var ad = from x in r
-                         where ((WindDirections)x) != WindDirections.Calm && ((WindDirections)x) != WindDirections.Undefined && ((WindDirections)x) != WindDirections.Variable
+                         where ((WindDirections16)x) != WindDirections16.Calm && ((WindDirections16)x) != WindDirections16.Undefined && ((WindDirections16)x) != WindDirections16.Variable
                          select x;
                 items.AddRange(ad);
             }
@@ -135,11 +135,11 @@ namespace WindEnergy.WindLib.Statistic.Structures
         /// <summary>
         /// градации по 16 румбам
         /// </summary>
-        public static GradationInfo<WindDirections> Rhumb16Gradations
+        public static GradationInfo<WindDirections16> Rhumb16Gradations
         {
             get
             {
-                return new GradationInfo<WindDirections>();
+                return new GradationInfo<WindDirections16>();
             }
         }
 
@@ -167,7 +167,7 @@ namespace WindEnergy.WindLib.Statistic.Structures
                 else
                     return GradationItem.Empty;
             }
-            else if (typeof(T) == typeof(WindDirections))
+            else if (typeof(T) == typeof(WindDirections16))
             { return new RawItem() { Direction = val }.DirectionRhumb; }
             else
                 throw new Exception("Этот тип не реализован");
@@ -183,11 +183,11 @@ namespace WindEnergy.WindLib.Statistic.Structures
         {
             if (typeof(T) == typeof(GradationItem))
                 return this as GradationInfo<GradationItem>;
-            if (typeof(T) == typeof(WindDirections))
+            if (typeof(T) == typeof(WindDirections16))
             {
                 double d = 22.5d / 2d;
                 GradationInfo<GradationItem> res = new GradationInfo<GradationItem>();
-                foreach (WindDirections item in this.items)
+                foreach (WindDirections16 item in this.items)
                 {
                     double dir = RawItem.GetDirection(item);
                     GradationItem gr = new GradationItem(dir - d, dir + d);

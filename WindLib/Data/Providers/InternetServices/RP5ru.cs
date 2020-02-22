@@ -544,46 +544,46 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
         /// </summary>
         /// <param name="direction">строка направления из файла РП5</param>
         /// <returns></returns>
-        public static WindDirections GetWindDirectionFromString(string direction)
+        public static WindDirections16 GetWindDirectionFromString(string direction)
         {
             switch (direction.ToLower())
             {
                 case "штиль, безветрие":
-                    return WindDirections.Calm;
+                    return WindDirections16.Calm;
                 case "ветер, дующий с севера":
-                    return WindDirections.N;
+                    return WindDirections16.N;
                 case "ветер, дующий с северо-северо-востока":
-                    return WindDirections.NNE;
+                    return WindDirections16.NNE;
                 case "ветер, дующий с северо-востока":
-                    return WindDirections.NE;
+                    return WindDirections16.NE;
                 case "ветер, дующий с востоко-северо-востока":
-                    return WindDirections.NEE;
+                    return WindDirections16.NEE;
                 case "ветер, дующий с востока":
-                    return WindDirections.E;
+                    return WindDirections16.E;
                 case "ветер, дующий с востоко-юго-востока":
-                    return WindDirections.SEE;
+                    return WindDirections16.SEE;
                 case "ветер, дующий с юго-востока":
-                    return WindDirections.SE;
+                    return WindDirections16.SE;
                 case "ветер, дующий с юго-юго-востока":
-                    return WindDirections.SSE;
+                    return WindDirections16.SSE;
                 case "ветер, дующий с юга":
-                    return WindDirections.S;
+                    return WindDirections16.S;
                 case "ветер, дующий с юго-юго-запада":
-                    return WindDirections.SSW;
+                    return WindDirections16.SSW;
                 case "ветер, дующий с юго-запада":
-                    return WindDirections.SW;
+                    return WindDirections16.SW;
                 case "ветер, дующий с западо-юго-запада":
-                    return WindDirections.SWW;
+                    return WindDirections16.SWW;
                 case "ветер, дующий с запада":
-                    return WindDirections.W;
+                    return WindDirections16.W;
                 case "ветер, дующий с западо-северо-запада":
-                    return WindDirections.NWW;
+                    return WindDirections16.NWW;
                 case "ветер, дующий с северо-запада":
-                    return WindDirections.NW;
+                    return WindDirections16.NW;
                 case "ветер, дующий с северо-северо-запада":
-                    return WindDirections.NNW;
+                    return WindDirections16.NNW;
                 case "переменное направление":
-                    return WindDirections.Variable;
+                    return WindDirections16.Variable;
                 default: throw new Exception("Это направление ветра не реализовано");
             }
         }
@@ -593,43 +593,43 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
         /// </summary>
         /// <param name="direction"></param>
         /// <returns></returns>
-        public static string GetStringFromWindDirection(WindDirections direction)
+        public static string GetStringFromWindDirection(WindDirections16 direction)
         {
             switch (direction)
             {
-                case WindDirections.N:
+                case WindDirections16.N:
                     return "ветер, дующий с севера";
-                case WindDirections.NNE:
+                case WindDirections16.NNE:
                     return "ветер, дующий с северо-северо-востока";
-                case WindDirections.NE:
+                case WindDirections16.NE:
                     return "ветер, дующий с северо-востока";
-                case WindDirections.NEE:
+                case WindDirections16.NEE:
                     return "ветер, дующий с востоко-северо-востока";
-                case WindDirections.E:
+                case WindDirections16.E:
                     return "ветер, дующий с востока";
-                case WindDirections.SEE:
+                case WindDirections16.SEE:
                     return "ветер, дующий с востоко-юго-востока";
-                case WindDirections.SE:
+                case WindDirections16.SE:
                     return "ветер, дующий с юго-востока";
-                case WindDirections.SSE:
+                case WindDirections16.SSE:
                     return "ветер, дующий с юго-юго-востока";
-                case WindDirections.S:
+                case WindDirections16.S:
                     return "ветер, дующий с юга";
-                case WindDirections.SSW:
+                case WindDirections16.SSW:
                     return "ветер, дующий с юго-юго-запада";
-                case WindDirections.SW:
+                case WindDirections16.SW:
                     return "ветер, дующий с юго-запада";
-                case WindDirections.SWW:
+                case WindDirections16.SWW:
                     return "ветер, дующий с западо-юго-запада";
-                case WindDirections.W:
+                case WindDirections16.W:
                     return "ветер, дующий с запада";
-                case WindDirections.NWW:
+                case WindDirections16.NWW:
                     return "ветер, дующий с западо-северо-запада";
-                case WindDirections.NW:
+                case WindDirections16.NW:
                     return "ветер, дующий с северо-запада";
-                case WindDirections.NNW:
+                case WindDirections16.NNW:
                     return "ветер, дующий с северо-северо-запада";
-                case WindDirections.Variable:
+                case WindDirections16.Variable:
                     return "переменное направление";
                 default: throw new Exception("Это направление ветра не реализовано");
             }
@@ -683,7 +683,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                             double wet = elems[5] == "" ? double.NaN : double.Parse(elems[5].Replace('.', Constants.DecimalSeparator));
                             double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Constants.DecimalSeparator));
                             string dirs = elems[6];
-                            WindDirections direct = GetWindDirectionFromString(dirs);
+                            WindDirections16 direct = GetWindDirectionFromString(dirs);
                             try
                             { res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press }); }
                             catch (Exception)
@@ -720,7 +720,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                             double wet = elems[4] == "" ? double.NaN : double.Parse(elems[4].Replace('.', Constants.DecimalSeparator));
                             double press = elems[2] == "" ? double.NaN : double.Parse(elems[2].Replace('.', Constants.DecimalSeparator));
                             string dirs = elems[5];
-                            WindDirections direct = RP5ru.GetWindDirectionFromString(dirs);
+                            WindDirections16 direct = RP5ru.GetWindDirectionFromString(dirs);
                             res.Add(new RawItem() { Date = dt, DirectionRhumb = direct, Speed = spd, Temperature = temp, Wetness = wet, Pressure = press });
                         }
                         //поиск информации о МС

@@ -34,16 +34,16 @@ namespace WindEnergy.WindLib.Classes.Structures
             }
         }
 
-        public WindDirections directionRhumb = WindDirections.Undefined;
+        public WindDirections16 directionRhumb = WindDirections16.Undefined;
 
         /// <summary>
         /// направление ветра по румбам
         /// </summary>
-        public WindDirections DirectionRhumb
+        public WindDirections16 DirectionRhumb
         {
             get
             {
-                if (directionRhumb == WindDirections.Undefined)
+                if (directionRhumb == WindDirections16.Undefined)
                     directionRhumb = GetRhumb(direction);
                 return directionRhumb;
 
@@ -173,46 +173,46 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static double GetDirection(WindDirections value)
+        public static double GetDirection(WindDirections16 value)
         {
             switch (value)
             {
-                case WindDirections.N:
+                case WindDirections16.N:
                     return 0;
-                case WindDirections.NNE:
+                case WindDirections16.NNE:
                     return 22.5;
-                case WindDirections.NE:
+                case WindDirections16.NE:
                     return 45;
-                case WindDirections.NEE:
+                case WindDirections16.NEE:
                     return 67.5;
-                case WindDirections.E:
+                case WindDirections16.E:
                     return 90;
-                case WindDirections.SEE:
+                case WindDirections16.SEE:
                     return 112.5;
-                case WindDirections.SE:
+                case WindDirections16.SE:
                     return 135;
-                case WindDirections.SSE:
+                case WindDirections16.SSE:
                     return 157.5;
-                case WindDirections.S:
+                case WindDirections16.S:
                     return 180;
-                case WindDirections.SSW:
+                case WindDirections16.SSW:
                     return 202.5;
-                case WindDirections.SW:
+                case WindDirections16.SW:
                     return 225;
-                case WindDirections.SWW:
+                case WindDirections16.SWW:
                     return 247.5;
-                case WindDirections.W:
+                case WindDirections16.W:
                     return 270;
-                case WindDirections.NWW:
+                case WindDirections16.NWW:
                     return 292.5;
-                case WindDirections.NW:
+                case WindDirections16.NW:
                     return 315;
-                case WindDirections.NNW:
+                case WindDirections16.NNW:
                     return 337.5;
-                case WindDirections.Calm:
-                case WindDirections.Variable:
+                case WindDirections16.Calm:
+                case WindDirections16.Variable:
                     return 0;
-                case WindDirections.Undefined:
+                case WindDirections16.Undefined:
                     return double.NaN;
                 default: throw new Exception("Такого румба нет");
             }
@@ -223,10 +223,10 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// </summary>
         /// <param name="directionValue">направление вестра в градусах</param>
         /// <returns></returns>
-        public static WindDirections GetRhumb(double directionValue)
+        public static WindDirections16 GetRhumb(double directionValue)
         {
             if (double.IsNaN(directionValue))
-                return WindDirections.Undefined;
+                return WindDirections16.Undefined;
 
             //получаем градации по румбам, начиная с севера
             double[] l = new double[17];
@@ -253,37 +253,37 @@ namespace WindEnergy.WindLib.Classes.Structures
             {
                 case 0:
                 case 16:
-                    return WindDirections.N;
+                    return WindDirections16.N;
                 case 1:
-                    return WindDirections.NNE;
+                    return WindDirections16.NNE;
                 case 2:
-                    return WindDirections.NE;
+                    return WindDirections16.NE;
                 case 3:
-                    return WindDirections.NEE;
+                    return WindDirections16.NEE;
                 case 4:
-                    return WindDirections.E;
+                    return WindDirections16.E;
                 case 5:
-                    return WindDirections.SEE;
+                    return WindDirections16.SEE;
                 case 6:
-                    return WindDirections.SE;
+                    return WindDirections16.SE;
                 case 7:
-                    return WindDirections.SSE;
+                    return WindDirections16.SSE;
                 case 8:
-                    return WindDirections.S;
+                    return WindDirections16.S;
                 case 9:
-                    return WindDirections.SSW;
+                    return WindDirections16.SSW;
                 case 10:
-                    return WindDirections.SW;
+                    return WindDirections16.SW;
                 case 11:
-                    return WindDirections.SWW;
+                    return WindDirections16.SWW;
                 case 12:
-                    return WindDirections.W;
+                    return WindDirections16.W;
                 case 13:
-                    return WindDirections.NWW;
+                    return WindDirections16.NWW;
                 case 14:
-                    return WindDirections.NW;
+                    return WindDirections16.NW;
                 case 15:
-                    return WindDirections.NNW;
+                    return WindDirections16.NNW;
                 default: throw new WindEnergyException("Что-то не так");
 
             }

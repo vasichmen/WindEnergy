@@ -40,6 +40,8 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         /// <returns></returns>
         protected virtual BaseMeteostationInfo GetNearestMS(PointLatLng coordinates, double maxRadius=double.MaxValue)
         {
+            if (coordinates.IsEmpty)
+                return null;
             BaseMeteostationInfo res = null;
             bool useMaxRadius = maxRadius != double.MaxValue;
             double min = double.MaxValue;

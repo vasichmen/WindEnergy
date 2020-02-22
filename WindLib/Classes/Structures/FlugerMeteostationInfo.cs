@@ -12,11 +12,9 @@ namespace WindEnergy.WindLib.Classes.Structures
     /// </summary>
     public class FlugerMeteostationInfo: BaseMeteostationInfo
     {
-      
-
         /// <summary>
-        /// коэффициенты к
+        /// коэффициенты открытости по 8 румбам kм
         /// </summary>
-        public Dictionary<WindDirections, double> KM { get; set; } 
+        public Dictionary<WindDirections8, double> KM { get; set; } 
     }
 }

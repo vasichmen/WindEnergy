@@ -220,7 +220,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 foreach (GradationItem grad in Vars.Options.CurrentSpeedGradation.Items)
                     cap.Add(grad.Average.ToString("0.00"));
                 cap.AddRange(new string[] { "Vmin, м/с", "Vmax, м/с", "Vср, м/с", "Cv(V)", "γ", "β", "Nвал уд., Вт/м^2", "Эвал уд., Вт*ч/м^2" });
-                foreach (WindDirections wd in WindDirections.Calm.GetEnumItems().GetRange(0, 17))
+                foreach (WindDirections16 wd in WindDirections16.Calm.GetEnumItems().GetRange(0, 17))
                     cap.Add(wd.Description());
 
 
@@ -235,7 +235,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
 
                 //запись данных обо всём периоде
                 EnergyInfo ri1 = StatisticEngine.ProcessRange(range);
-                StatisticalRange<WindDirections> sd1 = StatisticEngine.GetDirectionExpectancy(range, GradationInfo<WindDirections>.Rhumb16Gradations);
+                StatisticalRange<WindDirections16> sd1 = StatisticEngine.GetDirectionExpectancy(range, GradationInfo<WindDirections16>.Rhumb16Gradations);
                 StatisticalRange<GradationItem> ss1 = StatisticEngine.GetExpectancy(range, Vars.Options.CurrentSpeedGradation);
                 EnergyInfo ei1 = StatisticEngine.ProcessRange(ss1);
                 int cells = saveEnergyInfoLine(worksheet, 2, ri1, ei1, sd1, ss1, "Все года", "Все месяцы", range.Count);
@@ -255,7 +255,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                         if (rn == null || rn.Count == 0)
                             continue;
                         EnergyInfo ri = StatisticEngine.ProcessRange(rn);
-                        StatisticalRange<WindDirections> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections>.Rhumb16Gradations);
+                        StatisticalRange<WindDirections16> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections16>.Rhumb16Gradations);
                         StatisticalRange<GradationItem> ss = StatisticEngine.GetExpectancy(rn, Vars.Options.CurrentSpeedGradation);
                         EnergyInfo ei = StatisticEngine.ProcessRange(ss);
                         cells = saveEnergyInfoLine(worksheet, line, ri, ei, sd, ss, year.ToString(), month.Description(), rn.Count);
@@ -282,7 +282,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                     if (rn == null || rn.Count == 0)
                         continue;
                     EnergyInfo ri = StatisticEngine.ProcessRange(rn);
-                    StatisticalRange<WindDirections> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections>.Rhumb16Gradations);
+                    StatisticalRange<WindDirections16> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections16>.Rhumb16Gradations);
                     StatisticalRange<GradationItem> ss = StatisticEngine.GetExpectancy(rn, Vars.Options.CurrentSpeedGradation);
                     EnergyInfo ei = StatisticEngine.ProcessRange(ss);
                     cells = saveEnergyInfoLine(worksheet, line, ri, ei, sd, ss, "Все года", month.Description(), rn.Count);
@@ -318,7 +318,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             int line,
             EnergyInfo range_info,
             EnergyInfo ext_info,
-            StatisticalRange<WindDirections> stat_directions,
+            StatisticalRange<WindDirections16> stat_directions,
             StatisticalRange<GradationItem> stat_speeds,
             string year,
             string month,
@@ -349,10 +349,10 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             });
 
             //повторяемости направлений ветра
-            List<Enum> rs = WindDirections.Calm.GetEnumItems().GetRange(0, 17);
+            List<Enum> rs = WindDirections16.Calm.GetEnumItems().GetRange(0, 17);
             for (int j = 0; j < rs.Count; j++)
             {
-                WindDirections rhumb = (WindDirections)rs[j];
+                WindDirections16 rhumb = (WindDirections16)rs[j];
                 int index = stat_directions.Keys.IndexOf(rhumb);
                 if (index == -1)
                     continue;
@@ -449,7 +449,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 int i = 5;
                 foreach (RawItem item in rang)
                 {
-                    if (double.IsNaN(item.Direction) || double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections.Undefined)
+                    if (double.IsNaN(item.Direction) || double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections16.Undefined)
                         continue;
                     worksheet.Cells[i, 1].Style.Numberformat.Format = DateTimeFormat;
                     worksheet.Cells[i, 1].Value = item.Date;

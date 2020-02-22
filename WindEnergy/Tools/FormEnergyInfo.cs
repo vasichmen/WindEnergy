@@ -52,7 +52,7 @@ namespace WindEnergy.UI.Tools
         /// <summary>
         ///  повторяекмости направлений
         /// </summary>
-        private StatisticalRange<WindDirections> stat_directions;
+        private StatisticalRange<WindDirections16> stat_directions;
 
         /// <summary>
         /// характеристики по всему ряду
@@ -226,7 +226,7 @@ namespace WindEnergy.UI.Tools
             {
                 range_info = StatisticEngine.ProcessRange(tempr);
                 stat_speeds = StatisticEngine.GetExpectancy(tempr, Vars.Options.CurrentSpeedGradation);
-                stat_directions = StatisticEngine.GetDirectionExpectancy(tempr, GradationInfo<WindDirections>.Rhumb16Gradations);
+                stat_directions = StatisticEngine.GetDirectionExpectancy(tempr, GradationInfo<WindDirections16>.Rhumb16Gradations);
                 exp_info = StatisticEngine.ProcessRange(stat_speeds);
             }
             catch (Exception ex)
@@ -300,7 +300,7 @@ namespace WindEnergy.UI.Tools
             {
                 double r = stat_directions.Values[i] * 100;
                 dlist.Add(r, 1);
-                string txt = ((WindDirections)stat_directions.Keys[i]).Description();
+                string txt = ((WindDirections16)stat_directions.Keys[i]).Description();
                 double x = r * Math.Sin(((i) * 22.5d) * Math.PI / 180d);
                 double y = r * Math.Cos(((i) * 22.5d) * Math.PI / 180d);
                 TextObj t = new TextObj(txt, x, y);

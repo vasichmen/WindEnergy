@@ -236,7 +236,7 @@ namespace WindEnergy.WindLib.Operations.Interpolation
                     grads = new GradationInfo<GradationItem>(0, SPEED_GRADATION_STEP, range.Max((item) => { return item.Speed; })); //градации скорости
                     break;
                 case MeteorologyParameters.Direction:
-                    StatisticalRange<WindDirections> srwd = StatisticEngine.GetDirectionExpectancy(range, GradationInfo<WindDirections>.Rhumb16Gradations);
+                    StatisticalRange<WindDirections16> srwd = StatisticEngine.GetDirectionExpectancy(range, GradationInfo<WindDirections16>.Rhumb16Gradations);
 
                     return 0;
                 case MeteorologyParameters.Temperature:

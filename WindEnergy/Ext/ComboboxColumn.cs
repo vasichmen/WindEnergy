@@ -50,8 +50,8 @@ namespace WindEnergy.UI.Ext
         public DataGridViewComboboxCell()
             : base()
         {
-            if (typeof(T) == typeof(WindDirections))
-                items = WindDirections.Undefined.GetItems().ConvertAll<object>((s) => (object)s); // получение списка элементов перечисления
+            if (typeof(T) == typeof(WindDirections16))
+                items = WindDirections16.Undefined.GetItems().ConvertAll<object>((s) => (object)s); // получение списка элементов перечисления
             else if (typeof(T) == typeof(StandartIntervals))
                 items = StandartIntervals.H1.GetItems().ConvertAll<object>((s) => (object)s); // получение списка элементов перечисления
             else

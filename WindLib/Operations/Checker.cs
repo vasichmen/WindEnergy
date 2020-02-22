@@ -64,9 +64,9 @@ namespace WindEnergy.WindLib.Operations
                     if (!accept) repeats++;
                 }
                 if (accept)//если всё ещё подходит, то проверем значения скорости и направления (если не штиль, не переменное направление и не неопределённое и скорость равна 0 то не подходит)
-                    if (item.DirectionRhumb != WindDirections.Undefined && 
-                        item.DirectionRhumb != WindDirections.Variable && 
-                        item.DirectionRhumb != WindDirections.Calm && 
+                    if (item.DirectionRhumb != WindDirections16.Undefined && 
+                        item.DirectionRhumb != WindDirections16.Variable && 
+                        item.DirectionRhumb != WindDirections16.Calm && 
                         item.Speed == 0)
                     {
                         accept = false;

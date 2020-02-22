@@ -1,4 +1,6 @@
-﻿namespace WindEnergy.UI
+﻿using WindEnergy.UI.Ext;
+
+namespace WindEnergy.UI
 {
     partial class FormMain
     {
@@ -50,10 +52,12 @@
             this.modelRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rangePropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.операцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calculateEnergyInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCalcYear = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemRangeElevator = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dailyAverageGraphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,8 +77,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.button1 = new System.Windows.Forms.Button();
-            this.dailyAverageGraphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripMenuItemRangeTerrain = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -243,6 +246,7 @@
             this.calculateEnergyInfoToolStripMenuItem,
             this.ToolStripMenuItemCalcYear,
             this.ToolStripMenuItemRangeElevator,
+            this.ToolStripMenuItemRangeTerrain,
             this.toolStripSeparator4,
             this.equalizeRangesToolStripMenuItem,
             this.dailyAverageGraphsToolStripMenuItem,
@@ -252,15 +256,6 @@
             this.операцииToolStripMenuItem.Name = "операцииToolStripMenuItem";
             this.операцииToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
             this.операцииToolStripMenuItem.Text = "Операции";
-            // 
-            // equalizeRangesToolStripMenuItem
-            // 
-            this.equalizeRangesToolStripMenuItem.Name = "equalizeRangesToolStripMenuItem";
-            this.equalizeRangesToolStripMenuItem.Size = new System.Drawing.Size(345, 22);
-            this.equalizeRangesToolStripMenuItem.Text = "Привести ряды";
-            this.equalizeRangesToolStripMenuItem.ToolTipText = "Для каждого наблюдения из ряда с большим интервалом подобрать наблюдение из ряда " +
-    "с меньшим интервалом и сохранить";
-            this.equalizeRangesToolStripMenuItem.Click += new System.EventHandler(this.equalizeRangesToolStripMenuItem_Click);
             // 
             // calculateEnergyInfoToolStripMenuItem
             // 
@@ -283,6 +278,27 @@
             this.ToolStripMenuItemRangeElevator.Size = new System.Drawing.Size(345, 22);
             this.ToolStripMenuItemRangeElevator.Text = "Расчет скорости ветра на высоте башни ВЭУ";
             this.ToolStripMenuItemRangeElevator.Click += new System.EventHandler(this.ToolStripMenuItemRangeElevator_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(342, 6);
+            // 
+            // equalizeRangesToolStripMenuItem
+            // 
+            this.equalizeRangesToolStripMenuItem.Name = "equalizeRangesToolStripMenuItem";
+            this.equalizeRangesToolStripMenuItem.Size = new System.Drawing.Size(345, 22);
+            this.equalizeRangesToolStripMenuItem.Text = "Привести ряды";
+            this.equalizeRangesToolStripMenuItem.ToolTipText = "Для каждого наблюдения из ряда с большим интервалом подобрать наблюдение из ряда " +
+    "с меньшим интервалом и сохранить";
+            this.equalizeRangesToolStripMenuItem.Click += new System.EventHandler(this.equalizeRangesToolStripMenuItem_Click);
+            // 
+            // dailyAverageGraphsToolStripMenuItem
+            // 
+            this.dailyAverageGraphsToolStripMenuItem.Name = "dailyAverageGraphsToolStripMenuItem";
+            this.dailyAverageGraphsToolStripMenuItem.Size = new System.Drawing.Size(345, 22);
+            this.dailyAverageGraphsToolStripMenuItem.Text = "Среднесуточные графики";
+            this.dailyAverageGraphsToolStripMenuItem.Click += new System.EventHandler(this.dailyAverageGraphsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -462,17 +478,12 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // dailyAverageGraphsToolStripMenuItem
+            // ToolStripMenuItemRangeTerrain
             // 
-            this.dailyAverageGraphsToolStripMenuItem.Name = "dailyAverageGraphsToolStripMenuItem";
-            this.dailyAverageGraphsToolStripMenuItem.Size = new System.Drawing.Size(345, 22);
-            this.dailyAverageGraphsToolStripMenuItem.Text = "Среднесуточные графики";
-            this.dailyAverageGraphsToolStripMenuItem.Click += new System.EventHandler(this.dailyAverageGraphsToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(342, 6);
+            this.ToolStripMenuItemRangeTerrain.Name = "ToolStripMenuItemRangeTerrain";
+            this.ToolStripMenuItemRangeTerrain.Size = new System.Drawing.Size(345, 22);
+            this.ToolStripMenuItemRangeTerrain.Text = "Пересчет скорости ветра в точку ВЭС";
+            this.ToolStripMenuItemRangeTerrain.Click += new System.EventHandler(this.ToolStripMenuItemRangeTerrain_Click);
             // 
             // FormMain
             // 
@@ -516,7 +527,7 @@
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button button1;
-        public Ext.TabControlExt mainTabControl;
+        public TabControlExt mainTabControl;
         private System.Windows.Forms.ToolStripMenuItem equalizeRangesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadRP5ruToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem1;
@@ -550,6 +561,7 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemRangeElevator;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem dailyAverageGraphsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemRangeTerrain;
     }
 }
 

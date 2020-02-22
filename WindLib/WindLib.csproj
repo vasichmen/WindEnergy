@@ -235,6 +235,8 @@
     <Compile Include="Transformation\Altitude\AMSSupport.cs" />
     <Compile Include="Transformation\Altitude\ElevatorParameters.cs" />
     <Compile Include="Transformation\Altitude\RangeElevator.cs" />
+    <Compile Include="Transformation\Terrain\RangeTerrain.cs" />
+    <Compile Include="Transformation\Terrain\TerrainParameters.cs" />
     <Compile Include="Vars.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +244,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Transformation\Terrain\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

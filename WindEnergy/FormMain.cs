@@ -68,6 +68,7 @@ namespace WindEnergy.UI
             calculateEnergyInfoToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             ToolStripMenuItemCalcYear.Enabled = mainTabControl.SelectedTab != null;
             ToolStripMenuItemRangeElevator.Enabled = mainTabControl.SelectedTab != null;
+            ToolStripMenuItemRangeTerrain.Enabled = mainTabControl.SelectedTab != null;
         }
 
         #region Файл
@@ -334,6 +335,22 @@ namespace WindEnergy.UI
         }
 
         /// <summary>
+        /// пересчет скорости ветра в точку ВЭС
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripMenuItemRangeTerrain_Click(object sender, EventArgs e)
+        {
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            FormRangeTerrain frm = new FormRangeTerrain(rang);
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                _ = mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
+            }
+            frm.Dispose();
+        }
+
+        /// <summary>
         /// настройки
         /// </summary>
         /// <param name="sender"></param>
@@ -500,7 +517,5 @@ namespace WindEnergy.UI
             sw.Close();
 
         }
-
-       
     }
 }

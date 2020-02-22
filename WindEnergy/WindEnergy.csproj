@@ -71,6 +71,7 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
       <Private>True</Private>
@@ -126,6 +127,12 @@
     </Compile>
     <Compile Include="Dialogs\FormChooseMeteostAirportDialog.Designer.cs">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\FormRhumbsValuesDialogs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FormRhumbsValuesDialogs.Designer.cs">
+      <DependentUpon>FormRhumbsValuesDialogs.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\FormMonthsValuesDialogs.cs">
       <SubType>Form</SubType>
@@ -244,6 +251,12 @@
     <Compile Include="Tools\FormRangeStatistic.Designer.cs">
       <DependentUpon>FormRangeStatistic.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\FormRangeTerrain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FormRangeTerrain.Designer.cs">
+      <DependentUpon>FormRangeTerrain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\FormRepairRange.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -258,6 +271,9 @@
     </Compile>
     <EmbeddedResource Include="Dialogs\FormChooseMeteostAirportDialog.resx">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FormRhumbsValuesDialogs.resx">
+      <DependentUpon>FormRhumbsValuesDialogs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FormMonthsValuesDialogs.resx">
       <DependentUpon>FormMonthsValuesDialogs.cs</DependentUpon>
@@ -319,6 +335,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormRangeStatistic.resx">
       <DependentUpon>FormRangeStatistic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FormRangeTerrain.resx">
+      <DependentUpon>FormRangeTerrain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormRepairRange.resx">
       <DependentUpon>FormRepairRange.cs</DependentUpon>

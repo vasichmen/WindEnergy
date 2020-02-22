@@ -81,8 +81,8 @@ namespace WindEnergy
     /// <summary>
     /// направления ветра по 16 румбам
     /// </summary>
-    [TypeConverter(typeof(EnumTypeConverter<WindDirections>))]
-    public enum WindDirections
+    [TypeConverter(typeof(EnumTypeConverter<WindDirections16>))]
+    public enum WindDirections16
     {
 
         /// <summary>
@@ -187,6 +187,80 @@ namespace WindEnergy
         /// </summary>
         [Description("ССЗ")]
         NNW = 15,
+
+        /// <summary>
+        /// Переменное направление
+        /// </summary>
+        [Description("Переменное направление")]
+        Variable = -2,
+
+        /// <summary>
+        /// штиль
+        /// </summary>
+        [Description("Штиль")]
+        Calm = -3
+    }
+
+    /// <summary>
+    /// направления ветра по 8 румбам
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<WindDirections8>))]
+    public enum WindDirections8
+    {
+
+        /// <summary>
+        /// нет данных
+        /// </summary>
+        [Description("Нет данных")]
+        Undefined = -1,
+
+        /// <summary>
+        /// ветер с севера
+        /// </summary>
+        [Description("С")]
+        N = 0,
+
+        /// <summary>
+        /// ветер с северо  востока
+        /// </summary>
+        [Description("СВ")]
+        NE = 1,
+
+        /// <summary>
+        /// ветер с востока
+        /// </summary>
+        [Description("В")]
+        E = 2,
+        
+        /// <summary>
+        /// ветер с юго востока 
+        /// </summary>
+        [Description("ЮВ")]
+        SE = 3,
+
+        /// <summary>
+        /// ветер с юга
+        /// </summary>
+        [Description("Ю")]
+        S = 4,
+
+        /// <summary>
+        /// ветер с юго  запада
+        /// </summary>
+        [Description("ЮЗ")]
+        SW = 5,
+
+        /// <summary>
+        /// ветер с запада
+        /// </summary>
+        [Description("З")]
+        W = 6,
+
+        /// <summary>
+        /// ветер с северо запада 
+        /// </summary>
+        [Description("СЗ")]
+        NW = 7,
 
         /// <summary>
         /// Переменное направление
@@ -536,5 +610,17 @@ namespace WindEnergy
 
         [Description("Неизвестно")]
         None,
+    }
+
+    /// <summary>
+    /// Два типа рельефа
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<TerrainType>))]
+    public enum TerrainType
+    {
+
+        First,
+
+        Second
     }
 }

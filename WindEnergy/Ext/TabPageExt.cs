@@ -116,7 +116,7 @@ namespace WindEnergy.UI.Ext
                 case "directionrhumb":
                     e.Column.HeaderText = "Румб";
                     e.Column.Width = 55;
-                    e.Column.CellTemplate = new DataGridViewComboboxCell<WindDirections>();
+                    e.Column.CellTemplate = new DataGridViewComboboxCell<WindDirections16>();
                     break;
                 case "speed":
                     e.Column.HeaderText = "Скорость, м/с";
