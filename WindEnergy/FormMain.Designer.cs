@@ -55,6 +55,7 @@ namespace WindEnergy.UI
             this.calculateEnergyInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCalcYear = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemRangeElevator = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemRangeTerrain = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dailyAverageGraphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,7 +78,6 @@ namespace WindEnergy.UI
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.button1 = new System.Windows.Forms.Button();
-            this.ToolStripMenuItemRangeTerrain = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -245,8 +245,8 @@ namespace WindEnergy.UI
             this.операцииToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.calculateEnergyInfoToolStripMenuItem,
             this.ToolStripMenuItemCalcYear,
-            this.ToolStripMenuItemRangeElevator,
             this.ToolStripMenuItemRangeTerrain,
+            this.ToolStripMenuItemRangeElevator,
             this.toolStripSeparator4,
             this.equalizeRangesToolStripMenuItem,
             this.dailyAverageGraphsToolStripMenuItem,
@@ -278,6 +278,13 @@ namespace WindEnergy.UI
             this.ToolStripMenuItemRangeElevator.Size = new System.Drawing.Size(345, 22);
             this.ToolStripMenuItemRangeElevator.Text = "Расчет скорости ветра на высоте башни ВЭУ";
             this.ToolStripMenuItemRangeElevator.Click += new System.EventHandler(this.ToolStripMenuItemRangeElevator_Click);
+            // 
+            // ToolStripMenuItemRangeTerrain
+            // 
+            this.ToolStripMenuItemRangeTerrain.Name = "ToolStripMenuItemRangeTerrain";
+            this.ToolStripMenuItemRangeTerrain.Size = new System.Drawing.Size(345, 22);
+            this.ToolStripMenuItemRangeTerrain.Text = "Пересчет скорости ветра в точку ВЭС";
+            this.ToolStripMenuItemRangeTerrain.Click += new System.EventHandler(this.ToolStripMenuItemRangeTerrain_Click);
             // 
             // toolStripSeparator4
             // 
@@ -477,13 +484,6 @@ namespace WindEnergy.UI
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // ToolStripMenuItemRangeTerrain
-            // 
-            this.ToolStripMenuItemRangeTerrain.Name = "ToolStripMenuItemRangeTerrain";
-            this.ToolStripMenuItemRangeTerrain.Size = new System.Drawing.Size(345, 22);
-            this.ToolStripMenuItemRangeTerrain.Text = "Пересчет скорости ветра в точку ВЭС";
-            this.ToolStripMenuItemRangeTerrain.Click += new System.EventHandler(this.ToolStripMenuItemRangeTerrain_Click);
             // 
             // FormMain
             // 

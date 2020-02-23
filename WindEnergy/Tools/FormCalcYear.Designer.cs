@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCalcYear));
             this.labelRecomendedYear = new System.Windows.Forms.Label();
             this.labelSpeedDeviation = new System.Windows.Forms.Label();
@@ -39,6 +40,8 @@
             this.buttonSaveResults = new System.Windows.Forms.Button();
             this.dataGridViewExt1 = new WindEnergy.UI.Ext.DataGridViewExt();
             this.labelAverageYearsSpeed = new System.Windows.Forms.Label();
+            this.buttonOpenCalcYear = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExt1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -142,11 +145,24 @@
             this.labelAverageYearsSpeed.TabIndex = 9;
             this.labelAverageYearsSpeed.Text = "label1";
             // 
+            // buttonOpenCalcYear
+            // 
+            this.buttonOpenCalcYear.Location = new System.Drawing.Point(605, 51);
+            this.buttonOpenCalcYear.Name = "buttonOpenCalcYear";
+            this.buttonOpenCalcYear.Size = new System.Drawing.Size(121, 36);
+            this.buttonOpenCalcYear.TabIndex = 10;
+            this.buttonOpenCalcYear.Text = "Открыть расчетный год";
+            this.toolTip1.SetToolTip(this.buttonOpenCalcYear, "Открыть найденный расчетный год в новой вкладке");
+            this.buttonOpenCalcYear.UseVisualStyleBackColor = true;
+            this.buttonOpenCalcYear.Visible = false;
+            this.buttonOpenCalcYear.Click += new System.EventHandler(this.buttonOpenCalcYear_Click);
+            // 
             // FormCalcYear
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(738, 432);
+            this.Controls.Add(this.buttonOpenCalcYear);
             this.Controls.Add(this.labelAverageYearsSpeed);
             this.Controls.Add(this.buttonSaveResults);
             this.Controls.Add(this.labelCompletness);
@@ -180,5 +196,7 @@
         private System.Windows.Forms.Label labelCompletness;
         private System.Windows.Forms.Button buttonSaveResults;
         private System.Windows.Forms.Label labelAverageYearsSpeed;
+        private System.Windows.Forms.Button buttonOpenCalcYear;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

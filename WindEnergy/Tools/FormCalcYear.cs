@@ -61,6 +61,7 @@ namespace WindEnergy.UI.Tools
                     labelInterval.Text = "Δt: " + years.RecomendedYear.Interval.Description() + "";
                     labelMaxSpeed.Text = "Максимальная скорость: " + years.RecomendedYear.Vmax.ToString("0.0") + " м/с";
                     labelSpeedDeviation.Text = "Отклонение скорости от многолетней: " + years.RecomendedYear.SpeedDeviation.ToString("0.00") + " м/с";
+                    buttonOpenCalcYear.Visible = true;
                 }
                 else //если расчётный год не найден
                 {
@@ -121,7 +122,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void dataGridViewExt1_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
         {
-            e= e ?? throw new ArgumentNullException(nameof(e));
+            e = e ?? throw new ArgumentNullException(nameof(e));
             switch (e.Column.Name.ToLower())
             {
                 case "year":
@@ -165,6 +166,18 @@ namespace WindEnergy.UI.Tools
                     break;
                 default: throw new Exception("Для этой колонки нет названия");
             }
+        }
+
+        private void buttonOpenCalcYear_Click(object sender, EventArgs e)
+        {
+            RawRange range = new RawRange((from t in years.Range
+                                           where t.Date.Year == years.RecomendedYear.Year
+                                           select t  ));
+            range.Name = "Расчетный год для " + years.Range.Name;
+            range.Meteostation = years.Range.Meteostation;
+            range.Position = years.Range.Position;
+            _ = Program.winMain.mainTabControl.OpenNewTab(range, range.Name).Focus();
+            Close();
         }
     }
 }
