@@ -30,6 +30,8 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
             StaticAMSDatabaseSourceFile = Application.StartupPath + "\\Data\\AMS.database.txt";
             StaticFlugerDatabaseSourceFile = Application.StartupPath + "\\Data\\Fluger.database.txt";
             StaticEquipmentDatabaseSourceFile = Application.StartupPath + "\\Data\\Equipment.database.txt";
+            StaticMicroclimateTableDatabaseSourceFile = Application.StartupPath + "\\Data\\Microclimate.table.txt";
+            StaticMesoclimateTableDatabaseSourceFile = Application.StartupPath + "\\Data\\Mesoclimate.table.txt";
             StaticRP5DatabaseSourceDirectory = Application.StartupPath + "\\Data\\rp5.Database";
             QualifierSectionLength = 20; //20 измерений
             QualifierDaysToNewInterval = 30; //1 месяц
@@ -83,6 +85,16 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
         /// адрес файла БД оборудования
         /// </summary>
         public string StaticEquipmentDatabaseSourceFile { get; set; }
+
+        /// <summary>
+        /// адрес файла БД мезоклиматических коэффициентов
+        /// </summary>
+        public string StaticMesoclimateTableDatabaseSourceFile { get; set; }
+
+        /// <summary>
+        /// адрес файла БД микроклиматических коэффициентов
+        /// </summary>
+        public string StaticMicroclimateTableDatabaseSourceFile { get; set; }
 
         /// <summary>
         /// адрес папки БД рп5
@@ -194,6 +206,7 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
         /// минимальное количество дней, после которого считается пропуск данных как отдельный интервал
         /// </summary>
         public double QualifierDaysToBeginMissing { get; set; }
+
 
         /// <summary>
         /// Загрузка файла настроек

@@ -138,6 +138,7 @@ namespace WindEnergy.UI.Ext
 
                 //удаляемые колонки пишем тут:
                 case "dateargument":
+                case "directionrhumb8":
                     e.Column.DataGridView.Columns.Remove(e.Column);
                     break;
                 default: throw new Exception("Для этой колонки нет названия");

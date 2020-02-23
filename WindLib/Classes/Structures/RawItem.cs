@@ -106,7 +106,7 @@ namespace WindEnergy.WindLib.Classes.Structures
                 return (Date.Ticks / 1e7) / 60d;
             }
         }
-
+        
         /// <summary>
         /// создаёт новый объект с значениями по умолчанию
         /// </summary>
@@ -215,6 +215,92 @@ namespace WindEnergy.WindLib.Classes.Structures
                 case WindDirections16.Undefined:
                     return double.NaN;
                 default: throw new Exception("Такого румба нет");
+            }
+        }
+
+
+        /// <summary>
+        /// направление ветра по 8 румбам
+        /// </summary>
+        public WindDirections8 DirectionRhumb8
+        {
+            get
+            {
+                switch(DirectionRhumb)
+                {
+                    case WindDirections16.N:
+                    case WindDirections16.NNE:
+                        return WindDirections8.N;
+                    case WindDirections16.NE:
+                    case WindDirections16.NEE:
+                        return WindDirections8.NE;
+                    case WindDirections16.E:
+                    case WindDirections16.SEE:
+                        return WindDirections8.E;
+                    case WindDirections16.SE:
+                    case WindDirections16.SSE:
+                        return WindDirections8.SE;
+                    case WindDirections16.S:
+                    case WindDirections16.SSW:
+                        return WindDirections8.S;
+                    case WindDirections16.SW:
+                    case WindDirections16.SWW:
+                        return WindDirections8.SW;
+                    case WindDirections16.W:
+                    case WindDirections16.NWW:
+                        return WindDirections8.W;
+                    case WindDirections16.NW:
+                    case WindDirections16.NNW:
+                        return WindDirections8.NW;
+                    case WindDirections16.Undefined:
+                        return WindDirections8.Undefined;
+                    case WindDirections16.Variable:
+                        return WindDirections8.Variable;
+                    case WindDirections16.Calm:
+                        return WindDirections8.Calm;
+                    default: throw new Exception("Этот румб не существует");
+                }
+            }
+            set
+            {
+                switch (value)
+                {
+                    case WindDirections8.Calm:
+                        DirectionRhumb = WindDirections16.Calm;
+                        break;
+                    case WindDirections8.E:
+                        DirectionRhumb = WindDirections16.E;
+                        break;
+                    case WindDirections8.N:
+                        DirectionRhumb = WindDirections16.N;
+                        break;
+
+                    case WindDirections8.NE:
+                        DirectionRhumb = WindDirections16.NE;
+                        break;
+                    case WindDirections8.NW:
+                        DirectionRhumb = WindDirections16.NW;
+                        break;
+                    case WindDirections8.S:
+                        DirectionRhumb = WindDirections16.S;
+                        break;
+                    case WindDirections8.SE:
+                        DirectionRhumb = WindDirections16.SE;
+                        break;
+                    case WindDirections8.SW:
+                        DirectionRhumb = WindDirections16.SW;
+                        break;
+                    case WindDirections8.Undefined:
+                        DirectionRhumb = WindDirections16.Undefined;
+                        break;
+                    case WindDirections8.Variable:
+                        DirectionRhumb = WindDirections16.Variable;
+                        break;
+                    case WindDirections8.W:
+                        DirectionRhumb = WindDirections16.W;
+                        break;
+                    default: throw new Exception("Этот румб не существует");
+                }
             }
         }
 

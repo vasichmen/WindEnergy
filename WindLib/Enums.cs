@@ -231,7 +231,7 @@ namespace WindEnergy
         /// </summary>
         [Description("В")]
         E = 2,
-        
+
         /// <summary>
         /// ветер с юго востока 
         /// </summary>
@@ -622,5 +622,40 @@ namespace WindEnergy
         First,
 
         Second
+    }
+
+    /// <summary>
+    /// расстояния до водной поверхности
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<WaterDistanceType>))]
+    public enum WaterDistanceType
+    {
+        [Description("Не выбрано")]
+        Undefined =-1,
+
+        [Description("Вдали от водных поверхностей")]
+        FarFromWater = 7,
+
+        [Description("Берег большой реки")]
+        River = 8,
+
+        [Description("Берег большого озера или залива")]
+        Lake = 9,
+
+        [Description("Побережье внутреннего моря")]
+        SeaCoast = 10,
+
+        [Description("Побережье океана или внешнего моря")]
+        OceanCoast = 11
+    }
+
+    /// <summary>
+    /// типы стратификации атмосферы
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<WaterDistanceType>))]
+    public enum AtmosphereStratification
+    {
+
+        Stable, Unstable
     }
 }

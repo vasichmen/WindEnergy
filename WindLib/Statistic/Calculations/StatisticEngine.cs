@@ -278,5 +278,18 @@ namespace WindEnergy.WindLib.Statistic.Calculations
             StatisticalRange<WindDirections16> r = new StatisticalRange<WindDirections16>(spds, rhumb16Gradations);
             return r;
         }
+
+        /// <summary>
+        /// получить статистический ряд по заданным значениям и заданным градациям
+        /// </summary>
+        /// <param name="tempr"></param>
+        /// <param name="rhumb8Gradations"></param>
+        /// <returns></returns>
+        public static StatisticalRange<WindDirections8> GetDirectionExpectancy(RawRange tempr, GradationInfo<WindDirections8> rhumb8Gradations)
+        {
+            List<double> spds = new List<double>(from t in tempr select t.Direction);
+            StatisticalRange<WindDirections8> r = new StatisticalRange<WindDirections8>(spds, rhumb8Gradations);
+            return r;
+        }
     }
 }

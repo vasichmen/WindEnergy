@@ -138,6 +138,12 @@ namespace WindEnergy.UI.Tools
                 _ = MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
+            catch (Exception ex)
+            {
+                Cursor = Cursors.Arrow;
+                _ = MessageBox.Show(this, "Произошла ошибка:\r\n" + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult = DialogResult.Cancel;
+            }
         }
 
         private void checkBoxCustomCoeffM_CheckedChanged(object sender, EventArgs e)

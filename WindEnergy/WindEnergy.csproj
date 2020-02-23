@@ -379,6 +379,12 @@
     <Content Include="Data\Fluger.database.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\Microclimate.table.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Mesoclimate.table.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Docs\Добавление нового поля для rawRange.txt" />
     <Content Include="icon.ico" />
     <Content Include="License-LGPL.txt" />

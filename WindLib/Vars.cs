@@ -146,6 +146,36 @@ namespace WindLib
         }
         private static RP5Database _RP5Database = null;
 
+        /// <summary>
+        /// локальная БД мезоклиматических коэффициентов
+        /// </summary>
+        public static MesoclimateTableDatabase MesoclimateTableDatabase
+        {
+            get
+            {
+                if (_MesoclimateTableDatabase == null)
+                    _MesoclimateTableDatabase = new MesoclimateTableDatabase(Options.StaticMesoclimateTableDatabaseSourceFile);
+                return _MesoclimateTableDatabase;
+            }
+            set { _MesoclimateTableDatabase = value; }
+        }
+        private static MesoclimateTableDatabase _MesoclimateTableDatabase = null;
+
+        /// <summary>
+        /// локальная БД микроклиматических коэффициентов
+        /// </summary>
+        public static MicroclimateTableDatabase MicroclimateTableDatabase
+        {
+            get
+            {
+                if (_MicroclimateTableDatabase == null)
+                    _MicroclimateTableDatabase = new MicroclimateTableDatabase(Options.StaticMicroclimateTableDatabaseSourceFile);
+                return _MicroclimateTableDatabase;
+            }
+            set { _MicroclimateTableDatabase = value; }
+        }
+        private static MicroclimateTableDatabase _MicroclimateTableDatabase = null;
+
         #endregion
 
     }

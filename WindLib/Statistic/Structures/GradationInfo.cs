@@ -36,6 +36,14 @@ namespace WindEnergy.WindLib.Statistic.Structures
                          select x;
                 items.AddRange(ad);
             }
+            if (typeof(T) == typeof(WindDirections8))
+            {
+                var r = WindDirections8.Calm.GetEnumItems();
+                var ad = from x in r
+                         where ((WindDirections8)x) != WindDirections8.Calm && ((WindDirections8)x) != WindDirections8.Undefined && ((WindDirections8)x) != WindDirections8.Variable
+                         select x;
+                items.AddRange(ad);
+            }
         }
 
         /// <summary>
@@ -143,6 +151,18 @@ namespace WindEnergy.WindLib.Statistic.Structures
             }
         }
 
+
+        /// <summary>
+        /// градации по 8 румбам
+        /// </summary>
+        public static GradationInfo<WindDirections8> Rhumb8Gradations
+        {
+            get
+            {
+                return new GradationInfo<WindDirections8>();
+            }
+        }
+
         /// <summary>
         /// получить соответствующую значению градацию типа Т
         /// </summary>
@@ -169,6 +189,8 @@ namespace WindEnergy.WindLib.Statistic.Structures
             }
             else if (typeof(T) == typeof(WindDirections16))
             { return new RawItem() { Direction = val }.DirectionRhumb; }
+            else if (typeof(T) == typeof(WindDirections8))
+            { return new RawItem() { Direction = val }.DirectionRhumb8; }
             else
                 throw new Exception("Этот тип не реализован");
 

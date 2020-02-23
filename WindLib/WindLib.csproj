@@ -167,6 +167,8 @@
     <Compile Include="Classes\Structures\Diapason.cs" />
     <Compile Include="Classes\Structures\EquipmentItemInfo.cs" />
     <Compile Include="Classes\Structures\FlugerMeteostationInfo.cs" />
+    <Compile Include="Classes\Structures\MesoclimateItemInfo.cs" />
+    <Compile Include="Classes\Structures\MicroclimateItemInfo.cs" />
     <Compile Include="Classes\Structures\Options\TextImporterState.cs" />
     <Compile Include="Classes\Structures\RP5MeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Options\Options.cs" />
@@ -177,6 +179,8 @@
     <Compile Include="Data\Providers\DB\BaseMeteostationDatabase.cs" />
     <Compile Include="Data\Providers\DB\EquipmentDatabase.cs" />
     <Compile Include="Data\Providers\DB\FlugerMeteostationDatabase.cs" />
+    <Compile Include="Data\Providers\DB\MesoclimateTableDatabase.cs" />
+    <Compile Include="Data\Providers\DB\MicroclimateTableDatabase.cs" />
     <Compile Include="Data\Providers\DB\RP5Database.cs" />
     <Compile Include="Data\Providers\DB\SpeedLimitsDatabase.cs" />
     <Compile Include="Data\Providers\FileSystem\FileProvider.cs" />
