@@ -47,6 +47,7 @@ namespace WindEnergy.UI.Helpers
                 {
                     try
                     {
+                        f.Cursor = Cursors.WaitCursor;
                         RawRange rang = RawRangeSerializer.DeserializeFile(file, null);
                         rang.FilePath = file;
                         rang.Name = Path.GetFileNameWithoutExtension(file);
@@ -56,6 +57,10 @@ namespace WindEnergy.UI.Helpers
                     catch (Exception ex)
                     {
                         _ = MessageBox.Show(form, ex.Message, "Открытие файла " + file, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        f.Cursor = Cursors.Default;
                     }
                 }
             }
@@ -71,6 +76,7 @@ namespace WindEnergy.UI.Helpers
         {
             try
             {
+                f.Cursor = Cursors.WaitCursor;
                 if (fileName == null)
                 {
                     SaveFileDialog sf = new SaveFileDialog();
@@ -102,6 +108,10 @@ namespace WindEnergy.UI.Helpers
                 string msg = e.InnerException.InnerException != null ? e.InnerException.InnerException.Message : e.Message;
                 _ = MessageBox.Show(this.f, $"Не удалось сохранить файл, причина:\r\n{msg}", "Сохранение файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
+            }
+            finally
+            {
+                f.Cursor = Cursors.Default;
             }
         }
 

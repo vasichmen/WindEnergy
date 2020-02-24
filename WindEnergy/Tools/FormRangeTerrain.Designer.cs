@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRangeTerrain));
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxTerrainSecond = new System.Windows.Forms.GroupBox();
+            this.labelWaterDistanceType = new System.Windows.Forms.Label();
+            this.comboBoxWaterDistance = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioButtonUnstable = new System.Windows.Forms.RadioButton();
             this.radioButtonStable = new System.Windows.Forms.RadioButton();
@@ -54,8 +56,6 @@
             this.buttonEnterMSClasses = new System.Windows.Forms.Button();
             this.labelPointCoordinatesStatus = new System.Windows.Forms.Label();
             this.labelMSCoordinatesStatus = new System.Windows.Forms.Label();
-            this.comboBoxWaterDistance = new System.Windows.Forms.ComboBox();
-            this.labelWaterDistanceType = new System.Windows.Forms.Label();
             this.groupBoxTerrainSecond.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -78,6 +78,28 @@
             this.groupBoxTerrainSecond.Size = new System.Drawing.Size(326, 203);
             this.groupBoxTerrainSecond.TabIndex = 8;
             this.groupBoxTerrainSecond.TabStop = false;
+            // 
+            // labelWaterDistanceType
+            // 
+            this.labelWaterDistanceType.AutoSize = true;
+            this.labelWaterDistanceType.Location = new System.Drawing.Point(6, 155);
+            this.labelWaterDistanceType.Name = "labelWaterDistanceType";
+            this.labelWaterDistanceType.Size = new System.Drawing.Size(287, 13);
+            this.labelWaterDistanceType.TabIndex = 7;
+            this.labelWaterDistanceType.Text = "Расположение МС относительно водных поверхностей";
+            // 
+            // comboBoxWaterDistance
+            // 
+            this.comboBoxWaterDistance.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxWaterDistance.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBoxWaterDistance.FormattingEnabled = true;
+            this.comboBoxWaterDistance.Location = new System.Drawing.Point(9, 171);
+            this.comboBoxWaterDistance.Name = "comboBoxWaterDistance";
+            this.comboBoxWaterDistance.Size = new System.Drawing.Size(308, 21);
+            this.comboBoxWaterDistance.TabIndex = 6;
+            this.comboBoxWaterDistance.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.comboBox_DrawItem);
+            this.comboBoxWaterDistance.SelectionChangeCommitted += new System.EventHandler(this.comboBoxWaterDistance_SelectionChangeCommitted);
             // 
             // groupBox2
             // 
@@ -129,6 +151,7 @@
             // 
             this.comboBoxMicroclimate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxMicroclimate.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxMicroclimate.FormattingEnabled = true;
             this.comboBoxMicroclimate.Location = new System.Drawing.Point(9, 74);
             this.comboBoxMicroclimate.Name = "comboBoxMicroclimate";
@@ -150,6 +173,7 @@
             // 
             this.comboBoxMesoclimate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxMesoclimate.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxMesoclimate.FormattingEnabled = true;
             this.comboBoxMesoclimate.Location = new System.Drawing.Point(9, 32);
             this.comboBoxMesoclimate.Name = "comboBoxMesoclimate";
@@ -335,26 +359,6 @@
             this.labelMSCoordinatesStatus.Size = new System.Drawing.Size(22, 13);
             this.labelMSCoordinatesStatus.TabIndex = 5;
             this.labelMSCoordinatesStatus.Text = "ОК";
-            // 
-            // comboBoxWaterDistance
-            // 
-            this.comboBoxWaterDistance.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxWaterDistance.FormattingEnabled = true;
-            this.comboBoxWaterDistance.Location = new System.Drawing.Point(9, 171);
-            this.comboBoxWaterDistance.Name = "comboBoxWaterDistance";
-            this.comboBoxWaterDistance.Size = new System.Drawing.Size(308, 21);
-            this.comboBoxWaterDistance.TabIndex = 6;
-            this.comboBoxWaterDistance.SelectionChangeCommitted += new System.EventHandler(this.comboBoxWaterDistance_SelectionChangeCommitted);
-            // 
-            // labelWaterDistanceType
-            // 
-            this.labelWaterDistanceType.AutoSize = true;
-            this.labelWaterDistanceType.Location = new System.Drawing.Point(6, 155);
-            this.labelWaterDistanceType.Name = "labelWaterDistanceType";
-            this.labelWaterDistanceType.Size = new System.Drawing.Size(287, 13);
-            this.labelWaterDistanceType.TabIndex = 7;
-            this.labelWaterDistanceType.Text = "Расположение МС относительно водных поверхностей";
             // 
             // FormRangeTerrain
             // 
