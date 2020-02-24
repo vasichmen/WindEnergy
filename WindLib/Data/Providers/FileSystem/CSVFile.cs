@@ -328,7 +328,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             sw.WriteLine(caption);
             foreach (RawItem item in rang)
             {
-                if (double.IsNaN(item.Direction) || double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections16.Undefined)
+                if ( double.IsNaN(item.Speed) )
                     continue;
                 sw.WriteLine($"{item.Date.ToString("dd.MM.yyyy HH:mm")};{item.Temperature};{item.Wetness};{item.Direction};{item.Speed};{item.Pressure}");
             }

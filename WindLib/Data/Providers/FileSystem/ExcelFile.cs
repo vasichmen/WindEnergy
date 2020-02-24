@@ -449,7 +449,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 int i = 5;
                 foreach (RawItem item in rang)
                 {
-                    if (double.IsNaN(item.Direction) || double.IsNaN(item.Speed) || item.DirectionRhumb == WindDirections16.Undefined)
+                    if ( double.IsNaN(item.Speed))
                         continue;
                     worksheet.Cells[i, 1].Style.Numberformat.Format = DateTimeFormat;
                     worksheet.Cells[i, 1].Value = item.Date;

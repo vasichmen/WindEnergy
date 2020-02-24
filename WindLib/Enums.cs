@@ -658,11 +658,13 @@ namespace WindEnergy
         /// <summary>
         /// устойчивая
         /// </summary>
-        Stable, 
-        
+        [Description("Устойчивая")]
+        Stable,
+
         /// <summary>
         /// неустойчивая
         /// </summary>
+        [Description("Неустойчивая")]
         Unstable
     }
 }

@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CommonLib
-{
     public static class Constants
     {
         /// <summary>
@@ -121,4 +119,4 @@ namespace CommonLib
 
         #endregion
     }
-}
+

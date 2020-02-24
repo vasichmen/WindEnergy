@@ -1,12 +1,11 @@
-﻿using System;
+﻿using CommonLib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommonLib
-{
 
     /// <summary>
     /// месяцы
@@ -133,4 +132,4 @@ namespace CommonLib
         [Description("Google спутник")]
         GoogleSatellite
     }
-}
+
