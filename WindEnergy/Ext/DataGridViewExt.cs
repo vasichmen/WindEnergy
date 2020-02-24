@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,13 +43,17 @@ namespace WindEnergy.UI.Ext
         /// <param name="e"></param>
         private void dataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
+            if (!(sender as DataGridViewExt).CausesValidation)
+                return;
+
              this.Rows[e.RowIndex].ErrorText = "";
             //проверка значений double на соответствие типу
-            if (e.ColumnIndex == 1 || e.ColumnIndex == 3 || e.ColumnIndex == 4 || e.ColumnIndex == 5 || e.ColumnIndex == 6)
+            if (e.ColumnIndex == 0 || e.ColumnIndex == 2 || e.ColumnIndex == 3 || e.ColumnIndex == 5 )
             {
-                if (!double.TryParse(e.FormattedValue as string,out double d))
+                string val = e.FormattedValue as string;
+                if (!double.TryParse(val.Replace('.',Constants.DecimalSeparator),out double d))
                 {
-                    this.Rows[e.RowIndex].ErrorText = "Не удалось распознать число";
+                    this.Rows[e.RowIndex].ErrorText = $"Не удалось распознать число: {e.FormattedValue}";
                     e.Cancel = true;
                     return;
                 }
@@ -56,7 +61,8 @@ namespace WindEnergy.UI.Ext
             //проверка направления на допустимый диапазон
             if (e.ColumnIndex == 1)
             {
-                double dir = double.Parse(e.FormattedValue as string);
+                string val = e.FormattedValue as string;
+                bool fl = double.TryParse(val.Replace('.', Constants.DecimalSeparator), out double dir);
                 if (dir < 0 || dir >= 360)
                 {
                     this.Rows[e.RowIndex].ErrorText = "Направление должно быть в диапазоне от 0 до 360";
@@ -65,10 +71,11 @@ namespace WindEnergy.UI.Ext
                 }
             }
             //проверка влажности на допустимый диапазон
-            if (e.ColumnIndex == 6)
+            if (e.ColumnIndex == 5)
             {
-                double dir = double.Parse(e.FormattedValue as string);
-                if (dir < 0 || dir > 100)
+                string val = e.FormattedValue as string;
+                bool fl = double.TryParse(val.Replace('.', Constants.DecimalSeparator), out double dir);
+                if (dir < 0 || dir >= 100)
                 {
                     this.Rows[e.RowIndex].ErrorText = "Влажность должна быть в диапазоне от 0 до 100%";
                     e.Cancel = true;

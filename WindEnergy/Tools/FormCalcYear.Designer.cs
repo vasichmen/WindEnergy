@@ -38,10 +38,10 @@
             this.labelInterval = new System.Windows.Forms.Label();
             this.labelCompletness = new System.Windows.Forms.Label();
             this.buttonSaveResults = new System.Windows.Forms.Button();
-            this.dataGridViewExt1 = new WindEnergy.UI.Ext.DataGridViewExt();
             this.labelAverageYearsSpeed = new System.Windows.Forms.Label();
             this.buttonOpenCalcYear = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.dataGridViewExt1 = new WindEnergy.UI.Ext.DataGridViewExt();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExt1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,54 +60,54 @@
             this.labelSpeedDeviation.AutoSize = true;
             this.labelSpeedDeviation.Location = new System.Drawing.Point(9, 36);
             this.labelSpeedDeviation.Name = "labelSpeedDeviation";
-            this.labelSpeedDeviation.Size = new System.Drawing.Size(35, 13);
+            this.labelSpeedDeviation.Size = new System.Drawing.Size(25, 13);
             this.labelSpeedDeviation.TabIndex = 2;
-            this.labelSpeedDeviation.Text = "label1";
+            this.labelSpeedDeviation.Text = "      ";
             // 
             // labelExpectDeviation
             // 
             this.labelExpectDeviation.AutoSize = true;
             this.labelExpectDeviation.Location = new System.Drawing.Point(9, 48);
             this.labelExpectDeviation.Name = "labelExpectDeviation";
-            this.labelExpectDeviation.Size = new System.Drawing.Size(35, 13);
+            this.labelExpectDeviation.Size = new System.Drawing.Size(25, 13);
             this.labelExpectDeviation.TabIndex = 3;
-            this.labelExpectDeviation.Text = "label1";
+            this.labelExpectDeviation.Text = "      ";
             // 
             // labelAverageCalcYearSpeed
             // 
             this.labelAverageCalcYearSpeed.AutoSize = true;
             this.labelAverageCalcYearSpeed.Location = new System.Drawing.Point(9, 63);
             this.labelAverageCalcYearSpeed.Name = "labelAverageCalcYearSpeed";
-            this.labelAverageCalcYearSpeed.Size = new System.Drawing.Size(35, 13);
+            this.labelAverageCalcYearSpeed.Size = new System.Drawing.Size(25, 13);
             this.labelAverageCalcYearSpeed.TabIndex = 4;
-            this.labelAverageCalcYearSpeed.Text = "label1";
+            this.labelAverageCalcYearSpeed.Text = "      ";
             // 
             // labelMaxSpeed
             // 
             this.labelMaxSpeed.AutoSize = true;
             this.labelMaxSpeed.Location = new System.Drawing.Point(9, 74);
             this.labelMaxSpeed.Name = "labelMaxSpeed";
-            this.labelMaxSpeed.Size = new System.Drawing.Size(35, 13);
+            this.labelMaxSpeed.Size = new System.Drawing.Size(25, 13);
             this.labelMaxSpeed.TabIndex = 5;
-            this.labelMaxSpeed.Text = "label1";
+            this.labelMaxSpeed.Text = "      ";
             // 
             // labelInterval
             // 
             this.labelInterval.AutoSize = true;
             this.labelInterval.Location = new System.Drawing.Point(9, 87);
             this.labelInterval.Name = "labelInterval";
-            this.labelInterval.Size = new System.Drawing.Size(35, 13);
+            this.labelInterval.Size = new System.Drawing.Size(25, 13);
             this.labelInterval.TabIndex = 6;
-            this.labelInterval.Text = "label1";
+            this.labelInterval.Text = "      ";
             // 
             // labelCompletness
             // 
             this.labelCompletness.AutoSize = true;
             this.labelCompletness.Location = new System.Drawing.Point(9, 100);
             this.labelCompletness.Name = "labelCompletness";
-            this.labelCompletness.Size = new System.Drawing.Size(35, 13);
+            this.labelCompletness.Size = new System.Drawing.Size(25, 13);
             this.labelCompletness.TabIndex = 7;
-            this.labelCompletness.Text = "label1";
+            this.labelCompletness.Text = "      ";
             // 
             // buttonSaveResults
             // 
@@ -120,30 +120,15 @@
             this.buttonSaveResults.UseVisualStyleBackColor = true;
             this.buttonSaveResults.Click += new System.EventHandler(this.buttonSaveResults_Click);
             // 
-            // dataGridViewExt1
-            // 
-            this.dataGridViewExt1.AllowUserToAddRows = false;
-            this.dataGridViewExt1.AllowUserToDeleteRows = false;
-            this.dataGridViewExt1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridViewExt1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewExt1.Location = new System.Drawing.Point(12, 116);
-            this.dataGridViewExt1.Name = "dataGridViewExt1";
-            this.dataGridViewExt1.ReadOnly = true;
-            this.dataGridViewExt1.Size = new System.Drawing.Size(714, 304);
-            this.dataGridViewExt1.TabIndex = 0;
-            this.dataGridViewExt1.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridViewExt1_ColumnAdded);
-            // 
             // labelAverageYearsSpeed
             // 
             this.labelAverageYearsSpeed.AutoSize = true;
             this.labelAverageYearsSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelAverageYearsSpeed.Location = new System.Drawing.Point(9, 9);
             this.labelAverageYearsSpeed.Name = "labelAverageYearsSpeed";
-            this.labelAverageYearsSpeed.Size = new System.Drawing.Size(41, 13);
+            this.labelAverageYearsSpeed.Size = new System.Drawing.Size(27, 13);
             this.labelAverageYearsSpeed.TabIndex = 9;
-            this.labelAverageYearsSpeed.Text = "label1";
+            this.labelAverageYearsSpeed.Text = "     ";
             // 
             // buttonOpenCalcYear
             // 
@@ -156,6 +141,22 @@
             this.buttonOpenCalcYear.UseVisualStyleBackColor = true;
             this.buttonOpenCalcYear.Visible = false;
             this.buttonOpenCalcYear.Click += new System.EventHandler(this.buttonOpenCalcYear_Click);
+            // 
+            // dataGridViewExt1
+            // 
+            this.dataGridViewExt1.AllowUserToAddRows = false;
+            this.dataGridViewExt1.AllowUserToDeleteRows = false;
+            this.dataGridViewExt1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewExt1.CausesValidation = false;
+            this.dataGridViewExt1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewExt1.Location = new System.Drawing.Point(12, 116);
+            this.dataGridViewExt1.Name = "dataGridViewExt1";
+            this.dataGridViewExt1.ReadOnly = true;
+            this.dataGridViewExt1.Size = new System.Drawing.Size(714, 304);
+            this.dataGridViewExt1.TabIndex = 0;
+            this.dataGridViewExt1.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridViewExt1_ColumnAdded);
             // 
             // FormCalcYear
             // 

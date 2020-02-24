@@ -97,7 +97,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             Coordinates = PointLatLng.Empty;
             BindNearestMS = null;
             WetnessUnit = WetnessUnits.None;
-            NonRequireFields = new List<ImportFields>() { ImportFields.Pressure, ImportFields.Temperature, ImportFields.Wetness };
+            NonRequireFields = new List<ImportFields>() { ImportFields.Pressure, ImportFields.Temperature, ImportFields.Wetness, ImportFields.Direction };
         }
 
 
@@ -219,8 +219,6 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
         /// </summary>
         public string CheckParameters()
         {
-            if (DirectionUnit == DirectionUnits.None && !NonRequireFields.Contains(ImportFields.Direction))
-                throw new ArgumentException("Не заданы едиицы измерения направления");
             if (PressureUnit == PressureUnits.None && !NonRequireFields.Contains(ImportFields.Pressure))
                 throw new ArgumentException("Не заданы едиицы измерения давления");
             if (WetnessUnit == WetnessUnits.None && !NonRequireFields.Contains(ImportFields.Wetness))

@@ -655,7 +655,14 @@ namespace WindEnergy
     [TypeConverter(typeof(EnumTypeConverter<WaterDistanceType>))]
     public enum AtmosphereStratification
     {
-
-        Stable, Unstable
+        /// <summary>
+        /// устойчивая
+        /// </summary>
+        Stable, 
+        
+        /// <summary>
+        /// неустойчивая
+        /// </summary>
+        Unstable
     }
 }

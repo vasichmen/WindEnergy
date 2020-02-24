@@ -47,6 +47,7 @@ namespace WindEnergy.UI.Dialogs
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxDelimeter = new System.Windows.Forms.TextBox();
             this.groupBoxColumns = new System.Windows.Forms.GroupBox();
+            this.checkBoxUseDirection = new System.Windows.Forms.CheckBox();
             this.checkBoxUseWetness = new System.Windows.Forms.CheckBox();
             this.checkBoxUsePressure = new System.Windows.Forms.CheckBox();
             this.checkBoxUseTemperature = new System.Windows.Forms.CheckBox();
@@ -75,7 +76,6 @@ namespace WindEnergy.UI.Dialogs
             this.установкиПоУмолчаниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultRP5wmoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultRP5metarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkBoxUseDirection = new System.Windows.Forms.CheckBox();
             this.dataGridViewImported = new WindEnergy.UI.Ext.DataGridViewExt();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLine)).BeginInit();
@@ -285,6 +285,18 @@ namespace WindEnergy.UI.Dialogs
             this.groupBoxColumns.TabIndex = 14;
             this.groupBoxColumns.TabStop = false;
             this.groupBoxColumns.Text = "Настройки столбцов";
+            // 
+            // checkBoxUseDirection
+            // 
+            this.checkBoxUseDirection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxUseDirection.AutoSize = true;
+            this.checkBoxUseDirection.Location = new System.Drawing.Point(325, 15);
+            this.checkBoxUseDirection.Name = "checkBoxUseDirection";
+            this.checkBoxUseDirection.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxUseDirection.TabIndex = 21;
+            this.checkBoxUseDirection.Tag = "";
+            this.checkBoxUseDirection.UseVisualStyleBackColor = true;
+            this.checkBoxUseDirection.CheckedChanged += new System.EventHandler(this.checkBoxUse_CheckedChanged);
             // 
             // checkBoxUseWetness
             // 
@@ -620,22 +632,11 @@ namespace WindEnergy.UI.Dialogs
             this.defaultRP5metarToolStripMenuItem.Text = "Расписание погоды (аэропорт)";
             this.defaultRP5metarToolStripMenuItem.Click += new System.EventHandler(this.defaultRP5metarToolStripMenuItem_Click);
             // 
-            // checkBoxUseDirection
-            // 
-            this.checkBoxUseDirection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxUseDirection.AutoSize = true;
-            this.checkBoxUseDirection.Location = new System.Drawing.Point(325, 15);
-            this.checkBoxUseDirection.Name = "checkBoxUseDirection";
-            this.checkBoxUseDirection.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxUseDirection.TabIndex = 21;
-            this.checkBoxUseDirection.Tag = "";
-            this.checkBoxUseDirection.UseVisualStyleBackColor = true;
-            this.checkBoxUseDirection.CheckedChanged += new System.EventHandler(this.checkBoxUse_CheckedChanged);
-            // 
             // dataGridViewImported
             // 
             this.dataGridViewImported.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewImported.CausesValidation = false;
             this.dataGridViewImported.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewImported.Location = new System.Drawing.Point(12, 333);
             this.dataGridViewImported.Name = "dataGridViewImported";

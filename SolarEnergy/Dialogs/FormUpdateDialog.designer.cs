@@ -41,7 +41,7 @@
             // buttonUpdate
             // 
             this.buttonUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonUpdate.Location = new System.Drawing.Point(15, 255);
+            this.buttonUpdate.Location = new System.Drawing.Point(15, 367);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(91, 23);
             this.buttonUpdate.TabIndex = 0;
@@ -58,14 +58,14 @@
             this.textBoxChanges.Location = new System.Drawing.Point(15, 66);
             this.textBoxChanges.Multiline = true;
             this.textBoxChanges.Name = "textBoxChanges";
-            this.textBoxChanges.Size = new System.Drawing.Size(278, 160);
+            this.textBoxChanges.Size = new System.Drawing.Size(768, 272);
             this.textBoxChanges.TabIndex = 1;
             // 
             // checkBoxRemember
             // 
             this.checkBoxRemember.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxRemember.AutoSize = true;
-            this.checkBoxRemember.Location = new System.Drawing.Point(15, 232);
+            this.checkBoxRemember.Location = new System.Drawing.Point(15, 344);
             this.checkBoxRemember.Name = "checkBoxRemember";
             this.checkBoxRemember.Size = new System.Drawing.Size(140, 17);
             this.checkBoxRemember.TabIndex = 2;
@@ -75,7 +75,7 @@
             // buttonIgnore
             // 
             this.buttonIgnore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonIgnore.Location = new System.Drawing.Point(202, 255);
+            this.buttonIgnore.Location = new System.Drawing.Point(692, 367);
             this.buttonIgnore.Name = "buttonIgnore";
             this.buttonIgnore.Size = new System.Drawing.Size(91, 23);
             this.buttonIgnore.TabIndex = 3;
@@ -118,7 +118,7 @@
             this.AcceptButton = this.buttonUpdate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(308, 291);
+            this.ClientSize = new System.Drawing.Size(798, 403);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelNew);
             this.Controls.Add(this.labelСur);
