@@ -122,6 +122,7 @@
             this.radioButtonUnstable.Size = new System.Drawing.Size(96, 17);
             this.radioButtonUnstable.TabIndex = 1;
             this.radioButtonUnstable.Text = "Неустойчивая";
+            this.toolTip1.SetToolTip(this.radioButtonUnstable, resources.GetString("radioButtonUnstable.ToolTip"));
             this.radioButtonUnstable.UseVisualStyleBackColor = true;
             this.radioButtonUnstable.CheckedChanged += new System.EventHandler(this.radioButtonStratification_CheckedChanged);
             // 
@@ -135,6 +136,7 @@
             this.radioButtonStable.TabIndex = 0;
             this.radioButtonStable.TabStop = true;
             this.radioButtonStable.Text = "Устойчивая";
+            this.toolTip1.SetToolTip(this.radioButtonStable, resources.GetString("radioButtonStable.ToolTip"));
             this.radioButtonStable.UseVisualStyleBackColor = true;
             this.radioButtonStable.CheckedChanged += new System.EventHandler(this.radioButtonStratification_CheckedChanged);
             // 
@@ -238,7 +240,7 @@
             this.groupBox1.Size = new System.Drawing.Size(676, 44);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Тип рельефа";
+            this.groupBox1.Text = "Выберите тип рельефа";
             // 
             // radioButtonTerrainSecond
             // 
@@ -250,6 +252,8 @@
             this.radioButtonTerrainSecond.Size = new System.Drawing.Size(121, 21);
             this.radioButtonTerrainSecond.TabIndex = 1;
             this.radioButtonTerrainSecond.Text = "II тип рельефа";
+            this.toolTip1.SetToolTip(this.radioButtonTerrainSecond, "Неплоский, равнинно-холмистый и низкогорный рельеф с высотой до 750 м над уровнем" +
+        " моря");
             this.radioButtonTerrainSecond.UseVisualStyleBackColor = true;
             this.radioButtonTerrainSecond.CheckedChanged += new System.EventHandler(this.radioButtonTerrain_CheckedChanged);
             // 
@@ -264,6 +268,8 @@
             this.radioButtonTerrainFirst.TabIndex = 0;
             this.radioButtonTerrainFirst.TabStop = true;
             this.radioButtonTerrainFirst.Text = "Ⅰ тип рельефа";
+            this.toolTip1.SetToolTip(this.radioButtonTerrainFirst, "Плоский рельеф с естественными и искуственными препятствиями высотой до 100 м (ра" +
+        "внинная местность)");
             this.radioButtonTerrainFirst.UseVisualStyleBackColor = true;
             this.radioButtonTerrainFirst.CheckedChanged += new System.EventHandler(this.radioButtonTerrain_CheckedChanged);
             // 
@@ -291,6 +297,7 @@
             this.buttonSelectMSCoordinates.Size = new System.Drawing.Size(218, 23);
             this.buttonSelectMSCoordinates.TabIndex = 4;
             this.buttonSelectMSCoordinates.Text = "Выбрать точку МС";
+            this.toolTip1.SetToolTip(this.buttonSelectMSCoordinates, "Выбрать н акарте точку расположения ВЭС");
             this.buttonSelectMSCoordinates.UseVisualStyleBackColor = true;
             this.buttonSelectMSCoordinates.Click += new System.EventHandler(this.buttonSelectMSCoordinates_Click);
             // 
@@ -301,6 +308,7 @@
             this.buttonSelectPointCoordinates.Size = new System.Drawing.Size(218, 23);
             this.buttonSelectPointCoordinates.TabIndex = 0;
             this.buttonSelectPointCoordinates.Text = "Выбрать точку ВЭС";
+            this.toolTip1.SetToolTip(this.buttonSelectPointCoordinates, "Изменить точку расположения МС (если не задана ранее)");
             this.buttonSelectPointCoordinates.UseVisualStyleBackColor = true;
             this.buttonSelectPointCoordinates.Click += new System.EventHandler(this.buttonSelectPointCoordinates_Click);
             // 
@@ -320,6 +328,7 @@
             this.buttonEnterPointClasses.Size = new System.Drawing.Size(218, 23);
             this.buttonEnterPointClasses.TabIndex = 1;
             this.buttonEnterPointClasses.Text = "Ввести классы открытости точки ВЭС";
+            this.toolTip1.SetToolTip(this.buttonEnterPointClasses, "Указать классы открытости точки установки ВЭС");
             this.buttonEnterPointClasses.UseVisualStyleBackColor = true;
             this.buttonEnterPointClasses.Click += new System.EventHandler(this.buttonEnterPointClasses_Click);
             // 
@@ -339,6 +348,8 @@
             this.buttonEnterMSClasses.Size = new System.Drawing.Size(218, 23);
             this.buttonEnterMSClasses.TabIndex = 2;
             this.buttonEnterMSClasses.Text = "Ввести классы открытости МС";
+            this.toolTip1.SetToolTip(this.buttonEnterMSClasses, "Задать вручную классы открытости МС, если не удалось найти ближайшую МС из СБД Фл" +
+        "югер");
             this.buttonEnterMSClasses.UseVisualStyleBackColor = true;
             this.buttonEnterMSClasses.Click += new System.EventHandler(this.buttonEnterMSClasses_Click);
             // 
