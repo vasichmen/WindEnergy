@@ -287,6 +287,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         void comboBox_DrawItem(object sender, DrawItemEventArgs e)
         {
+            if (e.Index == -1) return;
             ComboBox combobox = sender as ComboBox;
 
             string text = combobox.GetItemText(combobox.Items[e.Index]);

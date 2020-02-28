@@ -308,7 +308,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                     res.Name = info.Name;
                     res.Position = info.Position;
                     res.Meteostation = info;
-                    Vars.RP5Meteostations.TryAddMeteostation(info); //если такой метеостанции нет в БД, то добавляем
+                    new Task(() => Vars.RP5Meteostations.TryAddMeteostation(info)).Start(); //если такой метеостанции нет в БД, то добавляем
                     return res;
 
                 #endregion

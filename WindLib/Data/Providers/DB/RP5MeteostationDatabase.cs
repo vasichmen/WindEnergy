@@ -19,6 +19,8 @@ namespace WindEnergy.WindLib.Data.Providers.DB
     /// </summary>
     public class RP5MeteostationDatabase : BaseMeteostationDatabase<string, RP5MeteostationInfo>
     {
+        private object dict_locker = new object();
+
         /// <summary>
         /// создает объект для этого файла, не загружая данные
         /// </summary>
@@ -248,10 +250,13 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                 info.Altitude = Vars.ETOPOdatabase.GetElevation(info.Position);
             if (string.IsNullOrWhiteSpace(info.Address))
                 info.Address = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(info.Position);
-
-            _dictionary.Add(info.ID, info);
-            ExportMeteostationList(this.List, Vars.Options.StaticMeteostationCoordinatesSourceFile);
-            return true;
+            lock (dict_locker)
+            {
+                Dictionary.Add(info.ID, info);
+                _list = null;
+                ExportMeteostationList(this.List, Vars.Options.StaticMeteostationCoordinatesSourceFile);
+                return true;
+            }
         }
 
         /// <summary>
@@ -261,10 +266,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         /// <returns></returns>
         public bool Contains(RP5MeteostationInfo meteostation)
         {
-            foreach (var v in this.List)
-                if (v.ID == meteostation.ID)
-                    return true;
-            return false;
+            return Dictionary.ContainsKey(meteostation.ID);
         }
     }
 }

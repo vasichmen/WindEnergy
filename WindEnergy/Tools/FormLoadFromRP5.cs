@@ -199,6 +199,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         void comboBoxPoint_DrawItem(object sender, DrawItemEventArgs e)
         {
+            if (e.Index == -1) return;
             string text = this.comboBoxPoint.GetItemText(comboBoxPoint.Items[e.Index]);
             e.DrawBackground();
             using (SolidBrush br = new SolidBrush(e.ForeColor))
