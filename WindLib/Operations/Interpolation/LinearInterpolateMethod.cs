@@ -10,6 +10,7 @@ namespace WindEnergy.WindLib.Operations.Interpolation
     {
         private readonly Dictionary<double, double> values;
         private List<double> sortedX;
+        public readonly bool Empty;
 
         /// <summary>
         /// сохдаёт новый экземпляр с заданной функцией
@@ -17,6 +18,9 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         /// <param name="funct"></param>
         public LinearInterpolateMethod(Dictionary<double, double> funct)
         {
+            if (funct.Keys.Count == 0)
+            { Empty = true; return; }
+            Empty = false;
             this.values = new Dictionary<double, double>();
             foreach (var kv in funct)
                 if (!double.IsNaN(kv.Value))
@@ -33,6 +37,9 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         /// <returns></returns>
         public double GetValue(double x)
         {
+            if (Empty)
+                return double.NaN;
+
             double res = double.NaN;
             if (values.ContainsKey(x))
                 res = values[x];

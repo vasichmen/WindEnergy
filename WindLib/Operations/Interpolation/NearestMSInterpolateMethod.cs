@@ -31,6 +31,7 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         private readonly RawRange nearestRange;
         private readonly Func<double, double> getRes = null;
         private readonly Diapason<double> interpolationDiapason;
+        public readonly bool Empty;
 
 
         /// <summary>
@@ -75,6 +76,10 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         /// <param name="parameterType">тип мтеорологического параметра</param>
         public NearestMSInterpolateMethod(Dictionary<double, double> func, RawRange baseRange, MeteorologyParameters parameterType)
         {
+            if (func.Keys.Count == 0)
+            { Empty = true; return; }
+            Empty = false;
+
             this.parameterType = parameterType;
             this.func = func;
             this.nearestRange = baseRange;
@@ -136,8 +141,8 @@ namespace WindEnergy.WindLib.Operations.Interpolation
 
             for (int i = 0; i < mts.Count; i++)
             {
-                if ( actionPercent != null)
-                    actionPercent.Invoke((int)((i*1d / mts.Count) * 100d), "Поиск подходящей МС...");
+                if (actionPercent != null)
+                    actionPercent.Invoke((int)((i * 1d / mts.Count) * 100d), "Поиск подходящей МС...");
 
                 RP5MeteostationInfo m = mts[i];
 
@@ -262,6 +267,8 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         /// <returns></returns>
         public double GetValue(double x)
         {
+            if (Empty)
+                return double.NaN;
             if (x > interpolationDiapason.To || x < interpolationDiapason.From) //если х выходит за границы диапазона функции, то ошибка
                 throw new ArgumentOutOfRangeException("Значение х должно быть внутри диапазона обеих функций");
 

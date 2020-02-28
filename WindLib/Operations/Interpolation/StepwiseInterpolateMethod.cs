@@ -13,6 +13,7 @@ namespace WindEnergy.WindLib.Operations.Interpolation
     {
         private readonly Dictionary<double, double> values;
         private readonly List<double> sortedX;
+        public readonly bool Empty;
 
         /// <summary>
         /// сохдаёт новый экземпляр с заданной функцией
@@ -20,6 +21,9 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         /// <param name="funct"></param>
         public StepwiseInterpolateMethod(Dictionary<double, double> funct)
         {
+            if (funct.Keys.Count == 0)
+            { Empty = true; return; }
+            Empty = false;
             this.values = new Dictionary<double, double>();
             foreach (var kv in funct)
                 if (!double.IsNaN(kv.Value))
@@ -36,13 +40,16 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         /// <returns></returns>
         public double GetValue(double x)
         {
+            if (Empty)
+                return double.NaN;
+
             if (values.ContainsKey(x))
                 return values[x];
 
             if (x > sortedX[sortedX.Count - 1] || x < sortedX[0]) //если х выходит за границы диапазона функции, то ошибка
                 throw new ArgumentOutOfRangeException("Значение х должно быть внутри диапазона функции");
             int left = getLeftBound(x);
-                    return values[sortedX[left]];
+            return values[sortedX[left]];
             throw new Exception("ошибка при поиске аргумента");
         }
 

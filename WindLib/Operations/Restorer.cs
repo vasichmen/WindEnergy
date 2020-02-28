@@ -87,7 +87,7 @@ namespace WindEnergy.WindLib.Operations
                     methodDirects = new StepwiseInterpolateMethod(directsFunc);
                     methodTemp = new StepwiseInterpolateMethod(tempFunc);
                     methodWet = new StepwiseInterpolateMethod(wetFunc);
-                    methodPress = new LinearInterpolateMethod(pressFunc);
+                    methodPress = new StepwiseInterpolateMethod(pressFunc);
                     break;
                 case InterpolateMethods.NearestMeteostation:
                     if (param.Coordinates.IsEmpty)
@@ -122,10 +122,10 @@ namespace WindEnergy.WindLib.Operations
             double start = double.MinValue;
             double[] starts = new double[] {
                 speedFunc.Keys.Min(),
-                directsFunc.Keys.Min(),
-                tempFunc.Keys.Min(),
-                wetFunc.Keys.Min(),
-                pressFunc.Keys.Min()
+                directsFunc.Keys.Count>0?directsFunc.Keys.Min():speedFunc.Keys.Min(),
+                tempFunc.Keys.Count>0?tempFunc.Keys.Min():speedFunc.Keys.Min(),
+                wetFunc.Keys.Count>0?wetFunc.Keys.Min():speedFunc.Keys.Min(),
+                pressFunc.Keys.Count>0?pressFunc.Keys.Min():speedFunc.Keys.Min()
             };
             foreach (double st in starts)
                 if (st > start)
@@ -151,11 +151,7 @@ namespace WindEnergy.WindLib.Operations
                     double temp = methodTemp.GetValue(p);
                     double wet = methodWet.GetValue(p);
                     double press = methodPress.GetValue(p);
-                    if (double.IsNaN(speed) ||
-                        double.IsNaN(direct) ||
-                        double.IsNaN(temp) ||
-                        double.IsNaN(press) ||
-                        double.IsNaN(wet))
+                    if (double.IsNaN(speed))
                         continue;
                     res.Add(new RawItem(p, speed, direct, temp, wet, press));
                 }
