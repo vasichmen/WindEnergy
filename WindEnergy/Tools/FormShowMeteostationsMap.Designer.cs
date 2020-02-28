@@ -94,6 +94,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormShowMeteostationsMap";
             this.Text = "Просмотр карты метеостанций";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormShowMeteostationsMap_FormClosing);
             this.Shown += new System.EventHandler(this.FormShowMeteostationsMap_Shown);
             this.Resize += new System.EventHandler(this.FormShowMeteostationsMap_Resize);
             this.statusStrip1.ResumeLayout(false);

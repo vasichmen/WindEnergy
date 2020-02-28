@@ -74,7 +74,6 @@ namespace WindEnergy.UI.Tools
                 dateTimePickerFromDate.Enabled = true;
                 dateTimePickerToDate.Enabled = true;
                 buttonDownload.Enabled = true;
-                linkLabelShowOnMap.Enabled = true;
             }
         }
 
@@ -176,7 +175,6 @@ namespace WindEnergy.UI.Tools
             selectedMeteostation = null;
             dateTimePickerFromDate.Enabled = false;
             dateTimePickerToDate.Enabled = false;
-            linkLabelShowOnMap.Enabled = false;
             string curTextBox = comboBoxPoint.Text.Trim();
             switch (Vars.Options.RP5SearchEngine)
             {
@@ -315,14 +313,11 @@ namespace WindEnergy.UI.Tools
                 dateTimePickerFromDate.MinDate = selectedMeteostation.MonitoringFrom;
                 dateTimePickerToDate.MaxDate = DateTime.Now;
                 labelDateRange.Text = "Выберите диапазон дат: (дата начала наблюдений: " + selectedMeteostation.MonitoringFrom.ToString() + ")";
-                linkLabelShowOnMap.Enabled = true;
 
                 //разблокировка элементов
                 dateTimePickerFromDate.Enabled = true;
                 dateTimePickerToDate.Enabled = true;
                 buttonDownload.Enabled = true;
-                linkLabelShowOnMap.Enabled = true;
-
             }
             catch (WebException)
             {
@@ -358,8 +353,25 @@ namespace WindEnergy.UI.Tools
 
         private void linkLabelShowOnMap_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (selectedMeteostation != null)
-                new FormShowMeteostationsMap(selectedMeteostation).Show();
+            FormShowMeteostationsMap fsmon =  new FormShowMeteostationsMap(true);
+            if(fsmon.ShowDialog(this) == DialogResult.OK)
+            {
+                this.selectedMeteostation = fsmon.Result;
+
+                //установка времени начала и конца наблюдений
+                dateTimePickerFromDate.MinDate = selectedMeteostation.MonitoringFrom;
+                dateTimePickerToDate.MaxDate = DateTime.Now;
+                labelDateRange.Text = "Выберите диапазон дат: (дата начала наблюдений: " + selectedMeteostation.MonitoringFrom.ToString() + ")";
+
+                //разблокировка элементов
+                dateTimePickerFromDate.Enabled = true;
+                dateTimePickerToDate.Enabled = true;
+                buttonDownload.Enabled = true;
+
+                comboBoxPoint.Items.Clear();
+                comboBoxPoint.Items.Add(selectedMeteostation);
+                comboBoxPoint.SelectedItem = selectedMeteostation;
+            }
         }
     }
 }

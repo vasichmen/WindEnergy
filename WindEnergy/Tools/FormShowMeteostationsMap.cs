@@ -25,13 +25,19 @@ namespace WindEnergy.UI.Tools
 {
     public partial class FormShowMeteostationsMap : Form
     {
+        bool IsDialog;
+
         /// <summary>
         /// видимый слой карты
         /// </summary>
         private GMapOverlay lay;
 
-        public FormShowMeteostationsMap()
+        public RP5MeteostationInfo Result { get; private set; }
+
+        public FormShowMeteostationsMap(bool isDialog=false)
         {
+            IsDialog = isDialog;
+            DialogResult = DialogResult.None;
             InitializeComponent();
             ConfigureGMapControl();
         }
@@ -269,22 +275,48 @@ namespace WindEnergy.UI.Tools
 
         private void gmapControlMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
-            if (item.Tag.GetType() != typeof(RP5MeteostationInfo)) return;
             item = item ?? throw new ArgumentNullException(nameof(item));
+            if (item.Tag.GetType() != typeof(RP5MeteostationInfo)) return;
             RP5MeteostationInfo mi = (RP5MeteostationInfo)item.Tag;
-            FormLoadFromRP5 frm = new FormLoadFromRP5(mi);
-            if (frm.ShowDialog(this) == DialogResult.OK)
+
+            if (IsDialog) {
+                Result = mi;
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else
             {
-                RawRange res = frm.Result;
-                TabPageExt tab = Program.winMain.mainTabControl.OpenNewTab(res, res.Name);
-                tab.HasNotSavedChanges = true;
-                _ = Program.winMain.Focus();
+                FormLoadFromRP5 frm = new FormLoadFromRP5(mi);
+                if (frm.ShowDialog(this) == DialogResult.OK)
+                {
+                    RawRange res = frm.Result;
+                    TabPageExt tab = Program.winMain.mainTabControl.OpenNewTab(res, res.Name);
+                    tab.HasNotSavedChanges = true;
+                    _ = Program.winMain.Focus();
+                }
             }
         }
 
         private void FormShowMeteostationsMap_Resize(object sender, EventArgs e)
         {
             showVisibleMeteostations();
+        }
+
+        private void OKToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            
+        }
+
+        private void FormShowMeteostationsMap_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DialogResult == DialogResult.None)
+                DialogResult = DialogResult.Cancel;
         }
     }
 }

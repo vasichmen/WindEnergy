@@ -40,7 +40,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.progressBarProgress = new System.Windows.Forms.ProgressBar();
-            this.linkLabelShowOnMap = new System.Windows.Forms.LinkLabel();
+            this.linkLabelSelectOnMap = new System.Windows.Forms.LinkLabel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
@@ -152,18 +152,17 @@
             this.progressBarProgress.Size = new System.Drawing.Size(374, 23);
             this.progressBarProgress.TabIndex = 9;
             // 
-            // linkLabelShowOnMap
+            // linkLabelSelectOnMap
             // 
-            this.linkLabelShowOnMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkLabelShowOnMap.AutoSize = true;
-            this.linkLabelShowOnMap.Enabled = false;
-            this.linkLabelShowOnMap.Location = new System.Drawing.Point(283, 9);
-            this.linkLabelShowOnMap.Name = "linkLabelShowOnMap";
-            this.linkLabelShowOnMap.Size = new System.Drawing.Size(103, 13);
-            this.linkLabelShowOnMap.TabIndex = 10;
-            this.linkLabelShowOnMap.TabStop = true;
-            this.linkLabelShowOnMap.Text = "Показать на карте";
-            this.linkLabelShowOnMap.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelShowOnMap_LinkClicked);
+            this.linkLabelSelectOnMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabelSelectOnMap.AutoSize = true;
+            this.linkLabelSelectOnMap.Location = new System.Drawing.Point(283, 9);
+            this.linkLabelSelectOnMap.Name = "linkLabelSelectOnMap";
+            this.linkLabelSelectOnMap.Size = new System.Drawing.Size(98, 13);
+            this.linkLabelSelectOnMap.TabIndex = 10;
+            this.linkLabelSelectOnMap.TabStop = true;
+            this.linkLabelSelectOnMap.Text = "Выбрать на карте";
+            this.linkLabelSelectOnMap.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelShowOnMap_LinkClicked);
             // 
             // FormLoadFromRP5
             // 
@@ -172,7 +171,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(395, 173);
-            this.Controls.Add(this.linkLabelShowOnMap);
+            this.Controls.Add(this.linkLabelSelectOnMap);
             this.Controls.Add(this.progressBarProgress);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.label4);
@@ -206,7 +205,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.ProgressBar progressBarProgress;
-        private System.Windows.Forms.LinkLabel linkLabelShowOnMap;
+        private System.Windows.Forms.LinkLabel linkLabelSelectOnMap;
         private System.Windows.Forms.ToolTip toolTip1;
     }
 }
