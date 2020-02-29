@@ -18,7 +18,6 @@ namespace WindEnergy.WindLib.Transformation.Terrain
         public TerrainType TerrainType { get; set; }
         public PointLatLng PointCoordinates { get; set; }
         public FlugerMeteostationInfo FlugerMeteostation { get; set; }
-        public WaterDistanceType WaterType { get;  set; }
         public MesoclimateItemInfo MesoclimateCoefficient { get; set; }
         public MicroclimateItemInfo MicroclimateCoefficient { get; set; }
         public AtmosphereStratification AtmosphereStratification { get; set; }

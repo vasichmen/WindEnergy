@@ -10,6 +10,11 @@ using CommonLib.Classes;
 using WindEnergy.WindLib.Statistic.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.WindLib.Statistic.Collections;
+using GMap.NET;
+using CommonLibLib.Data.Interfaces;
+using CommonLib.Geomodel;
+using System.Drawing;
+using WindEnergy.WindLib.Operations.Interpolation;
 
 namespace WindEnergy.WindLib.Transformation.Terrain
 {
@@ -35,8 +40,8 @@ namespace WindEnergy.WindLib.Transformation.Terrain
             result.BeginChange();
             switch (param.TerrainType)
             {
-                case TerrainType.First:
-                    k0 = getFirstTypeK0(param.MSClasses, param.PointClasses); //получаем коэффициенты для плоского рельефа
+                case TerrainType.Macro:
+                    k0 = getTerrainMacroK0(param.MSClasses, param.PointClasses); //получаем коэффициенты для плоского рельефа
 
                     //пересчет всех скоростей ряда
 
@@ -54,37 +59,33 @@ namespace WindEnergy.WindLib.Transformation.Terrain
                             actionPercent((int)((c / Range.Count) * 100));
                     }
                     break;
-                case TerrainType.Second:
-
-                    StatisticalRange<WindDirections8> expectancy = StatisticEngine.GetDirectionExpectancy(Range, GradationInfo<WindDirections8>.Rhumb8Gradations); //повторяемости скорости ветра по 8 румбам
-
-                    //1. привести Ряд на МС к условиям открытой местности
-                    //2. выбрать мезоклиматический коэффициент
-                    //3. выбрать микроклиматический коэффициент
-                    //4. Vа = kм * kмк * Vмс (только для преобладающего направления? >30%)
-                    RawRange flattered = ToFlatTerrain(Range, expectancy, param.MSClasses, param.WaterType);
-
+                case TerrainType.Meso:
                     //мезоклиматический коэффициент
                     double Km = (param.MesoclimateCoefficient.Value.From + param.MesoclimateCoefficient.Value.To) / 2d; //среднее внутри диапазона
 
-                    //микроклиматический коэффициент
-                    double Kmk = param.MicroclimateCoefficient != null ? selectMicroclimateCoefficient(flattered, param.MicroclimateCoefficient, param.AtmosphereStratification) : 1;
-
-                    //выбор преобладающих направлений ветра
-                    List<WindDirections8> dominants = new List<WindDirections8>();
-                    var maxes = expectancy.Values.OrderByDescending((d) => d).ToList();
-                    dominants.Add((WindDirections8)expectancy.Keys[expectancy.Values.IndexOf(maxes[0])]); //первый всегда добавляем
-                    if (maxes[0] > 0.3 && maxes[0] - maxes[1] < 0.1) //второй добавляем если первый больше 30% и у второго отрыв меньше 10%
-                        dominants.Add((WindDirections8)expectancy.Keys[expectancy.Values.IndexOf(maxes[1])]); 
+                    //выбор преобладающих направлений ветра 
+                    List<WindDirections8> dominants = GetRhumbsDominants(Range);
 
                     //пересчет ряда только для преобладающих направлений
-                    foreach (RawItem item in flattered)
+                    foreach (RawItem item in Range)
                     {
                         RawItem ni = item.Clone();
-                        ni.Speed = dominants.Contains(ni.DirectionRhumb8) ? ni.Speed * Km * Kmk : ni.Speed;
+                        ni.Speed = dominants.Contains(ni.DirectionRhumb8) ? ni.Speed * Km : ni.Speed;
                         result.Add(ni);
                     }
+                    break;
+                case TerrainType.Micro:
+                    //выбор преобладающих направлений ветра 
+                    List<WindDirections8> directs = GetRhumbsDominants(Range);
 
+                    //пересчет ряда только для преобладающих направлений
+                    foreach (RawItem item in Range)
+                    {
+                        double Kmk = selectMicroclimateCoefficient(item.Speed, param.MicroclimateCoefficient, param.AtmosphereStratification);
+                        RawItem ni = item.Clone();
+                        ni.Speed = directs.Contains(ni.DirectionRhumb8) ? ni.Speed * Kmk : ni.Speed;
+                        result.Add(ni);
+                    }
                     break;
                 default: throw new Exception("Этот тип рельефа не реализован");
             }
@@ -97,27 +98,39 @@ namespace WindEnergy.WindLib.Transformation.Terrain
         /// <summary>
         /// выбор микроклиматического коэффициента рельефа по средней скорости и стратификации атмосферы
         /// </summary>
-        /// <param name="flattered"></param>
+        /// <param name="speed">скорость ветра </param>
         /// <param name="microclimateCoefficient"></param>
         /// <param name="atmosphereStratification"></param>
         /// <returns></returns>
-        private static double selectMicroclimateCoefficient(RawRange flattered, MicroclimateItemInfo microclimateCoefficient, AtmosphereStratification atmosphereStratification)
+        private static double selectMicroclimateCoefficient(double speed, MicroclimateItemInfo microclimateCoefficient, AtmosphereStratification atmosphereStratification)
         {
-            double aver = flattered.Average((i) => i.Speed);
-            if (aver <= 5)
-                return atmosphereStratification == AtmosphereStratification.Stable ? microclimateCoefficient.Stable_3_5 : microclimateCoefficient.Unstable_3_5;
+            //TODO: сделать линейную интерполяцию
+            Diapason<double> diap;
+            double res;
+            if (speed <= 5)
+            {
+                diap = atmosphereStratification == AtmosphereStratification.Stable ? microclimateCoefficient.Stable_3_5 : microclimateCoefficient.Unstable_3_5;
+                res = LinearInterpolateMethod.LinearInterpolation(3, 5, diap.From, diap.To, speed);
+            }
             else
-                return atmosphereStratification == AtmosphereStratification.Stable ? microclimateCoefficient.Stable_6_20 : microclimateCoefficient.Unstable_6_20;
+            {
+                diap = atmosphereStratification == AtmosphereStratification.Stable ? microclimateCoefficient.Stable_6_20 : microclimateCoefficient.Unstable_6_20;
+                res = LinearInterpolateMethod.LinearInterpolation(6, 20, diap.From, diap.To, speed);
+            }
+
+            if (res < 0)
+                throw new Exception("Отрицательный коэффициент после интерполяции");
+            return res;
         }
 
 
         /// <summary>
-        /// расчет коэффициента k0 для первого типа рельефа
+        /// расчет коэффициента k0 для макрорельефа
         /// </summary>
         /// <param name="msClasses"></param>
         /// <param name="pointClasses"></param>
         /// <returns></returns>
-        private static Dictionary<WindDirections8, double> getFirstTypeK0(Dictionary<WindDirections8, double> msClasses, Dictionary<WindDirections8, double> pointClasses)
+        private static Dictionary<WindDirections8, double> getTerrainMacroK0(Dictionary<WindDirections8, double> msClasses, Dictionary<WindDirections8, double> pointClasses)
         {
             msClasses = msClasses ?? throw new ArgumentException(nameof(msClasses));
             pointClasses = pointClasses ?? throw new ArgumentException(nameof(pointClasses));
@@ -162,6 +175,74 @@ namespace WindEnergy.WindLib.Transformation.Terrain
                 result.Add(ni);
             }
             result.EndChange();
+            return result;
+        }
+
+        /// <summary>
+        /// получить преобладающие направления ветра 
+        /// </summary>
+        /// <param name="ms_range"></param>
+        /// <param name="expectancy"></param>
+        /// <returns></returns>
+        public static List<WindDirections8> GetRhumbsDominants(RawRange ms_range, StatisticalRange<WindDirections8> expectancy = null)
+        {
+            List<WindDirections8> res = new List<WindDirections8>();
+            expectancy = expectancy ?? StatisticEngine.GetDirectionExpectancy(ms_range, GradationInfo<WindDirections8>.Rhumb8Gradations); //повторяемости скорости ветра по 8 румбам
+            var maxes = expectancy.Values.OrderByDescending((d) => d).ToList();
+            res.Add((WindDirections8)expectancy.Keys[expectancy.Values.IndexOf(maxes[0])]); //первый всегда добавляем
+            if (maxes[0] > 0.3 && maxes[0] - maxes[1] < 0.1) //второй добавляем если первый больше 30% и у второго отрыв меньше 10%
+                res.Add((WindDirections8)expectancy.Keys[expectancy.Values.IndexOf(maxes[1])]);
+            return res;
+        }
+
+        /// <summary>
+        /// выбор текста для рекомендаций, какой тип рельефа лучше использовать
+        /// </summary>
+        /// <param name="range"></param>
+        /// <param name="pointCoordinates"></param>
+        /// <param name="geoinfo"></param>
+        /// <returns></returns>
+        public static Dictionary<string, Color> GetRecommendation(RawRange range, PointLatLng pointCoordinates, IGeoInfoProvider geoinfo)
+        {
+            if (range.Position.IsEmpty)
+                throw new WindEnergyException("Не заданы координаты метеостанции");
+            if (pointCoordinates.IsEmpty)
+                throw new WindEnergyException("Не заданы координаты точки ВЭС");
+            if (geoinfo == null)
+                throw new ArgumentNullException(nameof(geoinfo));
+
+            Dictionary<string, Color> result = new Dictionary<string, Color>();
+            double L = EarthModel.CalculateDistance(range.Position, pointCoordinates) / 1000; //расстояние вкилометрах между МС и точкой ВЭС
+            double Hms = geoinfo.GetElevation(range.Position); //высота точки МС
+            double Hpoint = geoinfo.GetElevation(pointCoordinates); //высота точки ВЭС
+            double Habs = Math.Max(Hms, Hpoint); //максимальная высота на у.м.
+            double dH = Math.Abs(Hpoint - Habs); //перепад высот между МС и ВЭС
+            StatisticalRange<WindDirections8> expectancy = StatisticEngine.GetDirectionExpectancy(range, GradationInfo<WindDirections8>.Rhumb8Gradations); //повторяемости скорости ветра по 8 румбам
+            var maxes = expectancy.Values.OrderByDescending((d) => d).ToList();
+
+            if (maxes[0] < 0.2) //если все румбы меньше 20%, то нет преобладающего направления
+                result.Add("Нет преобладающего направления ветра", Color.Black);
+            else//выбор преобладающих направлений ветра
+            {
+                var dirs = GetRhumbsDominants(range, expectancy);
+                string ln = dirs.Aggregate("", (str, dir) => str + $"{dir.Description()} ({Math.Round(expectancy[dir] * 100, 2)}%), ").Trim(new char[] { ' ', ',' });
+                result.Add("Преобладающие направления ветра: " + ln, Color.Black);
+            }
+
+            if (Hms > 750)
+                result.Add($"Высота точки МС больше 750 м над у. м. ({Hms.ToString("0.0")} м), не рекомендуеся выполнять преобразование", Color.Red);
+            else if (Hpoint > 750)
+                result.Add($"Высота точки ВЭС больше 750 м над у. м. ({Hpoint.ToString("0.0")} м), не рекомендуеся выполнять преобразование", Color.Red);
+            else
+            {
+                if (L > 50 && dH <= 750 && Habs <= 750) //макрорельеф
+                    result.Add($"Рекомендуется выбрать макрорельеф (L={L.ToString("0.0")} км, Δh={dH.ToString("0.0")} м)", Color.Green);
+                if (L > 3 && L <= 50 && dH <= 750 && Habs <= 750) //мезорельеф
+                    result.Add($"Рекомендуется выбрать мезорельеф (L={L.ToString("0.0")} км, Δh={dH.ToString("0.0")} м)", Color.Green);
+                if (L <= 3 && dH <= 80 && Habs <= 750) //микрорельеф
+                    result.Add($"Рекомендуется выбрать микрорельеф (L={L.ToString("0.0")} км, Δh={dH.ToString("0.0")} м)", Color.Green);
+            }
+
             return result;
         }
     }

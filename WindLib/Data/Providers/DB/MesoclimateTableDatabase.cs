@@ -27,7 +27,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         public override Dictionary<string, MesoclimateItemInfo> LoadDatabaseFile()
         {
             Dictionary<string, MesoclimateItemInfo> items = new Dictionary<string, MesoclimateItemInfo>();
-            StreamReader sr = new StreamReader(FileName, Encoding.Default, true);
+            StreamReader sr = new StreamReader(FileName, Encoding.UTF8, true);
             sr.ReadLine();//пропускаем первую строку-заголовок
             while (!sr.EndOfStream)
             {

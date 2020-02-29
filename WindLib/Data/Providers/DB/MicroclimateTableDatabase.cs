@@ -27,7 +27,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         public override Dictionary<string, MicroclimateItemInfo> LoadDatabaseFile()
         {
             Dictionary<string, MicroclimateItemInfo> items = new Dictionary<string, MicroclimateItemInfo>();
-            StreamReader sr = new StreamReader(FileName,Encoding.Default, true);
+            StreamReader sr = new StreamReader(FileName,Encoding.UTF8, true);
             sr.ReadLine();//пропускаем первую строку-заголовок
             while (!sr.EndOfStream)
             {
@@ -37,13 +37,18 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                 if (arr.Length < 5)
                     continue;
 
+                Diapason<double> uns_3_5 = parseDiapason(arr[1]);
+                Diapason<double> uns_6_20 = parseDiapason(arr[2]);
+                Diapason<double> s_3_5 = parseDiapason(arr[3]);
+                Diapason<double> s_6_20 = parseDiapason(arr[4]);
+
                 MicroclimateItemInfo data = new MicroclimateItemInfo()
                 {
                     Name = arr[0],
-                    Unstable_3_5 = double.Parse(arr[1].Replace(',', Constants.DecimalSeparator)),
-                    Unstable_6_20 = double.Parse(arr[2].Replace(',', Constants.DecimalSeparator)),
-                    Stable_3_5 = double.Parse(arr[3].Replace(',', Constants.DecimalSeparator)),
-                    Stable_6_20 = double.Parse(arr[4].Replace(',', Constants.DecimalSeparator)),
+                    Unstable_3_5 = uns_3_5,
+                    Unstable_6_20 = uns_6_20,
+                    Stable_3_5 = s_3_5,
+                    Stable_6_20 = s_6_20,
                 };
 
                 if (!items.ContainsKey(arr[0]))
@@ -51,6 +56,18 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             }
             sr.Close();
             return items;
+        }
+
+        /// <summary>
+        /// парсинг диапазона значений dobule
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        private Diapason<double> parseDiapason(string v)
+        {
+            string[] arr = v.Split('-');
+            Diapason<double> res = new Diapason<double>(double.Parse(arr[0].Replace('.',Constants.DecimalSeparator)),double.Parse(arr[1].Replace('.',Constants.DecimalSeparator)));
+            return res;
         }
     }
 }

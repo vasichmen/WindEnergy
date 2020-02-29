@@ -1,6 +1,7 @@
 ﻿using CommonLib;
 using CommonLib.Classes;
 using GMap.NET;
+using ScintillaNET;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,7 +30,7 @@ namespace WindEnergy.UI.Tools
         Dictionary<WindDirections8, double> msClasses = null;
         Dictionary<WindDirections8, double> pointClasses = null;
         PointLatLng pointCoordinates = PointLatLng.Empty;
-        TerrainType terrainType = TerrainType.First;
+        TerrainType terrainType = TerrainType.Macro;
         AtmosphereStratification stratification;
         MesoclimateItemInfo mesoclimateCoeff = null;
         MicroclimateItemInfo microclimateCoeff = null;
@@ -45,6 +46,11 @@ namespace WindEnergy.UI.Tools
         {
             InitializeComponent();
             this.range = range;
+            scintillaRecommendations.StyleResetDefault();
+            scintillaRecommendations.Styles[Style.Default].Size = 11;
+            scintillaRecommendations.StyleClearAll();
+
+
         }
 
         private void FormRangeTerrain_Load(object sender, EventArgs e)
@@ -54,9 +60,6 @@ namespace WindEnergy.UI.Tools
                 comboBoxMesoclimate.Items.Add(meso.Name);
             foreach (MicroclimateItemInfo micro in Vars.MicroclimateTableDatabase.List)
                 comboBoxMicroclimate.Items.Add(micro.Name);
-
-            comboBoxWaterDistance.Items.AddRange(WaterDistanceType.FarFromWater.GetItems().ToArray());
-            comboBoxWaterDistance.SelectedItem = WaterDistanceType.Undefined.Description();
 
             //установка тегов для radio типов стратификации
             radioButtonStable.Tag = AtmosphereStratification.Stable;
@@ -141,7 +144,7 @@ namespace WindEnergy.UI.Tools
                 {
                     string text = fluger_MS != null ? $"На основе данных МС {fluger_MS.Name} ({fluger_MS.Position.ToString()})\r\nИз СБД Флюгер" : "";
                     rawRange.Name = $"Ряд в точке {pointCoordinates.ToString(3)}";
-                    _ = MessageBox.Show(this, $"Скорости ветра пересчитаны в точку {pointCoordinates.ToString(3)} м\r\n{((!string.IsNullOrWhiteSpace(text)) ? text : "")}", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _ = MessageBox.Show(this, $"Скорости ветра пересчитаны в точку {pointCoordinates.ToString(3)}\r\n{((!string.IsNullOrWhiteSpace(text)) ? text : "")}", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     if (rawRange == null)
                         DialogResult = DialogResult.Cancel;
@@ -177,7 +180,6 @@ namespace WindEnergy.UI.Tools
                     AtmosphereStratification = stratification,
                     MicroclimateCoefficient = microclimateCoeff,
                     MesoclimateCoefficient = mesoclimateCoeff,
-                    WaterType = waterDistance
                 }, action, actionAfter); ;
 
             }
@@ -215,15 +217,24 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void radioButtonTerrain_CheckedChanged(object sender, EventArgs e)
         {
-            terrainType = radioButtonTerrainFirst.Checked ? TerrainType.First : TerrainType.Second;
+            terrainType = radioButtonTerrainMacro.Checked ? TerrainType.Macro : (radioButtonTerrainMeso.Checked ? TerrainType.Meso : TerrainType.Micro);
 
-            //эти относятся только к первому типу рельефа
-            labelPointClassesStatus.Enabled = terrainType == TerrainType.First;
-            buttonEnterPointClasses.Enabled = terrainType == TerrainType.First;
+            //эти относятся только к макрорельефу
+            labelPointClassesStatus.Enabled = terrainType == TerrainType.Macro;
+            buttonEnterPointClasses.Enabled = terrainType == TerrainType.Macro;
+            buttonEnterMSClasses.Enabled = terrainType == TerrainType.Macro;
 
-            //эти относятся только ко второму типу рельефа
-            foreach (Control control in groupBoxTerrainSecond.Controls)
-                control.Enabled = terrainType == TerrainType.Second;
+            //эти относятся только с мезорельефу
+            labelMesoclimateStatus.Enabled = terrainType == TerrainType.Meso;
+            comboBoxMesoclimate.Enabled = terrainType == TerrainType.Meso;
+
+
+            //эти относятся только к микрорельефу
+            labelMicroclimateStatus.Enabled = terrainType == TerrainType.Micro;
+            comboBoxMicroclimate.Enabled = terrainType == TerrainType.Micro;
+            foreach (Control c in groupBoxStratification.Controls)
+                c.Enabled = terrainType == TerrainType.Micro;
+
 
             //перерасчет статусов
             setStatuses();
@@ -235,41 +246,78 @@ namespace WindEnergy.UI.Tools
         /// </summary>
         private void setStatuses()
         {
-            //цвет
-            labelMSClassesStatus.ForeColor = msClasses == null || msClasses.Count == 0 ? Color.Red : Color.Green;
+            setRecommendation();
 
-            labelMSCoordinatesStatus.ForeColor = range.Position.IsEmpty ? Color.Red : Color.Green;
-            labelPointCoordinatesStatus.ForeColor = pointCoordinates.IsEmpty ? Color.Red : Color.Green;
-
-            if (terrainType == TerrainType.Second) //только для второго типа рельефа
-            {
-                labelMesoclimateStatus.ForeColor = mesoclimateCoeff == null ? Color.Red : Color.Green;
-                labelWaterDistanceType.ForeColor = waterDistance == WaterDistanceType.Undefined?Color.Red : Color.Green;
-            }
-
-            if (terrainType == TerrainType.First) //только для первого типа рельефа
-                labelPointClassesStatus.ForeColor = pointClasses == null || pointClasses.Count == 0 ? Color.Red : Color.Green;
-
-            //текст
+            //общая часть
             labelMSClassesStatus.Text = msClasses == null || msClasses.Count == 0 ? "Не выбраны" : (flugerMeteostation != null ? flugerMeteostation.Name + $" ({flugerMeteostation.Position.ToString(3)})" : "Заданы вручную");
             labelPointClassesStatus.Text = pointClasses == null || pointClasses.Count == 0 ? "Не выбрано" : "Заданы вручную";
             labelMSCoordinatesStatus.Text = range.Position.IsEmpty ? "Не выбрана" : range.Position.ToString(2);
             labelPointCoordinatesStatus.Text = pointCoordinates.IsEmpty ? "Не выбрана" : pointCoordinates.ToString(2);
 
-            //кнопка расчета
-            buttonCalculate.Enabled = labelMSClassesStatus.ForeColor == Color.Green &&
-                                      labelMSCoordinatesStatus.ForeColor == Color.Green &&
-                                      labelPointCoordinatesStatus.ForeColor == Color.Green;
 
+            //установка цветов и активности кнопки
+            buttonCalculate.Enabled = true;
+            labelMSCoordinatesStatus.ForeColor = range.Position.IsEmpty ? Color.Red : Color.Green;
+            labelPointCoordinatesStatus.ForeColor = pointCoordinates.IsEmpty ? Color.Red : Color.Green;
 
-            if (terrainType == TerrainType.Second)//только для второго типа рельефа
-            { 
-                buttonCalculate.Enabled &= labelMesoclimateStatus.ForeColor == Color.Green;
-                buttonCalculate.Enabled &= labelWaterDistanceType.ForeColor == Color.Green;
+            buttonCalculate.Enabled &= labelMSCoordinatesStatus.ForeColor == Color.Green && labelPointCoordinatesStatus.ForeColor == Color.Green;
+
+            switch (terrainType)
+            {
+                case TerrainType.Macro:
+                    labelMSClassesStatus.ForeColor = msClasses == null || msClasses.Count == 0 ? Color.Red : Color.Green;
+                    labelPointClassesStatus.ForeColor = pointClasses == null || pointClasses.Count == 0 ? Color.Red : Color.Green;
+                    buttonCalculate.Enabled &= labelMSClassesStatus.ForeColor == Color.Green && labelPointClassesStatus.ForeColor == Color.Green;
+                    break;
+                case TerrainType.Meso:
+                    labelMesoclimateStatus.ForeColor = mesoclimateCoeff == null ? Color.Red : Color.Green;
+                    buttonCalculate.Enabled &= labelMesoclimateStatus.ForeColor == Color.Green;
+                    break;
+                case TerrainType.Micro:
+                    labelMicroclimateStatus.ForeColor = microclimateCoeff == null ? Color.Red : Color.Green;
+                    buttonCalculate.Enabled &= labelMicroclimateStatus.ForeColor == Color.Green;
+                    break;
             }
-            if(terrainType == TerrainType.First) //только для первого рельефа
-                buttonCalculate.Enabled &= labelPointClassesStatus.ForeColor == Color.Green;
+        }
 
+        /// <summary>
+        /// установка текста рекомендации
+        /// </summary>
+        private void setRecommendation()
+        {
+            try
+            {
+                scintillaRecommendations.ReadOnly = false;
+                scintillaRecommendations.Text = "";
+                Dictionary<string, Color> textCollection = RangeTerrain.GetRecommendation(range, pointCoordinates, Vars.ETOPOdatabase);
+                int i = 9, start = 0;
+                foreach (string text in textCollection.Keys)
+                {
+                    scintillaRecommendations.Text += text + "\n";
+
+                    Indicator indic = scintillaRecommendations.Indicators[i++];
+                    indic.Style = IndicatorStyle.TextFore;
+                    indic.ForeColor = textCollection[text];
+                    indic.Alpha = 100;
+                    scintillaRecommendations.IndicatorCurrent = indic.Index;
+                    scintillaRecommendations.IndicatorFillRange(start, text.Length);
+                    start += text.Length + 1;
+                }
+            }
+            catch (WindEnergyException ex)
+            {
+                Indicator indic = scintillaRecommendations.Indicators[16];
+                indic.Style = IndicatorStyle.TextFore;
+                indic.ForeColor = Color.Red;
+                indic.Alpha = 100;
+                scintillaRecommendations.IndicatorCurrent = indic.Index;
+                scintillaRecommendations.Text = ex.Message;
+                scintillaRecommendations.IndicatorFillRange(0, ex.Message.Length);
+            }
+            finally
+            {
+                scintillaRecommendations.ReadOnly = true;
+            }
         }
 
         private void radioButtonStratification_CheckedChanged(object sender, EventArgs e)
@@ -318,12 +366,6 @@ namespace WindEnergy.UI.Tools
         {
             string key = comboBoxMicroclimate.SelectedItem as string;
             microclimateCoeff = Vars.MicroclimateTableDatabase[key];
-            setStatuses();
-        }
-
-        private void comboBoxWaterDistance_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            waterDistance = (WaterDistanceType)(new EnumTypeConverter<WaterDistanceType>().ConvertFrom(comboBoxWaterDistance.SelectedItem));
             setStatuses();
         }
     }

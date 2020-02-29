@@ -25,7 +25,7 @@ namespace WindEnergy.WindLib.Operations.Interpolation
             foreach (var kv in funct)
                 if (!double.IsNaN(kv.Value))
                     values.Add(kv.Key, kv.Value);
-            
+
             sortedX = values.Keys.ToList();
             sortedX.Sort();
         }
@@ -62,7 +62,8 @@ namespace WindEnergy.WindLib.Operations.Interpolation
             int from_i = 0;
             int to_i = sortedX.Count - 1;
 
-            while (to_i - from_i > 1) {
+            while (to_i - from_i > 1)
+            {
                 double from_x = sortedX[from_i];
                 double to_x = sortedX[to_i];
                 int c_i = (to_i + from_i) / 2;
@@ -76,7 +77,7 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         }
 
         /// <summary>
-        /// интерполяция между заданными точками
+        /// интерполяция между заданными точками на функции
         /// </summary>
         /// <param name="x1">левый известнтый х</param>
         /// <param name="x2">правый известный х</param>
@@ -86,8 +87,22 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         {
             double y1 = values[x1];
             double y2 = values[x2];
-            double y = y2 + ((y1 - y2) / (x1 - x2)) * (x - x2);
+            double y = LinearInterpolation(x1, x2, y1, y2, x);
             return y;
+        }
+
+        /// <summary>
+        /// линейная интерполяция между двумя заданными точками
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="x2"></param>
+        /// <param name="y1"></param>
+        /// <param name="y2"></param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static double LinearInterpolation(double x1, double x2, double y1, double y2, double x)
+        {
+            return y2 + ((y1 - y2) / (x1 - x2)) * (x - x2);
         }
     }
 }

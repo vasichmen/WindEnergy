@@ -619,9 +619,11 @@ namespace WindEnergy
     public enum TerrainType
     {
 
-        First,
+        Macro,
 
-        Second
+        Micro, 
+
+        Meso
     }
 
     /// <summary>
