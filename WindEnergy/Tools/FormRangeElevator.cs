@@ -1,5 +1,6 @@
 ﻿using CommonLib;
 using CommonLib.Classes;
+using CommonLib.UITools;
 using GMap.NET;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.UI.Dialogs;
+using WindEnergy.UI.Properties;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Transformation.Altitude;
@@ -101,7 +103,7 @@ namespace WindEnergy.UI.Tools
             {
                 if (range.Position.IsEmpty)
                 {
-                    FormSelectMapPointDialog fsp = new FormSelectMapPointDialog("Выберите координаты ряда " + range.Name, PointLatLng.Empty);
+                    FormSelectMapPointDialog fsp = new FormSelectMapPointDialog("Выберите координаты ряда " + range.Name, PointLatLng.Empty, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
                     if (fsp.ShowDialog(this) == DialogResult.OK)
                         range.Position = fsp.Result;
                     else

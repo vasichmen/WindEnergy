@@ -22,6 +22,9 @@ using WindEnergy.WindLib.Statistic.Structures;
 using WindEnergy.UI.Dialogs;
 using CommonLib;
 using CommonLib.Classes;
+using CommonLib.UITools;
+using WindLib;
+using WindEnergy.UI.Properties;
 
 namespace WindEnergy.UI.Tools
 {
@@ -140,7 +143,7 @@ namespace WindEnergy.UI.Tools
                     {
                         if (range.Position.IsEmpty)
                         {
-                            FormSelectMapPointDialog fsp = new FormSelectMapPointDialog("Выберите координаты ряда " + range.Name, PointLatLng.Empty);
+                            FormSelectMapPointDialog fsp = new FormSelectMapPointDialog("Выберите координаты ряда " + range.Name, PointLatLng.Empty, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
                             if (fsp.ShowDialog(this) == DialogResult.OK)
                                 range.Position = fsp.Result;
                             else

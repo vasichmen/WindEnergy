@@ -1,4 +1,4 @@
-﻿namespace WindEnergy.UI.Dialogs
+﻿namespace CommonLib.UITools
 {
     partial class FormSelectMapPointDialog
     {

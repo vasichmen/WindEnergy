@@ -152,12 +152,6 @@
     <Compile Include="Dialogs\FormEditDiapasons.Designer.cs">
       <DependentUpon>FormEditDiapasons.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\FormSelectMapPointDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\FormSelectMapPointDialog.Designer.cs">
-      <DependentUpon>FormSelectMapPointDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\FormUpdateDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -282,9 +276,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FormEditDiapasons.resx">
       <DependentUpon>FormEditDiapasons.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\FormSelectMapPointDialog.resx">
-      <DependentUpon>FormSelectMapPointDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FormUpdateDialog.resx">
       <DependentUpon>FormUpdateDialog.cs</DependentUpon>

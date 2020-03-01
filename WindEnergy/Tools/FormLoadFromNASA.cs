@@ -19,6 +19,8 @@ using WindEnergy.UI.Dialogs;
 using CommonLibLib.Data.Interfaces;
 using CommonLibLib.Data.Providers.InternetServices;
 using WindLib;
+using CommonLib.UITools;
+using WindEnergy.UI.Properties;
 
 namespace WindEnergy.UI.Tools
 {
@@ -49,7 +51,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void buttonSelectPoint_Click(object sender, EventArgs e)
         {
-            FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", point);
+            FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", point, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
                 spoint = new RP5MeteostationInfo();

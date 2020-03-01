@@ -21,6 +21,8 @@ using WindEnergy.UI.Dialogs;
 using WindEnergy.UI.Ext;
 using CommonLibLib.Data.Providers.InternetServices;
 using WindLib;
+using CommonLib.UITools;
+using WindEnergy.UI.Properties;
 
 namespace WindEnergy.UI.Tools
 {
@@ -196,7 +198,7 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void buttonSelectPoint_Click(object sender, EventArgs e)
         {
-            FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty);
+            FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
                 labelPointCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";

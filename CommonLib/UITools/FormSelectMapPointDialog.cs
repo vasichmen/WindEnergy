@@ -14,15 +14,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindEnergy.WindLib.Classes;
-using WindEnergy.WindLib.Data.Providers.InternetServices;
-using WindEnergy.UI.Properties;
 using CommonLib.Classes;
 using CommonLib;
 using CommonLibLib.Data.Providers.InternetServices;
-using WindLib;
 
-namespace WindEnergy.UI.Dialogs
+namespace CommonLib.UITools
 {
     /// <summary>
     /// выбор точки на карте
@@ -35,11 +31,17 @@ namespace WindEnergy.UI.Dialogs
         private PointLatLng initialPoint;
         private Arcgis searcher;
         private Dictionary<string, PointLatLng> adressess;
+        private MapProviders provider;
+        private string cacheFolder;
+        private Icon marker;
 
-        public FormSelectMapPointDialog(string caption, PointLatLng initialPoint)
+        public FormSelectMapPointDialog(string caption, PointLatLng initialPoint, string cacheFolder, Icon marker, MapProviders provider)
         {
             InitializeComponent();
             Text = caption;
+            this.provider = provider;
+            this.cacheFolder = cacheFolder;
+            this.marker = marker;
             ConfigureGMapControl();
             this.initialPoint = initialPoint;
             if (!initialPoint.IsEmpty)
@@ -51,7 +53,7 @@ namespace WindEnergy.UI.Dialogs
             toolStripTextBoxLat.Text = gmapControlMap.Position.Lat.ToString();
             toolStripTextBoxLon.Text = gmapControlMap.Position.Lng.ToString();
             DialogResult = DialogResult.None;
-            searcher = new Arcgis(Vars.Options.CacheFolder + "\\arcgis");
+            searcher = new Arcgis(cacheFolder + "\\arcgis");
         }
 
         /// <summary>
@@ -97,7 +99,7 @@ namespace WindEnergy.UI.Dialogs
 
 
             //поставщик карты
-            switch (Vars.Options.MapProvider)
+            switch (provider)
             {
                 case MapProviders.GoogleSatellite:
                     gmapControlMap.MapProvider = GMapProviders.GoogleSatelliteMap;
@@ -126,8 +128,8 @@ namespace WindEnergy.UI.Dialogs
             gmapControlMap.MapScaleInfoEnabled = true;
 
             //папка с кэшем
-            _ = Directory.CreateDirectory(Vars.Options.CacheFolder);
-            gmapControlMap.CacheLocation = Vars.Options.CacheFolder;
+            _ = Directory.CreateDirectory(cacheFolder);
+            gmapControlMap.CacheLocation = cacheFolder;
 
             #endregion
 
@@ -152,7 +154,7 @@ namespace WindEnergy.UI.Dialogs
             lay.Clear();
             cPoint = cled;
             Point offsets = new Point(0, -16);
-            MapMarker mar = new MapMarker(cled, Resources.rp5_marker, offsets);
+            MapMarker mar = new MapMarker(cled, marker, offsets);
 
             mar.IsHitTestVisible = true;
 
