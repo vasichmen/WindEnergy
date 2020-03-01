@@ -89,7 +89,7 @@ namespace SolarEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Vars.Options = new Options();
+            var s = Vars.NPSMeteostationDatabase.List;
         }
 
     }

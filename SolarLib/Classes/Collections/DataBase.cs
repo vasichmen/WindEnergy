@@ -22,5 +22,10 @@ namespace SolarEnergy.SolarLib.Classes.Collections
 
         public NPSMeteostationInfo Meteostation { get; set; }
 
+        public void Set(TKey key, TValue value)
+        {
+            this[key] = value;
+        }
+
     }
 }
