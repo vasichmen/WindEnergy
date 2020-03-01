@@ -34,16 +34,22 @@
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.операцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dailyAverageGraphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.createNewToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openFileToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveAlltoolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openNasaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openNpsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -74,6 +80,10 @@
             // 
             // файлToolStripMenuItem
             // 
+            this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.открытьToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.exitToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
@@ -93,6 +103,15 @@
             this.операцииToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
             this.операцииToolStripMenuItem.Text = "Операции";
             // 
+            // equalizeRangesToolStripMenuItem
+            // 
+            this.equalizeRangesToolStripMenuItem.Name = "equalizeRangesToolStripMenuItem";
+            this.equalizeRangesToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.equalizeRangesToolStripMenuItem.Text = "Привести ряды";
+            this.equalizeRangesToolStripMenuItem.ToolTipText = "Для каждого наблюдения из ряда с большим интервалом подобрать наблюдение из ряда " +
+    "с меньшим интервалом и сохранить";
+            this.equalizeRangesToolStripMenuItem.Click += new System.EventHandler(this.equalizeRangesToolStripMenuItem_Click);
+            // 
             // dailyAverageGraphsToolStripMenuItem
             // 
             this.dailyAverageGraphsToolStripMenuItem.Name = "dailyAverageGraphsToolStripMenuItem";
@@ -111,18 +130,9 @@
             // оПрограммеToolStripMenuItem
             // 
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
             this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // equalizeRangesToolStripMenuItem
-            // 
-            this.equalizeRangesToolStripMenuItem.Name = "equalizeRangesToolStripMenuItem";
-            this.equalizeRangesToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.equalizeRangesToolStripMenuItem.Text = "Привести ряды";
-            this.equalizeRangesToolStripMenuItem.ToolTipText = "Для каждого наблюдения из ряда с большим интервалом подобрать наблюдение из ряда " +
-    "с меньшим интервалом и сохранить";
-            this.equalizeRangesToolStripMenuItem.Click += new System.EventHandler(this.equalizeRangesToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
@@ -182,6 +192,49 @@
             this.toolStripSeparator.Name = "toolStripSeparator";
             this.toolStripSeparator.Size = new System.Drawing.Size(6, 27);
             // 
+            // открытьToolStripMenuItem
+            // 
+            this.открытьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openNasaToolStripMenuItem,
+            this.openNpsToolStripMenuItem,
+            this.openFileToolStripMenuItem1});
+            this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
+            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.открытьToolStripMenuItem.Text = "Открыть";
+            // 
+            // openNasaToolStripMenuItem
+            // 
+            this.openNasaToolStripMenuItem.Name = "openNasaToolStripMenuItem";
+            this.openNasaToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.openNasaToolStripMenuItem.Text = "Открыть данные NASA";
+            this.openNasaToolStripMenuItem.Click += new System.EventHandler(this.openNasaToolStripMenuItem_Click);
+            // 
+            // openNpsToolStripMenuItem
+            // 
+            this.openNpsToolStripMenuItem.Name = "openNpsToolStripMenuItem";
+            this.openNpsToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.openNpsToolStripMenuItem.Text = "Открыть данные из НПС";
+            this.openNpsToolStripMenuItem.Click += new System.EventHandler(this.openNpsToolStripMenuItem_Click);
+            // 
+            // openFileToolStripMenuItem1
+            // 
+            this.openFileToolStripMenuItem1.Name = "openFileToolStripMenuItem1";
+            this.openFileToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
+            this.openFileToolStripMenuItem1.Text = "Файл";
+            this.openFileToolStripMenuItem1.Click += new System.EventHandler(this.openFileToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Выход";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -220,6 +273,12 @@
         private System.Windows.Forms.ToolStripButton saveToolStripButton;
         private System.Windows.Forms.ToolStripButton saveAlltoolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+        private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openNasaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openNpsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

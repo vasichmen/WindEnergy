@@ -19,6 +19,7 @@ using WindEnergy.UI.Ext;
 using CommonLib;
 using CommonLib.Classes;
 using WindLib;
+using CommonLib.UITools;
 
 namespace WindEnergy.UI.Dialogs
 {

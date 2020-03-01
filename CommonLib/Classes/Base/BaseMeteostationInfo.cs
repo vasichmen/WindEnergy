@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindEnergy.WindLib.Classes.Structures
+namespace CommonLib.Classes.Base
 {
     /// <summary>
     /// Универсальная информация о МС

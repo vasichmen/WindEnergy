@@ -5,7 +5,7 @@ using CommonLibLib.Data.Providers.FileSystem;
 using SolarEnergy.UI;
 using SolarEnergy.UI.Common.Dialogs;
 using SolarLib;
-using SolarLib.Classes.Options;
+using SolarLib.Classes.Structures.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

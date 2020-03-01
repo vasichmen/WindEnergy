@@ -165,7 +165,6 @@
       <DependentUpon>FormUpdateDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Ext\ComboboxColumn.cs" />
-    <Compile Include="Ext\CalendarColumn.cs" />
     <Compile Include="Ext\DataGridViewExt.cs">
       <SubType>Component</SubType>
     </Compile>

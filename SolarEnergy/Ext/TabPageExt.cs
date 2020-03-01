@@ -1,12 +1,12 @@
 ﻿using CommonLib.UITools;
+using SolarEnergy.SolarLib.Classes.Collections;
+using SolarEnergy.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Data;
 
 namespace WindEnergy.UI.Ext
 {
@@ -15,12 +15,12 @@ namespace WindEnergy.UI.Ext
     /// </summary>
     public class TabPageExt : TabPage
     {
-        public DataGridViewExt DataGrid { get; }
+        public DataGridView DataGrid { get; set; }
 
         /// <summary>
         /// ряд данных, для этой вкладки
         /// </summary>
-        public RawRange Range { get; }
+        public Dataset Dataset { get; }
 
         /// <summary>
         /// если итина, то на этой вкладке есть несохраненные изменения
@@ -32,14 +32,14 @@ namespace WindEnergy.UI.Ext
         /// </summary>
         /// <param name="range"></param>
         /// <param name="text"></param>
-        public TabPageExt(RawRange range, string text)
+        public TabPageExt(Dataset range, string text)
         {
             range = range ?? throw new ArgumentNullException(nameof(range));
             TextChanged += tabPageExt_TextChanged;
-            Range = range;
+            Dataset = range;
             this.ToolTipText = string.IsNullOrWhiteSpace(range.FilePath) ? "" : range.FilePath;
             this.Text = text;
-            DataGridViewExt ndgv = new DataGridViewExt();
+            DataGridView ndgv = new DataGridView();
             ndgv.ColumnAdded += DataGridView_ColumnAdded;
             ndgv.Dock = DockStyle.Fill;
             ndgv.Parent = this;
@@ -68,7 +68,7 @@ namespace WindEnergy.UI.Ext
         {
             if (this.HasNotSavedChanges)
             {
-                DialogResult result = MessageBox.Show(Parent.Parent, "Сохранить изменения в файле " + this.Range.Name + " ?", "Закрытие файла", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                DialogResult result = MessageBox.Show(Parent.Parent, "Сохранить изменения в файле " + this.Dataset.Name + " ?", "Закрытие файла", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
                 switch (result)
                 {
                     case DialogResult.No:
@@ -109,15 +109,6 @@ namespace WindEnergy.UI.Ext
                     e.Column.HeaderText = "Дата наблюдения";
                     e.Column.Width = 130;
                     e.Column.CellTemplate = new DataGridViewCalendarCell();
-                    break;
-                case "direction":
-                    e.Column.HeaderText = "Направление, °";
-                    e.Column.DefaultCellStyle.Format = "n2";
-                    break;
-                case "directionrhumb":
-                    e.Column.HeaderText = "Румб";
-                    e.Column.Width = 55;
-                    e.Column.CellTemplate = new DataGridViewComboboxCell<WindDirections16>();
                     break;
                 case "speed":
                     e.Column.HeaderText = "Скорость, м/с";

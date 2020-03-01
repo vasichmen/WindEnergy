@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SolarLib.Classes.Options
+namespace SolarLib.Classes.Structures.Options
 {
     public class Options : OptionsBase
     {
@@ -14,7 +14,10 @@ namespace SolarLib.Classes.Options
         public Options()
         {
             LastDirectory = Application.StartupPath;
+            StaticNPSMeteostationDatabaseSourceFile = Application.StartupPath + "\\Data\\NPS.database.txt";
         }
+
+        public string StaticNPSMeteostationDatabaseSourceFile { get;  set; }
 
 
         /// <summary>

@@ -1,6 +1,8 @@
 ﻿using CommonLib.UITools;
 using SolarEnergy.UI;
+using SolarEnergy.UI.Helpers;
 using SolarLib;
+using SolarLib.Classes.Structures.Options;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,14 +17,45 @@ namespace SolarEnergy.UI
 {
     public partial class FormMain : Form
     {
+        /// <summary>
+        /// вспомогательные методы интерфейса
+        /// </summary>
+        public MainHelper mainHelper { get; set; }
+
         public FormMain()
         {
             InitializeComponent();
+            mainHelper = new MainHelper(this);
 #if DEBUG
             button1.Visible = true;
 #endif
         }
         #region Главное меню
+
+        #region Файл
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+
+        private void openNasaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void openNpsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void openFileToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
 
         #region Опериции
 
@@ -56,7 +89,7 @@ namespace SolarEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Vars.Options = new SolarLib.Classes.Options.Options();
+            Vars.Options = new Options();
         }
 
     }

@@ -1,13 +1,13 @@
-﻿using CommonLib.Geomodel;
+﻿using CommonLib.Classes.Base;
+using CommonLib.Geomodel;
 using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindEnergy.WindLib.Classes.Structures;
 
-namespace WindEnergy.WindLib.Data.Providers.DB
+namespace CommonLib.Classes.Base
 {
 
     /// <summary>

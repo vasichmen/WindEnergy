@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindEnergy.WindLib.Data.Providers.DB
+namespace CommonLib.Classes.Base
 {
     /// <summary>
     /// базовые функции для работы файловой БД

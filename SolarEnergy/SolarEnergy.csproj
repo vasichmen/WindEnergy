@@ -57,6 +57,12 @@
     <Compile Include="Dialogs\FormUpdateDialog.designer.cs">
       <DependentUpon>FormUpdateDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Ext\TabControlExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Ext\TabPageExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +75,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MainHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Dialogs\FormUpdateDialog.resx">
@@ -115,6 +122,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\page_close_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

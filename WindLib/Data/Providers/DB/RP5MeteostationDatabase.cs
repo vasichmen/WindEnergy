@@ -1,4 +1,5 @@
 ﻿using CommonLib;
+using CommonLib.Classes.Base;
 using CommonLib.Geomodel;
 using CommonLibLib.Data.Providers.InternetServices;
 using GMap.NET;

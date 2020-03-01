@@ -7,7 +7,7 @@
     <ProjectGuid>{9BCE8965-3956-4616-AA37-FCC199ED313D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WindEnergy.SolarLib</RootNamespace>
+    <RootNamespace>SolarEnergy.SolarLib</RootNamespace>
     <AssemblyName>SolarLib</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -128,7 +128,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Options\Options.cs" />
+    <Compile Include="Classes\Collections\Dataset.cs" />
+    <Compile Include="Classes\Collections\DataBase.cs" />
+    <Compile Include="Classes\Collections\DataMonthsHour.cs" />
+    <Compile Include="Classes\Collections\DataHours.cs" />
+    <Compile Include="Classes\Collections\DataMonths.cs" />
+    <Compile Include="Classes\Collections\RawRange.cs" />
+    <Compile Include="Classes\Structures\NPSMeteostationInfo.cs" />
+    <Compile Include="Classes\Structures\Options\Options.cs" />
+    <Compile Include="Classes\Structures\RawItem.cs" />
+    <Compile Include="Data\DatasetSerializer.cs" />
+    <Compile Include="Data\Providers\DB\NPSMeteostationDatabase.cs" />
+    <Compile Include="Data\Providers\FileSystem\CSVFile.cs" />
+    <Compile Include="Data\Providers\FileSystem\ExcelFile.cs" />
+    <Compile Include="Data\Providers\FileSystem\FileProvider.cs" />
+    <Compile Include="Data\Interfaces\IRangeProvider.cs" />
+    <Compile Include="Data\Providers\InternetServices\NASA.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vars.cs" />
   </ItemGroup>
@@ -142,5 +158,6 @@
       <Name>CommonLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -163,7 +163,6 @@
   <ItemGroup>
     <Compile Include="Classes\Exceptions.cs" />
     <Compile Include="Classes\Structures\AMSMeteostationInfo.cs" />
-    <Compile Include="Classes\Structures\BaseMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Diapason.cs" />
     <Compile Include="Classes\Structures\EquipmentItemInfo.cs" />
     <Compile Include="Classes\Structures\FlugerMeteostationInfo.cs" />
@@ -175,8 +174,6 @@
     <Compile Include="Classes\Structures\Options\UserGradation.cs" />
     <Compile Include="Classes\Structures\RangeInterval.cs" />
     <Compile Include="Data\Providers\DB\AMSMeteostationDatabase.cs" />
-    <Compile Include="Data\Providers\DB\BaseFileDatabase.cs" />
-    <Compile Include="Data\Providers\DB\BaseMeteostationDatabase.cs" />
     <Compile Include="Data\Providers\DB\EquipmentDatabase.cs" />
     <Compile Include="Data\Providers\DB\FlugerMeteostationDatabase.cs" />
     <Compile Include="Data\Providers\DB\MesoclimateTableDatabase.cs" />
