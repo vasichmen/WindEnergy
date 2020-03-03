@@ -1,4 +1,5 @@
 ﻿using SolarEnergy.SolarLib.Classes.Collections;
+using SolarEnergy.SolarLib.Classes.Structures;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ using WindEnergy.WindLib.Data.Providers.FileSystem;
 
 namespace SolarEnergy.SolarLib.Data
 {
-    public static class DatasetSerializer
+    public static class DataItemSerializer
     {
         /// <summary>
         /// открыть файл 
@@ -31,7 +32,7 @@ namespace SolarEnergy.SolarLib.Data
             }
         }
 
-        public static void SerializeFile(Dataset rang, string fileName)
+        public static void SerializeFile(DataItem rang, string fileName)
         {
             throw new NotImplementedException();
         }

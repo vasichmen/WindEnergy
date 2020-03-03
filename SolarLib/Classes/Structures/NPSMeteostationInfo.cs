@@ -10,7 +10,10 @@ namespace SolarEnergy.SolarLib.Classes.Structures
 {
    public class NPSMeteostationInfo:BaseMeteostationInfo
     {
-        public Dataset DatasetAllsky { get; set; }
-        public Dataset DatasetClearSky { get; set; }
+        public DataItem Data { get; set; }
+
+        public NPSMeteostationInfo() {
+            Data = new DataItem();
+        }
     }
 }

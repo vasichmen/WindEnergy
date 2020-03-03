@@ -32,6 +32,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openNasaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openNpsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.операцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,12 +50,7 @@
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveAlltoolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openNasaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openNpsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabControlMain = new WindEnergy.UI.Ext.TabControlExt();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -87,6 +88,49 @@
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
+            // 
+            // открытьToolStripMenuItem
+            // 
+            this.открытьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openNasaToolStripMenuItem,
+            this.openNpsToolStripMenuItem,
+            this.openFileToolStripMenuItem1});
+            this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
+            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.открытьToolStripMenuItem.Text = "Открыть";
+            // 
+            // openNasaToolStripMenuItem
+            // 
+            this.openNasaToolStripMenuItem.Name = "openNasaToolStripMenuItem";
+            this.openNasaToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.openNasaToolStripMenuItem.Text = "Открыть данные NASA";
+            this.openNasaToolStripMenuItem.Click += new System.EventHandler(this.openNasaToolStripMenuItem_Click);
+            // 
+            // openNpsToolStripMenuItem
+            // 
+            this.openNpsToolStripMenuItem.Name = "openNpsToolStripMenuItem";
+            this.openNpsToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.openNpsToolStripMenuItem.Text = "Открыть данные из НПС";
+            this.openNpsToolStripMenuItem.Click += new System.EventHandler(this.openNpsToolStripMenuItem_Click);
+            // 
+            // openFileToolStripMenuItem1
+            // 
+            this.openFileToolStripMenuItem1.Name = "openFileToolStripMenuItem1";
+            this.openFileToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
+            this.openFileToolStripMenuItem1.Text = "Файл";
+            this.openFileToolStripMenuItem1.Click += new System.EventHandler(this.openFileToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(118, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.exitToolStripMenuItem.Text = "Выход";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // правкаToolStripMenuItem
             // 
@@ -130,7 +174,7 @@
             // оПрограммеToolStripMenuItem
             // 
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
             this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -192,54 +236,25 @@
             this.toolStripSeparator.Name = "toolStripSeparator";
             this.toolStripSeparator.Size = new System.Drawing.Size(6, 27);
             // 
-            // открытьToolStripMenuItem
+            // tabControlMain
             // 
-            this.открытьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openNasaToolStripMenuItem,
-            this.openNpsToolStripMenuItem,
-            this.openFileToolStripMenuItem1});
-            this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
-            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.открытьToolStripMenuItem.Text = "Открыть";
-            // 
-            // openNasaToolStripMenuItem
-            // 
-            this.openNasaToolStripMenuItem.Name = "openNasaToolStripMenuItem";
-            this.openNasaToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.openNasaToolStripMenuItem.Text = "Открыть данные NASA";
-            this.openNasaToolStripMenuItem.Click += new System.EventHandler(this.openNasaToolStripMenuItem_Click);
-            // 
-            // openNpsToolStripMenuItem
-            // 
-            this.openNpsToolStripMenuItem.Name = "openNpsToolStripMenuItem";
-            this.openNpsToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.openNpsToolStripMenuItem.Text = "Открыть данные из НПС";
-            this.openNpsToolStripMenuItem.Click += new System.EventHandler(this.openNpsToolStripMenuItem_Click);
-            // 
-            // openFileToolStripMenuItem1
-            // 
-            this.openFileToolStripMenuItem1.Name = "openFileToolStripMenuItem1";
-            this.openFileToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
-            this.openFileToolStripMenuItem1.Text = "Файл";
-            this.openFileToolStripMenuItem1.Click += new System.EventHandler(this.openFileToolStripMenuItem1_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exitToolStripMenuItem.Text = "Выход";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlMain.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControlMain.ItemSize = new System.Drawing.Size(100, 20);
+            this.tabControlMain.Location = new System.Drawing.Point(0, 51);
+            this.tabControlMain.Name = "tabControlMain";
+            this.tabControlMain.SelectedIndex = 0;
+            this.tabControlMain.ShowToolTips = true;
+            this.tabControlMain.Size = new System.Drawing.Size(800, 399);
+            this.tabControlMain.TabIndex = 4;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -279,6 +294,7 @@
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private WindEnergy.UI.Ext.TabControlExt tabControlMain;
     }
 }
 

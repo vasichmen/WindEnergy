@@ -1,5 +1,6 @@
 ﻿using CommonLib.UITools;
 using SolarEnergy.SolarLib.Classes.Collections;
+using SolarEnergy.SolarLib.Classes.Structures;
 using SolarEnergy.UI;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace WindEnergy.UI.Ext
         /// <summary>
         /// ряд данных, для этой вкладки
         /// </summary>
-        public Dataset Dataset { get; }
+        public DataItem Dataset { get; }
 
         /// <summary>
         /// если итина, то на этой вкладке есть несохраненные изменения
@@ -32,7 +33,7 @@ namespace WindEnergy.UI.Ext
         /// </summary>
         /// <param name="range"></param>
         /// <param name="text"></param>
-        public TabPageExt(Dataset range, string text)
+        public TabPageExt(DataItem range, string text)
         {
             range = range ?? throw new ArgumentNullException(nameof(range));
             TextChanged += tabPageExt_TextChanged;

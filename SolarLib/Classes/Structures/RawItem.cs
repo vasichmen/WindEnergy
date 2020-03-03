@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SolarEnergy.SolarLib.Classes.Structures
 {
-   public class RawItem:RawItemBase
+    public class RawItem : RawItemBase
     {
         private DateTime dt;
         private Dictionary<MeteorologyParameters, double> values;
@@ -18,8 +18,8 @@ namespace SolarEnergy.SolarLib.Classes.Structures
             this.values = values;
         }
 
-        public double AllSkyInsolation { get; set; }
+        public double AllSkyInsolation { get { return values[MeteorologyParameters.AllSkyInsolation]; } set { values[MeteorologyParameters.AllSkyInsolation] = value; } }
 
-        public double ClearSkyInsolation { get; set; }
+        public double ClearSkyInsolation { get { return values[MeteorologyParameters.ClearSkyInsolation]; } set { values[MeteorologyParameters.ClearSkyInsolation] = value; } }
     }
 }

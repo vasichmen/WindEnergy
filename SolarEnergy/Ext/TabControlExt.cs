@@ -1,5 +1,6 @@
 ﻿using SolarEnergy;
 using SolarEnergy.SolarLib.Classes.Collections;
+using SolarEnergy.SolarLib.Classes.Structures;
 using SolarEnergy.UI.Properties;
 using System;
 using System.Collections.Generic;
@@ -32,9 +33,9 @@ namespace WindEnergy.UI.Ext
         /// </summary>
         /// <param name="range">ряд данных для отображения</param>
         /// <param name="text">заголовок вкладки</param>
-        internal TabPageExt OpenNewTab(Dataset range, string text = "Новый документ")
+        internal TabPageExt OpenNewTab(DataItem data, string text = "Новый документ")
         {
-            TabPageExt ntab = new TabPageExt(range, text);
+            TabPageExt ntab = new TabPageExt(data, text);
             this.TabPages.Add(ntab);
             this.SelectedTab = ntab;
             return ntab;

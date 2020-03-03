@@ -132,6 +132,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="icon.ico" />
+    <None Include="Resources\marker.ico" />
     <None Include="Resources\page_close_button.png" />
   </ItemGroup>
   <ItemGroup />

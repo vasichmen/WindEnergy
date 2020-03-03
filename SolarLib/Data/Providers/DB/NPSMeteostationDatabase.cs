@@ -39,8 +39,7 @@ namespace SolarEnergy.SolarLib.Data.Providers.DB
                     Dataset dsClrsk = loadTable(arr, i + 3, 28);
                     NPSMeteostationInfo item = new NPSMeteostationInfo()
                     {
-                        DatasetAllsky = dsAllsk,
-                        DatasetClearSky = dsClrsk,
+                        Data = new DataItem() { DatasetAllsky = dsAllsk, DatasetClearSky = dsClrsk},
                         ID = id,
                         Name = name,
                         Position = pos

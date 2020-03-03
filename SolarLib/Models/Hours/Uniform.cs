@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SolarEnergy.SolarLib.Models.Hours
 {
-    class Uniform : IHoursModel
+    public class Uniform : IHoursModel
     {
         public DataHours<double> GetData(double dailySum)
         {

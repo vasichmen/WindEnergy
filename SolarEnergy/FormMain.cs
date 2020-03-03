@@ -1,6 +1,12 @@
 ﻿using CommonLib.UITools;
+using GMap.NET;
+using SolarEnergy.SolarLib.Classes.Collections;
+using SolarEnergy.SolarLib.Classes.Structures;
+using SolarEnergy.SolarLib.Data.Providers.InternetServices;
+using SolarEnergy.SolarLib.Models.Hours;
 using SolarEnergy.UI;
 using SolarEnergy.UI.Helpers;
+using SolarEnergy.UI.Properties;
 using SolarLib;
 using SolarLib.Classes.Structures.Options;
 using System;
@@ -42,12 +48,29 @@ namespace SolarEnergy.UI
 
         private void openNasaToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            FormSelectMapPointDialog fsmp = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
+            if (fsmp.ShowDialog(this) == DialogResult.OK)
+            {
+                PointLatLng point = fsmp.Result;
+                RawRange range = new NASA(Vars.Options.CacheFolder + "\\nasa").GetRange(DateTime.Now - TimeSpan.FromDays(20 * 365),
+                    DateTime.Now - TimeSpan.FromDays(5), new NPSMeteostationInfo() { Position = point },
+                    null, null );
+                DataItem di = new DataItem()
+                {
+                    DatasetAllsky = new Dataset(range, SolarLib.MeteorologyParameters.AllSkyInsolation, new Uniform()),
+                    DatasetClearSky = new Dataset(range, SolarLib.MeteorologyParameters.ClearSkyInsolation, new Uniform())
+                };
 
+            }
         }
 
         private void openNpsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            FormSelectMapPointDialog fsmp = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
+            if (fsmp.ShowDialog(this) == DialogResult.OK)
+            {
+                PointLatLng point = fsmp.Result;
+            }
         }
 
         private void openFileToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -61,7 +84,7 @@ namespace SolarEnergy.UI
 
         private void dailyAverageGraphsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var w = new FormDailyAverageGraphs(Vars.Options.LastDirectory,  this.Icon);
+            var w = new FormDailyAverageGraphs(Vars.Options.LastDirectory, this.Icon);
             w.Show();
             Vars.Options.LastDirectory = w.Directory;
         }
@@ -69,7 +92,7 @@ namespace SolarEnergy.UI
 
         private void equalizeRangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var w = new FormEqualizer(Vars.Options.LastDirectory,this.Icon);
+            var w = new FormEqualizer(Vars.Options.LastDirectory, this.Icon);
             w.Show(this);
             Vars.Options.LastDirectory = w.Directory;
         }

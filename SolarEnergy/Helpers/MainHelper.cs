@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommonLib;
 using SolarEnergy.SolarLib.Classes.Collections;
+using SolarEnergy.SolarLib.Classes.Structures;
 using SolarEnergy.SolarLib.Data;
 using SolarLib;
 using WindEnergy.UI.Ext;
@@ -48,7 +49,7 @@ namespace SolarEnergy.UI.Helpers
                     try
                     {
                         f.Cursor = Cursors.WaitCursor;
-                        Dataset rang = DatasetSerializer.DeserializeFile(file, null);
+                        Dataset rang = DataItemSerializer.DeserializeFile(file, null);
                         rang.FilePath = file;
                         rang.Name = Path.GetFileNameWithoutExtension(file);
                         Vars.Options.LastDirectory = Path.GetDirectoryName(file);
@@ -72,7 +73,7 @@ namespace SolarEnergy.UI.Helpers
         /// сохранить как отдельный файл
         /// </summary>
         /// <param name="rang"></param>
-        internal string SaveAsFile(Dataset rang, string fileName = null)
+        internal string SaveAsFile(DataItem rang, string fileName = null)
         {
             try
             {
@@ -89,7 +90,7 @@ namespace SolarEnergy.UI.Helpers
                     if (sf.ShowDialog(f) == DialogResult.OK)
                     {
                         Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
-                       DatasetSerializer.SerializeFile(rang, sf.FileName);
+                       DataItemSerializer.SerializeFile(rang, sf.FileName);
                         rang.FilePath = sf.FileName;
                         return sf.FileName;
                     }
@@ -98,7 +99,7 @@ namespace SolarEnergy.UI.Helpers
                 }
                 else
                 {
-                    DatasetSerializer.SerializeFile(rang, fileName);
+                    DataItemSerializer.SerializeFile(rang, fileName);
                     rang.FilePath = fileName;
                     return fileName;
                 }
@@ -123,7 +124,7 @@ namespace SolarEnergy.UI.Helpers
         {
             if (tab == null)
                 return;
-            Dataset rang = (tab as TabPageExt).Dataset;
+            DataItem rang = (tab as TabPageExt).Dataset;
             if (!string.IsNullOrWhiteSpace(rang.FilePath)) // если есть путь для сохранения
                 _ = SaveAsFile(rang, rang.FilePath);
             else

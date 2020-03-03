@@ -134,10 +134,11 @@
     <Compile Include="Classes\Collections\DataHours.cs" />
     <Compile Include="Classes\Collections\DataMonths.cs" />
     <Compile Include="Classes\Collections\RawRange.cs" />
+    <Compile Include="Classes\Structures\DataItem.cs" />
     <Compile Include="Classes\Structures\NPSMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Options\Options.cs" />
     <Compile Include="Classes\Structures\RawItem.cs" />
-    <Compile Include="Data\DatasetSerializer.cs" />
+    <Compile Include="Data\DataItemSerializer.cs" />
     <Compile Include="Data\Providers\DB\NPSMeteostationDatabase.cs" />
     <Compile Include="Data\Providers\FileSystem\CSVFile.cs" />
     <Compile Include="Data\Providers\FileSystem\ExcelFile.cs" />

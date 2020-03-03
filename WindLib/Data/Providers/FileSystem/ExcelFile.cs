@@ -335,7 +335,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             //повторяемости скоростей ветра
             for (int j = 0; j < stat_speeds.Keys.Count; j++)
                 values.Add(Math.Round((stat_speeds.Values[j] * 100), 2));
-
+           
             //по ряду наблюдений
             values.AddRange(new List<object>() {
                Math.Round( range_info.Vmin,2),

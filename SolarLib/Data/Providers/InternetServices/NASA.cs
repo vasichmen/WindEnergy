@@ -23,8 +23,8 @@ namespace SolarEnergy.SolarLib.Data.Providers.InternetServices
             /// выбранные поля для загрузки https://power.larc.nasa.gov/docs/v1/#box
             /// </summary>
             Dictionary<MeteorologyParameters, string> parameters = new Dictionary<MeteorologyParameters, string>() {
-            {MeteorologyParameters.AllSkyInsolation, "WS10M" },
-            {MeteorologyParameters.AllSkyInsolation, "WS10M" }
+            {MeteorologyParameters.AllSkyInsolation, "ALLSKY_SFC_SW_DWN" },
+            {MeteorologyParameters.ClearSkyInsolation, "CLRSKY_SFC_SW_DWN" }
         };
 
             public override TimeSpan MinQueryInterval { get { return TimeSpan.FromSeconds(1); } }
