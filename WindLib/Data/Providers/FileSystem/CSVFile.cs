@@ -71,7 +71,8 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 line += ";" + (stat_speeds.Values[j] * 100).ToString("0.00");
 
             //по ряду наблюдений
-            line += string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f2}", range_info.Vmin, range_info.Vmax, range_info.V0, range_info.Cv, range_info.VeybullGamma, range_info.VeybullBeta, range_info.PowerDensity, range_info.EnergyDensity);
+            line += string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f2};{8:f2}", 
+                range_info.Vmin, range_info.Vmax, range_info.V0, range_info.Cv, range_info.StandardDeviationSpeed, range_info.VeybullGamma, range_info.VeybullBeta, range_info.PowerDensity, range_info.EnergyDensity);
 
             //повторяемости направлений ветра
             List<Enum> rs = WindDirections16.Calm.GetEnumItems().GetRange(0, 17);
@@ -257,7 +258,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             string cap = "Год;Месяц;кол-во изм";
             foreach (GradationItem grad in Vars.Options.CurrentSpeedGradation.Items)
                 cap += ";" + grad.Average.ToString("0.00");
-            cap += ";Vmin, м/с;Vmax, м/с;Vср, м/с;Cv(V);параметр γ;параметр β;Nвал уд., Вт/м^2;Эвал уд., Вт*ч/м^2";
+            cap += ";Vmin, м/с;Vmax, м/с;Vср, м/с;Cv(V);𝜎(V);параметр γ;параметр β;Nвал уд., Вт/м^2;Эвал уд., Вт*ч/м^2";
             foreach (WindDirections16 wd in WindDirections16.Calm.GetEnumItems().GetRange(0, 17))
                 cap += ";" + wd.Description();
 

@@ -219,7 +219,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 List<string> cap = new List<string>() { "Год", "Месяц", "Кол-во измерений" };
                 foreach (GradationItem grad in Vars.Options.CurrentSpeedGradation.Items)
                     cap.Add(grad.Average.ToString("0.00"));
-                cap.AddRange(new string[] { "Vmin, м/с", "Vmax, м/с", "Vср, м/с", "Cv(V)", "γ", "β", "Nвал уд., Вт/м^2", "Эвал уд., Вт*ч/м^2" });
+                cap.AddRange(new string[] { "Vmin, м/с", "Vmax, м/с", "Vср, м/с", "Cv(V)", "𝜎(V)", "γ", "β", "Nвал уд., Вт/м^2", "Эвал уд., Вт*ч/м^2" });
                 foreach (WindDirections16 wd in WindDirections16.Calm.GetEnumItems().GetRange(0, 17))
                     cap.Add(wd.Description());
 
@@ -342,6 +342,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
               Math.Round(  range_info.Vmax,2),
               Math.Round(range_info.V0,2),
               Math.Round(range_info.Cv,2),
+              Math.Round(range_info.StandardDeviationSpeed,2),
               Math.Round(range_info.VeybullGamma,2),
               Math.Round(range_info.VeybullBeta,2),
               Math.Round(range_info.PowerDensity,2),
