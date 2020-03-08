@@ -30,8 +30,10 @@ namespace SolarEnergy.UI.Tools
             InitializeComponent();
 
             comboBoxMonthTransformer.Items.AddRange(MonthTransformationModels.None.GetItems().ToArray());
-            comboBoxMonthTransformer.SelectedItem = MonthTransformationModels.None.Description();
+            comboBoxMonthTransformer.SelectedItem = MonthTransformationModels.LinearInterpolation.Description();
             DialogResult = DialogResult.Cancel;
+
+            updateUI();
         }
 
         private void buttonSelectPoint_Click(object sender, EventArgs e)

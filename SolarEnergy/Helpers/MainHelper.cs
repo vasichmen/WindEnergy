@@ -84,8 +84,8 @@ namespace SolarEnergy.UI.Helpers
                     sf.InitialDirectory = Vars.Options.LastDirectory;
                     sf.AddExtension = true;
                     sf.FileName = rang.Name;
-                    sf.Filter = "Файл Excel (*.xlsx)|*.xlsx";
-                    sf.Filter += "|Файл csv (*.csv)|*.csv";
+                    //sf.Filter = "Файл Excel (*.xlsx)|*.xlsx";
+                    sf.Filter += "Файл csv (*.csv)|*.csv";
 
                     if (sf.ShowDialog(f) == DialogResult.OK)
                     {
@@ -106,7 +106,7 @@ namespace SolarEnergy.UI.Helpers
             }
             catch (Exception e)
             {
-                string msg = e.InnerException.InnerException != null ? e.InnerException.InnerException.Message : e.Message;
+                string msg = e.InnerException != null ? e.InnerException.Message : e.Message;
                 _ = MessageBox.Show(this.f, $"Не удалось сохранить файл, причина:\r\n{msg}", "Сохранение файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }

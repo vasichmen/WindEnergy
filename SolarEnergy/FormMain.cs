@@ -15,10 +15,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindEnergy.UI.Ext;
 
 namespace SolarEnergy.UI
 {
@@ -41,6 +43,27 @@ namespace SolarEnergy.UI
 
         #region Файл
 
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabControlMain.SelectedTab == null)
+                return;
+            mainHelper.Save(tabControlMain.SelectedTab);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabControlMain.SelectedTab == null)
+                return;
+            DataRange rang = (tabControlMain.SelectedTab as TabPageExt).DataRange;
+            string name = mainHelper.SaveAsFile(rang);
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                tabControlMain.SelectedTab.Text = Path.GetFileName(name);
+                tabControlMain.SelectedTab.ToolTipText = name;
+            }
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
@@ -49,7 +72,11 @@ namespace SolarEnergy.UI
 
         private void openNasaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
+            FormLoadFromNASA fln = new FormLoadFromNASA();
+            if (fln.ShowDialog(this) == DialogResult.OK)
+            {
+                this.tabControlMain.OpenNewTab(fln.Result, fln.Name);
+            }
         }
 
         private void openNpsToolStripMenuItem_Click(object sender, EventArgs e)

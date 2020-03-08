@@ -104,7 +104,6 @@ namespace WindEnergy.WindLib.Transformation.Terrain
         /// <returns></returns>
         private static double selectMicroclimateCoefficient(double speed, MicroclimateItemInfo microclimateCoefficient, AtmosphereStratification atmosphereStratification)
         {
-            //TODO: сделать линейную интерполяцию
             Diapason<double> diap;
             double res;
             if (speed <= 5)

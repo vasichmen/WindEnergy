@@ -32,7 +32,15 @@ namespace SolarEnergy.SolarLib.Data
 
         public static void SerializeFile(DataRange rang, string fileName)
         {
-            throw new NotImplementedException();
+            string ext = Path.GetExtension(fileName).ToLower();
+            switch (ext)
+            {
+                case ".csv":
+                    new CSVFile().SaveDataRange(rang,fileName);
+                    break;
+                case ".xls":
+                default: throw new Exception("Сохранение этого типа файлов не реализовано");
+            }
         }
     }
 }
