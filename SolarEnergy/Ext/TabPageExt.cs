@@ -2,12 +2,15 @@
 using SolarEnergy.SolarLib.Classes.Collections;
 using SolarEnergy.SolarLib.Classes.Structures;
 using SolarEnergy.UI;
+using SolarEnergy.UI.Ext;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZedGraph;
 
 namespace WindEnergy.UI.Ext
 {
@@ -16,37 +19,35 @@ namespace WindEnergy.UI.Ext
     /// </summary>
     public class TabPageExt : TabPage
     {
-        public DataGridView DataGrid { get; set; }
-
         /// <summary>
         /// ряд данных, для этой вкладки
         /// </summary>
-        public DataItem Dataset { get; }
-
-        /// <summary>
-        /// если итина, то на этой вкладке есть несохраненные изменения
-        /// </summary>
-        public bool HasNotSavedChanges { get; internal set; }
+        public DataRange DataRange { get; }
 
         /// <summary>
         /// создаёт новую вкладку с заданным рядом
         /// </summary>
         /// <param name="range"></param>
         /// <param name="text"></param>
-        public TabPageExt(DataItem range, string text)
+        public TabPageExt(DataRange range, string text)
         {
             range = range ?? throw new ArgumentNullException(nameof(range));
             TextChanged += tabPageExt_TextChanged;
-            Dataset = range;
+            DataRange = range;
             this.ToolTipText = string.IsNullOrWhiteSpace(range.FilePath) ? "" : range.FilePath;
             this.Text = text;
-            DataGridView ndgv = new DataGridView();
-            ndgv.ColumnAdded += DataGridView_ColumnAdded;
-            ndgv.Dock = DockStyle.Fill;
-            ndgv.Parent = this;
-            ndgv.DataSource = range;
-            HasNotSavedChanges = false;
-            DataGrid = ndgv;
+
+            //расстановка контролов
+            //FlowLayoutPanel flp = new FlowLayoutPanel();
+            //flp.FlowDirection = FlowDirection.TopDown;
+            //flp.Dock = DockStyle.Fill;
+            //flp.Parent = this;
+
+            ZedGraphControlExt zgc = new ZedGraphControlExt(range);
+            zgc.Name = "zgc";
+            zgc.Parent = this;
+            zgc.Dock = DockStyle.Fill;
+           
         }
 
 
@@ -67,75 +68,9 @@ namespace WindEnergy.UI.Ext
         /// </summary>
         internal bool ClosePage()
         {
-            if (this.HasNotSavedChanges)
-            {
-                DialogResult result = MessageBox.Show(Parent.Parent, "Сохранить изменения в файле " + this.Dataset.Name + " ?", "Закрытие файла", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-                switch (result)
-                {
-                    case DialogResult.No:
-                        this.CausesValidation = false;
-                        this.DataGrid.CausesValidation = false;
-                        this.DataGrid.RefreshEdit();
-                        this.DataGrid.EndEdit();
-                        (this.Parent as TabControlExt).TabPages.Remove(this); //закрываем вкладку без сохранения
-                        return false;
-                    case DialogResult.Yes:
-                        (Parent.Parent.Parent as FormMain).mainHelper.Save(this);
-                        (this.Parent as TabControlExt).TabPages.Remove(this); //закрываем вкладку после сохранения
-                        return false;
-                    case DialogResult.Cancel:
-                        return true;
-                    default: throw new Exception();
-                }
-            }
-            else
-            {
-                (this.Parent as TabControlExt).TabPages.Remove(this); //закрываем вкладку
-                return false;
-            }
-
+            (this.Parent as TabControlExt).TabPages.Remove(this); //закрываем вкладку
+            return false;
         }
 
-        /// <summary>
-        /// изменение типа столбцов при добавлении
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void DataGridView_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
-        {
-            e = e ?? throw new ArgumentNullException(nameof(e));
-            switch (e.Column.Name.ToLower())
-            {
-                case "date":
-                    e.Column.HeaderText = "Дата наблюдения";
-                    e.Column.Width = 130;
-                    e.Column.CellTemplate = new DataGridViewCalendarCell();
-                    break;
-                case "speed":
-                    e.Column.HeaderText = "Скорость, м/с";
-                    e.Column.DefaultCellStyle.Format = "n1";
-                    break;
-                case "temperature":
-                    e.Column.HeaderText = "Температура, °С";
-                    e.Column.DefaultCellStyle.Format = "n1";
-                    break;
-                case "wetness":
-                    e.Column.HeaderText = "Влажность, %";
-                    e.Column.DefaultCellStyle.Format = "n1";
-                    break;
-                case "pressure":
-                    e.Column.HeaderText = "Давление, мм рт. ст.";
-                    e.Column.Width = 130;
-                    e.Column.DefaultCellStyle.Format = "n1";
-                    break;
-
-                //удаляемые колонки пишем тут:
-                case "dateargument":
-                case "directionrhumb8":
-                    e.Column.DataGridView.Columns.Remove(e.Column);
-                    break;
-                default: throw new Exception("Для этой колонки нет названия");
-            }
-        }
     }
 }

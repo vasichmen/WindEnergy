@@ -2,6 +2,7 @@
 using GMap.NET;
 using SolarEnergy.SolarLib.Classes.Collections;
 using SolarEnergy.SolarLib.Classes.Structures;
+using SolarEnergy.SolarLib.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SolarEnergy.SolarLib.Data.Providers.DB
 {
-    public class NPSMeteostationDatabase : BaseMeteostationDatabase<PointLatLng, NPSMeteostationInfo>
+    public class NPSMeteostationDatabase : BaseMeteostationDatabase<PointLatLng, NPSMeteostationInfo>, IDataItemtProvider
     {
         /// <summary>
         /// создает объект для этого файла, не загружая данные
@@ -96,6 +97,12 @@ namespace SolarEnergy.SolarLib.Data.Providers.DB
                 return res.First();
             else
                 return null;
+        }
+
+        public DataItem GetDataItem(PointLatLng point)
+        {
+            PointLatLng pt = this.GetNearestMS(point).Position;
+            return this[pt].Data;
         }
     }
 }

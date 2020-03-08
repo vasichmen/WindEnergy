@@ -44,4 +44,22 @@ namespace SolarEnergy.SolarLib
         [Description("Давление")]
         Pressure
     }
+
+    /// <summary>
+    /// типы переходов от значения одного месяца к другому
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<MonthTransformationModels>))]
+    public enum MonthTransformationModels
+    {
+        [Description("Не выбрано")]
+        None,
+
+        [Description("Ступенчатый переход")]
+        Constant,
+
+        [Description("Линейная интерполяция")]
+        LinearInterpolation,
+
+
+    }
 }

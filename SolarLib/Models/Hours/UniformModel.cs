@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace SolarEnergy.SolarLib.Models.Hours
 {
-    public class Uniform : IHoursModel
+    /// <summary>
+    /// модель равномерного распределения радиации внутри суток
+    /// </summary>
+    public class UniformModel : IHoursModel
     {
         public DataHours<double> GetData(double dailySum)
         {

@@ -33,7 +33,7 @@ namespace WindEnergy.UI.Ext
         /// </summary>
         /// <param name="range">ряд данных для отображения</param>
         /// <param name="text">заголовок вкладки</param>
-        internal TabPageExt OpenNewTab(DataItem data, string text = "Новый документ")
+        internal TabPageExt OpenNewTab(DataRange data, string text = "Новый документ")
         {
             TabPageExt ntab = new TabPageExt(data, text);
             this.TabPages.Add(ntab);

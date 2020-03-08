@@ -24,7 +24,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public override Dataset LoadDataset(string fileName)
+        public override DataRange LoadDataRange(string fileName)
         {
             StreamReader sr = new StreamReader(fileName, Encoding.UTF8, true);
 
@@ -42,7 +42,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
 
             string regex = @"^\d+[\.\,].\d*\s+\d+[\.\,].\d*$";
 
-            Dataset res = new Dataset();
+            DataRange res = new DataRange();
             //TODO: Загрузка из csv
 
             return res;
@@ -53,7 +53,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        private Dataset loadCSVFile(string filename)
+        private DataRange loadCSVFile(string filename)
         {
             StreamReader sr = new StreamReader(filename, Encoding.UTF8);
             string title = sr.ReadLine();
@@ -62,7 +62,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             sr.ReadLine();//пропуск заголовка таблицы
             string data = sr.ReadToEnd();
             sr.Close();
-            Dataset res = new Dataset() { Name = name };
+            DataRange res = new DataRange() { Name = name };
 
             //чтение координат файла
             string regex = @"^\d+[\.\,].\d*\s+\d+[\.\,].\d*$";
@@ -80,15 +80,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             res.Position = coord;
 
             //TODO: Загрузка из csv
-
-            //поиск информации о МС
-            NPSMeteostationInfo meteostation = null;
-            int start = title.IndexOf("ID=") + "ID=".Length;
-            string id_s = title.Substring(start);
-            meteostation = Vars.NPSMeteostationDatabase.GetByID(id_s);
-            res.Meteostation = meteostation;
-
-
+                       
             return res;
         }
 
@@ -97,19 +89,10 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
         /// </summary>
         /// <param name="rang"></param>
         /// <param name="filename"></param>
-        internal override void SaveDataset(Dataset rang, string filename)
+        internal override void SaveDataRange(DataRange rang, string filename)
         {
             StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
-            string coordinates = rang.Position.Lat.ToString("0.000000") + " " + rang.Position.Lng.ToString("0.000000");
             string caption = "Местное время;T;U;DD;ff;P0";
-            string title;
-            if (rang.Meteostation == null)
-                title = "ID=undefined";
-            else
-                title = $"ID={rang.Meteostation.ID}";
-            sw.WriteLine(title);
-            sw.WriteLine(coordinates);
-            sw.WriteLine(rang.Name);
             sw.WriteLine(caption);
             
             //TODO: сохранение csv

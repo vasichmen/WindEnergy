@@ -18,13 +18,13 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public abstract Dataset LoadDataset(string fileName);
+        public abstract DataRange LoadDataRange(string fileName);
 
         /// <summary>
         /// экспорт ряда наблюдений в файл
         /// </summary>
         /// <param name="rang"></param>
         /// <param name="filename"></param>
-        internal abstract void SaveDataset(Dataset dataset, string filename);
+        internal abstract void SaveDataRange(DataRange dataset, string filename);
     }
 }

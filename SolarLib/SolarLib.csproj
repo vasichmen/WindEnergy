@@ -128,6 +128,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Collections\DataRange.cs" />
     <Compile Include="Classes\Collections\Dataset.cs" />
     <Compile Include="Classes\Collections\DataBase.cs" />
     <Compile Include="Classes\Collections\DataMonthsHour.cs" />
@@ -138,16 +139,20 @@
     <Compile Include="Classes\Structures\NPSMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Options\Options.cs" />
     <Compile Include="Classes\Structures\RawItem.cs" />
-    <Compile Include="Data\DataItemSerializer.cs" />
+    <Compile Include="Data\DataRangeSerializer.cs" />
+    <Compile Include="Data\Interfaces\IDataRangeProvider.cs" />
+    <Compile Include="Data\Interfaces\IDataItemtProvider.cs" />
     <Compile Include="Data\Providers\DB\NPSMeteostationDatabase.cs" />
     <Compile Include="Data\Providers\FileSystem\CSVFile.cs" />
-    <Compile Include="Data\Providers\FileSystem\ExcelFile.cs" />
     <Compile Include="Data\Providers\FileSystem\FileProvider.cs" />
     <Compile Include="Data\Interfaces\IRangeProvider.cs" />
     <Compile Include="Data\Providers\InternetServices\NASA.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Models\Hours\Uniform.cs" />
+    <Compile Include="Models\Hours\UniformModel.cs" />
     <Compile Include="Models\Interfaces\IHoursModel.cs" />
+    <Compile Include="Models\Interfaces\IMonthTransformerModel.cs" />
+    <Compile Include="Models\MonthTransformer\ConstantModel.cs" />
+    <Compile Include="Models\MonthTransformer\LinearInterpolationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts.cs" />
     <Compile Include="Vars.cs" />
@@ -162,6 +167,8 @@
       <Name>CommonLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Operations\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

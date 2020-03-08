@@ -10,7 +10,7 @@ using WindEnergy.WindLib.Data.Providers.FileSystem;
 
 namespace SolarEnergy.SolarLib.Data
 {
-    public static class DataItemSerializer
+    public static class DataRangeSerializer
     {
         /// <summary>
         /// открыть файл 
@@ -18,21 +18,19 @@ namespace SolarEnergy.SolarLib.Data
         /// <param name="FileName">имя файла</param>
         /// <param name="onProgressChanged">действие при изменении состояния открытия (передаются проценты выполнения)</param>
         /// <returns></returns>
-        public static Dataset DeserializeFile(string FileName, Action<double> onProgressChanged = null)
+        public static DataRange DeserializeFile(string FileName, Action<double> onProgressChanged = null)
         {
             string ext = Path.GetExtension(FileName).ToLower();
             switch (ext)
             {
                 case ".csv":
-                    return new CSVFile().LoadDataset(FileName);
+                    return new CSVFile().LoadDataRange(FileName);
                 case ".xls":
-                case ".xlsx":
-                    return new ExcelFile().LoadDataset(FileName);
                 default: throw new Exception("Открытие этого типа файлов не реализовано");
             }
         }
 
-        public static void SerializeFile(DataItem rang, string fileName)
+        public static void SerializeFile(DataRange rang, string fileName)
         {
             throw new NotImplementedException();
         }

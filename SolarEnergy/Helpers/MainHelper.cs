@@ -32,7 +32,7 @@ namespace SolarEnergy.UI.Helpers
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        internal Dataset OpenFile(Form form = null)
+        internal DataRange OpenFile(Form form = null)
         {
             if (form == null)
                 form = f;
@@ -49,7 +49,7 @@ namespace SolarEnergy.UI.Helpers
                     try
                     {
                         f.Cursor = Cursors.WaitCursor;
-                        Dataset rang = DataItemSerializer.DeserializeFile(file, null);
+                        DataRange rang = DataRangeSerializer.DeserializeFile(file, null);
                         rang.FilePath = file;
                         rang.Name = Path.GetFileNameWithoutExtension(file);
                         Vars.Options.LastDirectory = Path.GetDirectoryName(file);
@@ -73,7 +73,7 @@ namespace SolarEnergy.UI.Helpers
         /// сохранить как отдельный файл
         /// </summary>
         /// <param name="rang"></param>
-        internal string SaveAsFile(DataItem rang, string fileName = null)
+        internal string SaveAsFile(DataRange rang, string fileName = null)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace SolarEnergy.UI.Helpers
                     if (sf.ShowDialog(f) == DialogResult.OK)
                     {
                         Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
-                       DataItemSerializer.SerializeFile(rang, sf.FileName);
+                       DataRangeSerializer.SerializeFile(rang, sf.FileName);
                         rang.FilePath = sf.FileName;
                         return sf.FileName;
                     }
@@ -99,7 +99,7 @@ namespace SolarEnergy.UI.Helpers
                 }
                 else
                 {
-                    DataItemSerializer.SerializeFile(rang, fileName);
+                    DataRangeSerializer.SerializeFile(rang, fileName);
                     rang.FilePath = fileName;
                     return fileName;
                 }
@@ -124,7 +124,7 @@ namespace SolarEnergy.UI.Helpers
         {
             if (tab == null)
                 return;
-            DataItem rang = (tab as TabPageExt).Dataset;
+            DataRange rang = (tab as TabPageExt).DataRange;
             if (!string.IsNullOrWhiteSpace(rang.FilePath)) // если есть путь для сохранения
                 _ = SaveAsFile(rang, rang.FilePath);
             else

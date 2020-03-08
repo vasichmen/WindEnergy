@@ -18,5 +18,11 @@ namespace SolarEnergy.SolarLib.Classes.Structures
             DatasetAllsky = new Dataset();
             DatasetClearSky = new Dataset();
         }
+
+        public DataItem(Dataset allsky, Dataset clearsky)
+        {
+            DatasetAllsky = allsky;
+            DatasetClearSky = clearsky;
+        }
     }
 }
