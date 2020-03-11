@@ -9,6 +9,6 @@ namespace SolarEnergy.SolarLib.Models.Interfaces
 {
    public interface IHoursModel
     {
-        DataHours<double> GetData(double dailySum);
+        DataHours<double> GetData(double dailySum, MeteorologyParameters allSkyInsolation);
     }
 }

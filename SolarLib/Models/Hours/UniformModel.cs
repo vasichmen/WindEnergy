@@ -13,7 +13,7 @@ namespace SolarEnergy.SolarLib.Models.Hours
     /// </summary>
     public class UniformModel : IHoursModel
     {
-        public DataHours<double> GetData(double dailySum)
+        public DataHours<double> GetData(double dailySum, MeteorologyParameters allSkyInsolation)
         {
             DataHours<double> res = new DataHours<double>();
             for (int i = 0; i < 24; i++)

@@ -133,3 +133,70 @@ using System.Threading.Tasks;
         GoogleSatellite
     }
 
+/// <summary>
+/// Интервалы наблюдений. При приведении к int - время в минутах
+/// </summary>
+[TypeConverter(typeof(EnumTypeConverter<StandartIntervals>))]
+public enum StandartIntervals
+{
+    /// <summary>
+    /// пропущенные данные
+    /// </summary>
+    [Description("Пропуск данных")]
+    Missing = int.MaxValue,
+
+    /// <summary>
+    /// переменный интервал (ряд не однородный)
+    /// </summary>
+    [Description("Неоднородный ряд")]
+    Variable = -1,
+
+    /// <summary>
+    /// 10 минут
+    /// </summary>
+    [Description("10 минут")]
+    M10 = 10,
+
+    /// <summary>
+    /// 30 минут
+    /// </summary>
+    [Description("30 минут")]
+    M30 = 30,
+
+    /// <summary>
+    /// 1 час
+    /// </summary>
+    [Description("1 час")]
+    H1 = 60,
+
+    /// <summary>
+    /// 3 часа
+    /// </summary>
+    [Description("3 часа")]
+    H3 = 180,
+
+    /// <summary>
+    /// 6 часов
+    /// </summary>
+    [Description("6 часов")]
+    H6 = 360,
+
+    /// <summary>
+    /// 8 часов
+    /// </summary>
+    [Description("8 часов")]
+    H8 = 480,
+
+    /// <summary>
+    /// 8 часов
+    /// </summary>
+    [Description("12 часов")]
+    H12 = 720,
+
+    /// <summary>
+    /// 1 день
+    /// </summary>
+    [Description("1 день")]
+    D1 = 24 * 60,
+}
+

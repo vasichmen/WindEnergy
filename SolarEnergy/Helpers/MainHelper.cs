@@ -1,4 +1,9 @@
-﻿using System;
+﻿using CommonLib;
+using SolarEnergy.SolarLib.Classes.Collections;
+using SolarEnergy.SolarLib.Classes.Structures;
+using SolarEnergy.SolarLib.Data;
+using SolarLib;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -6,11 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CommonLib;
-using SolarEnergy.SolarLib.Classes.Collections;
-using SolarEnergy.SolarLib.Classes.Structures;
-using SolarEnergy.SolarLib.Data;
-using SolarLib;
 using WindEnergy.UI.Ext;
 
 namespace SolarEnergy.UI.Helpers
@@ -90,7 +90,7 @@ namespace SolarEnergy.UI.Helpers
                     if (sf.ShowDialog(f) == DialogResult.OK)
                     {
                         Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
-                       DataRangeSerializer.SerializeFile(rang, sf.FileName);
+                        DataRangeSerializer.SerializeFile(rang, sf.FileName);
                         rang.FilePath = sf.FileName;
                         return sf.FileName;
                     }

@@ -62,4 +62,39 @@ namespace SolarEnergy.SolarLib
 
 
     }
+
+    /// <summary>
+    /// типы исходных данных для NASA
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<NasaSourceTypes>))]
+    public enum NasaSourceTypes
+    {
+        [Description("Не выбрано")]
+        None,
+
+        [Description("Только выбранный год")]
+        SelectedYear,
+
+        [Description("Средние значения для всего периода")]
+        AllPeriod,
+
+        [Description("Минимальные значения для каждого дня")]
+        Minimal,
+
+        [Description("Максимальные значения для каждого дня")]
+        Maximal
+    }
+
+    /// <summary>
+    /// Модели распркделения радиации по часам суток
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<HourModels>))]
+    public enum HourModels
+    {
+        [Description("Не выбрано")]
+        None,
+
+        [Description("Равномерное распределение")]
+        Uniform
+    }
 }

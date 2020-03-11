@@ -136,6 +136,7 @@
     <Compile Include="Classes\Collections\DataMonths.cs" />
     <Compile Include="Classes\Collections\RawRange.cs" />
     <Compile Include="Classes\Structures\DataItem.cs" />
+    <Compile Include="Classes\Structures\DataRangeConverterParams.cs" />
     <Compile Include="Classes\Structures\NPSMeteostationInfo.cs" />
     <Compile Include="Classes\Structures\Options\Options.cs" />
     <Compile Include="Classes\Structures\RawItem.cs" />

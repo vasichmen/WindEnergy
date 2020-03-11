@@ -29,7 +29,7 @@ namespace SolarEnergy.SolarLib.Classes.Collections
                         double aver = (from t in range
                                        where t.Date.Month == i
                                        select t.AllSkyInsolation).Average();
-                        DataHours<double> hours = model.GetData(aver);
+                        DataHours<double> hours = model.GetData(aver,param);
                         Months month = (Months)i;
                         this[month] = hours;
                         break;
@@ -38,7 +38,7 @@ namespace SolarEnergy.SolarLib.Classes.Collections
                         double aver2 = (from t in range
                                         where t.Date.Month == i
                                         select t.ClearSkyInsolation).Average();
-                        DataHours<double> hours2 = model.GetData(aver2);
+                        DataHours<double> hours2 = model.GetData(aver2, param);
                         Months month2 = (Months)i;
                         this[month2] = hours2;
                         break;
