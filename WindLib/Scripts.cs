@@ -1,8 +1,10 @@
 ﻿using CommonLib;
 using CommonLib.Classes;
+using CommonLib.Data.Providers.InternetServices;
 using CommonLibLib.Data.Interfaces;
 using CommonLibLib.Data.Providers.InternetServices;
 using GMap.NET;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
@@ -33,6 +35,21 @@ namespace WindEnergy.WindLib
     /// </summary>
     public static class Scripts
     {
+        private class Requester : BaseConnection
+        {
+            public Requester() : base("", null) { }
+
+            public override TimeSpan MinQueryInterval { get { return TimeSpan.FromSeconds(1); } }
+            public override int MaxAttempts { get { return 5; } }
+            public override TimeSpan SessionLifetime { get => TimeSpan.FromMinutes(60); }
+
+            public JObject GetJson(string url)
+            {
+                return base.SendJsonGetRequest(url, out HttpStatusCode code, false);
+            }
+        }
+
+
         #region не используются
 
         #region обновление БД АМС
@@ -666,6 +683,138 @@ namespace WindEnergy.WindLib
             completed = true;
         }
 
+
+        /// <summary>
+        /// выгрузка БД НАСА
+        /// </summary>
+        /// <param name="directoryOut"></param>
+        /// <param name="act"></param>
+        /// <param name="checkStop"></param>
+        public static void LoadAllNasaDatabase(string directoryOut, Action<int, string> act, Func<bool> checkStop)
+        {
+            string fields = "WS10M,T10M,RH2M,PS,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN";
+            string header = "WS10M, m/s;T10M, C;RH2M, %;PS, kPa;ALLSKY_SFC_SW_DWN, ;CLRSKY_SFC_SW_DWN, ";
+
+            string filePosition = directoryOut + "\\position.txt";
+
+            DateTime fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month,DateTime.Now.Day) - TimeSpan.FromDays(365 * 30);
+            DateTime toDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            double startLat = -179, endLat = 179;
+            double startLon = -89, endLon = 89;
+            double stepLat = 1, stepLon = 1;
+            Requester req = new Requester();
+
+            if (File.Exists(filePosition))
+            {
+                StreamReader sr = new StreamReader(filePosition);
+                string lat = sr.ReadLine();
+                string lon = sr.ReadLine();
+                sr.Close();
+
+                startLat = double.Parse(lat);
+                startLon = double.Parse(lon);
+            }
+
+
+
+            double total = (endLon - startLon) * (endLat - startLat);
+            double current = 0;
+            for (double lat = startLat; lat <= endLat; lat += stepLat)
+            {
+                string curdir = directoryOut + "\\" + lat;
+                if (!Directory.Exists(curdir))
+                    Directory.CreateDirectory(curdir);
+
+                for (double lon = startLon; lon <= endLon; lon += stepLon)
+                {
+                    if (checkStop != null && checkStop.Invoke()) //проверка остановки процесса
+                        return;
+
+                    PointLatLng coord = new PointLatLng(lat, lon);
+                    Dictionary<DateTime, double> WS10M = new Dictionary<DateTime, double>();
+                    Dictionary<DateTime, double> T10M = new Dictionary<DateTime, double>();
+                    Dictionary<DateTime, double> RH2M = new Dictionary<DateTime, double>();
+                    Dictionary<DateTime, double> PS = new Dictionary<DateTime, double>();
+                    Dictionary<DateTime, double> ALLSKY_SFC_SW_DWN = new Dictionary<DateTime, double>();
+                    Dictionary<DateTime, double> CLRSKY_SFC_SW_DWN = new Dictionary<DateTime, double>();
+
+                    //отправка статуса
+                    int perc = (int)((++current / total) * 100d);
+                    act(perc, $"Загружаются координаты: {coord.ToString(3)}");
+
+                    //запись прогресса
+                    StreamWriter sw = new StreamWriter(filePosition);
+                    sw.WriteLine(lat);
+                    sw.WriteLine(lon);
+                    sw.Close();
+
+                    //проверка файла
+                    string fname = curdir + "\\" + lon + ".csv";
+                    if (File.Exists(fname))
+                        continue;
+
+                    //загрузка данных
+                    string url = "https://power.larc.nasa.gov/cgi-bin/v1/DataAccess.py?request=execute&identifier=SinglePoint&parameters={0}&startDate={1}&endDate={2}&userCommunity=SSE&tempAverage=DAILY&outputList=ASCII&lat={3}&lon={4}&user=anonymous";
+                    url = string.Format(url,
+                        fields,
+                        fromDate.ToString("yyyyMMdd"),
+                        toDate.ToString("yyyyMMdd"),
+                        coord.Lat.ToString("00.00").Replace(Constants.DecimalSeparator, '.'),
+                        coord.Lng.ToString("00.00").Replace(Constants.DecimalSeparator, '.'));
+                    JToken ans = req.GetJson(url);
+                    if (ans["messages"].HasValues) //если есть ошибки, то дальше
+                        continue;
+
+                    var parameters = ans["features"][0]["properties"]["parameter"];
+                    WS10M = getValues(parameters["WS10M"]);
+                    T10M = getValues(parameters["T10M"]);
+                    RH2M = getValues(parameters["RH2M"]);
+                    PS = getValues(parameters["PS"]);
+                    ALLSKY_SFC_SW_DWN = getValues(parameters["ALLSKY_SFC_SW_DWN"]);
+                    CLRSKY_SFC_SW_DWN = getValues(parameters["CLRSKY_SFC_SW_DWN"]);
+
+                    
+                    StreamWriter swr = new StreamWriter(fname);
+                    swr.WriteLine(header);
+                    for (DateTime date = fromDate; date <= toDate; date += TimeSpan.FromDays(1))
+                    {
+                        double WS10M_v = WS10M.ContainsKey(date) ? WS10M[date] : double.NaN;
+                        double T10M_v = T10M.ContainsKey(date) ? T10M[date] : double.NaN;
+                        double RH2M_v = RH2M.ContainsKey(date) ? RH2M[date] : double.NaN;
+                        double PS_v = PS.ContainsKey(date) ? PS[date] : double.NaN;
+                        double ALLSKY_SFC_SW_DWN_v = ALLSKY_SFC_SW_DWN.ContainsKey(date) ? ALLSKY_SFC_SW_DWN[date] : double.NaN;
+                        double CLRSKY_SFC_SW_DWN_v = CLRSKY_SFC_SW_DWN.ContainsKey(date) ? CLRSKY_SFC_SW_DWN[date] : double.NaN;
+                        string line = $"{WS10M_v};{T10M_v};{RH2M_v};{PS_v};{ALLSKY_SFC_SW_DWN_v};{CLRSKY_SFC_SW_DWN_v}";
+                        swr.WriteLine(line);
+                    }
+                    swr.Close();
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// возвращает список значений из json объекта
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        private static Dictionary<DateTime, double> getValues(JToken param)
+        {
+            Dictionary<DateTime, double> res = new Dictionary<DateTime, double>();
+            var vals = JsonConvert.DeserializeObject<Dictionary<string, double>>(param.ToString());
+            foreach(string key in vals.Keys)
+            {
+                double val = vals[key];
+
+                DateTime dt = new DateTime(
+                    int.Parse(key.Substring(0,4)),
+                    int.Parse(key.Substring(4,2)),
+                    int.Parse(key.Substring(6,2))
+                    );
+                res.Add(dt, val);
+            }
+            return res;
+        }
 
         #endregion
 

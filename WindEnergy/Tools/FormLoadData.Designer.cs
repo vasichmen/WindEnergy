@@ -46,9 +46,15 @@
             this.buttonStopRP5 = new System.Windows.Forms.Button();
             this.labelStatusRP5 = new System.Windows.Forms.Label();
             this.buttonStartRP5 = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.progressBarStatusNASA = new System.Windows.Forms.ProgressBar();
+            this.buttonStopNASA = new System.Windows.Forms.Button();
+            this.labelStatusNASA = new System.Windows.Forms.Label();
+            this.buttonStartNASA = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -237,11 +243,66 @@
             this.buttonStartRP5.UseVisualStyleBackColor = true;
             this.buttonStartRP5.Click += new System.EventHandler(this.buttonStartRP5_Click);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Controls.Add(this.progressBarStatusNASA);
+            this.groupBox4.Controls.Add(this.buttonStopNASA);
+            this.groupBox4.Controls.Add(this.labelStatusNASA);
+            this.groupBox4.Controls.Add(this.buttonStartNASA);
+            this.groupBox4.Location = new System.Drawing.Point(12, 306);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(620, 96);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Загрузка БД NASA";
+            // 
+            // progressBarStatusNASA
+            // 
+            this.progressBarStatusNASA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBarStatusNASA.Location = new System.Drawing.Point(90, 48);
+            this.progressBarStatusNASA.Name = "progressBarStatusNASA";
+            this.progressBarStatusNASA.Size = new System.Drawing.Size(524, 23);
+            this.progressBarStatusNASA.TabIndex = 3;
+            // 
+            // buttonStopNASA
+            // 
+            this.buttonStopNASA.Enabled = false;
+            this.buttonStopNASA.Location = new System.Drawing.Point(6, 48);
+            this.buttonStopNASA.Name = "buttonStopNASA";
+            this.buttonStopNASA.Size = new System.Drawing.Size(75, 23);
+            this.buttonStopNASA.TabIndex = 2;
+            this.buttonStopNASA.Text = "Остановить";
+            this.buttonStopNASA.UseVisualStyleBackColor = true;
+            this.buttonStopNASA.Click += new System.EventHandler(this.buttonStopNASA_Click);
+            // 
+            // labelStatusNASA
+            // 
+            this.labelStatusNASA.AutoSize = true;
+            this.labelStatusNASA.Location = new System.Drawing.Point(87, 24);
+            this.labelStatusNASA.Name = "labelStatusNASA";
+            this.labelStatusNASA.Size = new System.Drawing.Size(70, 13);
+            this.labelStatusNASA.TabIndex = 1;
+            this.labelStatusNASA.Text = "Состояние...";
+            // 
+            // buttonStartNASA
+            // 
+            this.buttonStartNASA.Location = new System.Drawing.Point(6, 19);
+            this.buttonStartNASA.Name = "buttonStartNASA";
+            this.buttonStartNASA.Size = new System.Drawing.Size(75, 23);
+            this.buttonStartNASA.TabIndex = 0;
+            this.buttonStartNASA.Text = "Начать";
+            this.buttonStartNASA.UseVisualStyleBackColor = true;
+            this.buttonStartNASA.Click += new System.EventHandler(this.buttonStartNASA_Click);
+            // 
             // FormLoadData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 322);
+            this.ClientSize = new System.Drawing.Size(644, 409);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -255,6 +316,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -278,5 +341,10 @@
         private System.Windows.Forms.Button buttonStartRP5;
         private System.Windows.Forms.CheckBox checkBoxSkipErrors;
         private System.Windows.Forms.Button buttonUpdateRP5;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ProgressBar progressBarStatusNASA;
+        private System.Windows.Forms.Button buttonStopNASA;
+        private System.Windows.Forms.Label labelStatusNASA;
+        private System.Windows.Forms.Button buttonStartNASA;
     }
 }

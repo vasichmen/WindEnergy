@@ -35,23 +35,26 @@ namespace WindEnergy.UI
         private static void Main(string[] args)
         {
 
-#if(!DEBUG)
-            bool is_accept = File.Exists(Application.StartupPath + "\\id.key");
-            if (is_accept)
+#if (!DEBUG)
+            new Task(() =>
             {
-                byte[] cur_key = Driver.GetID();
-                byte[] file_key = Driver.LoadID(Application.StartupPath + "\\id.key");
-                if (cur_key.Length == file_key.Length)
-                    for (int i = cur_key.Length - 1; i >= 0; i--)
-                        is_accept &= cur_key[i] == file_key[i];
-                else
-                    is_accept = false;
-            }
-            if (!is_accept)
-            {
-                MessageBox.Show("Ошибка при проверке файла ключа, программа будет закрыта\r\n");
-                return;
-            }
+                bool is_accept = File.Exists(Application.StartupPath + "\\id.key");
+                if (is_accept)
+                {
+                    byte[] cur_key = Driver.GetID();
+                    byte[] file_key = Driver.LoadID(Application.StartupPath + "\\id.key");
+                    if (cur_key.Length == file_key.Length)
+                        for (int i = cur_key.Length - 1; i >= 0; i--)
+                            is_accept &= cur_key[i] == file_key[i];
+                    else
+                        is_accept = false;
+                }
+                if (!is_accept)
+                {
+                    MessageBox.Show("Ошибка при проверке файла ключа, программа будет закрыта\r\n");
+                    Application.Exit();
+                }
+            }).Start();
 #endif
 
 

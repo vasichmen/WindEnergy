@@ -30,22 +30,25 @@ namespace SolarEnergy
         private static void Main(string[] args)
         {
 #if (!DEBUG)
-            bool is_accept = File.Exists(Application.StartupPath + "\\id.key");
-            if (is_accept)
+            new Task(() =>
             {
-                byte[] cur_key = Driver.GetID();
-                byte[] file_key = Driver.LoadID(Application.StartupPath + "\\id.key");
-                if (cur_key.Length == file_key.Length)
-                    for (int i = cur_key.Length - 1; i >= 0; i--)
-                        is_accept &= cur_key[i] == file_key[i];
-                else
-                    is_accept = false;
-            }
-            if (!is_accept)
-            {
-                MessageBox.Show("Ошибка при проверке файла ключа, программа будет закрыта\r\n");
-                return;
-            }
+                bool is_accept = File.Exists(Application.StartupPath + "\\id.key");
+                if (is_accept)
+                {
+                    byte[] cur_key = Driver.GetID();
+                    byte[] file_key = Driver.LoadID(Application.StartupPath + "\\id.key");
+                    if (cur_key.Length == file_key.Length)
+                        for (int i = cur_key.Length - 1; i >= 0; i--)
+                            is_accept &= cur_key[i] == file_key[i];
+                    else
+                        is_accept = false;
+                }
+                if (!is_accept)
+                {
+                    MessageBox.Show("Ошибка при проверке файла ключа, программа будет закрыта\r\n");
+                    Application.Exit();
+                }
+            }).Start();
 #endif
 
 #if (!DEBUG)
@@ -53,48 +56,48 @@ namespace SolarEnergy
             {
 #endif
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
 
-            Vars.Options = Options.Load(Application.StartupPath + "\\solarOptions.xml");
-            if (Vars.Options == null)
-            {
-                throw new Exception("Файлы программы повреждены, запуск невозможен");
-            }
-            Vars.LocalFileSystem = new LocalFileSystem(Vars.Options.TempFolder);
+                Vars.Options = Options.Load(Application.StartupPath + "\\solarOptions.xml");
+                if (Vars.Options == null)
+                {
+                    throw new Exception("Файлы программы повреждены, запуск невозможен");
+                }
+                Vars.LocalFileSystem = new LocalFileSystem(Vars.Options.TempFolder);
 
-            winMain = new FormMain();
-
-
-            //обработчик выхода из приложения
-            Application.ApplicationExit += application_ApplicationExit;
+                winMain = new FormMain();
 
 
-            #region запись статистики, проверка версии
+                //обработчик выхода из приложения
+                Application.ApplicationExit += application_ApplicationExit;
 
-            new Task(new Action(() =>
-            {
-                Velomapa site = new Velomapa(); //связь с сайтом
+
+                #region запись статистики, проверка версии
+
+                new Task(new Action(() =>
+                {
+                    Velomapa site = new Velomapa(); //связь с сайтом
                 site.SendStatisticAsync(Vars.Options.ApplicationGuid); //статистика
 
                 //действие при проверке версии
                 Action<VersionInfo> action = new Action<VersionInfo>((vi) =>
-                {
-                    float curVer = Vars.Options.VersionInt;
-                    if (vi.VersionInt > curVer)
                     {
-                        FormUpdateDialog fud = new FormUpdateDialog(vi);
-                        if (Vars.Options.UpdateMode != UpdateDialogAnswer.AlwaysIgnore)
-                            winMain.Invoke(new Action(() => fud.ShowDialog()));
-                    }
-                });
-                site.GetVersionAsync(action); //проверка версии
+                        float curVer = Vars.Options.VersionInt;
+                        if (vi.VersionInt > curVer)
+                        {
+                            FormUpdateDialog fud = new FormUpdateDialog(vi);
+                            if (Vars.Options.UpdateMode != UpdateDialogAnswer.AlwaysIgnore)
+                                winMain.Invoke(new Action(() => fud.ShowDialog()));
+                        }
+                    });
+                    site.GetVersionAsync(action); //проверка версии
             })
-            ).Start();
+                ).Start();
 
-            #endregion
+                #endregion
 
-            Application.Run(winMain);
+                Application.Run(winMain);
 #if (!DEBUG)
             }
             catch (Exception e)

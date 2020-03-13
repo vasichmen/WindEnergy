@@ -20,6 +20,7 @@ namespace WindEnergy.UI.Tools
         private bool stopMS = false;
         private bool stopMaxSpeed = false;
         private bool stopRP5 = false;
+        private bool stopNASA = false;
         private object RP5locker = new object();
 
         public FormLoadData()
@@ -249,6 +250,62 @@ namespace WindEnergy.UI.Tools
                 }
             });
         }
+        #endregion
+
+        #region Загрузка БД NASA
+
+        private void buttonStartNASA_Click(object sender, EventArgs e)
+        {
+            buttonStartNASA.Enabled = false;
+            buttonStopNASA.Enabled = true;
+            progressBarStatusNASA.Value = 0;
+            progressBarStatusNASA.Maximum = 100;
+            progressBarStatusNASA.Step = 1;
+            stopNASA = false;
+
+            Action<int, string> act = new Action<int, string>((perc, text) =>
+            {
+                if (this.InvokeRequired)
+                    _ = this.Invoke(new Action(() =>
+                    {
+                        progressBarStatusNASA.Value = perc;
+                        labelStatusNASA.Text = text;
+
+                        Application.DoEvents();
+                    }));
+                else
+                {
+                    progressBarStatusNASA.Value = perc;
+                    labelStatusNASA.Text = text;
+                    Application.DoEvents();
+                }
+            });
+            Func<bool> checkStop = new Func<bool>(() => { return stopNASA; });
+
+            _ = Task.Run(() =>
+            {
+                Scripts.LoadAllNasaDatabase(Application.StartupPath+"\\nasa.database", act, checkStop);
+
+                if (InvokeRequired)
+                    _ = this.Invoke(new Action(() =>
+                    {
+                        _ = MessageBox.Show("Операция завершена!");
+                        buttonStartNASA.Enabled = true;
+                    }));
+                else
+                {
+                    _ = MessageBox.Show("Операция завершена!");
+                    buttonStartNASA.Enabled = true;
+                }
+            });
+        }
+
+        private void buttonStopNASA_Click(object sender, EventArgs e)
+        {
+            stopNASA = true;
+            buttonStopNASA.Enabled = false;
+        }
+
         #endregion
 
     }
