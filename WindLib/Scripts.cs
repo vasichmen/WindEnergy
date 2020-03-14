@@ -39,7 +39,7 @@ namespace WindEnergy.WindLib
         {
             public Requester() : base("", null) { }
 
-            public override TimeSpan MinQueryInterval { get { return TimeSpan.FromSeconds(1); } }
+            public override TimeSpan MinQueryInterval { get { return TimeSpan.FromSeconds(0.1); } }
             public override int MaxAttempts { get { return 5; } }
             public override TimeSpan SessionLifetime { get => TimeSpan.FromMinutes(60); }
 
@@ -693,37 +693,42 @@ namespace WindEnergy.WindLib
         public static void LoadAllNasaDatabase(string directoryOut, Action<int, string> act, Func<bool> checkStop)
         {
             string fields = "WS10M,T10M,RH2M,PS,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN";
-            string header = "WS10M, m/s;T10M, C;RH2M, %;PS, kPa;ALLSKY_SFC_SW_DWN, ;CLRSKY_SFC_SW_DWN, ";
+            string header = "Дата;WS10M, m/s;T10M, ℃;RH2M, %;PS, kPa;ALLSKY_SFC_SW_DWN, kW-hr/m^2/day;CLRSKY_SFC_SW_DWN, kW-hr/m^2/day";
 
             string filePosition = directoryOut + "\\position.txt";
 
-            DateTime fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month,DateTime.Now.Day) - TimeSpan.FromDays(365 * 30);
+            DateTime fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) - TimeSpan.FromDays(365 * 30);
             DateTime toDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-            double startLat = -179, endLat = 179;
-            double startLon = -89, endLon = 89;
+            double startLat = -89, endLat = 89;
+            double startLon = -179, endLon = 179;
             double stepLat = 1, stepLon = 1;
             Requester req = new Requester();
 
-            if (File.Exists(filePosition))
-            {
-                StreamReader sr = new StreamReader(filePosition);
-                string lat = sr.ReadLine();
-                string lon = sr.ReadLine();
-                sr.Close();
+            //if (File.Exists(filePosition))
+            //{
+            //    StreamReader sr = new StreamReader(filePosition);
+            //    string lat = sr.ReadLine();
+            //    string lon = sr.ReadLine();
+            //    sr.Close();
 
-                startLat = double.Parse(lat);
-                startLon = double.Parse(lon);
-            }
+            //    startLat = double.Parse(lat);
+            //    startLon = double.Parse(lon);
+            //}
 
 
 
             double total = (endLon - startLon) * (endLat - startLat);
             double current = 0;
-            for (double lat = startLat; lat <= endLat; lat += stepLat)
+            DateTime startTime = DateTime.Now;
+
+
+            Parallel.For((int)startLat, (int)endLat, new ParallelOptions() { MaxDegreeOfParallelism = 8 }, (lat) =>
+            //for (double lat = startLat; lat <= endLat; lat += stepLat)
             {
                 string curdir = directoryOut + "\\" + lat;
                 if (!Directory.Exists(curdir))
                     Directory.CreateDirectory(curdir);
+
 
                 for (double lon = startLon; lon <= endLon; lon += stepLon)
                 {
@@ -739,14 +744,16 @@ namespace WindEnergy.WindLib
                     Dictionary<DateTime, double> CLRSKY_SFC_SW_DWN = new Dictionary<DateTime, double>();
 
                     //отправка статуса
-                    int perc = (int)((++current / total) * 100d);
-                    act(perc, $"Загружаются координаты: {coord.ToString(3)}");
+                    double perc = ((++current / total) * 100d);
+                    TimeSpan tm = DateTime.Now - startTime;
+                    double remain = (tm.TotalHours * 100) / (perc);
+                    act((int)perc, $"Загружаются координаты: {coord.ToString()}, {perc.ToString("0.000")}%, прошло: {tm.ToString(@"d\.hh\:mm\:ss")}, осталось {remain.ToString("0.00")} ч");
 
                     //запись прогресса
-                    StreamWriter sw = new StreamWriter(filePosition);
-                    sw.WriteLine(lat);
-                    sw.WriteLine(lon);
-                    sw.Close();
+                    //StreamWriter sw = new StreamWriter(filePosition);
+                    //sw.WriteLine(lat);
+                    //sw.WriteLine(lon);
+                    //sw.Close();
 
                     //проверка файла
                     string fname = curdir + "\\" + lon + ".csv";
@@ -762,7 +769,7 @@ namespace WindEnergy.WindLib
                         coord.Lat.ToString("00.00").Replace(Constants.DecimalSeparator, '.'),
                         coord.Lng.ToString("00.00").Replace(Constants.DecimalSeparator, '.'));
                     JToken ans = req.GetJson(url);
-                    if (ans["messages"].HasValues) //если есть ошибки, то дальше
+                    if (ans == null || ans["messages"].HasValues) //если есть ошибки, то дальше
                         continue;
 
                     var parameters = ans["features"][0]["properties"]["parameter"];
@@ -773,8 +780,8 @@ namespace WindEnergy.WindLib
                     ALLSKY_SFC_SW_DWN = getValues(parameters["ALLSKY_SFC_SW_DWN"]);
                     CLRSKY_SFC_SW_DWN = getValues(parameters["CLRSKY_SFC_SW_DWN"]);
 
-                    
-                    StreamWriter swr = new StreamWriter(fname);
+
+                    StreamWriter swr = new StreamWriter(fname, false, Encoding.UTF8);
                     swr.WriteLine(header);
                     for (DateTime date = fromDate; date <= toDate; date += TimeSpan.FromDays(1))
                     {
@@ -784,13 +791,13 @@ namespace WindEnergy.WindLib
                         double PS_v = PS.ContainsKey(date) ? PS[date] : double.NaN;
                         double ALLSKY_SFC_SW_DWN_v = ALLSKY_SFC_SW_DWN.ContainsKey(date) ? ALLSKY_SFC_SW_DWN[date] : double.NaN;
                         double CLRSKY_SFC_SW_DWN_v = CLRSKY_SFC_SW_DWN.ContainsKey(date) ? CLRSKY_SFC_SW_DWN[date] : double.NaN;
-                        string line = $"{WS10M_v};{T10M_v};{RH2M_v};{PS_v};{ALLSKY_SFC_SW_DWN_v};{CLRSKY_SFC_SW_DWN_v}";
+                        string line = $"{date.ToString()};{WS10M_v};{T10M_v};{RH2M_v};{PS_v};{ALLSKY_SFC_SW_DWN_v};{CLRSKY_SFC_SW_DWN_v}";
                         swr.WriteLine(line);
                     }
                     swr.Close();
 
                 }
-            }
+            });
         }
 
         /// <summary>
@@ -802,14 +809,14 @@ namespace WindEnergy.WindLib
         {
             Dictionary<DateTime, double> res = new Dictionary<DateTime, double>();
             var vals = JsonConvert.DeserializeObject<Dictionary<string, double>>(param.ToString());
-            foreach(string key in vals.Keys)
+            foreach (string key in vals.Keys)
             {
                 double val = vals[key];
 
                 DateTime dt = new DateTime(
-                    int.Parse(key.Substring(0,4)),
-                    int.Parse(key.Substring(4,2)),
-                    int.Parse(key.Substring(6,2))
+                    int.Parse(key.Substring(0, 4)),
+                    int.Parse(key.Substring(4, 2)),
+                    int.Parse(key.Substring(6, 2))
                     );
                 res.Add(dt, val);
             }
