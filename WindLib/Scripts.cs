@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -697,34 +698,62 @@ namespace WindEnergy.WindLib
 
             string filePosition = directoryOut + "\\position.txt";
 
+            DateTime lastLoad = DateTime.Now;
+            bool iterate = true;
+
+            if (checkStop != null && checkStop.Invoke()) //проверка остановки процесса
+                return;
+
+
             DateTime fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) - TimeSpan.FromDays(365 * 30);
             DateTime toDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
             double startLat = -89, endLat = 89;
             double startLon = -179, endLon = 179;
-            double stepLat = 1, stepLon = 1;
-            Requester req = new Requester();
-
-            //if (File.Exists(filePosition))
-            //{
-            //    StreamReader sr = new StreamReader(filePosition);
-            //    string lat = sr.ReadLine();
-            //    string lon = sr.ReadLine();
-            //    sr.Close();
-
-            //    startLat = double.Parse(lat);
-            //    startLon = double.Parse(lon);
-            //}
-
-
+            double stepLon = 1;
 
             double total = (endLon - startLon) * (endLat - startLat);
-            double current = 0;
+            double current = 0, loaded = 0;
             DateTime startTime = DateTime.Now;
+            PointLatLng coordC = PointLatLng.Empty;
+            bool stop = false;
 
-
-            Parallel.For((int)startLat, (int)endLat, new ParallelOptions() { MaxDegreeOfParallelism = 8 }, (lat) =>
-            //for (double lat = startLat; lat <= endLat; lat += stepLat)
+            //обновление статуса
+            new Task(() =>
             {
+                double remain = 0;
+                double oldLoaded = 0;
+                while (true)
+                {
+                    double perc = ((current / total) * 100d);
+                    TimeSpan tm = DateTime.Now - startTime;
+                    if (oldLoaded != loaded)
+                    {
+                        double remainInt = total - current;
+                        remain = (tm.TotalHours / loaded) * remainInt;
+                        oldLoaded = loaded;
+                    }
+                    act((int)perc, $"Координаты: {coordC.ToString()}, {perc.ToString("0.000")}%, {current}/{total}, прошло: {tm.ToString(@"d\.hh\:mm\:ss")}, осталось {remain.ToString("0.00")} ч");
+                    if (stop)
+                        break;
+                    Thread.Sleep(200);
+                }
+
+            }).Start();
+
+            //вычисление случайной строки
+            Func<int,string> random = (length) => {
+                Random _random = new Random(Environment.TickCount); string chars = "0123456789abcdefghijklmnopqrstuvwxyz"; StringBuilder builder = new StringBuilder(length);
+                for (int i = 0; i < length; ++i)
+                    builder.Append(chars[_random.Next(chars.Length)]);
+                return builder.ToString();
+            };
+
+            Parallel.For((int)startLat, (int)endLat, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, (lat) =>
+            {
+
+                if (checkStop != null && checkStop.Invoke()) //проверка остановки процесса
+                    return;
+
                 string curdir = directoryOut + "\\" + lat;
                 if (!Directory.Exists(curdir))
                     Directory.CreateDirectory(curdir);
@@ -734,8 +763,10 @@ namespace WindEnergy.WindLib
                 {
                     if (checkStop != null && checkStop.Invoke()) //проверка остановки процесса
                         return;
-
+                    current++;
                     PointLatLng coord = new PointLatLng(lat, lon);
+                    coordC = coord;
+
                     Dictionary<DateTime, double> WS10M = new Dictionary<DateTime, double>();
                     Dictionary<DateTime, double> T10M = new Dictionary<DateTime, double>();
                     Dictionary<DateTime, double> RH2M = new Dictionary<DateTime, double>();
@@ -744,34 +775,43 @@ namespace WindEnergy.WindLib
                     Dictionary<DateTime, double> CLRSKY_SFC_SW_DWN = new Dictionary<DateTime, double>();
 
                     //отправка статуса
-                    double perc = ((++current / total) * 100d);
-                    TimeSpan tm = DateTime.Now - startTime;
-                    double remain = (tm.TotalHours * 100) / (perc);
-                    act((int)perc, $"Загружаются координаты: {coord.ToString()}, {perc.ToString("0.000")}%, прошло: {tm.ToString(@"d\.hh\:mm\:ss")}, осталось {remain.ToString("0.00")} ч");
-
-                    //запись прогресса
-                    //StreamWriter sw = new StreamWriter(filePosition);
-                    //sw.WriteLine(lat);
-                    //sw.WriteLine(lon);
-                    //sw.Close();
 
                     //проверка файла
                     string fname = curdir + "\\" + lon + ".csv";
                     if (File.Exists(fname))
                         continue;
+                    iterate = true;
+                    JToken ans = null;
+                    while (iterate)
+                    {
+                        try
+                        {
+                    Requester req = new Requester();
+                            //загрузка данных
 
-                    //загрузка данных
-                    string url = "https://power.larc.nasa.gov/cgi-bin/v1/DataAccess.py?request=execute&identifier=SinglePoint&parameters={0}&startDate={1}&endDate={2}&userCommunity=SSE&tempAverage=DAILY&outputList=ASCII&lat={3}&lon={4}&user=anonymous";
-                    url = string.Format(url,
-                        fields,
-                        fromDate.ToString("yyyyMMdd"),
-                        toDate.ToString("yyyyMMdd"),
-                        coord.Lat.ToString("00.00").Replace(Constants.DecimalSeparator, '.'),
-                        coord.Lng.ToString("00.00").Replace(Constants.DecimalSeparator, '.'));
-                    JToken ans = req.GetJson(url);
+                            string url = "https://power.larc.nasa.gov/cgi-bin/v1/DataAccess.py?request=execute&identifier=SinglePoint&parameters={0}&startDate={1}&endDate={2}&userCommunity=SSE&tempAverage=DAILY&outputList=ASCII&lat={3}&lon={4}&user={5}";
+                            url = string.Format(url,
+                                fields,
+                                fromDate.ToString("yyyyMMdd"),
+                                toDate.ToString("yyyyMMdd"),
+                                coord.Lat.ToString("00.00").Replace(Constants.DecimalSeparator, '.'),
+                                coord.Lng.ToString("00.00").Replace(Constants.DecimalSeparator, '.'),
+                                random(8));
+                            ans = req.GetJson(url);
+
+                            iterate = false;
+                        }
+                        catch (Exception ex)
+                        {
+                            StreamWriter sw = new StreamWriter(Application.StartupPath + "\\load_error.log", true, Encoding.UTF8);
+                            sw.WriteLine(ex.Message + "\r\n"+ex.Source + "\r\n" + ex.StackTrace +"\r\n");
+                            sw.Close();
+                            iterate = true;
+                            Thread.Sleep(10000);
+                        }
+                    }
                     if (ans == null || ans["messages"].HasValues) //если есть ошибки, то дальше
                         continue;
-
                     var parameters = ans["features"][0]["properties"]["parameter"];
                     WS10M = getValues(parameters["WS10M"]);
                     T10M = getValues(parameters["T10M"]);
@@ -795,9 +835,14 @@ namespace WindEnergy.WindLib
                         swr.WriteLine(line);
                     }
                     swr.Close();
-
+                    loaded++;
                 }
+
             });
+
+            if (!iterate)
+                stop = true;
+
         }
 
         /// <summary>

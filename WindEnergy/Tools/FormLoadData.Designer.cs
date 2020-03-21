@@ -67,7 +67,7 @@
             this.groupBox1.Controls.Add(this.buttonStartMS);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(620, 90);
+            this.groupBox1.Size = new System.Drawing.Size(757, 90);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Обновление списка метеостанций (www.rp5.ru)";
@@ -78,7 +78,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBarStatusMS.Location = new System.Drawing.Point(90, 48);
             this.progressBarStatusMS.Name = "progressBarStatusMS";
-            this.progressBarStatusMS.Size = new System.Drawing.Size(524, 23);
+            this.progressBarStatusMS.Size = new System.Drawing.Size(661, 23);
             this.progressBarStatusMS.TabIndex = 3;
             // 
             // buttonStopMS
@@ -121,7 +121,7 @@
             this.groupBox2.Controls.Add(this.buttonStartMaxSpeed);
             this.groupBox2.Location = new System.Drawing.Point(12, 108);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(620, 90);
+            this.groupBox2.Size = new System.Drawing.Size(757, 90);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Обновление максимальных скоростей ветра (www.energywind.ru)";
@@ -132,7 +132,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBarStatusMaxSpeed.Location = new System.Drawing.Point(90, 48);
             this.progressBarStatusMaxSpeed.Name = "progressBarStatusMaxSpeed";
-            this.progressBarStatusMaxSpeed.Size = new System.Drawing.Size(524, 23);
+            this.progressBarStatusMaxSpeed.Size = new System.Drawing.Size(661, 23);
             this.progressBarStatusMaxSpeed.TabIndex = 3;
             // 
             // buttonStopMaxSpeed
@@ -177,7 +177,7 @@
             this.groupBox3.Controls.Add(this.buttonStartRP5);
             this.groupBox3.Location = new System.Drawing.Point(12, 204);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(620, 96);
+            this.groupBox3.Size = new System.Drawing.Size(757, 96);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Загрузка БД Расписание погоды";
@@ -210,7 +210,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBarStatusRP5.Location = new System.Drawing.Point(90, 48);
             this.progressBarStatusRP5.Name = "progressBarStatusRP5";
-            this.progressBarStatusRP5.Size = new System.Drawing.Size(524, 23);
+            this.progressBarStatusRP5.Size = new System.Drawing.Size(661, 23);
             this.progressBarStatusRP5.TabIndex = 3;
             // 
             // buttonStopRP5
@@ -253,7 +253,7 @@
             this.groupBox4.Controls.Add(this.buttonStartNASA);
             this.groupBox4.Location = new System.Drawing.Point(12, 306);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(620, 96);
+            this.groupBox4.Size = new System.Drawing.Size(757, 96);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Загрузка БД NASA";
@@ -264,7 +264,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBarStatusNASA.Location = new System.Drawing.Point(90, 48);
             this.progressBarStatusNASA.Name = "progressBarStatusNASA";
-            this.progressBarStatusNASA.Size = new System.Drawing.Size(524, 23);
+            this.progressBarStatusNASA.Size = new System.Drawing.Size(661, 23);
             this.progressBarStatusNASA.TabIndex = 3;
             // 
             // buttonStopNASA
@@ -301,7 +301,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 409);
+            this.ClientSize = new System.Drawing.Size(781, 409);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
