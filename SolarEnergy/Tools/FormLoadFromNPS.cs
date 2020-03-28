@@ -58,16 +58,24 @@ namespace SolarEnergy.UI.Tools
 
         private void comboBoxMonthTransformer_SelectedValueChanged(object sender, EventArgs e)
         {
-            monthTransformator =  (MonthTransformationModels)(new EnumTypeConverter<MonthTransformationModels>().ConvertFrom(comboBoxMonthTransformer.SelectedItem));
+            monthTransformator = (MonthTransformationModels)(new EnumTypeConverter<MonthTransformationModels>().ConvertFrom(comboBoxMonthTransformer.SelectedItem));
         }
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
-            DataItem data = Vars.NPSMeteostationDatabase.GetDataItem(point);
-            DataRange range = new DataRange(data, monthTransformator);
-            Result = range;
-            DialogResult = DialogResult.OK;
-            Close();
+            try
+            {
+                DataItem data = Vars.NPSMeteostationDatabase.GetDataItem(point);
+                DataRange range = new DataRange(data, monthTransformator);
+                range.Name = "Ряд НПС в точке " + point.ToString();
+                Result = range;
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "При загрузке данных произошла ошибка. Причина:\r\n" + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

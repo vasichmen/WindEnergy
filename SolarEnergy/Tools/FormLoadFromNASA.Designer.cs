@@ -36,11 +36,14 @@
             this.labelPointStatus = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxDailyModel = new System.Windows.Forms.ComboBox();
+            this.numericUpDownYear = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYear)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonSelectPoint
             // 
-            this.buttonSelectPoint.Location = new System.Drawing.Point(12, 104);
+            this.buttonSelectPoint.Location = new System.Drawing.Point(12, 102);
             this.buttonSelectPoint.Name = "buttonSelectPoint";
             this.buttonSelectPoint.Size = new System.Drawing.Size(117, 23);
             this.buttonSelectPoint.TabIndex = 0;
@@ -59,7 +62,7 @@
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(12, 133);
+            this.buttonLoad.Location = new System.Drawing.Point(12, 131);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(117, 23);
             this.buttonLoad.TabIndex = 2;
@@ -79,7 +82,7 @@
             // labelPointStatus
             // 
             this.labelPointStatus.AutoSize = true;
-            this.labelPointStatus.Location = new System.Drawing.Point(135, 109);
+            this.labelPointStatus.Location = new System.Drawing.Point(135, 107);
             this.labelPointStatus.Name = "labelPointStatus";
             this.labelPointStatus.Size = new System.Drawing.Size(68, 13);
             this.labelPointStatus.TabIndex = 4;
@@ -88,7 +91,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 61);
+            this.label2.Location = new System.Drawing.Point(12, 59);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(179, 13);
             this.label2.TabIndex = 6;
@@ -97,17 +100,51 @@
             // comboBoxDailyModel
             // 
             this.comboBoxDailyModel.FormattingEnabled = true;
-            this.comboBoxDailyModel.Location = new System.Drawing.Point(15, 77);
+            this.comboBoxDailyModel.Location = new System.Drawing.Point(15, 75);
             this.comboBoxDailyModel.Name = "comboBoxDailyModel";
             this.comboBoxDailyModel.Size = new System.Drawing.Size(191, 21);
             this.comboBoxDailyModel.TabIndex = 5;
             this.comboBoxDailyModel.SelectedValueChanged += new System.EventHandler(this.comboBoxDailyModel_SelectedValueChanged);
             // 
+            // numericUpDownYear
+            // 
+            this.numericUpDownYear.Location = new System.Drawing.Point(271, 26);
+            this.numericUpDownYear.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDownYear.Minimum = new decimal(new int[] {
+            1990,
+            0,
+            0,
+            0});
+            this.numericUpDownYear.Name = "numericUpDownYear";
+            this.numericUpDownYear.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownYear.TabIndex = 7;
+            this.numericUpDownYear.Value = new decimal(new int[] {
+            1990,
+            0,
+            0,
+            0});
+            this.numericUpDownYear.ValueChanged += new System.EventHandler(this.numericUpDownYear_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(240, 28);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(25, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Год";
+            // 
             // FormLoadFromNASA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(340, 163);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.numericUpDownYear);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxDailyModel);
             this.Controls.Add(this.labelPointStatus);
@@ -116,8 +153,10 @@
             this.Controls.Add(this.comboBoxSourceType);
             this.Controls.Add(this.buttonSelectPoint);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(356, 202);
             this.Name = "FormLoadFromNASA";
             this.Text = "Загрузить данные с NASA";
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYear)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,5 +171,7 @@
         private System.Windows.Forms.Label labelPointStatus;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxDailyModel;
+        private System.Windows.Forms.NumericUpDown numericUpDownYear;
+        private System.Windows.Forms.Label label3;
     }
 }

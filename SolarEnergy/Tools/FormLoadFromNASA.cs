@@ -21,7 +21,7 @@ namespace SolarEnergy.UI.Tools
 {
     public partial class FormLoadFromNASA : Form
     {
-        private PointLatLng point = new PointLatLng(55,37);
+        private PointLatLng point = PointLatLng.Empty;
         private NasaSourceTypes sourceType = NasaSourceTypes.None;
         private HourModels hourModel = HourModels.None;
         private int year = int.MinValue;
@@ -37,6 +37,7 @@ namespace SolarEnergy.UI.Tools
             comboBoxDailyModel.Items.AddRange(HourModels.None.GetItems().ToArray());
             comboBoxDailyModel.SelectedItem = HourModels.None.Description();
             DialogResult = DialogResult.Cancel;
+            numericUpDownYear.Maximum = DateTime.Now.Year - 1;
 
             updateUI();
         }
@@ -53,18 +54,26 @@ namespace SolarEnergy.UI.Tools
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
-            RawRange data = new NASA(Vars.Options.CacheFolder + "\\nasa").GetRange(DateTime.Now - TimeSpan.FromDays(30 * 365), DateTime.Now, new NPSMeteostationInfo() { Position = point });
-            DataRange range = new DataRange(data, new DataRangeConverterParams()
+            try
             {
-                HourModel = hourModel,
-                Interval = StandartIntervals.D1,
-                SourceType = sourceType,
-                Year = year
-                
-            });
-            Result = range;
-            DialogResult = DialogResult.OK;
-            Close();
+                RawRange data = new NASA(Vars.Options.CacheFolder + "\\nasa").GetRange(DateTime.Now - TimeSpan.FromDays(30 * 365), DateTime.Now, new NPSMeteostationInfo() { Position = point });
+                DataRange range = new DataRange(data, new DataRangeConverterParams()
+                {
+                    HourModel = hourModel,
+                    Interval = StandartIntervals.D1,
+                    SourceType = sourceType,
+                    Year = year
+
+                });
+                range.Name = "Ряд NASA в точке " + point.ToString();
+                Result = range;
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(this, "При загрузке данных произошла ошибка. Причина:\r\n" + ex.Message,this.Text,MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
         }
 
         private void comboBoxSourceType_SelectedValueChanged(object sender, EventArgs e)
@@ -78,14 +87,24 @@ namespace SolarEnergy.UI.Tools
         /// </summary>
         private void updateUI()
         {
+            numericUpDownYear.Enabled = sourceType == NasaSourceTypes.SelectedYear;
             labelPointStatus.ForeColor = point.IsEmpty ? Color.Red : Color.Green;
             labelPointStatus.Text = point.IsEmpty ? "Не выбрана" : point.ToString(2);
-            buttonLoad.Enabled = labelPointStatus.ForeColor == Color.Green && sourceType != NasaSourceTypes.None && hourModel != HourModels.None;
+            buttonLoad.Enabled = labelPointStatus.ForeColor == Color.Green &&
+                sourceType != NasaSourceTypes.None &&
+                hourModel != HourModels.None &&
+                (sourceType == NasaSourceTypes.SelectedYear ? (year != int.MinValue) : true);
         }
 
         private void comboBoxDailyModel_SelectedValueChanged(object sender, EventArgs e)
         {
             hourModel = (HourModels)(new EnumTypeConverter<HourModels>().ConvertFrom(comboBoxDailyModel.SelectedItem));
+            updateUI();
+        }
+
+        private void numericUpDownYear_ValueChanged(object sender, EventArgs e)
+        {
+            year = (int)numericUpDownYear.Value;
             updateUI();
         }
     }

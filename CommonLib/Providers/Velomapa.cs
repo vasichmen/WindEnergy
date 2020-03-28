@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -135,6 +136,10 @@ namespace CommonLib.Data.Providers.InternetServices
                     {
                         f = true;
                         Thread.Sleep(2000);
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        return;
                     }
                 }
 

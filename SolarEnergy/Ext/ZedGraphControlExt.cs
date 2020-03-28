@@ -28,9 +28,9 @@ namespace SolarEnergy.UI.Ext
             if (range == null)
                 return;
             //Прямая радиация
-            // GraphPane.Title.Text = "t(V), %";
+            GraphPane.Title.Text = "";
             GraphPane.XAxis.Title.Text = "t, час";
-            GraphPane.YAxis.Title.Text = "Э, кВт/м2";
+            GraphPane.YAxis.Title.Text = "Э, кВт*ч/м2";
             GraphPane.GraphObjList.Clear();
             GraphPane.CurveList.Clear();
             PointPairList clist = new PointPairList();

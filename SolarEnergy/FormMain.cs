@@ -41,6 +41,13 @@ namespace SolarEnergy.UI
         }
         #region Главное меню
 
+
+        private void menuStrip1_MenuActivate(object sender, EventArgs e)
+        {
+            saveToolStripMenuItem.Enabled = tabControlMain.SelectedTab != null;
+            saveAsToolStripMenuItem.Enabled = tabControlMain.SelectedTab != null;
+        }
+
         #region Файл
 
 
@@ -75,23 +82,27 @@ namespace SolarEnergy.UI
             FormLoadFromNASA fln = new FormLoadFromNASA();
             if (fln.ShowDialog(this) == DialogResult.OK)
             {
-                this.tabControlMain.OpenNewTab(fln.Result, fln.Name);
+                this.tabControlMain.OpenNewTab(fln.Result, fln.Result.Name);
             }
         }
 
         private void openNpsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormLoadFromNPS fln = new FormLoadFromNPS();
-            if(fln.ShowDialog(this) == DialogResult.OK)
+            if (fln.ShowDialog(this) == DialogResult.OK)
             {
-                this.tabControlMain.OpenNewTab(fln.Result, fln.Name);
+                this.tabControlMain.OpenNewTab(fln.Result, fln.Result.Name);
             }
         }
 
         private void openFileToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-
+            var range = mainHelper.OpenFile(this);
+            if (range == null)
+                return;
+            this.tabControlMain.OpenNewTab(range, range.Name);
         }
+
 
         #endregion
 

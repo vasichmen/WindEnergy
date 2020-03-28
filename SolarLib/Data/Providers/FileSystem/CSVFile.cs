@@ -31,11 +31,18 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             //определение формата файла csv
             string title = null;
             title = sr.ReadLine();
-           
 
             DataRange res = new DataRange();
-            //TODO: Загрузка из csv
-
+            while(!sr.EndOfStream)
+            {
+                string[] arr = sr.ReadLine().Split(';');
+                DateTime dt = DateTime.Parse(arr[0]);
+                double allsk = double.Parse(arr[1].Replace('.', Constants.DecimalSeparator));
+                double clrsk = double.Parse(arr[2].Replace('.', Constants.DecimalSeparator));
+                res.Add(new RawItem(dt, allsk, clrsk));
+            }
+            res.Name = Path.GetFileNameWithoutExtension(fileName);
+            res.FilePath = fileName;
             sr.Close();
             return res;
         }

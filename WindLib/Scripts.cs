@@ -710,6 +710,7 @@ namespace WindEnergy.WindLib
             double startLat = -89, endLat = 89;
             double startLon = -179, endLon = 179;
             double stepLon = 1;
+            object locker = new object();
 
             double total = (endLon - startLon) * (endLat - startLat);
             double current = 0, loaded = 0;
@@ -803,11 +804,14 @@ namespace WindEnergy.WindLib
                         }
                         catch (Exception ex)
                         {
-                            StreamWriter sw = new StreamWriter(Application.StartupPath + "\\load_error.log", true, Encoding.UTF8);
-                            sw.WriteLine(ex.Message + "\r\n"+ex.Source + "\r\n" + ex.StackTrace +"\r\n");
-                            sw.Close();
-                            iterate = true;
-                            Thread.Sleep(10000);
+                            lock (locker)
+                            {
+                                StreamWriter sw = new StreamWriter(Application.StartupPath + "\\load_error.log", true, Encoding.UTF8);
+                                sw.WriteLine(ex.Message + "\r\n" + DateTime.Now.ToString() + "\r\n" + ex.StackTrace + "\r\n");
+                                sw.Close();
+                                iterate = true;
+                                Thread.Sleep(10000);
+                            }
                         }
                     }
                     if (ans == null || ans["messages"].HasValues) //если есть ошибки, то дальше
