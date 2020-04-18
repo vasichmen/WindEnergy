@@ -78,11 +78,11 @@ namespace WindEnergy.UI.Tools
                 catch (Exception) { }
             });
 
-            Action<RawRange, AMSMeteostationInfo> actionAfter = new Action<RawRange, AMSMeteostationInfo>((rawRange, AMS) =>
+            Action<RawRange, SuitAMSResult> actionAfter = new Action<RawRange, SuitAMSResult>((rawRange, AMSans) =>
              {
                  _ = this.Invoke(new Action(() =>
                  {
-                     string AMStext = AMS != null ? $"На основе данных АМС {AMS.Name} {AMS.Position.ToString()}" : "";
+                     string AMStext = AMSans != null ? $"На основе данных АМС {AMSans.AMS.Name} {AMSans.AMS.Position} {(AMSans.AllMonthInRange?"":"\r\nВНИМАНИЕ!! В исходном ряде представлены не все месяцы. Поэтому подбор подходящей АМС может быть неточным" )}" : "";
                      rawRange.Name = "Ряд на высоте " + new_height + " м";
                      _ = MessageBox.Show(this, $"Скорости ветра пересчитаны на высоту {new_height} м\r\n{((!string.IsNullOrWhiteSpace(AMStext)) ? AMStext : "")}", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

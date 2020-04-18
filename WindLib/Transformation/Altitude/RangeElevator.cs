@@ -23,7 +23,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// <param name="param">настройки</param>
         /// <param name="actionPercent">действие при изменении процента выполнения</param>
         /// <param name="actionAfter">действие по окончании выполнения</param>
-        public static void ProcessRange(RawRange Range, ElevatorParameters param, Action<int> actionPercent, Action<RawRange, AMSMeteostationInfo> actionAfter)
+        public static void ProcessRange(RawRange Range, ElevatorParameters param, Action<int> actionPercent, Action<RawRange, SuitAMSResult> actionAfter)
         {
             //найти подходящую АМС
             //получить из неё параметры m по месяцам
@@ -33,11 +33,12 @@ namespace WindEnergy.WindLib.Transformation.Altitude
             //выбор варианта расчета m: через БД АМС или введенный вручную
             Dictionary<Months, double> coeffs = null;
             AMSMeteostationInfo AMS = null;
-
+            SuitAMSResult AMSanswer = null;
             switch (param.HellmanCoefficientSource)
             {
                 case HellmanCoefficientSource.AMSAnalog:
-                    AMS = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis);
+                    AMSanswer = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis);
+                    AMS = AMSanswer.AMS;
                     if (AMS == null)
                         throw new WindEnergyException("Не удалось найти АМС в заданном радиусе");
                     coeffs = AMS.m; ;
@@ -74,7 +75,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
                     res.Add(ni);
                 }
                 res.EndChange();
-                actionAfter.Invoke(res, AMS);
+                actionAfter.Invoke(res, AMSanswer);
             });
             tsk.Start();
             return;

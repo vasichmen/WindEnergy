@@ -24,7 +24,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// <param name="MSMeteostations">БД АМС</param>
         /// <param name="searchRadius">расстояние для фильтрации АМС в метрах. Если задано NaN, то фильтрация по расстоянию проводить не будет</param>
         /// <returns></returns>
-        internal static AMSMeteostationInfo GetSuitAMS(RawRange range, PointLatLng coordinates, AMSMeteostationDatabase MSMeteostations,double searchRadius)
+        internal static SuitAMSResult GetSuitAMS(RawRange range, PointLatLng coordinates, AMSMeteostationDatabase MSMeteostations, double searchRadius)
         {
             //посчитать среднемесячные скорости на МС
             //посчитать относительные скорости для МС
@@ -36,17 +36,25 @@ namespace WindEnergy.WindLib.Transformation.Altitude
             //относительные скорости на МС
             double rAverage = range.Average((item) => { return item.Speed; }); //средняя скорость во всем ряде на МС
             Dictionary<Months, double> msRelatives = new Dictionary<Months, double>(); //относительные скорости по месяцам на МС
+            bool allMonth = true;
             for (int m = 1; m <= 12; m++)
             {
                 Months month = (Months)m;
-                double mAverage = (from t in range
-                                   where t.Date.Month == m
-                                   select t.Speed).Average();
+                double mAverage = double.NaN;
+                var r = from t in range
+                        where t.Date.Month == m
+                        select t.Speed;
+                if (r.Count() == 0)
+                {
+                    allMonth = false;
+                    mAverage = 0;
+                }
+                else mAverage = r.Average();
                 msRelatives.Add(month, mAverage / rAverage);//относительная скорость = среднемесячная скорость / средняя скорость ряда
             }
 
             //выбор АМС в заданном радиусе
-            List<AMSMeteostationInfo> amss = double.IsNaN(searchRadius)? MSMeteostations.List: MSMeteostations.GetNearestMS(coordinates, searchRadius, true); //выбираем все АМС в радиусе 1000 км
+            List<AMSMeteostationInfo> amss = double.IsNaN(searchRadius) ? MSMeteostations.List : MSMeteostations.GetNearestMS(coordinates, searchRadius, true); //выбираем все АМС в радиусе 1000 км
 
             if (amss == null)
                 return null;
@@ -66,7 +74,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
                 }
             }
 
-            return min_ams;
+            return new SuitAMSResult() {AMS= min_ams, AllMonthInRange = allMonth };
         }
     }
 }
