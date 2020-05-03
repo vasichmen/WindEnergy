@@ -61,41 +61,6 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
             }
         }
 
-        /// <summary>
-        /// типы ошибок при загрузке данных
-        /// </summary>
-        public enum ErrorReason
-        {
-            /// <summary>
-            /// Для этого id нет архива погоды
-            /// </summary>
-            FS004,
-
-            /// <summary>
-            /// Ошибка в исходных данных
-            /// </summary>
-            FS002,
-
-            /// <summary>
-            /// Ошибка авторизации
-            /// </summary>
-            FS000,
-
-            /// <summary>
-            /// Неправильный метод запроса. Ожидается POST
-            /// </summary>
-            FS001,
-
-            /// <summary>
-            /// Время жизни статистики истекло для этой сессии
-            /// </summary>
-            FM000,
-
-            /// <summary>
-            /// Превышено количество запросов
-            /// </summary>
-            FM004
-        }
 
         /// <summary>
         /// количество лет в одной загрузке данных 

@@ -107,7 +107,10 @@ namespace WindEnergy.UI.Tools
                     if (fsp.ShowDialog(this) == DialogResult.OK)
                         range.Position = fsp.Result;
                     else
+                    {
+                        Cursor = Cursors.Arrow;
                         return;
+                    }
                 }
 
                 RangeElevator.ProcessRange(range, new ElevatorParameters()
@@ -132,7 +135,6 @@ namespace WindEnergy.UI.Tools
             {
                 Cursor = Cursors.Arrow;
                 _ = MessageBox.Show(this, wex.Message, "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DialogResult = DialogResult.Cancel;
             }
             catch (ApplicationException exc)
             {

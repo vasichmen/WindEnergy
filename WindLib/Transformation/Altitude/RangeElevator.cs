@@ -40,7 +40,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
                     AMSanswer = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis);
                     AMS = AMSanswer.AMS;
                     if (AMS == null)
-                        throw new WindEnergyException("Не удалось найти АМС в заданном радиусе");
+                        throw new WindEnergyException("Не удалось найти подходящую АМС в заданном радиусе или длина исходного ряда слишком мала.\r\nПопробуйте увеличить радиус поиска или возьмите более длинный ряд.");
                     coeffs = AMS.m; ;
                     break;
                 case HellmanCoefficientSource.CustomMonths:
