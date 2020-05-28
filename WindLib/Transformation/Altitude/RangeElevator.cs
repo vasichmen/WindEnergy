@@ -37,10 +37,13 @@ namespace WindEnergy.WindLib.Transformation.Altitude
             switch (param.HellmanCoefficientSource)
             {
                 case HellmanCoefficientSource.AMSAnalog:
-                    AMSanswer = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis);
+                    AMSanswer = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis, param.MaximalRelativeSpeedDeviation);
                     AMS = AMSanswer.AMS;
                     if (AMS == null)
-                        throw new WindEnergyException("Не удалось найти подходящую АМС в заданном радиусе или длина исходного ряда слишком мала.\r\nПопробуйте увеличить радиус поиска или возьмите более длинный ряд.");
+                        if(AMSanswer.IsDeviationFailed)
+                            throw new WindEnergyException($"В заданном радиусе найдена АМС, но отклонение скорости больше, чем максимальное отклонение в настройках.\r\nОтклонение АМС: {AMSanswer.Deviation}\r\nМаксимальное отклонение из настроек: {param.MaximalRelativeSpeedDeviation} ");
+                        else
+                            throw new WindEnergyException("Не удалось найти подходящую АМС в заданном радиусе или длина исходного ряда слишком мала.\r\nПопробуйте увеличить радиус поиска или возьмите более длинный ряд.");
                     coeffs = AMS.m; ;
                     break;
                 case HellmanCoefficientSource.CustomMonths:

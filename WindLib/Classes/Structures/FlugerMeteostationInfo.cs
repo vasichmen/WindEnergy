@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace WindEnergy.WindLib.Classes.Structures
 {
     /// <summary>
-    /// структура записи в БД Флюгер
+    /// структура записи в БД Классы открытости МС
     /// </summary>
     public class FlugerMeteostationInfo: BaseMeteostationInfo
     {

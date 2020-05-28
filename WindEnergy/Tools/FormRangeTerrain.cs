@@ -36,7 +36,6 @@ namespace WindEnergy.UI.Tools
         AtmosphereStratification stratification;
         MesoclimateItemInfo mesoclimateCoeff = null;
         MicroclimateItemInfo microclimateCoeff = null;
-        WaterDistanceType waterDistance = WaterDistanceType.Undefined;
 
         /// <summary>
         /// результат работы диалогового окна (новый ряд данных)
@@ -59,9 +58,9 @@ namespace WindEnergy.UI.Tools
         {
             //заполнение списков типов рельефа
             foreach (MesoclimateItemInfo meso in Vars.MesoclimateTableDatabase.List)
-                comboBoxMesoclimate.Items.Add(meso.Name);
+                _ = comboBoxMesoclimate.Items.Add(meso.Name);
             foreach (MicroclimateItemInfo micro in Vars.MicroclimateTableDatabase.List)
-                comboBoxMicroclimate.Items.Add(micro.Name);
+                _ = comboBoxMicroclimate.Items.Add(micro.Name);
 
             //установка тегов для radio типов стратификации
             radioButtonStable.Tag = AtmosphereStratification.Stable;
@@ -79,7 +78,7 @@ namespace WindEnergy.UI.Tools
             FormSelectMapPointDialog fsp = new FormSelectMapPointDialog("Выберите точку метеостанции", range.Position, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
             if (fsp.ShowDialog(this) == DialogResult.OK)
                 range.Position = fsp.Result;
-            tryGetMSClasses(); //при изменении точки МС заново ищем классы открытости из флюгера
+            tryGetMSClasses(); //при изменении точки МС заново ищем классы открытости из Классы открытости МС
             setStatuses();
         }
 
@@ -144,10 +143,10 @@ namespace WindEnergy.UI.Tools
             {
                 _ = this.Invoke(new Action(() =>
                 {
-                    string text = fluger_MS != null ? $"На основе данных МС {fluger_MS.Name} ({fluger_MS.Position.ToString()})\r\nИз СБД Флюгер" : "";
-                    rawRange.Name = $"Ряд в точке {pointCoordinates.ToString(3)}";
-                    _ = MessageBox.Show(this, $"Скорости ветра пересчитаны в точку {pointCoordinates.ToString(3)}\r\n{((!string.IsNullOrWhiteSpace(text)) ? text : "")}", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string text = fluger_MS != null ? $"\r\nпо данным МС {fluger_MS.Name} ({fluger_MS.Position}) с учетом изменения классов открытости площадок" : "";
+                    _ = MessageBox.Show(this, $"Скорости ветра пересчитаны в точку ВЭС ({pointCoordinates.ToString(3)}){((!string.IsNullOrWhiteSpace(text)) ? text : "")}", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                    rawRange.Name = $"Ряд в точке {pointCoordinates.ToString(3)}";
                     if (rawRange == null)
                         DialogResult = DialogResult.Cancel;
                     else

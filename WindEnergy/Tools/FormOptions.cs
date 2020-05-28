@@ -91,6 +91,7 @@ namespace WindEnergy.UI.Tools
             textBoxSectionLength.Text = Vars.Options.QualifierSectionLength.ToString();
             textBoxMinimalCoeffCorrel.Text = Vars.Options.MinimalCorrelationCoeff.ToString();
             textBoxNearestMSRadius.Text = Vars.Options.NearestMSRadius.ToString();
+            textBoxSuitAMSMaximalRelativeSpeedDeviation.Text = Vars.Options.SuitAMSMaximalRelativeSpeedDeviation.ToString();
             checkBoxMinCorrDirection.Checked = Vars.Options.MinimalCorrelationControlParametres.Contains(MeteorologyParameters.Direction);
             checkBoxMinCorrTemp.Checked = Vars.Options.MinimalCorrelationControlParametres.Contains(MeteorologyParameters.Temperature);
             checkBoxMinCorrSpeed.Checked = Vars.Options.MinimalCorrelationControlParametres.Contains(MeteorologyParameters.Speed);
@@ -98,8 +99,12 @@ namespace WindEnergy.UI.Tools
             numericUpDownNormalLawFrom.Value = (decimal)Vars.Options.NormalLawPirsonCoefficientDiapason.From;
             numericUpDownNormalLawTo.Value = (decimal)Vars.Options.NormalLawPirsonCoefficientDiapason.To;
             checkBoxCalculateAirDensity.Checked = Vars.Options.CalculateAirDensity;
+            checkBoxUseSuitAMSMaximalRelativeSpeedDeviation.Checked = Vars.Options.UseSuitAMSMaximalRelativeSpeedDeviation;
             textBoxAirDensity.Text = Vars.Options.AirDensity.ToString();
             textBoxAirDensity.Enabled = !checkBoxCalculateAirDensity.Checked;
+
+
+            checkBoxUseSuitAMSMaximalRelativeSpeedDeviation_CheckedChanged(null, null);
 
             //ГРАДАЦИИ
             comboBoxSpeedGradations.Items.AddRange(GradationTypes.NASA.GetItems().ToArray());
@@ -159,11 +164,13 @@ namespace WindEnergy.UI.Tools
             {
                 Vars.Options.AirDensity = double.Parse(textBoxAirDensity.Text.Replace('.', Constants.DecimalSeparator));
                 Vars.Options.CalculateAirDensity = checkBoxCalculateAirDensity.Checked;
+                Vars.Options.UseSuitAMSMaximalRelativeSpeedDeviation = checkBoxUseSuitAMSMaximalRelativeSpeedDeviation.Checked;
                 Vars.Options.QualifierDaysToNewInterval = int.Parse(textBoxDaysToNewInterval.Text);
                 Vars.Options.MinimalSpeedDeviation = double.Parse(textBoxMinimalSpeedDeviation.Text.Replace('.', Constants.DecimalSeparator));
                 Vars.Options.QualifierSectionLength = int.Parse(textBoxSectionLength.Text);
                 Vars.Options.MinimalCorrelationCoeff = double.Parse(textBoxMinimalCoeffCorrel.Text.Replace('.', Constants.DecimalSeparator));
                 Vars.Options.NearestMSRadius = double.Parse(textBoxNearestMSRadius.Text.Replace('.', Constants.DecimalSeparator));
+                Vars.Options.SuitAMSMaximalRelativeSpeedDeviation = double.Parse(textBoxSuitAMSMaximalRelativeSpeedDeviation.Text.Replace('.', Constants.DecimalSeparator));
 
                 //диапазон критерия Пирсона
                 double fr = (double)numericUpDownNormalLawFrom.Value;
@@ -311,7 +318,7 @@ namespace WindEnergy.UI.Tools
                 bool f = new FlugerMeteostationDatabase(of.FileName).CheckDatabaseFile();
                 if (!f)
                 {
-                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла БД Флюгер", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла БД Классы открытости МС", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 this.flugerFile = of.FileName;
@@ -338,5 +345,10 @@ namespace WindEnergy.UI.Tools
 
         #endregion
 
+        private void checkBoxUseSuitAMSMaximalRelativeSpeedDeviation_CheckedChanged(object sender, EventArgs e)
+        {
+            labelSuitAMSMaximalRelativeSpeedDeviation.Enabled = checkBoxUseSuitAMSMaximalRelativeSpeedDeviation.Checked;
+            textBoxSuitAMSMaximalRelativeSpeedDeviation.Enabled = checkBoxUseSuitAMSMaximalRelativeSpeedDeviation.Checked;
+        }
     }
 }

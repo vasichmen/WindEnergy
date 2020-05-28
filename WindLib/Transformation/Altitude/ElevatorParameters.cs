@@ -39,13 +39,18 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         public double CustomMCoefficient { get; set; }
 
         /// <summary>
-        /// коэффициенты хеллмана по месяцам
+        /// среднемноголетний показатель степени по месяцам
         /// </summary>
         public Dictionary<Months, double> CustomNCoefficientMonths { get; set; }
 
         /// <summary>
-        /// источник коэффициентов Хеллмана
+        /// источник среднемноголетний показатель степени
         /// </summary>
         public HellmanCoefficientSource HellmanCoefficientSource { get; set; }
+
+        /// <summary>
+        /// максимальное отклонение относительной скорости при поиске подходящей АМС
+        /// </summary>
+        public double MaximalRelativeSpeedDeviation { get; set; }
     }
 }

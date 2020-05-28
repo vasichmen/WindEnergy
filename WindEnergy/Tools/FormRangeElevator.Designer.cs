@@ -36,14 +36,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label3 = new System.Windows.Forms.Label();
-            this.buttonElevate = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.textBoxRadius = new System.Windows.Forms.TextBox();
             this.checkBoxUseRadius = new System.Windows.Forms.CheckBox();
-            this.checkBoxCustomCoeffM = new System.Windows.Forms.CheckBox();
             this.textBoxCoeffM = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonMonths = new System.Windows.Forms.Button();
+            this.buttonElevate = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.checkBoxCustomCoeffM = new System.Windows.Forms.CheckBox();
             this.labelCurrentOptions = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -56,7 +56,8 @@
             this.textBoxFromHeight.TabIndex = 0;
             this.textBoxFromHeight.Text = "10";
             this.toolTip1.SetToolTip(this.textBoxFromHeight, "Высота наблюдений выбранного ряда от уровня земли в метрах. Значение можно измени" +
-        "ть только если используется коэффициент Хеллмана, заданный вручную");
+        "ть только если используется среднемноголетний показатель степени, заданный вручн" +
+        "ую");
             // 
             // textBoxToHeight
             // 
@@ -76,7 +77,8 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Высота наблюдений, м";
             this.toolTip1.SetToolTip(this.label1, "Высота наблюдений выбранного ряда от уровня земли в метрах. Значение можно измени" +
-        "ть только если используется коэффициент Хеллмана, заданный вручную");
+        "ть только если используется среднемноголетний показатель степени, заданный вручн" +
+        "ую");
             // 
             // label2
             // 
@@ -98,26 +100,6 @@
             this.label3.Text = "Радиус поиска АМС, км";
             this.toolTip1.SetToolTip(this.label3, "Область поиска АМС для получения коэффициентов пересчета скорости ветра на высоту" +
         "");
-            // 
-            // buttonElevate
-            // 
-            this.buttonElevate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonElevate.Location = new System.Drawing.Point(12, 215);
-            this.buttonElevate.Name = "buttonElevate";
-            this.buttonElevate.Size = new System.Drawing.Size(426, 23);
-            this.buttonElevate.TabIndex = 4;
-            this.buttonElevate.Text = "Пересчитать ряд";
-            this.buttonElevate.UseVisualStyleBackColor = true;
-            this.buttonElevate.Click += new System.EventHandler(this.buttonElevate_Click);
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(12, 244);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(426, 23);
-            this.progressBar1.TabIndex = 11;
             // 
             // textBoxRadius
             // 
@@ -143,17 +125,6 @@
             this.checkBoxUseRadius.UseVisualStyleBackColor = true;
             this.checkBoxUseRadius.CheckedChanged += new System.EventHandler(this.checkBoxUseRadius_CheckedChanged);
             // 
-            // checkBoxCustomCoeffM
-            // 
-            this.checkBoxCustomCoeffM.AutoSize = true;
-            this.checkBoxCustomCoeffM.Location = new System.Drawing.Point(12, 113);
-            this.checkBoxCustomCoeffM.Name = "checkBoxCustomCoeffM";
-            this.checkBoxCustomCoeffM.Size = new System.Drawing.Size(232, 17);
-            this.checkBoxCustomCoeffM.TabIndex = 15;
-            this.checkBoxCustomCoeffM.Text = "Задать коэффициент Хеллмана вручную";
-            this.checkBoxCustomCoeffM.UseVisualStyleBackColor = true;
-            this.checkBoxCustomCoeffM.CheckedChanged += new System.EventHandler(this.checkBoxCustomCoeffM_CheckedChanged);
-            // 
             // textBoxCoeffM
             // 
             this.textBoxCoeffM.Enabled = false;
@@ -162,35 +133,68 @@
             this.textBoxCoeffM.Size = new System.Drawing.Size(100, 20);
             this.textBoxCoeffM.TabIndex = 12;
             this.textBoxCoeffM.Text = "0.18";
-            this.toolTip1.SetToolTip(this.textBoxCoeffM, "Значение коэффициента Хеллмана для степенного преобразования скорости ветра на за" +
-        "данную высоту");
+            this.toolTip1.SetToolTip(this.textBoxCoeffM, "Значение среднемноголетнего показателя степени для степенного преобразования скор" +
+        "ости ветра на заданную высоту");
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(118, 139);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(204, 13);
+            this.label4.Size = new System.Drawing.Size(288, 13);
             this.label4.TabIndex = 13;
-            this.label4.Text = "Значение коэффициента Хеллмана (m)";
-            this.toolTip1.SetToolTip(this.label4, "Значение коэффициента Хеллмана для степенного преобразования скорости ветра на за" +
-        "данную высоту");
+            this.label4.Text = "Значение среднемноголетнего показателя степени (m)";
+            this.toolTip1.SetToolTip(this.label4, "Значение среднемноголетнего показателя степени для степенного преобразования скор" +
+        "ости ветра на заданную высоту");
             // 
             // buttonMonths
             // 
-            this.buttonMonths.Location = new System.Drawing.Point(328, 134);
+            this.buttonMonths.Location = new System.Drawing.Point(12, 159);
             this.buttonMonths.Name = "buttonMonths";
-            this.buttonMonths.Size = new System.Drawing.Size(110, 23);
+            this.buttonMonths.Size = new System.Drawing.Size(100, 23);
             this.buttonMonths.TabIndex = 16;
             this.buttonMonths.Text = "По месяцам";
-            this.toolTip1.SetToolTip(this.buttonMonths, "Задать коэффициенты Хеллмана для каждого месяца отдельно");
+            this.toolTip1.SetToolTip(this.buttonMonths, "Задать среднемноголетний показатель степени для каждого месяца отдельно");
             this.buttonMonths.UseVisualStyleBackColor = true;
             this.buttonMonths.Click += new System.EventHandler(this.buttonMonths_Click);
+            // 
+            // buttonElevate
+            // 
+            this.buttonElevate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonElevate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonElevate.Location = new System.Drawing.Point(12, 223);
+            this.buttonElevate.Name = "buttonElevate";
+            this.buttonElevate.Size = new System.Drawing.Size(392, 23);
+            this.buttonElevate.TabIndex = 4;
+            this.buttonElevate.Text = "Пересчитать ряд";
+            this.buttonElevate.UseVisualStyleBackColor = true;
+            this.buttonElevate.Click += new System.EventHandler(this.buttonElevate_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(12, 252);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(392, 23);
+            this.progressBar1.TabIndex = 11;
+            // 
+            // checkBoxCustomCoeffM
+            // 
+            this.checkBoxCustomCoeffM.AutoSize = true;
+            this.checkBoxCustomCoeffM.Location = new System.Drawing.Point(12, 113);
+            this.checkBoxCustomCoeffM.Name = "checkBoxCustomCoeffM";
+            this.checkBoxCustomCoeffM.Size = new System.Drawing.Size(317, 17);
+            this.checkBoxCustomCoeffM.TabIndex = 15;
+            this.checkBoxCustomCoeffM.Text = "Задать среднемноголетний показатель степени вручную";
+            this.checkBoxCustomCoeffM.UseVisualStyleBackColor = true;
+            this.checkBoxCustomCoeffM.CheckedChanged += new System.EventHandler(this.checkBoxCustomCoeffM_CheckedChanged);
             // 
             // labelCurrentOptions
             // 
             this.labelCurrentOptions.AutoSize = true;
-            this.labelCurrentOptions.Location = new System.Drawing.Point(12, 175);
+            this.labelCurrentOptions.Location = new System.Drawing.Point(12, 198);
             this.labelCurrentOptions.Name = "labelCurrentOptions";
             this.labelCurrentOptions.Size = new System.Drawing.Size(111, 13);
             this.labelCurrentOptions.TabIndex = 17;
@@ -201,7 +205,7 @@
             this.AcceptButton = this.buttonElevate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(450, 278);
+            this.ClientSize = new System.Drawing.Size(416, 286);
             this.Controls.Add(this.labelCurrentOptions);
             this.Controls.Add(this.buttonMonths);
             this.Controls.Add(this.checkBoxCustomCoeffM);
@@ -217,6 +221,7 @@
             this.Controls.Add(this.textBoxToHeight);
             this.Controls.Add(this.textBoxFromHeight);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(432, 325);
             this.Name = "FormRangeElevator";
             this.Text = "Расчет скорости ветра на высоте башни ВЭУ";
             this.ResumeLayout(false);

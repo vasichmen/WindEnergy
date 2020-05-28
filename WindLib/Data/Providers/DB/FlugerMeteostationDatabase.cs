@@ -12,7 +12,7 @@ using WindEnergy.WindLib.Classes.Structures;
 namespace WindEnergy.WindLib.Data.Providers.DB
 {
     /// <summary>
-    /// База данных Флюгер
+    /// База данных Классы открытости МС
     /// </summary>
     public class FlugerMeteostationDatabase : BaseMeteostationDatabase<PointLatLng, FlugerMeteostationInfo>
     {

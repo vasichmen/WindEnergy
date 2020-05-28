@@ -23,15 +23,15 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// <param name="coordinates">координаты ряда</param>
         /// <param name="MSMeteostations">БД АМС</param>
         /// <param name="searchRadius">расстояние для фильтрации АМС в метрах. Если задано NaN, то фильтрация по расстоянию проводить не будет</param>
+        /// <param name="maximalRelativeSpeedDeviation">максимальное среднеквадратичное отклонение относительной скорости. NaN, если не надо учитывать</param>
         /// <returns></returns>
-        internal static SuitAMSResult GetSuitAMS(RawRange range, PointLatLng coordinates, AMSMeteostationDatabase MSMeteostations, double searchRadius)
+        internal static SuitAMSResult GetSuitAMS(RawRange range, PointLatLng coordinates, AMSMeteostationDatabase MSMeteostations, double searchRadius, double maximalRelativeSpeedDeviation)
         {
             //посчитать среднемесячные скорости на МС
             //посчитать относительные скорости для МС
             //выбрать АМС из заданного радиуса
             //посчитать относительные скорости на всех АМС
             //найти наиболее подходящую АМС по наименьшему среднеквадратичному отклонению относительных скоростей
-
 
             //относительные скорости на МС
             double rAverage = range.Average((item) => { return item.Speed; }); //средняя скорость во всем ряде на МС
@@ -54,27 +54,31 @@ namespace WindEnergy.WindLib.Transformation.Altitude
             }
 
             //выбор АМС в заданном радиусе
-            List<AMSMeteostationInfo> amss = double.IsNaN(searchRadius) ? MSMeteostations.List : MSMeteostations.GetNearestMS(coordinates, searchRadius, true); //выбираем все АМС в радиусе 1000 км
+            List<AMSMeteostationInfo> amss = double.IsNaN(searchRadius) ? MSMeteostations.List : MSMeteostations.GetNearestMS(coordinates, searchRadius, true); //выбираем все АМС в радиусе 
 
             if (amss == null)
                 return null;
 
             //поиск АМС с минимальным среднеквадр отклонением относительных скоростей
-            double min = double.MaxValue;
+            double minDelta = double.MaxValue;
             AMSMeteostationInfo min_ams = null;
             foreach (AMSMeteostationInfo ams in amss)
             {
                 Dictionary<Months, double> amsRelatives = ams.RelativeSpeeds;
                 double delta = Math.Sqrt(msRelatives.Average((kv) => { return Math.Pow(kv.Value - amsRelatives[kv.Key], 2); })); //корень(среднее ((KjМС - KjАМС)^2)), j - номер месяца
 
-                if (delta < min)
+                if (delta < minDelta)
                 {
-                    min = delta;
+                    minDelta = delta;
                     min_ams = ams;
                 }
             }
 
-            return new SuitAMSResult() {AMS= min_ams, AllMonthInRange = allMonth };
+            //сравнение с максимальным отклонением
+            if (!double.IsNaN(maximalRelativeSpeedDeviation) && maximalRelativeSpeedDeviation < minDelta)
+                return new SuitAMSResult() { AMS = min_ams, AllMonthInRange = allMonth, IsDeviationFailed = true, Deviation = minDelta }; ;
+
+            return new SuitAMSResult() { AMS = min_ams, AllMonthInRange = allMonth, Deviation = minDelta };
         }
     }
 }

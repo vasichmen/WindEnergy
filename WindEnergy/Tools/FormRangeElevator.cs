@@ -82,7 +82,7 @@ namespace WindEnergy.UI.Tools
              {
                  _ = this.Invoke(new Action(() =>
                  {
-                     string AMStext = AMSans != null ? $"На основе данных АМС {AMSans.AMS.Name} {AMSans.AMS.Position} {(AMSans.AllMonthInRange?"":"\r\nВНИМАНИЕ!! В исходном ряде представлены не все месяцы. Поэтому подбор подходящей АМС может быть неточным" )}" : "";
+                     string AMStext = AMSans != null ? $"На основе данных АМС {AMSans.AMS.Name} {AMSans.AMS.Position} {(AMSans.AllMonthInRange ? "" : "\r\nВНИМАНИЕ!! В исходном ряде представлены не все месяцы. Поэтому подбор подходящей АМС может быть неточным")}" : "";
                      rawRange.Name = "Ряд на высоте " + new_height + " м";
                      _ = MessageBox.Show(this, $"Скорости ветра пересчитаны на высоту {new_height} м\r\n{((!string.IsNullOrWhiteSpace(AMStext)) ? AMStext : "")}", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -119,6 +119,7 @@ namespace WindEnergy.UI.Tools
                     ToHeight = new_height,
                     Coordinates = range.Position,
                     SearchRaduis = checkBoxUseRadius.Checked ? radius : double.NaN,
+                    MaximalRelativeSpeedDeviation = Vars.Options.UseSuitAMSMaximalRelativeSpeedDeviation ? Vars.Options.SuitAMSMaximalRelativeSpeedDeviation : double.NaN,
                     CustomMCoefficient = checkBoxCustomCoeffM.Checked ? m : double.NaN,
                     CustomNCoefficientMonths = MonthsHellmanValues,
                     HellmanCoefficientSource = hellmanCoeffSource
@@ -165,13 +166,13 @@ namespace WindEnergy.UI.Tools
         {
             textBoxRadius.Enabled = checkBoxUseRadius.Checked;
             checkBoxCustomCoeffM.Enabled = !checkBoxUseRadius.Checked;
-            hellmanCoeffSource = checkBoxUseRadius.Checked ? HellmanCoefficientSource.AMSAnalog : (checkBoxCustomCoeffM.Checked? HellmanCoefficientSource.CustomOne: HellmanCoefficientSource.AMSAnalog);
+            hellmanCoeffSource = checkBoxUseRadius.Checked ? HellmanCoefficientSource.AMSAnalog : (checkBoxCustomCoeffM.Checked ? HellmanCoefficientSource.CustomOne : HellmanCoefficientSource.AMSAnalog);
             refreshOptionsText();
         }
 
         private void buttonMonths_Click(object sender, EventArgs e)
         {
-            FormMonthsValuesDialogs fmv = new FormMonthsValuesDialogs(MonthsHellmanValues, "Коэффициенты Хеллмана по месяцам");
+            FormMonthsValuesDialogs fmv = new FormMonthsValuesDialogs(MonthsHellmanValues, "Среднемноголетние показатели степени по месяцам");
             if (fmv.ShowDialog() == DialogResult.OK)
             {
                 this.MonthsHellmanValues = fmv.Result;

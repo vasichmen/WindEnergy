@@ -37,6 +37,8 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
             QualifierDaysToNewInterval = 30; //1 месяц
             QualifierDaysToBeginMissing = 30; //1 месяца
             AirDensity = 1.226;
+            SuitAMSMaximalRelativeSpeedDeviation = 0.8;
+            UseSuitAMSMaximalRelativeSpeedDeviation = false;
             MinimalSpeedDeviation = 0.1d;
             MinimalCorrelationCoeff = 0.7;
             MinimalCorrelationControlParametres = new List<MeteorologyParameters>() { MeteorologyParameters.Speed };
@@ -201,11 +203,20 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
         /// </summary>
         public string ETOPO2Folder { get; set; }
 
-
         /// <summary>
         /// минимальное количество дней, после которого считается пропуск данных как отдельный интервал
         /// </summary>
         public double QualifierDaysToBeginMissing { get; set; }
+
+        /// <summary>
+        /// Максимальное отклонение средней скорости при поиске подходящей АМС
+        /// </summary>
+        public double SuitAMSMaximalRelativeSpeedDeviation { get; set; }
+
+        /// <summary>
+        /// нужно ли использовать ограничение на отклонение скорости при поиске АМС
+        /// </summary>
+        public bool UseSuitAMSMaximalRelativeSpeedDeviation { get;  set; }
 
 
         /// <summary>
@@ -218,7 +229,7 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
             try
             {
                 Options res = xmlDeserialize<Options>(filename);
-                return res == null ? new Options() : res;
+                return res ?? new Options();
             }
             catch (Exception) { return new Options(); }
         }

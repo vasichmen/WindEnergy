@@ -29,7 +29,7 @@ namespace WindEnergy
     }
 
     /// <summary>
-    /// типы источников коэффициентов Хеллмана
+    /// типы источников среднемноголетних показателей степени m
     /// </summary>
     [TypeConverter(typeof(EnumTypeConverter<HellmanCoefficientSource>))]
     public enum HellmanCoefficientSource
