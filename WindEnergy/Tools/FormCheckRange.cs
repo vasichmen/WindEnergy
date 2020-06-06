@@ -72,14 +72,14 @@ namespace WindEnergy.UI.Tools
         {
             try
             {
-                Action<int> pcAction = new Action<int>((percent) =>
+                Action<double> pcAction = new Action<double>((percent) =>
                 {
                     try
                     {
                         if (this.InvokeRequired)
-                            _ = this.Invoke(new Action(() => { progressBar1.Value = percent; }));
+                            _ = this.Invoke(new Action(() => { progressBar1.Value = (int)percent; }));
                         else
-                            progressBar1.Value = percent;
+                            progressBar1.Value = (int)percent;
                     }
                     catch (Exception) { }
                 });
@@ -118,7 +118,6 @@ namespace WindEnergy.UI.Tools
                             return;
 
                         range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats, pcAction);
-                        range.Name = "Исправленный ряд";
                         _ = this.Invoke(new Action(() =>
                            {
                                _ = MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nНулевая скорость с направлением: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);

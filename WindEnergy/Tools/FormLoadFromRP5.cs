@@ -17,6 +17,8 @@ using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
 using WindEnergy.UI.Dialogs;
 using WindLib;
+using WindEnergy.WindLib.Operations;
+using WindEnergy.WindLib.Operations.Structures;
 
 namespace WindEnergy.UI.Tools
 {
@@ -124,6 +126,7 @@ namespace WindEnergy.UI.Tools
                 _ = MessageBox.Show(this, ae.Message + "\r\n" + (ae.InnerException != null ? ae.InnerException.Message : "\r\n") + "\r\nПопробуйте выбрать меньший интервал времени", "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             });
+            Action<string> setStatus = new Action<string>((text) => { labelStatus.Text = text; });
 
             buttonDownload.Enabled = false;
 
@@ -131,7 +134,14 @@ namespace WindEnergy.UI.Tools
             {
                 try
                 {
+                    this.Invoke(setStatus, "Загрузка ряда...");
                     RawRange res = engine.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, selectedMeteostation, pcChange);
+                    if (checkBoxClearRange.Checked)
+                    {
+                        pcChange.Invoke(0);
+                        this.Invoke(setStatus, "Очистка ряда...");
+                        res = Checker.ProcessRange(res, new CheckerParameters(LimitsProviders.StaticLimits,res.Position), out CheckerInfo stats, pcChange);
+                    }
 
                     if (this.InvokeRequired)
                         _ = Invoke(success, res);
@@ -353,8 +363,8 @@ namespace WindEnergy.UI.Tools
 
         private void linkLabelShowOnMap_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            FormShowMeteostationsMap fsmon =  new FormShowMeteostationsMap(true);
-            if(fsmon.ShowDialog(this) == DialogResult.OK)
+            FormShowMeteostationsMap fsmon = new FormShowMeteostationsMap(true);
+            if (fsmon.ShowDialog(this) == DialogResult.OK)
             {
                 this.selectedMeteostation = fsmon.Result;
 

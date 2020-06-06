@@ -25,7 +25,7 @@ namespace WindEnergy.WindLib.Operations
         /// <param name="info">результаты проверки ряда</param>
         /// <param name="action">действие, при изменении провенца выполнения</param>
         /// <returns></returns>
-        public static RawRange ProcessRange(RawRange range, CheckerParameters param, out CheckerInfo info, Action<int> action = null)
+        public static RawRange ProcessRange(RawRange range, CheckerParameters param, out CheckerInfo info, Action<double> action = null)
         {
             ILimitsProvider provider;
             switch (param.LimitsProvider)
@@ -46,6 +46,7 @@ namespace WindEnergy.WindLib.Operations
             RawRange res = new RawRange();
             res.Position = range.Position;
             res.Meteostation = range.Meteostation;
+            res.Name = "Исправленный ряд. " + range.Name;
             res.BeginChange();
             List<DateTime> dates = new List<DateTime>();
             int lims = 0, repeats = 0, other = 0;
@@ -54,7 +55,7 @@ namespace WindEnergy.WindLib.Operations
             {
                 c++;
                 if (Math.IEEERemainder(c, 100) == 0 && action != null)
-                    action.Invoke((int)((c / range.Count) * 100));
+                    action.Invoke((c / range.Count) * 100);
                 bool accept = provider.CheckItem(item, param.Coordinates); //проверка по диапазону
                 if (!accept) lims++;
 
@@ -64,9 +65,9 @@ namespace WindEnergy.WindLib.Operations
                     if (!accept) repeats++;
                 }
                 if (accept)//если всё ещё подходит, то проверем значения скорости и направления (если не штиль, не переменное направление и не неопределённое и скорость равна 0 то не подходит)
-                    if (item.DirectionRhumb != WindDirections16.Undefined && 
-                        item.DirectionRhumb != WindDirections16.Variable && 
-                        item.DirectionRhumb != WindDirections16.Calm && 
+                    if (item.DirectionRhumb != WindDirections16.Undefined &&
+                        item.DirectionRhumb != WindDirections16.Variable &&
+                        item.DirectionRhumb != WindDirections16.Calm &&
                         item.Speed == 0)
                     {
                         accept = false;

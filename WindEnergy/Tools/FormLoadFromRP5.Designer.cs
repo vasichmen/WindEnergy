@@ -42,13 +42,15 @@
             this.progressBarProgress = new System.Windows.Forms.ProgressBar();
             this.linkLabelSelectOnMap = new System.Windows.Forms.LinkLabel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.checkBoxClearRange = new System.Windows.Forms.CheckBox();
+            this.labelStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // dateTimePickerFromDate
             // 
-            this.dateTimePickerFromDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.dateTimePickerFromDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.dateTimePickerFromDate.Enabled = false;
-            this.dateTimePickerFromDate.Location = new System.Drawing.Point(40, 76);
+            this.dateTimePickerFromDate.Location = new System.Drawing.Point(40, 78);
             this.dateTimePickerFromDate.Name = "dateTimePickerFromDate";
             this.dateTimePickerFromDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerFromDate.TabIndex = 0;
@@ -56,9 +58,9 @@
             // 
             // dateTimePickerToDate
             // 
-            this.dateTimePickerToDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTimePickerToDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.dateTimePickerToDate.Enabled = false;
-            this.dateTimePickerToDate.Location = new System.Drawing.Point(254, 76);
+            this.dateTimePickerToDate.Location = new System.Drawing.Point(40, 104);
             this.dateTimePickerToDate.Name = "dateTimePickerToDate";
             this.dateTimePickerToDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerToDate.TabIndex = 1;
@@ -67,11 +69,11 @@
             // 
             // buttonDownload
             // 
-            this.buttonDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonDownload.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.buttonDownload.Enabled = false;
-            this.buttonDownload.Location = new System.Drawing.Point(12, 109);
+            this.buttonDownload.Location = new System.Drawing.Point(254, 74);
             this.buttonDownload.Name = "buttonDownload";
-            this.buttonDownload.Size = new System.Drawing.Size(160, 23);
+            this.buttonDownload.Size = new System.Drawing.Size(132, 23);
             this.buttonDownload.TabIndex = 2;
             this.buttonDownload.Text = "Загрузить";
             this.buttonDownload.UseVisualStyleBackColor = true;
@@ -103,9 +105,9 @@
             // 
             // labelDateRange
             // 
-            this.labelDateRange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelDateRange.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.labelDateRange.AutoSize = true;
-            this.labelDateRange.Location = new System.Drawing.Point(9, 51);
+            this.labelDateRange.Location = new System.Drawing.Point(9, 53);
             this.labelDateRange.Name = "labelDateRange";
             this.labelDateRange.Size = new System.Drawing.Size(81, 13);
             this.labelDateRange.TabIndex = 5;
@@ -113,9 +115,9 @@
             // 
             // label3
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 82);
+            this.label3.Location = new System.Drawing.Point(9, 84);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(25, 13);
             this.label3.TabIndex = 6;
@@ -123,9 +125,9 @@
             // 
             // label4
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(222, 82);
+            this.label4.Location = new System.Drawing.Point(8, 110);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(27, 13);
             this.label4.TabIndex = 7;
@@ -133,11 +135,11 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(311, 109);
+            this.buttonCancel.Location = new System.Drawing.Point(254, 110);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(132, 23);
             this.buttonCancel.TabIndex = 8;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -147,7 +149,7 @@
             // 
             this.progressBarProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBarProgress.Location = new System.Drawing.Point(12, 138);
+            this.progressBarProgress.Location = new System.Drawing.Point(12, 168);
             this.progressBarProgress.Name = "progressBarProgress";
             this.progressBarProgress.Size = new System.Drawing.Size(374, 23);
             this.progressBarProgress.TabIndex = 9;
@@ -164,13 +166,39 @@
             this.linkLabelSelectOnMap.Text = "Выбрать на карте";
             this.linkLabelSelectOnMap.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelShowOnMap_LinkClicked);
             // 
+            // checkBoxClearRange
+            // 
+            this.checkBoxClearRange.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.checkBoxClearRange.AutoSize = true;
+            this.checkBoxClearRange.Checked = true;
+            this.checkBoxClearRange.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxClearRange.Location = new System.Drawing.Point(11, 130);
+            this.checkBoxClearRange.Name = "checkBoxClearRange";
+            this.checkBoxClearRange.Size = new System.Drawing.Size(173, 17);
+            this.checkBoxClearRange.TabIndex = 11;
+            this.checkBoxClearRange.Text = "Проверить загруженный ряд";
+            this.toolTip1.SetToolTip(this.checkBoxClearRange, "После загрузки очистить ряд от ошибок");
+            this.checkBoxClearRange.UseVisualStyleBackColor = true;
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.Location = new System.Drawing.Point(12, 152);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(70, 13);
+            this.labelStatus.TabIndex = 12;
+            this.labelStatus.Text = "Состояние...";
+            // 
             // FormLoadFromRP5
             // 
             this.AcceptButton = this.buttonDownload;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(395, 173);
+            this.ClientSize = new System.Drawing.Size(395, 203);
+            this.Controls.Add(this.labelStatus);
+            this.Controls.Add(this.checkBoxClearRange);
             this.Controls.Add(this.linkLabelSelectOnMap);
             this.Controls.Add(this.progressBarProgress);
             this.Controls.Add(this.buttonCancel);
@@ -183,7 +211,7 @@
             this.Controls.Add(this.dateTimePickerToDate);
             this.Controls.Add(this.dateTimePickerFromDate);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(411, 212);
+            this.MinimumSize = new System.Drawing.Size(411, 242);
             this.Name = "FormLoadFromRP5";
             this.Text = "Загрузка ряда с Расписания погоды";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.formLoadFromRP5_FormClosed);
@@ -207,5 +235,7 @@
         private System.Windows.Forms.ProgressBar progressBarProgress;
         private System.Windows.Forms.LinkLabel linkLabelSelectOnMap;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.CheckBox checkBoxClearRange;
+        private System.Windows.Forms.Label labelStatus;
     }
 }
