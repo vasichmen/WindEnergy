@@ -14,7 +14,7 @@ using System.Windows.Forms;
 using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures.Options;
-using WindEnergy.WindLib.Data.Providers.FileSystem;
+using WindEnergy.WindLib.Data.Providers.FileSystem.Import;
 using WindEnergy.UI.Ext;
 using CommonLib;
 using CommonLib.Classes;
@@ -34,7 +34,12 @@ namespace WindEnergy.UI.Dialogs
         /// <summary>
         /// импортер данных из файла
         /// </summary>
-        private TextImporter importer;
+        private BaseImporter importer;
+
+        /// <summary>
+        /// путь к выбранному файлу
+        /// </summary>
+        private string fileName;
 
         /// <summary>
         /// результат импорта ряда наблюдений
@@ -47,7 +52,7 @@ namespace WindEnergy.UI.Dialogs
         public FormTextImport()
         {
             InitializeComponent();
-            importer = new TextImporter();
+            importer = new CSVImporter(null, null);
         }
 
         private void formTextImport_Load(object sender, EventArgs e)
@@ -92,7 +97,7 @@ namespace WindEnergy.UI.Dialogs
             installControls(Vars.Options.TextImportState);
 
             writeImporter();
-            update();
+            updateUI();
         }
 
         /// <summary>
@@ -108,7 +113,7 @@ namespace WindEnergy.UI.Dialogs
                         else
                             importer.Columns.Add((ImportFields)contr.Tag, (int)((NumericUpDown)contr).Value);
 
-            importer.Delimeter = textBoxDelimeter.Text;
+            importer.Delimeter = importer.FileFormat == FileFormats.CSV? textBoxDelimeter.Text: ";";
             importer.Trimmers = textBoxTrimmers.Text.ToCharArray();
             importer.Encoding = Encoding.GetEncoding(comboBoxEncoding.SelectedItem as string);
             importer.DirectionUnit = (DirectionUnits)(new EnumTypeConverter<DirectionUnits>().ConvertFrom(comboBoxDirectUnit.SelectedItem));
@@ -117,6 +122,11 @@ namespace WindEnergy.UI.Dialogs
             importer.BindNearestMS = checkBoxFindNearestMS.Checked;
         }
 
+        /// <summary>
+        /// Выбор файла
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSelect_Click(object sender, EventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
@@ -124,11 +134,12 @@ namespace WindEnergy.UI.Dialogs
             of.Multiselect = false;
             if (of.ShowDialog() == DialogResult.OK)
             {
-                this.importer.FilePath = of.FileName;
-                labelPath.Text = Path.GetFileName(this.importer.FilePath);
-                new ToolTip().SetToolTip(labelPath, this.importer.FilePath);
-                Vars.Options.LastDirectory = Path.GetDirectoryName(this.importer.FilePath);
-                this.update();
+                fileName = of.FileName;
+                importer = ImportFactory.CreateImporter(fileName, importer);
+                labelPath.Text = Path.GetFileName(fileName);
+                new ToolTip().SetToolTip(labelPath, fileName);
+                Vars.Options.LastDirectory = Path.GetDirectoryName(fileName);
+                this.updateUI();
             }
         }
 
@@ -160,22 +171,27 @@ namespace WindEnergy.UI.Dialogs
         /// <summary>
         /// обновление полей, установка ошибок после изменения параметров импорта
         /// </summary>
-        private void update()
+        private void updateUI()
         {
             scintillaExample.ReadOnly = false;
             //заполнение первых 10 строк файла в окно
             try
             {
                 scintillaExample.Text = importer.GetText(10); //получаем текст
+                string delimeter = importer.FileFormat == FileFormats.CSV ? textBoxDelimeter.Text : ";";
 
                 //выделяем разделители
-                MatchCollection collect = new Regex("w*" + textBoxDelimeter.Text + "w*").Matches(scintillaExample.Text);
+                MatchCollection collect = new Regex("w*" + delimeter + "w*").Matches(scintillaExample.Text);
                 foreach (Match match in collect)
                     scintillaExample.IndicatorFillRange(match.Index, match.Length);
 
+                //блокируем не используемые поля
+                textBoxDelimeter.Enabled = importer.FileFormat == FileFormats.CSV;
+                comboBoxEncoding.Enabled = importer.FileFormat == FileFormats.CSV;
+
                 //количество столбцов в первой строке
                 string firstLine = scintillaExample.Lines[0].Text;
-                string[] cols = new Regex("w*" + textBoxDelimeter.Text + "w*").Split(firstLine);
+                string[] cols = new Regex("w*" + delimeter + "w*").Split(firstLine);
                 int count = cols.Length;
                 groupBoxColumns.Text = $"Настройки столбцов. В первой строке доступно {count} шт.";
                 if (count > 0)
@@ -256,7 +272,7 @@ namespace WindEnergy.UI.Dialogs
             switch (name)
             {
                 case "textBoxDelimeter":
-                    importer.Delimeter = textBoxDelimeter.Text;
+                    importer.Delimeter = importer.FileFormat == FileFormats.CSV ? textBoxDelimeter.Text : ";";
                     break;
                 case "numericUpDownStartLine":
                     importer.StartLine = (int)numericUpDownStartLine.Value;
@@ -300,7 +316,7 @@ namespace WindEnergy.UI.Dialogs
                 default: throw new Exception("Этот контрол не реализован");
             }
 
-            update(); //пересобираем окно
+            updateUI(); //пересобираем окно
         }
 
         /// <summary>
@@ -330,13 +346,13 @@ namespace WindEnergy.UI.Dialogs
         /// <param name="e"></param>
         private void ButtonSelectCoordinates_Click(object sender, EventArgs e)
         {
-            FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty,Vars.Options.CacheFolder,Resources.rp5_marker,Vars.Options.MapProvider);
+            FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
                 labelCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";
                 toolTip1.SetToolTip(labelCoordinates, labelCoordinates.Text);
                 importer.Coordinates = spt.Result;
-                update();
+                updateUI();
             }
             spt.Dispose();
         }
@@ -437,7 +453,7 @@ namespace WindEnergy.UI.Dialogs
             state.Delimeter = ";";
             installControls(state);
             writeImporter();
-            update();
+            updateUI();
         }
 
         private void defaultRP5metarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -456,7 +472,7 @@ namespace WindEnergy.UI.Dialogs
             state.Delimeter = ";";
             installControls(state);
             writeImporter();
-            update();
+            updateUI();
         }
 
         #endregion
@@ -504,7 +520,7 @@ namespace WindEnergy.UI.Dialogs
             }
 
             controlUpdate_Event(numeric, e); //вызываем событие обновления нужного NumericUpDown колонки
-            update(); //пересобираем окно
+            updateUI(); //пересобираем окно
         }
     }
 }

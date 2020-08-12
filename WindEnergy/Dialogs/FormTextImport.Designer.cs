@@ -42,8 +42,6 @@ namespace WindEnergy.UI.Dialogs
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBoxEncoding = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDownStartLine = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxDelimeter = new System.Windows.Forms.TextBox();
             this.groupBoxColumns = new System.Windows.Forms.GroupBox();
@@ -76,9 +74,10 @@ namespace WindEnergy.UI.Dialogs
             this.установкиПоУмолчаниюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultRP5wmoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultRP5metarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numericUpDownStartLine = new System.Windows.Forms.NumericUpDown();
             this.dataGridViewImported = new WindEnergy.UI.Ext.DataGridViewExt();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLine)).BeginInit();
             this.groupBoxColumns.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownColTemper)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownColDirect)).BeginInit();
@@ -88,6 +87,7 @@ namespace WindEnergy.UI.Dialogs
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownColDate)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewImported)).BeginInit();
             this.SuspendLayout();
             // 
@@ -126,7 +126,7 @@ namespace WindEnergy.UI.Dialogs
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 101);
+            this.label4.Location = new System.Drawing.Point(7, 44);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(102, 13);
             this.label4.TabIndex = 20;
@@ -137,7 +137,7 @@ namespace WindEnergy.UI.Dialogs
             // 
             this.textBoxTrimmers.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBoxTrimmers.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxTrimmers.Location = new System.Drawing.Point(139, 98);
+            this.textBoxTrimmers.Location = new System.Drawing.Point(138, 41);
             this.textBoxTrimmers.Name = "textBoxTrimmers";
             this.textBoxTrimmers.Size = new System.Drawing.Size(63, 23);
             this.textBoxTrimmers.TabIndex = 19;
@@ -163,12 +163,12 @@ namespace WindEnergy.UI.Dialogs
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.numericUpDownStartLine);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.textBoxTrimmers);
             this.groupBox1.Controls.Add(this.comboBoxEncoding);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.numericUpDownStartLine);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textBoxDelimeter);
             this.groupBox1.Location = new System.Drawing.Point(12, 200);
@@ -182,75 +182,45 @@ namespace WindEnergy.UI.Dialogs
             // 
             this.comboBoxEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.comboBoxEncoding.FormattingEnabled = true;
-            this.comboBoxEncoding.Location = new System.Drawing.Point(139, 71);
+            this.comboBoxEncoding.Location = new System.Drawing.Point(138, 68);
             this.comboBoxEncoding.Name = "comboBoxEncoding";
             this.comboBoxEncoding.Size = new System.Drawing.Size(128, 21);
             this.comboBoxEncoding.TabIndex = 18;
+            this.toolTip1.SetToolTip(this.comboBoxEncoding, "Только для текстовых форматов");
             this.comboBoxEncoding.SelectedIndexChanged += new System.EventHandler(this.controlUpdate_Event);
             // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 74);
+            this.label3.Location = new System.Drawing.Point(6, 71);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 13);
             this.label3.TabIndex = 17;
             this.label3.Text = "Кодировка:";
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 47);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(99, 13);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "Начать со строки:";
-            // 
-            // numericUpDownStartLine
-            // 
-            this.numericUpDownStartLine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.numericUpDownStartLine.Location = new System.Drawing.Point(139, 45);
-            this.numericUpDownStartLine.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numericUpDownStartLine.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownStartLine.Name = "numericUpDownStartLine";
-            this.numericUpDownStartLine.Size = new System.Drawing.Size(63, 20);
-            this.numericUpDownStartLine.TabIndex = 15;
-            this.numericUpDownStartLine.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownStartLine.ValueChanged += new System.EventHandler(this.controlUpdate_Event);
+            this.toolTip1.SetToolTip(this.label3, "Только для текстовых форматов");
             // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 20);
+            this.label1.Location = new System.Drawing.Point(7, 98);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(126, 13);
             this.label1.TabIndex = 14;
             this.label1.Text = "Разделитель столбцов:";
+            this.toolTip1.SetToolTip(this.label1, "Только для текстовых форматов");
             // 
             // textBoxDelimeter
             // 
             this.textBoxDelimeter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBoxDelimeter.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBoxDelimeter.Location = new System.Drawing.Point(139, 16);
+            this.textBoxDelimeter.Location = new System.Drawing.Point(138, 94);
             this.textBoxDelimeter.Name = "textBoxDelimeter";
             this.textBoxDelimeter.Size = new System.Drawing.Size(63, 23);
             this.textBoxDelimeter.TabIndex = 13;
             this.textBoxDelimeter.Text = ";";
+            this.toolTip1.SetToolTip(this.textBoxDelimeter, "Только для текстовых форматов");
             this.textBoxDelimeter.TextChanged += new System.EventHandler(this.controlUpdate_Event);
             // 
             // groupBoxColumns
@@ -632,6 +602,40 @@ namespace WindEnergy.UI.Dialogs
             this.defaultRP5metarToolStripMenuItem.Text = "Расписание погоды (аэропорт)";
             this.defaultRP5metarToolStripMenuItem.Click += new System.EventHandler(this.defaultRP5metarToolStripMenuItem_Click);
             // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 20);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(99, 13);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Начать со строки:";
+            // 
+            // numericUpDownStartLine
+            // 
+            this.numericUpDownStartLine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownStartLine.Location = new System.Drawing.Point(138, 18);
+            this.numericUpDownStartLine.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownStartLine.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownStartLine.Name = "numericUpDownStartLine";
+            this.numericUpDownStartLine.Size = new System.Drawing.Size(63, 20);
+            this.numericUpDownStartLine.TabIndex = 21;
+            this.numericUpDownStartLine.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownStartLine.ValueChanged += new System.EventHandler(this.controlUpdate_Event);
+            // 
             // dataGridViewImported
             // 
             this.dataGridViewImported.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -670,7 +674,6 @@ namespace WindEnergy.UI.Dialogs
             this.Load += new System.EventHandler(this.formTextImport_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLine)).EndInit();
             this.groupBoxColumns.ResumeLayout(false);
             this.groupBoxColumns.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownColTemper)).EndInit();
@@ -683,6 +686,7 @@ namespace WindEnergy.UI.Dialogs
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewImported)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -701,8 +705,6 @@ namespace WindEnergy.UI.Dialogs
         private System.Windows.Forms.TextBox textBoxTrimmers;
         private System.Windows.Forms.ComboBox comboBoxEncoding;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDownStartLine;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxDelimeter;
         private System.Windows.Forms.GroupBox groupBoxColumns;
@@ -736,5 +738,7 @@ namespace WindEnergy.UI.Dialogs
         private System.Windows.Forms.CheckBox checkBoxUsePressure;
         private System.Windows.Forms.CheckBox checkBoxUseTemperature;
         private System.Windows.Forms.CheckBox checkBoxUseDirection;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numericUpDownStartLine;
     }
 }

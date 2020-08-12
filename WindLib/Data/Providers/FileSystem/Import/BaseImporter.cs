@@ -14,12 +14,12 @@ using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
 using WindLib;
 
-namespace WindEnergy.WindLib.Data.Providers.FileSystem
+namespace WindEnergy.WindLib.Data.Providers.FileSystem.Import
 {
     /// <summary>
     ///  настраиваемый импорт из текстового файла
     /// </summary>
-    public class TextImporter
+    public abstract class BaseImporter
     {
         /// <summary>
         /// Выбранные координаты для привязки с ряду
@@ -79,25 +79,49 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
         /// <summary>
         /// Необязательные поля
         /// </summary>
-        public List<ImportFields> NonRequireFields { get; }
+        public List<ImportFields> NonRequireFields { get; set; }
+
+        /// <summary>
+        /// формат импортируемого файла
+        /// </summary>
+        public FileFormats FileFormat { get; set; }
 
         /// <summary>
         /// создает пустой объект импортера
         /// </summary>
-        public TextImporter()
+        protected void Initialize(string filePath, BaseImporter baseImporter = null, FileFormats fileFormat = FileFormats.None)
         {
-            Columns = new Dictionary<ImportFields, int>();
-            Delimeter = string.Empty;
-            Trimmers = null;
-            StartLine = 0;
-            FilePath = null;
-            DirectionUnit = DirectionUnits.None;
-            PressureUnit = PressureUnits.None;
-            Encoding = null;
-            Coordinates = PointLatLng.Empty;
-            BindNearestMS = null;
-            WetnessUnit = WetnessUnits.None;
-            NonRequireFields = new List<ImportFields>() { ImportFields.Pressure, ImportFields.Temperature, ImportFields.Wetness, ImportFields.Direction };
+            FilePath = filePath;
+            FileFormat = fileFormat;
+
+            if (baseImporter == null)
+            {
+                Columns = new Dictionary<ImportFields, int>();
+                Delimeter = string.Empty;
+                Trimmers = null;
+                StartLine = 0;
+                DirectionUnit = DirectionUnits.None;
+                PressureUnit = PressureUnits.None;
+                Encoding = null;
+                Coordinates = PointLatLng.Empty;
+                BindNearestMS = null;
+                WetnessUnit = WetnessUnits.None;
+                NonRequireFields = new List<ImportFields>() { ImportFields.Pressure, ImportFields.Temperature, ImportFields.Wetness, ImportFields.Direction };
+            }
+            else
+            {
+                Columns = baseImporter.Columns;
+                Delimeter = baseImporter.Delimeter;
+                Trimmers = baseImporter.Trimmers;
+                StartLine = baseImporter.StartLine;
+                DirectionUnit = baseImporter.DirectionUnit;
+                PressureUnit = baseImporter.PressureUnit;
+                Encoding = baseImporter.Encoding;
+                Coordinates = baseImporter.Coordinates;
+                BindNearestMS = baseImporter.BindNearestMS;
+                WetnessUnit = baseImporter.WetnessUnit;
+                NonRequireFields = baseImporter.NonRequireFields;
+            }
         }
 
 
@@ -242,29 +266,6 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
         /// </summary>
         /// <param name="lineCount">long.MaxValue, если надо считать файл до конца</param>
         /// <returns></returns>
-        public string GetText(long lineCount)
-        {
-            if (!File.Exists(FilePath))
-                throw new ArgumentException("Файл не выбран");
-            if (Encoding == null)
-                throw new ArgumentException("Не задана кодировка");
-
-            using (StreamReader sr = new StreamReader(FilePath, Encoding, true))
-            {
-                for (int i = 0; i < StartLine - 1; i++) //пропуск строк
-                    sr.ReadLine();
-
-                if (lineCount == long.MaxValue)
-                    return sr.ReadToEnd();
-                else
-                {
-                    string res = "";
-                    for (long i = 0; i < lineCount + this.StartLine; i++)
-                        if (!sr.EndOfStream)
-                            res += sr.ReadLine() + "\r\n";
-                    return res;
-                }
-            }
-        }
+        public abstract string GetText(long lineCount);
     }
 }

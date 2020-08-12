@@ -181,7 +181,10 @@
     <Compile Include="Data\Providers\DB\RP5Database.cs" />
     <Compile Include="Data\Providers\DB\SpeedLimitsDatabase.cs" />
     <Compile Include="Data\Providers\FileSystem\FileProvider.cs" />
-    <Compile Include="Data\Providers\FileSystem\TextImporter.cs" />
+    <Compile Include="Data\Providers\FileSystem\Import\ImportFactory.cs" />
+    <Compile Include="Data\Providers\FileSystem\Import\XLSXImporter.cs" />
+    <Compile Include="Data\Providers\FileSystem\Import\CSVImporter.cs" />
+    <Compile Include="Data\Providers\FileSystem\Import\BaseImporter.cs" />
     <Compile Include="Data\Providers\DB\ETOPO\BaseGrid.cs" />
     <Compile Include="Data\Providers\DB\ETOPO\ETOPO2Provider.cs" />
     <Compile Include="Data\Providers\DB\ETOPO\FloatDatabase.cs" />

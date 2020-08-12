@@ -30,7 +30,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
     /// </summary>
     public class ExcelFile : FileProvider
     {
-        private static string DateTimeFormat = DateTimeFormatInfo.CurrentInfo.ShortDatePattern + " " + DateTimeFormatInfo.CurrentInfo.LongTimePattern;
+        public static string DateTimeFormat = DateTimeFormatInfo.CurrentInfo.ShortDatePattern + " " + DateTimeFormatInfo.CurrentInfo.LongTimePattern;
 
         /// <summary>
         /// Преобразовать значение ячейки в double

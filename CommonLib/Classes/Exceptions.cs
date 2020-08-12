@@ -48,4 +48,15 @@ namespace CommonLib.Classes
             this.Reason = reason;
         }
     }
+
+    public class WrongFileFormatException : WindEnergyException
+    {
+        /// <summary>
+        /// Простое исключение с сообщением
+        /// </summary>
+        /// <param name="message"></param>
+        public WrongFileFormatException(string message) : base(message)
+        {
+        }
+    }
 }
