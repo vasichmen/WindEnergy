@@ -54,8 +54,8 @@ namespace WindEnergy.UI
             this.операцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calculateEnergyInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCalcYear = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemRangeElevator = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemRangeTerrain = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemRangeElevator = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.equalizeRangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dailyAverageGraphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,8 +76,10 @@ namespace WindEnergy.UI
             this.toolStripStatusLabelCompletness = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelInterval = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.button1 = new System.Windows.Forms.Button();
+            this.toolStripButtonLoadRP5Range = new System.Windows.Forms.ToolStripButton();
+            this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
+            this.toolStripButtonLoadNASARange = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -272,19 +274,19 @@ namespace WindEnergy.UI
             this.ToolStripMenuItemCalcYear.Text = "Выбор расчётного года";
             this.ToolStripMenuItemCalcYear.Click += new System.EventHandler(this.toolStripMenuItemCalcYear_Click);
             // 
-            // ToolStripMenuItemRangeElevator
-            // 
-            this.ToolStripMenuItemRangeElevator.Name = "ToolStripMenuItemRangeElevator";
-            this.ToolStripMenuItemRangeElevator.Size = new System.Drawing.Size(345, 22);
-            this.ToolStripMenuItemRangeElevator.Text = "Расчет скорости ветра на высоте башни ВЭУ";
-            this.ToolStripMenuItemRangeElevator.Click += new System.EventHandler(this.ToolStripMenuItemRangeElevator_Click);
-            // 
             // ToolStripMenuItemRangeTerrain
             // 
             this.ToolStripMenuItemRangeTerrain.Name = "ToolStripMenuItemRangeTerrain";
             this.ToolStripMenuItemRangeTerrain.Size = new System.Drawing.Size(345, 22);
             this.ToolStripMenuItemRangeTerrain.Text = "Пересчет скорости ветра в точку ВЭС";
             this.ToolStripMenuItemRangeTerrain.Click += new System.EventHandler(this.ToolStripMenuItemRangeTerrain_Click);
+            // 
+            // ToolStripMenuItemRangeElevator
+            // 
+            this.ToolStripMenuItemRangeElevator.Name = "ToolStripMenuItemRangeElevator";
+            this.ToolStripMenuItemRangeElevator.Size = new System.Drawing.Size(345, 22);
+            this.ToolStripMenuItemRangeElevator.Text = "Расчет скорости ветра на высоте башни ВЭУ";
+            this.ToolStripMenuItemRangeElevator.Click += new System.EventHandler(this.ToolStripMenuItemRangeElevator_Click);
             // 
             // toolStripSeparator4
             // 
@@ -349,7 +351,9 @@ namespace WindEnergy.UI
             this.openFileToolStripButton,
             this.saveToolStripButton,
             this.saveAlltoolStripButton,
-            this.toolStripSeparator});
+            this.toolStripSeparator,
+            this.toolStripButtonLoadRP5Range,
+            this.toolStripButtonLoadNASARange});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1157, 27);
@@ -458,6 +462,28 @@ namespace WindEnergy.UI
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1157, 501);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(251, 26);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(56, 19);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // toolStripButtonLoadRP5Range
+            // 
+            this.toolStripButtonLoadRP5Range.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonLoadRP5Range.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoadRP5Range.Image")));
+            this.toolStripButtonLoadRP5Range.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonLoadRP5Range.Name = "toolStripButtonLoadRP5Range";
+            this.toolStripButtonLoadRP5Range.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonLoadRP5Range.Text = "toolStripButton1";
+            this.toolStripButtonLoadRP5Range.Click += new System.EventHandler(this.downloadRP5ruToolStripMenuItem_Click);
+            // 
             // mainTabControl
             // 
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -473,17 +499,15 @@ namespace WindEnergy.UI
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.mainTabControl_Selected);
             // 
-            // button1
+            // toolStripButtonLoadNASARange
             // 
-            this.button1.Location = new System.Drawing.Point(251, 26);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(56, 19);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.toolStripButtonLoadNASARange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonLoadNASARange.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoadNASARange.Image")));
+            this.toolStripButtonLoadNASARange.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonLoadNASARange.Name = "toolStripButtonLoadNASARange";
+            this.toolStripButtonLoadNASARange.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonLoadNASARange.Text = "toolStripButton1";
+            this.toolStripButtonLoadNASARange.Click += new System.EventHandler(this.downloadNASAToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -562,6 +586,8 @@ namespace WindEnergy.UI
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem dailyAverageGraphsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemRangeTerrain;
+        private System.Windows.Forms.ToolStripButton toolStripButtonLoadRP5Range;
+        private System.Windows.Forms.ToolStripButton toolStripButtonLoadNASARange;
     }
 }
 
