@@ -144,7 +144,7 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void importTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormTextImport fti = new FormTextImport();
+            FormFileImport fti = new FormFileImport();
             if (fti.ShowDialog(this) == DialogResult.OK)
             {
                 RawRange rang = fti.Result;

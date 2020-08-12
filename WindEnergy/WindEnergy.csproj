@@ -140,11 +140,11 @@
     <Compile Include="Dialogs\FormMonthsValuesDialogs.Designer.cs">
       <DependentUpon>FormMonthsValuesDialogs.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\FormTextImport.cs">
+    <Compile Include="Dialogs\FormFileImport.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\FormTextImport.Designer.cs">
-      <DependentUpon>FormTextImport.cs</DependentUpon>
+    <Compile Include="Dialogs\FormFileImport.Designer.cs">
+      <DependentUpon>FormFileImport.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\FormEditDiapasons.cs">
       <SubType>Form</SubType>
@@ -271,8 +271,8 @@
     <EmbeddedResource Include="Dialogs\FormMonthsValuesDialogs.resx">
       <DependentUpon>FormMonthsValuesDialogs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\FormTextImport.resx">
-      <DependentUpon>FormTextImport.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\FormFileImport.resx">
+      <DependentUpon>FormFileImport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FormEditDiapasons.resx">
       <DependentUpon>FormEditDiapasons.cs</DependentUpon>

@@ -38,7 +38,7 @@ namespace WindEnergy.UI
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadRP5ruToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadNASAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,16 +70,16 @@ namespace WindEnergy.UI
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveAlltoolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonLoadRP5Range = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonLoadNASARange = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.contextMenuStripRangeIntervals = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripStatusLabelRangeCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelCompletness = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelInterval = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.toolStripButtonLoadRP5Range = new System.Windows.Forms.ToolStripButton();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
-            this.toolStripButtonLoadNASARange = new System.Windows.Forms.ToolStripButton();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -129,7 +129,7 @@ namespace WindEnergy.UI
             this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.downloadRP5ruToolStripMenuItem,
             this.downloadNASAToolStripMenuItem,
-            this.importTextToolStripMenuItem,
+            this.importFileToolStripMenuItem,
             this.openFileToolStripMenuItem1});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(289, 22);
@@ -149,12 +149,13 @@ namespace WindEnergy.UI
             this.downloadNASAToolStripMenuItem.Text = "Загрузить ряд из СБД NASA";
             this.downloadNASAToolStripMenuItem.Click += new System.EventHandler(this.downloadNASAToolStripMenuItem_Click);
             // 
-            // importTextToolStripMenuItem
+            // importFileToolStripMenuItem
             // 
-            this.importTextToolStripMenuItem.Name = "importTextToolStripMenuItem";
-            this.importTextToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
-            this.importTextToolStripMenuItem.Text = "Импортировать текстовый файл";
-            this.importTextToolStripMenuItem.Click += new System.EventHandler(this.importTextToolStripMenuItem_Click);
+            this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
+            this.importFileToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
+            this.importFileToolStripMenuItem.Text = "Импортировать файл";
+            this.importFileToolStripMenuItem.ToolTipText = "Импортировать текстовый или Excel файл";
+            this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importTextToolStripMenuItem_Click);
             // 
             // openFileToolStripMenuItem1
             // 
@@ -407,6 +408,26 @@ namespace WindEnergy.UI
             this.toolStripSeparator.Name = "toolStripSeparator";
             this.toolStripSeparator.Size = new System.Drawing.Size(6, 27);
             // 
+            // toolStripButtonLoadRP5Range
+            // 
+            this.toolStripButtonLoadRP5Range.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonLoadRP5Range.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoadRP5Range.Image")));
+            this.toolStripButtonLoadRP5Range.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonLoadRP5Range.Name = "toolStripButtonLoadRP5Range";
+            this.toolStripButtonLoadRP5Range.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonLoadRP5Range.Text = "toolStripButton1";
+            this.toolStripButtonLoadRP5Range.Click += new System.EventHandler(this.downloadRP5ruToolStripMenuItem_Click);
+            // 
+            // toolStripButtonLoadNASARange
+            // 
+            this.toolStripButtonLoadNASARange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonLoadNASARange.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoadNASARange.Image")));
+            this.toolStripButtonLoadNASARange.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonLoadNASARange.Name = "toolStripButtonLoadNASARange";
+            this.toolStripButtonLoadNASARange.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonLoadNASARange.Text = "toolStripButton1";
+            this.toolStripButtonLoadNASARange.Click += new System.EventHandler(this.downloadNASAToolStripMenuItem_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.ContextMenuStrip = this.contextMenuStripRangeIntervals;
@@ -462,28 +483,6 @@ namespace WindEnergy.UI
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1157, 501);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(251, 26);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(56, 19);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // toolStripButtonLoadRP5Range
-            // 
-            this.toolStripButtonLoadRP5Range.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonLoadRP5Range.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoadRP5Range.Image")));
-            this.toolStripButtonLoadRP5Range.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonLoadRP5Range.Name = "toolStripButtonLoadRP5Range";
-            this.toolStripButtonLoadRP5Range.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButtonLoadRP5Range.Text = "toolStripButton1";
-            this.toolStripButtonLoadRP5Range.Click += new System.EventHandler(this.downloadRP5ruToolStripMenuItem_Click);
-            // 
             // mainTabControl
             // 
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -499,15 +498,17 @@ namespace WindEnergy.UI
             this.mainTabControl.TabIndex = 0;
             this.mainTabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.mainTabControl_Selected);
             // 
-            // toolStripButtonLoadNASARange
+            // button1
             // 
-            this.toolStripButtonLoadNASARange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonLoadNASARange.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoadNASARange.Image")));
-            this.toolStripButtonLoadNASARange.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonLoadNASARange.Name = "toolStripButtonLoadNASARange";
-            this.toolStripButtonLoadNASARange.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButtonLoadNASARange.Text = "toolStripButton1";
-            this.toolStripButtonLoadNASARange.Click += new System.EventHandler(this.downloadNASAToolStripMenuItem_Click);
+            this.button1.Location = new System.Drawing.Point(251, 26);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(56, 19);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // FormMain
             // 
@@ -581,7 +582,7 @@ namespace WindEnergy.UI
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem loadDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemRangeElevator;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem dailyAverageGraphsToolStripMenuItem;

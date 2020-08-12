@@ -27,7 +27,7 @@ namespace WindEnergy.UI.Dialogs
     /// <summary>
     /// окно импорта ряда наблюдений из текстового файла
     /// </summary>
-    public partial class FormTextImport : Form
+    public partial class FormFileImport : Form
     {
         private int maxLineNumberCharLength;
 
@@ -49,7 +49,7 @@ namespace WindEnergy.UI.Dialogs
         /// <summary>
         /// Создает новое окно импорта
         /// </summary>
-        public FormTextImport()
+        public FormFileImport()
         {
             InitializeComponent();
             importer = new CSVImporter(null, null);

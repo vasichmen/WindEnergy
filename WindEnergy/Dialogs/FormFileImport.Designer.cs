@@ -2,7 +2,7 @@
 
 namespace WindEnergy.UI.Dialogs
 {
-    partial class FormTextImport
+    partial class FormFileImport
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@ namespace WindEnergy.UI.Dialogs
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTextImport));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFileImport));
             this.buttonSelect = new System.Windows.Forms.Button();
             this.labelPath = new System.Windows.Forms.Label();
             this.scintillaExample = new ScintillaNET.Scintilla();
@@ -98,6 +98,7 @@ namespace WindEnergy.UI.Dialogs
             this.buttonSelect.Size = new System.Drawing.Size(75, 23);
             this.buttonSelect.TabIndex = 0;
             this.buttonSelect.Text = "Открыть";
+            this.toolTip1.SetToolTip(this.buttonSelect, "Поддерживаются текстовые файлы и файлы Excel");
             this.buttonSelect.UseVisualStyleBackColor = true;
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
