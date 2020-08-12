@@ -221,7 +221,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem.Import
                     }
                     catch (Exception ex)
                     {
-                        throw new WindEnergyException($"Не удалось распознать строку {value} как значение поля {field.Description()} на строке {line_i}", ex.Message);
+                        throw new WindEnergyException($"Не удалось распознать строку \"{value}\" как значение поля {field.Description()} в строке {line_i}", ex.Message);
                     }
                 }
                 res.Add(item);

@@ -142,7 +142,7 @@ namespace WindEnergy.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void importTextToolStripMenuItem_Click(object sender, EventArgs e)
+        private void importFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormFileImport fti = new FormFileImport();
             if (fti.ShowDialog(this) == DialogResult.OK)

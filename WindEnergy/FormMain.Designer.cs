@@ -80,6 +80,7 @@ namespace WindEnergy.UI
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.button1 = new System.Windows.Forms.Button();
+            this.toolStripButtonImportFile = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -155,7 +156,7 @@ namespace WindEnergy.UI
             this.importFileToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
             this.importFileToolStripMenuItem.Text = "Импортировать файл";
             this.importFileToolStripMenuItem.ToolTipText = "Импортировать текстовый или Excel файл";
-            this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importTextToolStripMenuItem_Click);
+            this.importFileToolStripMenuItem.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
             // 
             // openFileToolStripMenuItem1
             // 
@@ -353,6 +354,7 @@ namespace WindEnergy.UI
             this.saveToolStripButton,
             this.saveAlltoolStripButton,
             this.toolStripSeparator,
+            this.toolStripButtonImportFile,
             this.toolStripButtonLoadRP5Range,
             this.toolStripButtonLoadNASARange});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
@@ -510,6 +512,16 @@ namespace WindEnergy.UI
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // toolStripButtonImportFile
+            // 
+            this.toolStripButtonImportFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonImportFile.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonImportFile.Image")));
+            this.toolStripButtonImportFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonImportFile.Name = "toolStripButtonImportFile";
+            this.toolStripButtonImportFile.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonImportFile.Text = "toolStripButton1";
+            this.toolStripButtonImportFile.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -589,6 +601,7 @@ namespace WindEnergy.UI
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemRangeTerrain;
         private System.Windows.Forms.ToolStripButton toolStripButtonLoadRP5Range;
         private System.Windows.Forms.ToolStripButton toolStripButtonLoadNASARange;
+        private System.Windows.Forms.ToolStripButton toolStripButtonImportFile;
     }
 }
 
