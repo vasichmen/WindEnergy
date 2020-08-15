@@ -21,7 +21,7 @@ namespace WindEnergy.WindLib.Operations
         /// <summary>
         /// восстановить ряд до нужного интревала наблюдений
         /// </summary>
-        /// <param name="Range"></param>
+        /// <param name="range">Ряд для восстановления</param>
         /// <param name="param">параметры восстановления</param>
         /// <param name="actionPercent">изменение процента выполнения</param>
         /// <param name="actionAfter">действие после обработки</param>

@@ -93,7 +93,7 @@ namespace SolarEnergy.UI.Tools
             buttonLoad.Enabled = labelPointStatus.ForeColor == Color.Green &&
                 sourceType != NasaSourceTypes.None &&
                 hourModel != HourModels.None &&
-                (sourceType == NasaSourceTypes.SelectedYear ? (year != int.MinValue) : true);
+                (sourceType != NasaSourceTypes.SelectedYear || (year != int.MinValue));
         }
 
         private void comboBoxDailyModel_SelectedValueChanged(object sender, EventArgs e)

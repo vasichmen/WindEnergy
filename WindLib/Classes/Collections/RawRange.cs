@@ -380,7 +380,7 @@ namespace WindEnergy.WindLib.Classes.Collections
         /// <returns></returns>
         public override string ToString()
         {
-            return $"count: {this.Count}, {this.Position.ToString()}, {this.Meteostation.ToString()}";
+            return $"count: {this.Count}, {this.Position}, {this.Meteostation}";
         }
     }
 }

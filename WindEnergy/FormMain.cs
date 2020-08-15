@@ -231,7 +231,7 @@ namespace WindEnergy.UI
             FormRepairRange frm = new FormRepairRange(rang, new List<InterpolateMethods>() { InterpolateMethods.NearestMeteostation }, "Восстановление ряда", "Восстановить ряд");
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
-                mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
+                _ = mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
             }
             frm.Dispose();
         }
@@ -247,7 +247,7 @@ namespace WindEnergy.UI
             FormRepairRange frm = new FormRepairRange(rang, new List<InterpolateMethods>() { InterpolateMethods.Linear, InterpolateMethods.Stepwise }, "Моделирование ряда", "Моделировать ряд");
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
-                mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
+                _ = mainTabControl.OpenNewTab(frm.Result, frm.Result.Name);
             }
             frm.Dispose();
         }
@@ -261,7 +261,7 @@ namespace WindEnergy.UI
         {
             RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
             FormRangeProperties frm = new FormRangeProperties(rang);
-            frm.ShowDialog(this);
+            _ = frm.ShowDialog(this);
             frm.Dispose();
         }
 
@@ -417,7 +417,7 @@ namespace WindEnergy.UI
             contextMenuStripRangeIntervals.Items.Clear();
             RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
             foreach (RangeInterval intt in rang.Quality.Intervals)
-                contextMenuStripRangeIntervals.Items.Add(intt.ToString());
+                _ = contextMenuStripRangeIntervals.Items.Add(intt.ToString());
 
             contextMenuStripRangeIntervals.Show(MousePosition);
         }

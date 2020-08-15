@@ -16,9 +16,6 @@ namespace SolarEnergy.SolarLib.Classes.Structures
             this.Date = dt;
             this.values = values;
 
-            if (values[MeteorologyParameters.AllSkyInsolation] < values[MeteorologyParameters.ClearSkyInsolation]) ;
-            { }
-
         }
 
         public RawItem(DateTime dt, double allSky, double clearSky)

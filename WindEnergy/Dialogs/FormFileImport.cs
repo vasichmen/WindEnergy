@@ -349,7 +349,7 @@ namespace WindEnergy.UI.Dialogs
             FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
-                labelCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";
+                labelCoordinates.Text = $"Широта: {spt.Result.Lat:0.000} Долгота: {spt.Result.Lng:0.000}";
                 toolTip1.SetToolTip(labelCoordinates, labelCoordinates.Text);
                 importer.Coordinates = spt.Result;
                 updateUI();
@@ -362,7 +362,7 @@ namespace WindEnergy.UI.Dialogs
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonImport_Click(object sender, EventArgs e)
+        private void buttonImport_Click(object sender, EventArgs e)
         {
             try
             {
@@ -377,7 +377,7 @@ namespace WindEnergy.UI.Dialogs
             }
         }
 
-        private void ButtonCancel_Click(object sender, EventArgs e)
+        private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             Close();
@@ -388,7 +388,7 @@ namespace WindEnergy.UI.Dialogs
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void DataGridView_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
+        public void DataGridViewColumnAdded(object sender, DataGridViewColumnEventArgs e)
         {
             if (e == null || e.Column == null || e.Column.Name == null)
                 return;

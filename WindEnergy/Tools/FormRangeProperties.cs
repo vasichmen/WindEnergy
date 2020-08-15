@@ -48,7 +48,7 @@ namespace WindEnergy.UI.Tools
                 textBoxMSName.Text = Range.Meteostation.Name;
                 new ToolTip().SetToolTip(textBoxMSName, textBoxMSName.Text);
 
-                textBoxMSCoordinates.Text = $"Широта: {Range.Meteostation.Position.Lat.ToString("0.000")} Долгота: {Range.Meteostation.Position.Lng.ToString("0.000")}";
+                textBoxMSCoordinates.Text = $"Широта: {Range.Meteostation.Position.Lat:0.000} Долгота: {Range.Meteostation.Position.Lng:0.000}";
                 new ToolTip().SetToolTip(textBoxMSCoordinates, textBoxMSCoordinates.Text);
 
                 textBoxMSAddress.Text = Range.Meteostation.Address;

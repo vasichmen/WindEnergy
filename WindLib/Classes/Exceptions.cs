@@ -55,9 +55,9 @@ namespace WindEnergy.WindLib.Classes
         public GetBaseRangeException(double maxCorrelKoeff, double minCorrlCoeff, double nearestMS, int totalMSs, double nearestMSRadius, PointLatLng centerPoint)
             : base($"Не удалось найти ряд соседней метеостанции для восстановления. Возможно, неправильно заданы настройки:\r\n \r\n" +
                  $"Найдено метеостанций в заданной области: {totalMSs} \r\n" +
-                 $"Ближайшая метеостанция находится в {(nearestMS / 1000).ToString("0")} км от заданной точки ({centerPoint.Lat.ToString("0.000")} {centerPoint.Lng.ToString("0.000")}),\r\n" +
-                 $"Максимальный радиус поиска соседних метеостанций {(nearestMSRadius / 1000).ToString("0")} км.\r\n" +
-                 (maxCorrelKoeff != double.MinValue ? $"Максимальный коэффициент корреляции, среди наденных метеостанций: {maxCorrelKoeff.ToString("0.00")}, (минимальный допустимый {minCorrlCoeff.ToString("0.00")})" : ""))
+                 $"Ближайшая метеостанция находится в {(nearestMS / 1000):0)} км от заданной точки ({centerPoint.Lat:0.000} {centerPoint.Lng:0.000}),\r\n" +
+                 $"Максимальный радиус поиска соседних метеостанций {nearestMSRadius / 1000:0} км.\r\n" +
+                 (maxCorrelKoeff != double.MinValue ? $"Максимальный коэффициент корреляции, среди наденных метеостанций: {maxCorrelKoeff:0.00}, (минимальный допустимый {minCorrlCoeff:0.00})" : ""))
         {
             MaxCorrelationCoefficient = maxCorrelKoeff;
             NearestMSDistance = nearestMS;

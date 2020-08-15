@@ -23,8 +23,8 @@ namespace CommonLib
             if (d != 0) z2 = 1; else z2 = 0;
             if (z30 == z2) z = 0; else z = 1;
             if (z == c) b = 1; else b = 0;
-            a = a << 1;
-            if (b != 0) a = a | m0;
+            a <<= 1;
+            if (b != 0) a |= m0;
         }
         // Прокрутка на n разрядов
         void Cript31Prokr(ref int a, int n)

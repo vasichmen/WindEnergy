@@ -53,7 +53,7 @@ namespace CommonLib.Data.Providers.InternetServices
         /// отправить отчет о запуске программы
         /// </summary>
         /// <param name="guid">guid экземпляра</param>
-        private void AttachGuid(string guid)
+        private void attachGuid(string guid)
         {
             string site = SITE_ADDRESS;
             string userkey = "";
@@ -129,7 +129,7 @@ namespace CommonLib.Data.Providers.InternetServices
                     try
                     {
                         i++;
-                        AttachGuid(guid);
+                        attachGuid(guid);
                         f = false;
                     }
                     catch (WebException)

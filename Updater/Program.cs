@@ -115,7 +115,7 @@ namespace Updater
                 if (DateTime.Now - LastPrint > TimeSpan.FromSeconds(1))
                 {
                     Console.SetCursorPosition(0, 1);
-                    Console.Write($"Загрузка файла обновления: {e.ProgressPercentage}% {((double)e.BytesReceived / (1024 * 1024)).ToString("0.000")} MБ из {((double)e.TotalBytesToReceive / (1024 * 1024)).ToString("0.000")} MБ");
+                    Console.Write($"Загрузка файла обновления: {e.ProgressPercentage}% {(double)e.BytesReceived / (1024 * 1024):0.000} MБ из {(double)e.TotalBytesToReceive / (1024 * 1024):0.000} MБ");
                     Thread.Sleep(50);
                     LastPrint = DateTime.Now;
                 }

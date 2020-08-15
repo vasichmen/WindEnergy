@@ -122,6 +122,8 @@ namespace WindEnergy.WindLib.Operations.Interpolation
         /// ищет наиболее подходящую к заданной точке МС и получает её ряд. Если ряд не найден, то возвращает null
         /// </summary>
         /// <param name="coordinates"></param>
+        /// <param name="r"></param>
+        /// <param name="actionPercent"></param>
         /// <param name="Range">ряд, для которого подбирается функция</param>
         /// <exception cref="GetBaseRangeException">Возвращает иснформацию о параметрах, мешающих получить ближайшую МС</exception>
         /// <returns></returns>

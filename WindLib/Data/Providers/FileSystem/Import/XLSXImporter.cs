@@ -115,9 +115,9 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem.Import
                 }
             }
             catch (WindEnergyException)
-            { throw new WindEnergyException($"Не удалось распознать значение \"{cell.Value.ToString()}\" как DateTime"); }
+            { throw new WindEnergyException($"Не удалось распознать значение \"{cell.Value}\" как DateTime"); }
             catch (FormatException ex)
-            { throw new WindEnergyException($"Не удалось распознать значение \"{cell.Value.ToString()}\" как DateTime\r\n({ex.Message})"); }
+            { throw new WindEnergyException($"Не удалось распознать значение \"{cell.Value}\" как DateTime\r\n({ex.Message})"); }
         }
     }
 }

@@ -571,7 +571,7 @@ namespace WindEnergy.WindLib
 
                 Action<double> loadAction = new Action<double>((loadPercent) => // действие при частичной загрузке
                     {
-                        act.Invoke((int)perc, $"Загружается {i} из {meteostations.Count} ({perc.ToString("0.00")})%, загрузка по частям: {loadPercent.ToString("0.0")}%");
+                        act.Invoke((int)perc, $"Загружается {i} из {meteostations.Count} ({perc:0.00})%, загрузка по частям: {loadPercent:0.0}%");
                     });
 
                 string filename = directoryOut + "\\" + RP5Database.PREFIX + mts.ID + ".xlsx";
@@ -601,7 +601,7 @@ namespace WindEnergy.WindLib
                         {
                             if (step <= CONNECT_COUNT)
                             {
-                                act.Invoke((int)perc, $"Загружается {i} из {meteostations.Count} ({perc.ToString("0.00")})%, отсутствует подключение к интернету, жду 30с...");
+                                act.Invoke((int)perc, $"Загружается {i} из {meteostations.Count} ({perc:0.00})%, отсутствует подключение к интернету, жду 30с...");
                                 Thread.Sleep(30000);//ждем 30 с до следующего подключения, если нет интернета
                                 continue;
                             }
@@ -733,7 +733,7 @@ namespace WindEnergy.WindLib
                         remain = (tm.TotalHours / loaded) * remainInt;
                         oldLoaded = loaded;
                     }
-                    act((int)perc, $"Координаты: {coordC.ToString()}, {perc.ToString("0.000")}%, {current}/{total}, прошло: {tm.ToString(@"d\.hh\:mm\:ss")}, осталось {remain.ToString("0.00")} ч");
+                    act((int)perc, $"Координаты: {coordC}, {perc:0.000}%, {current}/{total}, прошло: {tm:d\\.hh\\:mm\\:ss}, осталось {remain:0.00} ч");
                     if (stop)
                         break;
                     Thread.Sleep(200);
@@ -835,7 +835,7 @@ namespace WindEnergy.WindLib
                         double PS_v = PS.ContainsKey(date) ? PS[date] : double.NaN;
                         double ALLSKY_SFC_SW_DWN_v = ALLSKY_SFC_SW_DWN.ContainsKey(date) ? ALLSKY_SFC_SW_DWN[date] : double.NaN;
                         double CLRSKY_SFC_SW_DWN_v = CLRSKY_SFC_SW_DWN.ContainsKey(date) ? CLRSKY_SFC_SW_DWN[date] : double.NaN;
-                        string line = $"{date.ToString()};{WS10M_v};{T10M_v};{RH2M_v};{PS_v};{ALLSKY_SFC_SW_DWN_v};{CLRSKY_SFC_SW_DWN_v}";
+                        string line = $"{date};{WS10M_v};{T10M_v};{RH2M_v};{PS_v};{ALLSKY_SFC_SW_DWN_v};{CLRSKY_SFC_SW_DWN_v}";
                         swr.WriteLine(line);
                     }
                     swr.Close();

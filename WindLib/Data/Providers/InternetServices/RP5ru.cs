@@ -121,6 +121,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
         /// <param name="toDate">до какой даты</param>
         /// <param name="info">Метеостанция, с которой загружается ряд</param>
         /// <param name="onPercentChange"></param>
+        /// <param name="checkStop"></param>
         /// <returns></returns>
         public RawRange GetRange(DateTime fromDate, DateTime toDate, RP5MeteostationInfo info, Action<double> onPercentChange = null, Func<bool> checkStop = null)
         {

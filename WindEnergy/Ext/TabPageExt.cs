@@ -40,7 +40,7 @@ namespace WindEnergy.UI.Ext
             this.ToolTipText = string.IsNullOrWhiteSpace(range.FilePath) ? "" : range.FilePath;
             this.Text = text;
             DataGridViewExt ndgv = new DataGridViewExt();
-            ndgv.ColumnAdded += DataGridView_ColumnAdded;
+            ndgv.ColumnAdded += DataGridViewColumnAdded;
             ndgv.Dock = DockStyle.Fill;
             ndgv.Parent = this;
             ndgv.DataSource = range;
@@ -57,7 +57,7 @@ namespace WindEnergy.UI.Ext
         private void tabPageExt_TextChanged(object sender, EventArgs e)
         {
             //пустое место, чтоб поместилась кнопка закрытия вкладки
-            if (!this.Text.EndsWith("     "))
+            if (!this.Text.EndsWith("     ", StringComparison.CurrentCulture))
                 this.Text += "     ";
         }
 
@@ -100,7 +100,7 @@ namespace WindEnergy.UI.Ext
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void DataGridView_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
+        public void DataGridViewColumnAdded(object sender, DataGridViewColumnEventArgs e)
         {
             e = e ?? throw new ArgumentNullException(nameof(e));
             switch (e.Column.Name.ToLower())

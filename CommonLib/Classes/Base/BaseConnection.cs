@@ -75,7 +75,6 @@ namespace CommonLib.Data.Providers.InternetServices
         private readonly string ProxyHost = "127.0.0.1";
         private readonly int ProxyPort = 8118;
         private FileSystemCache cache;
-        private string TempFolder = null;
 
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace SolarLib.Classes.Structures.Options
             try
             {
                 Options res = xmlDeserialize<Options>(filename);
-                return res == null ? new Options() : res;
+                return res ?? new Options();
             }
             catch (Exception) { return new Options(); }
         }

@@ -200,7 +200,7 @@ namespace WindEnergy.UI.Tools
             FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", PointLatLng.Empty, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
-                labelPointCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";
+                labelPointCoordinates.Text = $"Широта: {spt.Result.Lat:0.000} Долгота: {spt.Result.Lng:0.000}";
                 labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(spt.Result);
                 toolTip1.SetToolTip(labelPointAddress, labelPointAddress.Text);
                 checkPoint = spt.Result;
@@ -250,7 +250,7 @@ namespace WindEnergy.UI.Tools
 
             //comboBoxLimitsProvider.SelectedItem = LimitsProviders.StaticLimits.Description();
             checkPoint = range.Position;
-            labelPointCoordinates.Text = $"Широта: {checkPoint.Lat.ToString("0.000")} Долгота: {checkPoint.Lng.ToString("0.000")}";
+            labelPointCoordinates.Text = $"Широта: {checkPoint.Lat:0.000} Долгота: {checkPoint.Lng:0.000}";
             try
             { labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(checkPoint); }
             catch (Exception) { }

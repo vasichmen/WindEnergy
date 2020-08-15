@@ -1,6 +1,4 @@
-﻿using WindEnergy.UI.Ext;
-
-namespace WindEnergy.UI
+﻿namespace WindEnergy.UI
 {
     partial class FormMain
     {
@@ -70,6 +68,7 @@ namespace WindEnergy.UI
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveAlltoolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonImportFile = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonLoadRP5Range = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonLoadNASARange = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -80,7 +79,6 @@ namespace WindEnergy.UI
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.button1 = new System.Windows.Forms.Button();
-            this.toolStripButtonImportFile = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -410,6 +408,17 @@ namespace WindEnergy.UI
             this.toolStripSeparator.Name = "toolStripSeparator";
             this.toolStripSeparator.Size = new System.Drawing.Size(6, 27);
             // 
+            // toolStripButtonImportFile
+            // 
+            this.toolStripButtonImportFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonImportFile.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonImportFile.Image")));
+            this.toolStripButtonImportFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonImportFile.Name = "toolStripButtonImportFile";
+            this.toolStripButtonImportFile.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonImportFile.Text = "toolStripButton1";
+            this.toolStripButtonImportFile.ToolTipText = "Импортировать ряд из файла";
+            this.toolStripButtonImportFile.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
+            // 
             // toolStripButtonLoadRP5Range
             // 
             this.toolStripButtonLoadRP5Range.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -418,6 +427,7 @@ namespace WindEnergy.UI
             this.toolStripButtonLoadRP5Range.Name = "toolStripButtonLoadRP5Range";
             this.toolStripButtonLoadRP5Range.Size = new System.Drawing.Size(24, 24);
             this.toolStripButtonLoadRP5Range.Text = "toolStripButton1";
+            this.toolStripButtonLoadRP5Range.ToolTipText = "Загрузить ряд с Расписания погоды";
             this.toolStripButtonLoadRP5Range.Click += new System.EventHandler(this.downloadRP5ruToolStripMenuItem_Click);
             // 
             // toolStripButtonLoadNASARange
@@ -428,6 +438,7 @@ namespace WindEnergy.UI
             this.toolStripButtonLoadNASARange.Name = "toolStripButtonLoadNASARange";
             this.toolStripButtonLoadNASARange.Size = new System.Drawing.Size(24, 24);
             this.toolStripButtonLoadNASARange.Text = "toolStripButton1";
+            this.toolStripButtonLoadNASARange.ToolTipText = "Загрузить ряд NASA";
             this.toolStripButtonLoadNASARange.Click += new System.EventHandler(this.downloadNASAToolStripMenuItem_Click);
             // 
             // statusStrip1
@@ -512,16 +523,6 @@ namespace WindEnergy.UI
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // toolStripButtonImportFile
-            // 
-            this.toolStripButtonImportFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonImportFile.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonImportFile.Image")));
-            this.toolStripButtonImportFile.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonImportFile.Name = "toolStripButtonImportFile";
-            this.toolStripButtonImportFile.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButtonImportFile.Text = "toolStripButton1";
-            this.toolStripButtonImportFile.Click += new System.EventHandler(this.importFileToolStripMenuItem_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -564,7 +565,7 @@ namespace WindEnergy.UI
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button button1;
-        public TabControlExt mainTabControl;
+        public WindEnergy.UI.Ext.TabControlExt mainTabControl;
         private System.Windows.Forms.ToolStripMenuItem equalizeRangesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadRP5ruToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem1;

@@ -57,7 +57,7 @@ namespace WindEnergy.UI.Tools
                 spoint = new RP5MeteostationInfo();
                 spoint.Position = spt.Result;
                 point = spt.Result;
-                labelPointCoordinates.Text = $"Широта: {spt.Result.Lat.ToString("0.000")} Долгота: {spt.Result.Lng.ToString("0.000")}";
+                labelPointCoordinates.Text = $"Широта: {spt.Result.Lat:0.000} Долгота: {spt.Result.Lng:0.000}";
                 try
                 {
                     labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(spt.Result);

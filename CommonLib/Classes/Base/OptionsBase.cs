@@ -151,7 +151,7 @@ namespace CommonLib.Classes.Base
         protected static T xmlDeserialize<T>(string FilePath)
         {
             if (!File.Exists(FilePath))
-                return default(T);
+                return default;
 
 
             FileStream fs = new FileStream(FilePath, FileMode.Open);
@@ -163,7 +163,7 @@ namespace CommonLib.Classes.Base
             }
             catch (Exception)
             {
-                return default(T);
+                return default;
             }
             finally
             {

@@ -229,17 +229,17 @@ namespace WindEnergy.WindLib.Transformation.Terrain
             }
 
             if (Hms > 750)
-                result.Add($"Высота точки МС больше 750 м над у. м. ({Hms.ToString("0.0")} м), не рекомендуеся выполнять преобразование", Color.Red);
+                result.Add($"Высота точки МС больше 750 м над у. м. ({Hms:0.0} м), не рекомендуеся выполнять преобразование", Color.Red);
             else if (Hpoint > 750)
-                result.Add($"Высота точки ВЭС больше 750 м над у. м. ({Hpoint.ToString("0.0")} м), не рекомендуеся выполнять преобразование", Color.Red);
+                result.Add($"Высота точки ВЭС больше 750 м над у. м. ({Hpoint:0.0} м), не рекомендуеся выполнять преобразование", Color.Red);
             else
             {
                 if (L > 50 && dH <= 750 && Habs <= 750) //макрорельеф
-                    result.Add($"Рекомендуется выбрать макрорельеф (L={L.ToString("0.0")} км, Δh={dH.ToString("0.0")} м)", Color.Green);
+                    result.Add($"Рекомендуется выбрать макрорельеф (L={L:0.0} км, Δh={dH:0.0} м)", Color.Green);
                 if (L > 3 && L <= 50 && dH <= 750 && Habs <= 750) //мезорельеф
-                    result.Add($"Рекомендуется выбрать мезорельеф (L={L.ToString("0.0")} км, Δh={dH.ToString("0.0")} м)", Color.Green);
+                    result.Add($"Рекомендуется выбрать мезорельеф (L={L:0.0} км, Δh={dH:0.0} м)", Color.Green);
                 if (L <= 3 && dH <= 80 && Habs <= 750) //микрорельеф
-                    result.Add($"Рекомендуется выбрать микрорельеф (L={L.ToString("0.0")} км, Δh={dH.ToString("0.0")} м)", Color.Green);
+                    result.Add($"Рекомендуется выбрать микрорельеф (L={L:0.0} км, Δh={dH:0.0} м)", Color.Green);
             }
 
             return result;

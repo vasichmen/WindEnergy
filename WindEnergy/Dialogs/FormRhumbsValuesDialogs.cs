@@ -18,11 +18,10 @@ namespace WindEnergy.UI.Dialogs
     {
         Dictionary<WindDirections8, double> Values;
 
-
         /// <summary>
         /// результат работы диалогового окна
         /// </summary>
-        public Dictionary<WindDirections8, double> Result { get; set; }
+        public Dictionary<WindDirections8, double> Result { get; private set; }
 
 
         Dictionary<WindDirections8, Label> Labels = new Dictionary<WindDirections8, Label>();

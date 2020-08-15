@@ -18,11 +18,10 @@ namespace WindEnergy.UI.Dialogs
     {
         Dictionary<Months, double> Values;
 
-
         /// <summary>
         /// результат работы диалогового окна
         /// </summary>
-        public Dictionary<Months, double> Result { get; set; }
+        public Dictionary<Months, double> Result { get; private set; }
 
 
         Dictionary<Months, Label> Labels = new Dictionary<Months, Label>();

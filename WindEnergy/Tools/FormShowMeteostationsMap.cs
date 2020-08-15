@@ -15,7 +15,6 @@ using System.Windows.Forms;
 using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.UI.Ext;
 using WindEnergy.UI.Properties;
 using CommonLib.Classes;
 using CommonLib;
@@ -290,7 +289,7 @@ namespace WindEnergy.UI.Tools
                 if (frm.ShowDialog(this) == DialogResult.OK)
                 {
                     RawRange res = frm.Result;
-                    TabPageExt tab = Program.winMain.mainTabControl.OpenNewTab(res, res.Name);
+                    WindEnergy.UI.Ext.TabPageExt tab = Program.winMain.mainTabControl.OpenNewTab(res, res.Name);
                     tab.HasNotSavedChanges = true;
                     _ = Program.winMain.Focus();
                 }

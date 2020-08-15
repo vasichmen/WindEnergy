@@ -294,7 +294,7 @@ namespace CommonLib.UITools
         /// <param name="point"></param>
         private void gmapControlMap_OnPositionChanged(PointLatLng point)
         {
-            toolStripStatusLabelCoordinates.Text = $"Широта: {point.Lat.ToString("0.00000")}, долгота: {point.Lng.ToString("0.00000")}";
+            toolStripStatusLabelCoordinates.Text = $"Широта: {point.Lat:0.00000}, долгота: {point.Lng:0.00000}";
         }
     }
 }

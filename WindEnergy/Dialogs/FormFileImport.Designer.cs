@@ -590,7 +590,7 @@ namespace WindEnergy.UI.Dialogs
             this.buttonImport.TabIndex = 16;
             this.buttonImport.Text = "Импортировать";
             this.buttonImport.UseVisualStyleBackColor = true;
-            this.buttonImport.Click += new System.EventHandler(this.ButtonImport_Click);
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // buttonCancel
             // 
@@ -602,7 +602,7 @@ namespace WindEnergy.UI.Dialogs
             this.buttonCancel.TabIndex = 17;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // menuStrip1
             // 
@@ -648,7 +648,7 @@ namespace WindEnergy.UI.Dialogs
             this.dataGridViewImported.ReadOnly = true;
             this.dataGridViewImported.Size = new System.Drawing.Size(732, 148);
             this.dataGridViewImported.TabIndex = 10;
-            this.dataGridViewImported.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.DataGridView_ColumnAdded);
+            this.dataGridViewImported.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.DataGridViewColumnAdded);
             // 
             // FormFileImport
             // 

@@ -104,7 +104,7 @@ namespace WindEnergy.UI.Tools
                             if (double.IsNaN(r))
                                 additionalText += "Восстановление проводилось на основе ряда наблюдений, заданного пользователем\r\n";
                             else
-                                additionalText += $"Восстановление проводилось на основе ряда наблюдений {(baseRange.Meteostation != null ? $" на МС {baseRange.Meteostation.Name} " : "")}с коэффициентом корреляции {r.ToString("0.00")} \r\n";
+                                additionalText += $"Восстановление проводилось на основе ряда наблюдений {(baseRange.Meteostation != null ? $" на МС {baseRange.Meteostation.Name} " : "")}с коэффициентом корреляции {r:0.00} \r\n";
                             //предупреждение, что не все данные восстановлены
                             RangeInterval baseInterval = baseRange.Quality.Intervals.OrderByDescending((i) => i.LengthMinutes).First(); //выбираем самый длинный интервал наблюдений в базовом ряде
                             if (baseInterval.LengthMinutes > (int)interval) //если максимальный интервал базового ряда больше, чем требуемый интервал восстановления

@@ -331,7 +331,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             {
                 if ( double.IsNaN(item.Speed) )
                     continue;
-                sw.WriteLine($"{item.Date.ToString("dd.MM.yyyy HH:mm")};{item.Temperature};{item.Wetness};{item.Direction};{item.Speed};{item.Pressure}");
+                sw.WriteLine($"{item.Date:dd.MM.yyyy HH:mm};{item.Temperature};{item.Wetness};{item.Direction};{item.Speed};{item.Pressure}");
             }
 
             sw.Close();
