@@ -32,8 +32,6 @@ namespace WindEnergy.WindLib.Transformation.Terrain
         /// <param name="actionAfter">действие по окончании выполнения</param>
         public static void ProcessRange(RawRange Range, TerrainParameters param, Action<int> actionPercent, Action<RawRange, FlugerMeteostationInfo> actionAfter)
         {
-            //поиск коэффициента k0
-            Dictionary<WindDirections8, double> k0 = null;
             RawRange result = new RawRange();
             result.Position = param.PointCoordinates;
             result.Name = $"Ряд в точке {param.PointCoordinates.ToString(3)}";
@@ -41,7 +39,7 @@ namespace WindEnergy.WindLib.Transformation.Terrain
             switch (param.TerrainType)
             {
                 case TerrainType.Macro:
-                    k0 = getTerrainMacroK0(param.MSClasses, param.PointClasses); //получаем коэффициенты для плоского рельефа
+                   Dictionary<WindDirections8, double> k0 = getTerrainMacroK0(param.MSClasses, param.PointClasses); //получаем коэффициенты для плоского рельефа
 
                     //пересчет всех скоростей ряда
 
