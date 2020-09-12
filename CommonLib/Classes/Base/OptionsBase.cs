@@ -108,7 +108,7 @@ namespace CommonLib.Classes.Base
         /// <summary>
         /// адрес для связи в Telegram
         /// </summary>
-        public string TelegramAddress { get { return "tg://resolve?domain=vasichmen"; } }
+        public string TelegramAddress { get { return "https://t.me/langstor"; } }
 
         /// <summary>
         /// адрес репозитория гитхаб

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonLib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,11 @@ namespace Installer
         public FormMain()
         {
             InitializeComponent();
+#if BUILD_FULL
+            this.buttonGenerateFullKey.Visible = true;
+#else
+            this.buttonGenerateFullKey.Visible = false;
+#endif
         }
 
         private void buttonInstall_Click(object sender, EventArgs e)
@@ -24,6 +30,9 @@ namespace Installer
             fbd.Description = "Выберите папку для установки";
             if (fbd.ShowDialog() == DialogResult.OK)
             {
+#if BUILD_FULL
+                Driver.GenerateFullKey();
+#endif
                 Installer.Install(Application.StartupPath, fbd.SelectedPath);
             }
         }
@@ -35,8 +44,16 @@ namespace Installer
             fbd.Description = "Выберите папку для сохранения ключа";
             if (fbd.ShowDialog() == DialogResult.OK)
             {
-                Installer.GenerateKey(fbd.SelectedPath+"\\id.key");
+                Installer.GenerateKey(fbd.SelectedPath + "\\id.key");
             }
+        }
+
+        private void buttonGenerateFullKey_Click(object sender, EventArgs e)
+        {
+#if BUILD_FULL
+            Driver.GenerateFullKey();
+            MessageBox.Show("Ключ создан");
+#endif
         }
     }
 }

@@ -17,6 +17,6 @@
 *.pdb
 Release/cache/*
 *id.key
-*Installer.exe*
+*Installer_full.exe*
 
 

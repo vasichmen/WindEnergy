@@ -27,6 +27,7 @@ using WindEnergy.UI.Helpers;
 using WindEnergy.UI.Tools;
 using WindLib;
 using CommonLib.UITools;
+using CommonLib;
 
 namespace WindEnergy.UI
 {
@@ -59,6 +60,10 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void menuStrip1_MenuActivate(object sender, EventArgs e)
         {
+            bool fullVersion = Driver.CheckFullKey();
+            ToolStripMenuItemRangeElevator.Visible = fullVersion;
+            ToolStripMenuItemRangeTerrain.Visible = fullVersion;
+
             saveToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             saveAsToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             checkRangeToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
@@ -500,21 +505,7 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new FormMonthsValuesDialogs(null, "sd").Show();
-
-            return;
-            var files = Directory.EnumerateFiles("D:\\Clouds\\Projects\\CS\\WindEnergy\\", "*.cs", SearchOption.AllDirectories);
-            StreamWriter sw = new StreamWriter(Application.StartupPath + "\\source_text.txt", true, Encoding.UTF8);
-            foreach (string file in files)
-            {
-                StreamReader sr = new StreamReader(file);
-                string content = sr.ReadToEnd();
-                sw.WriteLine(Path.GetFileName(file));
-                sw.WriteLine(content);
-                sw.WriteLine();
-                sr.Close();
-            }
-            sw.Close();
+          bool f=  Driver.CheckFullKey();
 
         }
     }

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +24,11 @@ namespace CommonLib
         }
     }
 
-    public class Driver
+    public static class Driver
     {
+        static string cacheID1 = null;
+        static string cacheID2 = null;
+
         public static byte[] GetID()
         {
             string proc = GetID1();
@@ -93,11 +98,41 @@ namespace CommonLib
             }
         }
 
+        static string getFullKey()
+        {
+            SHA256 crypto = SHA256.Create();
+            byte[] buffer = Encoding.Unicode.GetBytes(keygen().ToString() + GetID1() + GetID2());
+            byte[] hashBuffer = crypto.ComputeHash(buffer);
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in hashBuffer)
+                sb.Append(b);
+            return sb.ToString();
+
+        }
+
+        public static bool CheckFullKey()
+        {
+            RegistryKey regKey = Registry.CurrentUser.CreateSubKey("Software\\WindEnergy");
+            if (regKey == null) return false;
+            string value = (string)regKey.GetValue("Hash", null);
+            string hash = getFullKey();
+            return hash.Equals(value);
+        }
+
+        public static void GenerateFullKey()
+        {
+            string hash = getFullKey();
+            RegistryKey regKey = Registry.CurrentUser.CreateSubKey("Software\\WindEnergy");
+            regKey.SetValue("Hash", hash, RegistryValueKind.String);
+        }
+
 
         #region USED
         //Метод для получения ProcessorID
         private static string GetID1()
         {
+            if (cacheID1 != null)
+                return cacheID1;
             string ProcessorID = string.Empty;
             SelectQuery query = new SelectQuery("Win32_processor");
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
@@ -107,11 +142,14 @@ namespace CommonLib
                 ManagementObject info = (ManagementObject)enumerator.Current;
                 ProcessorID = info["processorId"].ToString().Trim();
             }
+            cacheID1 = ProcessorID;
             return ProcessorID;
         }
         //Метод для получения MotherBoardID
         private static string GetID2()
         {
+            if (cacheID2 != null)
+                return cacheID2;
             string MotherBoardID = string.Empty;
             SelectQuery query = new SelectQuery("Win32_BaseBoard");
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
@@ -123,6 +161,7 @@ namespace CommonLib
                 ManagementObject info = (ManagementObject)enumerator.Current;
                 MotherBoardID = info["SerialNumber"].ToString().Trim();
             }
+            cacheID2 = MotherBoardID;
             return MotherBoardID;
         }
         #endregion

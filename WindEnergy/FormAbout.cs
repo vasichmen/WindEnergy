@@ -27,9 +27,9 @@ namespace WindEnergy.UI
             this.Text = string.Format("О программе {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = string.Format("Версия {0}", AssemblyVersion);
-            this.labelCopyright.Text = "© vasich, "+DateTime.Now.Year;
+            this.labelCopyright.Text = "© langstore, " + DateTime.Now.Year;
             this.linkLabelSite.Text = Vars.Options.SiteAddress + @"programs.php?item=windenergy";
-            this.linkLabelTlg.Text = "Telegram: @vasichmen";
+            this.linkLabelTlg.Text = "Telegram: @langstore";
             this.linkLabelGithub.Text = "Репозиторий GitHub";
             this.textBoxDescription.Text = AssemblyDescription;
         }
