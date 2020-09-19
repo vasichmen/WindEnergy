@@ -40,10 +40,10 @@ namespace WindEnergy.WindLib.Operations.Interpolation
             if (Empty)
                 return double.NaN;
 
-            double res = double.NaN;
             if (values.ContainsKey(x))
-                res = values[x];
+                return values[x];
 
+            double res;
             if (x > sortedX[sortedX.Count - 1] || x < sortedX[0]) //если х выходит за границы диапазона функции, то ошибка
                 throw new ArgumentOutOfRangeException("Значение х должно быть внутри диапазона функции");
             int left = getLeftBound(x);

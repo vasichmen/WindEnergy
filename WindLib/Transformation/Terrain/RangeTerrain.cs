@@ -39,7 +39,7 @@ namespace WindEnergy.WindLib.Transformation.Terrain
             switch (param.TerrainType)
             {
                 case TerrainType.Macro:
-                   Dictionary<WindDirections8, double> k0 = getTerrainMacroK0(param.MSClasses, param.PointClasses); //получаем коэффициенты для плоского рельефа
+                    Dictionary<WindDirections8, double> k0 = getTerrainMacroK0(param.MSClasses, param.PointClasses); //получаем коэффициенты для плоского рельефа
 
                     //пересчет всех скоростей ряда
 
@@ -136,7 +136,8 @@ namespace WindEnergy.WindLib.Transformation.Terrain
 
             Dictionary<WindDirections8, double> res = new Dictionary<WindDirections8, double>();
             foreach (WindDirections8 dir in WindDirections8.E.GetEnumItems())
-                res[dir] = pointClasses[dir] / msClasses[dir];
+                if (dir != WindDirections8.Calm && dir != WindDirections8.Undefined && dir != WindDirections8.Variable)
+                    res[dir] = pointClasses[dir] / msClasses[dir];
 
             return res;
         }

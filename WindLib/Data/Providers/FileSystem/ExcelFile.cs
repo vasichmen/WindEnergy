@@ -90,7 +90,11 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             FileInfo fi = new FileInfo(fileName);
             using (ExcelPackage excelPackage = new ExcelPackage(fi))
             {
-                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[1];
+                if (excelPackage.Workbook.Worksheets.Count == 0)
+                    return null;
+
+                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[0];
+
                 if( worksheet.Cells[3, 1].Value == null)
                     return null;
                 string title = worksheet.Cells[1, 1].Value.ToString();

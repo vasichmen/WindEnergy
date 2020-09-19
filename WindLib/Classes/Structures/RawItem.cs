@@ -15,6 +15,7 @@ namespace WindEnergy.WindLib.Classes.Structures
     {
         private double direction = double.NaN;
         private double wetness;
+        private double speed;
 
 
         /// <summary>
@@ -46,7 +47,6 @@ namespace WindEnergy.WindLib.Classes.Structures
                 if (directionRhumb == WindDirections16.Undefined)
                     directionRhumb = GetRhumb(direction);
                 return directionRhumb;
-
             }
             set
             {
@@ -67,7 +67,16 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// <summary>
         /// скорость ветра в м/с
         /// </summary>
-        public double Speed { get; set; }
+        public double Speed {
+            get => speed;
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("Скорость не может быть отрицательной");
+                else
+                    speed = value;
+            }
+        }
 
         /// <summary>
         /// температура воздуха в градусах цельсия
@@ -84,10 +93,11 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// </summary>
         public double Wetness
         {
-            get => wetness; set
+            get => wetness; 
+            set
             {
                 if (value < 0 || value > 100)
-                    throw new ArgumentOutOfRangeException("влажность воздуха должна быть от 0 до 100 %");
+                    throw new ArgumentOutOfRangeException("Влажность воздуха должна быть от 0 до 100 %");
                 else
                     wetness = value;
             }
