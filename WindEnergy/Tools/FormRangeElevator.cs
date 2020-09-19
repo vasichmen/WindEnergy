@@ -82,11 +82,11 @@ namespace WindEnergy.UI.Tools
                 catch (Exception) { }
             });
 
-            Action<RawRange, SuitAMSResultItem> actionAfter = new Action<RawRange, SuitAMSResultItem>((rawRange, AMSans) =>
+            Action<RawRange, SuitAMSResultItem> actionAfter = new Action<RawRange, SuitAMSResultItem>((rawRange, selectedAMS) =>
              {
                  _ = this.Invoke(new Action(() =>
                  {
-                     string AMStext = AMSans != null ? $"На основе данных АМС {AMSans.AMS.Name} {AMSans.AMS.Position} {(AMSans.AllMonthInRange ? "" : "\r\nВНИМАНИЕ!! В исходном ряде представлены не все месяцы. Поэтому подбор подходящей АМС может быть неточным")}" : "";
+                     string AMStext = selectedAMS != null ? $"На основе данных АМС {selectedAMS.AMS.Name} {selectedAMS.AMS.Position}\r\nОтклонение среднемесячных скоростей: {selectedAMS.Deviation:0.000} {(selectedAMS.AllMonthInRange ? "" : "\r\nВНИМАНИЕ!! В исходном ряде представлены не все месяцы. Поэтому подбор подходящей АМС может быть неточным")}" : "";
                      rawRange.Name = "Ряд на высоте " + new_height + " м";
                      _ = MessageBox.Show(this, $"Скорости ветра пересчитаны на высоту {new_height} м\r\n{((!string.IsNullOrWhiteSpace(AMStext)) ? AMStext : "")}", "Расчет скорости ветра на высоте башни ВЭУ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -105,8 +105,8 @@ namespace WindEnergy.UI.Tools
 
             try
             {
-                //если в ряде нет координат, то выбираем (для подбора подходящей АМС)
-                if (range.Position.IsEmpty)
+                //если в ряде нет координат и надо искать АМС-аналог, то выбираем (для подбора подходящей АМС)
+                if (range.Position.IsEmpty && hellmanCoeffSource == HellmanCoefficientSource.AMSAnalog)
                 {
                     FormSelectMapPointDialog fsp = new FormSelectMapPointDialog("Выберите координаты ряда " + range.Name, PointLatLng.Empty, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
                     if (fsp.ShowDialog(this) == DialogResult.OK)
@@ -206,7 +206,7 @@ namespace WindEnergy.UI.Tools
             FormMonthsValuesDialogs fmv = new FormMonthsValuesDialogs(MonthsHellmanValues, "Среднемноголетние показатели степени по месяцам");
             if (fmv.ShowDialog() == DialogResult.OK)
             {
-                this.MonthsHellmanValues = fmv.Result;
+                MonthsHellmanValues = fmv.Result;
                 textBoxCoeffM.Enabled = false;
                 hellmanCoeffSource = HellmanCoefficientSource.CustomMonths;
             }

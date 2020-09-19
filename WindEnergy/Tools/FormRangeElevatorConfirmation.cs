@@ -30,7 +30,7 @@ namespace WindEnergy.UI.Tools
             AMSList.Sort(new Comparison<SuitAMSResultItem>((a1, a2) => { return a1.Deviation.CompareTo(a2.Deviation); }));
             DialogResult = DialogResult.Cancel;
             initializeList(AMSList);
-            listViewAMS.SelectedIndices.Add(0);
+            _ = listViewAMS.SelectedIndices.Add(0);
         }
 
         private void initializeList(SuitAMSResult list)
@@ -103,6 +103,12 @@ namespace WindEnergy.UI.Tools
                 selectedAMS = e.Item.Tag as SuitAMSResultItem;
                 initializeGraph(selectedAMS);
             }
+        }
+
+        private void FormRangeElevatorConfirmation_Shown(object sender, EventArgs e)
+        {
+            if (!AMSList.AllMonthInRange)
+                _ = MessageBox.Show("В исходном ряде представлены не все месяцы, расчет может быть неточным");
         }
     }
 }

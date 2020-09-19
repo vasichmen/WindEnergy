@@ -128,12 +128,12 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Название АМС";
-            this.columnHeader1.Width = 137;
+            this.columnHeader1.Width = 114;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Расстояние до МС, км";
-            this.columnHeader2.Width = 138;
+            this.columnHeader2.Width = 163;
             // 
             // columnHeader3
             // 
@@ -149,11 +149,13 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3});
+            this.listViewAMS.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listViewAMS.FullRowSelect = true;
             this.listViewAMS.HideSelection = false;
             this.listViewAMS.Location = new System.Drawing.Point(3, 22);
             this.listViewAMS.MultiSelect = false;
             this.listViewAMS.Name = "listViewAMS";
+            this.listViewAMS.ShowItemToolTips = true;
             this.listViewAMS.Size = new System.Drawing.Size(364, 497);
             this.listViewAMS.TabIndex = 1;
             this.listViewAMS.UseCompatibleStateImageBehavior = false;
@@ -172,6 +174,7 @@
             this.MinimumSize = new System.Drawing.Size(1119, 505);
             this.Name = "FormRangeElevatorConfirmation";
             this.Text = "Расчет скорости ветра на высоте башни ВЭУ";
+            this.Shown += new System.EventHandler(this.FormRangeElevatorConfirmation_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);

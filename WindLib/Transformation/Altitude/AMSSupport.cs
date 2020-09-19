@@ -49,6 +49,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
                 SuitAMSResultItem item = new SuitAMSResultItem();
                 item.Deviation = Math.Sqrt(msRelatives.Average((kv) => { return Math.Pow(kv.Value - ams.RelativeSpeeds[kv.Key], 2); })); //корень(среднее ((KjМС - KjАМС)^2)), j - номер месяца
                 item.AMS = ams;
+                item.AllMonthInRange = allMonth;
                 item.IsDeviationFailed = !double.IsNaN(maximalRelativeSpeedDeviation) && item.Deviation > maximalRelativeSpeedDeviation;
                 item.Distance = EarthModel.CalculateDistance(coordinates, ams.Position);
                 res.Add(item);
