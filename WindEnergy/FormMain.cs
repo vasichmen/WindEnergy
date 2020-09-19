@@ -60,9 +60,11 @@ namespace WindEnergy.UI
         /// <param name="e"></param>
         private void menuStrip1_MenuActivate(object sender, EventArgs e)
         {
+#if !DEBUG
             bool fullVersion = Driver.CheckFullKey();
             ToolStripMenuItemRangeElevator.Visible = fullVersion;
             ToolStripMenuItemRangeTerrain.Visible = fullVersion;
+#endif
 
             saveToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
             saveAsToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
@@ -505,7 +507,7 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-          bool f=  Driver.CheckFullKey();
+            bool f = Driver.CheckFullKey();
 
         }
     }

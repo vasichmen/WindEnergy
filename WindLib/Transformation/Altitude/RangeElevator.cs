@@ -23,7 +23,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// <param name="param">настройки</param>
         /// <param name="actionPercent">действие при изменении процента выполнения</param>
         /// <param name="actionAfter">действие по окончании выполнения</param>
-        public static void ProcessRange(RawRange Range, ElevatorParameters param, Action<int> actionPercent, Action<RawRange, SuitAMSResult> actionAfter)
+        public static void ProcessRange(RawRange Range, ElevatorParameters param, Action<int> actionPercent, Action<RawRange, SuitAMSResultItem> actionAfter)
         {
             //найти подходящую АМС
             //получить из неё параметры m по месяцам
@@ -32,19 +32,10 @@ namespace WindEnergy.WindLib.Transformation.Altitude
 
             //выбор варианта расчета m: через БД АМС или введенный вручную
             Dictionary<Months, double> coeffs = null;
-            AMSMeteostationInfo AMS = null;
-            SuitAMSResult AMSanswer = null;
             switch (param.HellmanCoefficientSource)
             {
                 case HellmanCoefficientSource.AMSAnalog:
-                    AMSanswer = AMSSupport.GetSuitAMS(Range, param.Coordinates, Vars.AMSMeteostations, param.SearchRaduis, param.MaximalRelativeSpeedDeviation);
-                    AMS = AMSanswer.AMS;
-                    if (AMS == null)
-                        if(AMSanswer.IsDeviationFailed)
-                            throw new WindEnergyException($"В заданном радиусе найдена АМС, но отклонение скорости больше, чем максимальное отклонение в настройках.\r\nОтклонение АМС: {AMSanswer.Deviation}\r\nМаксимальное отклонение из настроек: {param.MaximalRelativeSpeedDeviation} ");
-                        else
-                            throw new WindEnergyException("Не удалось найти подходящую АМС в заданном радиусе или длина исходного ряда слишком мала.\r\nПопробуйте увеличить радиус поиска или возьмите более длинный ряд.");
-                    coeffs = AMS.m; ;
+                    coeffs = param.SelectedAMS.AMS.m ?? null;
                     break;
                 case HellmanCoefficientSource.CustomMonths:
                     coeffs = param.CustomNCoefficientMonths;
@@ -56,6 +47,8 @@ namespace WindEnergy.WindLib.Transformation.Altitude
                 default: throw new Exception("Этот источник данных не реализован");
 
             }
+
+            coeffs = coeffs ?? throw new ArgumentException("Недопустимые настройки, коэффициенты пересчета на высоту не получены");
 
             //поднять ряд  с учетом m по месяцам
             RawRange res = new RawRange();
@@ -78,7 +71,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
                     res.Add(ni);
                 }
                 res.EndChange();
-                actionAfter.Invoke(res, AMSanswer);
+                actionAfter.Invoke(res, param.SelectedAMS);
             });
             tsk.Start();
             return;

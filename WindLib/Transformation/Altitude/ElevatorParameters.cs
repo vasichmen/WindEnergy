@@ -52,5 +52,10 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// максимальное отклонение относительной скорости при поиске подходящей АМС
         /// </summary>
         public double MaximalRelativeSpeedDeviation { get; set; }
+
+        /// <summary>
+        /// Выбранная АМС для расчетов
+        /// </summary>
+        public SuitAMSResultItem SelectedAMS { get;  set; }
     }
 }

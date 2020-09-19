@@ -241,6 +241,7 @@
     <Compile Include="Transformation\Altitude\ElevatorParameters.cs" />
     <Compile Include="Transformation\Altitude\RangeElevator.cs" />
     <Compile Include="Transformation\Altitude\SuitAMSResult.cs" />
+    <Compile Include="Transformation\Altitude\SuitAMSResultItem.cs" />
     <Compile Include="Transformation\Terrain\RangeTerrain.cs" />
     <Compile Include="Transformation\Terrain\TerrainParameters.cs" />
     <Compile Include="Vars.cs" />

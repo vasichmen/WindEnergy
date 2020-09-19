@@ -45,7 +45,11 @@ namespace WindEnergy.UI.Tools
                 labelCurrentOptions.ForeColor = Color.Red;
             else
                 labelCurrentOptions.ForeColor = Color.Green;
+
             labelCurrentOptions.Text = $"Режим: {hellmanCoeffSource.Description()}";
+            if (hellmanCoeffSource == HellmanCoefficientSource.AMSAnalog && checkBoxUseRadius.Checked && double.TryParse(textBoxRadius.Text.Trim().Replace('.', Constants.DecimalSeparator), out double radius))
+                labelCurrentOptions.Text += $" в радиусе {radius} км";
+
         }
 
         private void buttonElevate_Click(object sender, EventArgs e)
@@ -78,7 +82,7 @@ namespace WindEnergy.UI.Tools
                 catch (Exception) { }
             });
 
-            Action<RawRange, SuitAMSResult> actionAfter = new Action<RawRange, SuitAMSResult>((rawRange, AMSans) =>
+            Action<RawRange, SuitAMSResultItem> actionAfter = new Action<RawRange, SuitAMSResultItem>((rawRange, AMSans) =>
              {
                  _ = this.Invoke(new Action(() =>
                  {
@@ -101,6 +105,7 @@ namespace WindEnergy.UI.Tools
 
             try
             {
+                //если в ряде нет координат, то выбираем (для подбора подходящей АМС)
                 if (range.Position.IsEmpty)
                 {
                     FormSelectMapPointDialog fsp = new FormSelectMapPointDialog("Выберите координаты ряда " + range.Name, PointLatLng.Empty, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
@@ -113,7 +118,8 @@ namespace WindEnergy.UI.Tools
                     }
                 }
 
-                RangeElevator.ProcessRange(range, new ElevatorParameters()
+                //основные параметры пересчета ряда на высоту
+                ElevatorParameters parameters = new ElevatorParameters()
                 {
                     FromHeight = old_height,
                     ToHeight = new_height,
@@ -123,8 +129,33 @@ namespace WindEnergy.UI.Tools
                     CustomMCoefficient = checkBoxCustomCoeffM.Checked ? m : double.NaN,
                     CustomNCoefficientMonths = MonthsHellmanValues,
                     HellmanCoefficientSource = hellmanCoeffSource
-                }, action, actionAfter);
+                };
 
+                //если способ пересчета АМС-аналог, то надо предоставить выбор АМС для расчетов
+                if (hellmanCoeffSource == HellmanCoefficientSource.AMSAnalog)
+                {
+                    //находим все подходящие АМС
+                    SuitAMSResult suitAMSList = AMSSupport.GetSuitAMS(
+                        range,
+                        range.Position,
+                        Vars.AMSMeteostations,
+                        checkBoxUseRadius.Checked ? radius : double.NaN,
+                        Vars.Options.UseSuitAMSMaximalRelativeSpeedDeviation ? Vars.Options.SuitAMSMaximalRelativeSpeedDeviation : double.NaN
+                    );
+
+                    //открывам диалоговое окно списка АМС
+                    FormRangeElevatorConfirmation frec = new FormRangeElevatorConfirmation(suitAMSList);
+                    if (frec.ShowDialog(this) == DialogResult.OK)
+                        parameters.SelectedAMS = frec.Result;
+                    else //если ничего не выбрали, то выходим
+                    {
+                        Cursor = Cursors.Arrow;
+                        return;
+                    }
+
+                }
+
+                RangeElevator.ProcessRange(range, parameters, action, actionAfter); //запускаем обработку ряда
             }
             catch (WebException exc)
             {
@@ -184,5 +215,9 @@ namespace WindEnergy.UI.Tools
             refreshOptionsText();
         }
 
+        private void textBoxRadius_TextChanged(object sender, EventArgs e)
+        {
+            refreshOptionsText();
+        }
     }
 }

@@ -111,6 +111,7 @@
             this.textBoxRadius.Text = "1000";
             this.toolTip1.SetToolTip(this.textBoxRadius, "Область поиска АМС для получения коэффициентов пересчета скорости ветра на высоту" +
         "");
+            this.textBoxRadius.TextChanged += new System.EventHandler(this.textBoxRadius_TextChanged);
             // 
             // checkBoxUseRadius
             // 
