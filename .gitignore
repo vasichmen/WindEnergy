@@ -268,4 +268,8 @@ __pycache__/
 /Flyger_RomanBacaL.xls
 /Release
 *.zip
+*.exe
 /NDP462-KB3151800-x86-x64-AllOS-ENU.exe
+/exclusions_arhive_program.txt
+/listnotcopy.txt
+/порядок релиза.txt
