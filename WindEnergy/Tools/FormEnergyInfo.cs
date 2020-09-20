@@ -250,7 +250,7 @@ namespace WindEnergy.UI.Tools
             labelVmin.Text = range_info.Vmin.ToString("0.0") + " м/с";
             labelGamma.Text = range_info.VeybullGamma.ToString("0.000");
             labelBeta.Text = range_info.VeybullBeta.ToString("0.000") + " м/с";
-            labelAirDensity.Text = tempr.AirDensity.ToString("0.000") + " кг/м^3" + (Vars.Options.CalculateAirDensity ? " (рассчёт)" : "");
+            labelAirDensity.Text = tempr.AirDensity.ToString("0.000") + " кг/м^3" + (Vars.Options.CalculateAirDensity ? " (расчёт)" : "");
 
             labelEnergyDensityTV.Text = (exp_info.EnergyDensity / 1000).ToString("0.00") + " кВт*ч/м^2";
             labelPowerDensityTV.Text = exp_info.PowerDensity.ToString("0.00") + " Вт/м^2";
