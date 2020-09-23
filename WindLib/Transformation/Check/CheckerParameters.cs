@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 
-namespace WindEnergy.WindLib.Operations.Structures
+namespace WindEnergy.WindLib.Transformation.Check
 {
     /// <summary>
     /// структура параметров обработки ошибок

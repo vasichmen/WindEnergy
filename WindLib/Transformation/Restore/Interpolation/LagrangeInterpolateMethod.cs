@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindEnergy.WindLib.Operations.Interpolation
+namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
 {
     /// <summary>
     /// интерполяция полиномом лагранжа

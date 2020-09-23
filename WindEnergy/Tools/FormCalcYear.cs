@@ -13,11 +13,11 @@ using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.FileSystem;
-using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.UI.Ext;
 using CommonLib;
 using WindLib;
+using WindEnergy.WindLib.Statistic.Structures;
 
 namespace WindEnergy.UI.Tools
 {

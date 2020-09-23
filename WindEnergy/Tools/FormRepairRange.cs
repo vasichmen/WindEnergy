@@ -15,8 +15,6 @@ using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data;
 using WindEnergy.WindLib.Data.Providers;
-using WindEnergy.WindLib.Operations;
-using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.WindLib.Statistic.Structures;
 using WindEnergy.UI.Dialogs;
@@ -25,6 +23,7 @@ using CommonLib.Classes;
 using CommonLib.UITools;
 using WindLib;
 using WindEnergy.UI.Properties;
+using WindEnergy.WindLib.Transformation.Restore;
 
 namespace WindEnergy.UI.Tools
 {

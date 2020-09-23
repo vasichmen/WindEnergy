@@ -13,7 +13,6 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Interfaces;
-using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.WindLib.Statistic.Structures;
 using WindLib;
@@ -121,7 +120,7 @@ namespace WindEnergy.WindLib.Classes.Collections
                 if (double.IsNaN(airDensity))
                     //получаем плотность воздуха в зависимости от настроек
                     if (Vars.Options.CalculateAirDensity)
-                        airDensity =this.GetAirDensity();
+                        airDensity = this.GetAirDensity();
                     else
                         airDensity = Vars.Options.AirDensity;
                 return airDensity;
@@ -295,6 +294,10 @@ namespace WindEnergy.WindLib.Classes.Collections
                     }
                 }
             }
+
+            res.Name = Name;
+            res.Position = Position;
+            res.FilePath = FilePath;
             return res;
         }
 
@@ -303,13 +306,13 @@ namespace WindEnergy.WindLib.Classes.Collections
         /// </summary>
         /// <param name="provider">источник данных о высотах точек</param>
         /// <returns></returns>
-        public  double GetAirDensity(IGeoInfoProvider provider = null)
+        public double GetAirDensity(IGeoInfoProvider provider = null)
         {
             if (this.Position.IsEmpty)
                 throw new WindEnergyException("Для вычисления плотности воздуха необходимы координаты точки");
 
-            if(provider==null)
-             provider = Vars.ETOPOdatabase;
+            if (provider == null)
+                provider = Vars.ETOPOdatabase;
             double alt = provider.GetElevation(this.Position);
             double pressure = 101.29 - 0.011837 * alt + 4.793e-7 * Math.Pow(alt, 2);
 
@@ -334,8 +337,8 @@ namespace WindEnergy.WindLib.Classes.Collections
         public RawRange Trim()
         {
             var res = from t in this
-                           where t.Date < this.Last().Date
-                           select t;
+                      where t.Date < this.Last().Date
+                      select t;
             return new RawRange(res);
         }
 
@@ -345,10 +348,10 @@ namespace WindEnergy.WindLib.Classes.Collections
         /// </summary>
         /// <param name="range"></param>
         /// <returns></returns>
-        public RawRange  Concat(RawRange range)
+        public RawRange Concat(RawRange range)
         {
             this.BeginChange();
-            foreach(RawItem ri in range)
+            foreach (RawItem ri in range)
             {
                 var r = from t in this
                         where t.DateArgument == ri.DateArgument

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WindEnergy.WindLib.Operations.Interpolation
+namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
 {
     /// <summary>
     /// представляет основные методы интерполяции функций

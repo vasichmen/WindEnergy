@@ -4,19 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindEnergy.WindLib.Operations.Interpolation
+namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
 {
-    public class LinearInterpolateMethod : IInterpolateMethod
+    /// <summary>
+    /// ступенчатая интерполяция
+    /// </summary>
+    public class StepwiseInterpolateMethod : IInterpolateMethod
     {
         private readonly Dictionary<double, double> values;
-        private List<double> sortedX;
+        private readonly List<double> sortedX;
         public readonly bool Empty;
 
         /// <summary>
         /// сохдаёт новый экземпляр с заданной функцией
         /// </summary>
         /// <param name="funct"></param>
-        public LinearInterpolateMethod(Dictionary<double, double> funct)
+        public StepwiseInterpolateMethod(Dictionary<double, double> funct)
         {
             if (funct.Keys.Count == 0)
             { Empty = true; return; }
@@ -43,12 +46,11 @@ namespace WindEnergy.WindLib.Operations.Interpolation
             if (values.ContainsKey(x))
                 return values[x];
 
-            double res;
             if (x > sortedX[sortedX.Count - 1] || x < sortedX[0]) //если х выходит за границы диапазона функции, то ошибка
                 throw new ArgumentOutOfRangeException("Значение х должно быть внутри диапазона функции");
             int left = getLeftBound(x);
-            res = linInterpolate(sortedX[left], sortedX[left + 1], x);
-            return res;
+            return values[sortedX[left]];
+            throw new Exception("ошибка при поиске аргумента");
         }
 
         /// <summary>
@@ -76,33 +78,5 @@ namespace WindEnergy.WindLib.Operations.Interpolation
             return from_i;
         }
 
-        /// <summary>
-        /// интерполяция между заданными точками на функции
-        /// </summary>
-        /// <param name="x1">левый известнтый х</param>
-        /// <param name="x2">правый известный х</param>
-        /// <param name="x">искомый агрумент </param>
-        /// <returns></returns>
-        private double linInterpolate(double x1, double x2, double x)
-        {
-            double y1 = values[x1];
-            double y2 = values[x2];
-            double y = LinearInterpolation(x1, x2, y1, y2, x);
-            return y;
-        }
-
-        /// <summary>
-        /// линейная интерполяция между двумя заданными точками
-        /// </summary>
-        /// <param name="x1"></param>
-        /// <param name="x2"></param>
-        /// <param name="y1"></param>
-        /// <param name="y2"></param>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        public static double LinearInterpolation(double x1, double x2, double y1, double y2, double x)
-        {
-            return y2 + ((y1 - y2) / (x1 - x2)) * (x - x2);
-        }
     }
 }

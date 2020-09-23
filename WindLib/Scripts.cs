@@ -26,7 +26,7 @@ using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.DB;
 using WindEnergy.WindLib.Data.Providers.FileSystem;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
-using WindEnergy.WindLib.Operations.Limits;
+using WindEnergy.WindLib.Transformation.Check.Limits;
 using WindLib;
 
 namespace WindEnergy.WindLib

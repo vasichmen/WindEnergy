@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Collections;
 
-namespace WindEnergy.WindLib.Operations.Structures
+namespace WindEnergy.WindLib.Statistic.Structures
 {
     /// <summary>
     /// структура информации при выборе расчётного года

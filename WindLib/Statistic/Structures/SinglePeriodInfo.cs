@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindEnergy.WindLib.Operations.Structures
+namespace WindEnergy.WindLib.Statistic.Structures
 {
     /// <summary>
     /// статистическая информация об одном периоде в ряде

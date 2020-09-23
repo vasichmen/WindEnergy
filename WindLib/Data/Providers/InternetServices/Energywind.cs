@@ -7,11 +7,11 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.WindLib.Operations.Limits;
 using Fizzler.Systems.HtmlAgilityPack;
 using WindEnergy.WindLib.Data.Interfaces;
 using CommonLib.Data.Providers.InternetServices;
 using CommonLibLib.Data.Interfaces;
+using WindEnergy.WindLib.Transformation.Check.Limits;
 
 namespace WindEnergy.WindLib.Data.Providers.InternetServices
 {

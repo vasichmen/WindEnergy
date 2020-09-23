@@ -13,13 +13,13 @@ using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Interfaces;
 using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
-using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.WindLib.Statistic.Collections;
 using WindEnergy.WindLib.Statistic.Structures;
+using WindEnergy.WindLib.Transformation.Check;
 using WindLib;
 
-namespace WindEnergy.WindLib.Operations.Interpolation
+namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
 {
     /// <summary>
     /// интерполирование функции на основе данных ближайшей метеостанции

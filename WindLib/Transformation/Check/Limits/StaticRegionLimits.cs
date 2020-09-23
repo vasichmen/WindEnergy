@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 using WindLib;
 
-namespace WindEnergy.WindLib.Operations.Limits
+namespace WindEnergy.WindLib.Transformation.Check.Limits
 {
     /// <summary>
     /// БД Максимальные скорости ветра

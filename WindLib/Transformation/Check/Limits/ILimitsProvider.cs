@@ -1,7 +1,7 @@
 ﻿using GMap.NET;
 using WindEnergy.WindLib.Classes.Structures;
 
-namespace WindEnergy.WindLib.Operations.Limits
+namespace WindEnergy.WindLib.Transformation.Check.Limits
 {
     /// <summary>
     /// представляет основные методы проверки данных

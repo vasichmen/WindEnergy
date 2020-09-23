@@ -6,11 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.WindLib.Operations.Limits;
-using WindEnergy.WindLib.Operations.Structures;
+using WindEnergy.WindLib.Transformation.Check.Limits;
 using WindLib;
 
-namespace WindEnergy.WindLib.Operations
+namespace WindEnergy.WindLib.Transformation.Check
 {
     /// <summary>
     /// проверка и устранение ошибок в ряде
@@ -43,10 +42,12 @@ namespace WindEnergy.WindLib.Operations
 
             }
 
-            RawRange res = new RawRange();
-            res.Position = range.Position;
-            res.Meteostation = range.Meteostation;
-            res.Name = "Исправленный ряд. " + range.Name;
+            RawRange res = new RawRange
+            {
+                Position = range.Position,
+                Meteostation = range.Meteostation,
+                Name = "Исправленный ряд. " + range.Name
+            };
             res.BeginChange();
             List<DateTime> dates = new List<DateTime>();
             int lims = 0, repeats = 0, other = 0;

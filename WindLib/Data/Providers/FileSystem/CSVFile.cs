@@ -12,7 +12,6 @@ using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
-using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.WindLib.Statistic.Collections;
 using WindEnergy.WindLib.Statistic.Structures;

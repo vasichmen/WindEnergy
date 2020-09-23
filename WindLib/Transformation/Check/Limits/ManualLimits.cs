@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 
-namespace WindEnergy.WindLib.Operations.Limits
+namespace WindEnergy.WindLib.Transformation.Check.Limits
 {
     /// <summary>
     /// проверка значений по заданным вручную диапазонам

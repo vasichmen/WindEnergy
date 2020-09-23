@@ -14,7 +14,7 @@ using GMap.NET;
 using CommonLibLib.Data.Interfaces;
 using CommonLib.Geomodel;
 using System.Drawing;
-using WindEnergy.WindLib.Operations.Interpolation;
+using WindEnergy.WindLib.Transformation.Restore.Interpolation;
 
 namespace WindEnergy.WindLib.Transformation.Terrain
 {

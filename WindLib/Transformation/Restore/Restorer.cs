@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.WindLib.Operations.Interpolation;
-using WindEnergy.WindLib.Operations.Structures;
+using WindEnergy.WindLib.Transformation.Restore.Interpolation;
 using WindLib;
 
-namespace WindEnergy.WindLib.Operations
+namespace WindEnergy.WindLib.Transformation.Restore
 {
     /// <summary>
     /// восстановление ряда данных до указанного интервала

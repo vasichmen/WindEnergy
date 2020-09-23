@@ -17,8 +17,7 @@ using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
 using WindEnergy.UI.Dialogs;
 using WindLib;
-using WindEnergy.WindLib.Operations;
-using WindEnergy.WindLib.Operations.Structures;
+using WindEnergy.WindLib.Transformation.Check;
 
 namespace WindEnergy.UI.Tools
 {

@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.WindLib.Operations.Structures;
 using WindEnergy.WindLib.Statistic.Structures;
 using WindLib;
 
