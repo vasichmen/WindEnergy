@@ -17,29 +17,26 @@ namespace WindEnergy.WindLib.Transformation.Check.Limits
     public class StaticRegionLimits : ILimitsProvider
     {
         private readonly Dictionary<PointLatLng, ManualLimits> limits;
+        PointLatLng nearestPoint = PointLatLng.Empty;
 
         /// <summary>
         /// загружает ограничения из заданного файла
         /// </summary>
-        /// <param name="sourceFile"></param>
-        public StaticRegionLimits(string sourceFile)
+        public StaticRegionLimits(Dictionary<PointLatLng, ManualLimits> limits, PointLatLng coordinates)
         {
-           limits= Vars.SpeedLimits.List;
+            this.limits = limits;
+            nearestPoint = getNearest(coordinates);
         }
-
-      
 
         /// <summary>
         /// возвращает истину, если значение допустимо в этой точке
         /// </summary>
-        /// <param name="item">данные для провtрки</param>
-        /// <param name="coordinates">координаты точки</param>
+        /// <param name="item">данные для проверки</param>
         /// <returns></returns>
-        public bool CheckItem(RawItem item, PointLatLng coordinates)
+        public bool CheckItem(RawItem item)
         {
-            PointLatLng pt = getNearest(coordinates);
-            if (limits.ContainsKey(pt))
-                return limits[pt].CheckItem(item, pt);
+            if (limits.ContainsKey(nearestPoint))
+                return limits[nearestPoint].CheckItem(item);
             else
                 throw new Exception("Коллекция ключей пуста!");
 
@@ -54,7 +51,7 @@ namespace WindEnergy.WindLib.Transformation.Check.Limits
         {
             double min = double.MaxValue;
             PointLatLng res = PointLatLng.Empty;
-            foreach (var p in limits.Keys)
+            foreach (var p in this.limits.Keys)
             {
                 double f = EarthModel.CalculateDistance(p, coordinates);
                 if (f < min)

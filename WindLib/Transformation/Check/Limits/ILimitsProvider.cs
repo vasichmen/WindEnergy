@@ -14,6 +14,6 @@ namespace WindEnergy.WindLib.Transformation.Check.Limits
         /// <param name="item">данные для провtрки</param>
         /// <param name="coordinates">координаты точки</param>
         /// <returns></returns>
-        bool CheckItem(RawItem item, PointLatLng coordinates);
+        bool CheckItem(RawItem item);
     }
 }

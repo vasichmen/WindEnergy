@@ -139,7 +139,7 @@ namespace WindEnergy.UI.Tools
                     {
                         pcChange.Invoke(0);
                         this.Invoke(setStatus, "Очистка ряда...");
-                        res = Checker.ProcessRange(res, new CheckerParameters(LimitsProviders.StaticLimits,res.Position), out CheckerInfo stats, pcChange);
+                        res = new Checker().ProcessRange(res, new CheckerParameters(LimitsProviders.StaticLimits,res.Position), out CheckerInfo stats, pcChange);
                     }
 
                     if (this.InvokeRequired)

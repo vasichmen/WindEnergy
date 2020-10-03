@@ -116,7 +116,7 @@ namespace WindEnergy.UI.Tools
                         if (error == 1) //если произошла ошибка, то выход
                             return;
 
-                        range = Checker.ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats, pcAction);
+                        range = new Checker().ProcessRange(range, new CheckerParameters(provider, checkPoint), out CheckerInfo stats, pcAction);
                         _ = this.Invoke(new Action(() =>
                            {
                                _ = MessageBox.Show(this, $"Ряд исправлен, результаты:\r\nНаблюдений в исходном ряде: {stats.Total}\r\nПовторов дат: {stats.DateRepeats}\r\nПревышений диапазонов: {stats.OverLimits}\r\nНулевая скорость с направлением: {stats.OtherErrors}\r\nОсталось наблюдений: {stats.Remain}", "Проверка ряда", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -148,7 +148,7 @@ namespace WindEnergy.UI.Tools
                                   return;
                               }
                           }));
-                        range = Checker.ProcessRange(range, new CheckerParameters(speedDiapasons, directionDiapasons), out CheckerInfo stats, pcAction);
+                        range = new Checker().ProcessRange(range, new CheckerParameters(speedDiapasons, directionDiapasons), out CheckerInfo stats, pcAction);
                         range.Name = "Исправленный ряд";
                         _ = this.Invoke(new Action(() =>
                           {

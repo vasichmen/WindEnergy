@@ -164,7 +164,7 @@ namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
                 { continue; }
 
 
-                curRange = Checker.ProcessRange(curRange, new CheckerParameters(LimitsProviders.StaticLimits, curRange.Position), out CheckerInfo info, null); //исправляем ошибки
+                curRange = new Checker().ProcessRange(curRange, new CheckerParameters(LimitsProviders.StaticLimits, curRange.Position), out CheckerInfo info, null); //исправляем ошибки
 
 
                 //СКОРОСТЬ

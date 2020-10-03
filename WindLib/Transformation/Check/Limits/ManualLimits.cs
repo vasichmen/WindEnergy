@@ -37,7 +37,7 @@ namespace WindEnergy.WindLib.Transformation.Check.Limits
             this.speedInclude = speedInclude!=null ? speedInclude : new List<Diapason<double>>();
         }
 
-        public bool CheckItem(RawItem item, PointLatLng coordinates)
+        public bool CheckItem(RawItem item)
         {
             return check(speedInclude, item.Speed) && check(directionInclude, item.Direction);
         }
