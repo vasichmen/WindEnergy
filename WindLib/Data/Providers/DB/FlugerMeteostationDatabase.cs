@@ -1,12 +1,8 @@
-﻿using CommonLib;
-using CommonLib.Classes.Base;
+﻿using CommonLib.Classes.Base;
 using GMap.NET;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 
 namespace WindEnergy.WindLib.Data.Providers.DB
@@ -35,7 +31,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             while (!sr.EndOfStream)
             {
                 string line = sr.ReadLine();
-                
+
                 string[] arr = line.Split(';');
                 if (arr.Length < 12)
                     continue;

@@ -1,10 +1,5 @@
-﻿using CommonLib;
-using GMap.NET;
-using System;
+﻿using GMap.NET;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindEnergy.WindLib.Transformation.Altitude
 {
@@ -31,7 +26,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// <summary>
         /// расстояние в метрах, на котором ищется АМС (NaN - неограниченное)
         /// </summary>
-        public double SearchRaduis { get;  set; }
+        public double SearchRaduis { get; set; }
 
         /// <summary>
         /// коэффициент m, заданный вручную
@@ -56,6 +51,6 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// <summary>
         /// Выбранная АМС для расчетов
         /// </summary>
-        public SuitAMSResultItem SelectedAMS { get;  set; }
+        public SuitAMSResultItem SelectedAMS { get; set; }
     }
 }

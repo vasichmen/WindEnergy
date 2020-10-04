@@ -1,16 +1,11 @@
-﻿using GMap.NET;
+﻿using CommonLib.Data.Providers.InternetServices;
+using CommonLibLib.Data.Interfaces;
+using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
-using Fizzler.Systems.HtmlAgilityPack;
-using WindEnergy.WindLib.Data.Interfaces;
-using CommonLib.Data.Providers.InternetServices;
-using CommonLibLib.Data.Interfaces;
 using WindEnergy.WindLib.Transformation.Check.Limits;
 
 namespace WindEnergy.WindLib.Data.Providers.InternetServices
@@ -101,7 +96,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                     if (checkStop.Invoke())
                         return res;
                     if (act != null)
-                        act.Invoke(current_region,total_regions,  region.Name, counter, bases.Count);
+                        act.Invoke(current_region, total_regions, region.Name, counter, bases.Count);
 
                     Diapason<double> speeds = new Diapason<double>(0, lim.MaxSpeed);
                     ManualLimits limit = new ManualLimits(null, new List<Diapason<double>>() { speeds });

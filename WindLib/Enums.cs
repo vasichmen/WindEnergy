@@ -1,10 +1,5 @@
 ﻿using CommonLib;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindEnergy
 {
@@ -554,7 +549,7 @@ namespace WindEnergy
 
         Macro,
 
-        Micro, 
+        Micro,
 
         Meso
     }
@@ -566,7 +561,7 @@ namespace WindEnergy
     public enum WaterDistanceType
     {
         [Description("Не выбрано")]
-        Undefined =-1,
+        Undefined = -1,
 
         [Description("Вдали от водных поверхностей")]
         FarFromWater = 7,

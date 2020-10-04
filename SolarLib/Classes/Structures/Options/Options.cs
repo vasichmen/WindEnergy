@@ -1,9 +1,5 @@
 ﻿using CommonLib.Classes.Base;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SolarLib.Classes.Structures.Options
@@ -17,7 +13,7 @@ namespace SolarLib.Classes.Structures.Options
             StaticNPSMeteostationDatabaseSourceFile = Application.StartupPath + "\\Data\\NPS.database.txt";
         }
 
-        public string StaticNPSMeteostationDatabaseSourceFile { get;  set; }
+        public string StaticNPSMeteostationDatabaseSourceFile { get; set; }
 
 
         /// <summary>

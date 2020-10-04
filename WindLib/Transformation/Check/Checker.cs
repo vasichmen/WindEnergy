@@ -3,7 +3,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
@@ -17,19 +16,17 @@ namespace WindEnergy.WindLib.Transformation.Check
     /// </summary>
     public class Checker
     {
-        object lockerIncrement = new object();
-        object lockerLims = new object();
-        object lockerRepeats = new object();
-        object lockerOther = new object();
-
-        int lims = 0, repeats = 0, other = 0, totalCount = 0;
-        double c = 0;
-        ConcurrentBag<RawItem> resultCollection = new ConcurrentBag<RawItem>();
-        HashSet<double> dates = new HashSet<double>();
-        Action<double> action = null;
-
-        ILimitsProvider provider;
-        PointLatLng coordinates = PointLatLng.Empty;
+        private object lockerIncrement = new object();
+        private object lockerLims = new object();
+        private object lockerRepeats = new object();
+        private object lockerOther = new object();
+        private int lims = 0, repeats = 0, other = 0, totalCount = 0;
+        private double c = 0;
+        private ConcurrentBag<RawItem> resultCollection = new ConcurrentBag<RawItem>();
+        private HashSet<double> dates = new HashSet<double>();
+        private Action<double> action = null;
+        private ILimitsProvider provider;
+        private PointLatLng coordinates = PointLatLng.Empty;
 
         /// <summary>
         /// проверить ряд и устранить ошибки

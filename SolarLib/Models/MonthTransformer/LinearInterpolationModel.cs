@@ -3,10 +3,6 @@ using SolarEnergy.SolarLib.Classes.Collections;
 using SolarEnergy.SolarLib.Classes.Structures;
 using SolarEnergy.SolarLib.Models.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolarEnergy.SolarLib.Models.MonthTransformer
 {
@@ -73,7 +69,7 @@ namespace SolarEnergy.SolarLib.Models.MonthTransformer
 
             //заполнение результата
             for (int h = 0; h < 24; h++)
-                for (int d = 0; d < 365;d++)
+                for (int d = 0; d < 365; d++)
                 {
                     int hour = d * 24 + h;
                     res[hour] = arr[h, d];

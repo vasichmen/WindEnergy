@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindEnergy.WindLib.Statistic.Structures
 {
@@ -48,7 +44,7 @@ namespace WindEnergy.WindLib.Statistic.Structures
         /// <summary>
         /// отклонение средней скорости от среднемноголетней в процентах
         /// </summary>
-        public double SpeedDeviationPercent { get;  set; }
+        public double SpeedDeviationPercent { get; set; }
 
         /// <summary>
         /// отклонение повторяемости скорости ветра в долях

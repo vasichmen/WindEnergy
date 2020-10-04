@@ -1,15 +1,8 @@
-﻿using CommonLib;
-using CommonLib.Classes;
+﻿using CommonLib.Classes;
 using CommonLib.Classes.Base;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using WindEnergy.WindLib.Statistic.Structures;
 
 namespace WindEnergy.WindLib.Classes.Structures.Options
@@ -216,7 +209,7 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
         /// <summary>
         /// нужно ли использовать ограничение на отклонение скорости при поиске АМС
         /// </summary>
-        public bool UseSuitAMSMaximalRelativeSpeedDeviation { get;  set; }
+        public bool UseSuitAMSMaximalRelativeSpeedDeviation { get; set; }
 
 
         /// <summary>

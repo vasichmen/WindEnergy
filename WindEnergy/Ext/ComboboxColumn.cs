@@ -1,10 +1,6 @@
 ﻿using CommonLib;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindEnergy.UI.Ext
@@ -51,15 +47,15 @@ namespace WindEnergy.UI.Ext
             : base()
         {
             if (typeof(T) == typeof(WindDirections16))
-                items = WindDirections16.Undefined.GetItems().ConvertAll<object>((s) => (object)s); // получение списка элементов перечисления
+                items = WindDirections16.Undefined.GetItems().ConvertAll<object>((s) => s); // получение списка элементов перечисления
             else if (typeof(T) == typeof(StandartIntervals))
-                items = StandartIntervals.H1.GetItems().ConvertAll<object>((s) => (object)s); // получение списка элементов перечисления
+                items = StandartIntervals.H1.GetItems().ConvertAll<object>((s) => s); // получение списка элементов перечисления
             else
                 throw new Exception("Конвертер типов для этого перечисления не реализован");
 
         }
 
-      
+
 
         /// <summary>
         /// начало редактирования ячейки

@@ -7,8 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
@@ -153,7 +151,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem.Import
                 RawItem item = new RawItem();
                 foreach (ImportFields field in fields)
                 {
-                    
+
                     int index = Columns[field] - 1;
                     string value = arr[index];
                     if (Trimmers != null && Trimmers.Length > 0)

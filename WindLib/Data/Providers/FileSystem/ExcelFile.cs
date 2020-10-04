@@ -8,11 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
@@ -94,7 +90,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
 
                 ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[0];
 
-                if( worksheet.Cells[3, 1].Value == null)
+                if (worksheet.Cells[3, 1].Value == null)
                     return null;
                 string title = worksheet.Cells[1, 1].Value.ToString();
                 string coordinates = worksheet.Cells[2, 1].Value.ToString();
@@ -338,7 +334,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             //повторяемости скоростей ветра
             for (int j = 0; j < stat_speeds.Keys.Count; j++)
                 values.Add(Math.Round((stat_speeds.Values[j] * 100), 2));
-           
+
             //по ряду наблюдений
             values.AddRange(new List<object>() {
                Math.Round( range_info.Vmin,2),
@@ -453,7 +449,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 int i = 5;
                 foreach (RawItem item in rang)
                 {
-                    if ( double.IsNaN(item.Speed))
+                    if (double.IsNaN(item.Speed))
                         continue;
                     worksheet.Cells[i, 1].Style.Numberformat.Format = DateTimeFormat;
                     worksheet.Cells[i, 1].Value = item.Date;

@@ -1,6 +1,5 @@
 ﻿using CommonLib;
 using CommonLib.Classes.Base;
-using CommonLib.Geomodel;
 using CommonLibLib.Data.Providers.InternetServices;
 using GMap.NET;
 using System;
@@ -8,9 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.WindLib.Data.Providers.InternetServices;
 using WindLib;
 
 namespace WindEnergy.WindLib.Data.Providers.DB

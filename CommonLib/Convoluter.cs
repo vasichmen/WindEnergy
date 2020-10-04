@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CommonLib
+﻿namespace CommonLib
 {
-    class Convoluter
+    internal class Convoluter
     {
-        int m0 = 0x00000001;
-        int m2 = 0x00000004;
-        int m30 = 0x40000000;
+        private int m0 = 0x00000001;
+        private int m2 = 0x00000004;
+        private int m30 = 0x40000000;
         // Шаг обработки
         protected void Cript31Step(ref int a, int c)
         {
@@ -26,8 +20,9 @@ namespace CommonLib
             a <<= 1;
             if (b != 0) a |= m0;
         }
+
         // Прокрутка на n разрядов
-        void Cript31Prokr(ref int a, int n)
+        private void Cript31Prokr(ref int a, int n)
         {
             int c = 0;
             for (int i = 0; i < n; i++)

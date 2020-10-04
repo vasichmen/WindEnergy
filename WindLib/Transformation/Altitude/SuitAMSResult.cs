@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WindEnergy.WindLib.Transformation.Altitude
 {
@@ -19,6 +15,6 @@ namespace WindEnergy.WindLib.Transformation.Altitude
         /// <summary>
         /// Относительные скорости по месяцам для этого ряда
         /// </summary>
-        public Dictionary<Months, double> RangeRelativeSpeeds { get;  set; }
+        public Dictionary<Months, double> RangeRelativeSpeeds { get; set; }
     }
 }

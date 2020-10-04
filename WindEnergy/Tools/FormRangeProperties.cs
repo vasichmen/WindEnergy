@@ -1,17 +1,6 @@
-﻿using GMap.NET;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Data.Providers;
-using WindEnergy.WindLib.Data.Providers.InternetServices;
-using WindEnergy.UI.Dialogs;
 
 namespace WindEnergy.UI.Tools
 {
@@ -54,7 +43,8 @@ namespace WindEnergy.UI.Tools
                 textBoxMSAddress.Text = Range.Meteostation.Address;
                 new ToolTip().SetToolTip(textBoxMSAddress, textBoxMSAddress.Text);
 
-                switch (Range.Meteostation.MeteoSourceType) {
+                switch (Range.Meteostation.MeteoSourceType)
+                {
                     case MeteoSourceType.Meteostation:
                         textBoxMSType.Text = "Метеостанция";
                         labelMSID.Text = "WMO ID метеостанции";
@@ -72,7 +62,7 @@ namespace WindEnergy.UI.Tools
             }
 
 
-            textBoxRangeCount.Text = Range.Count.ToString() +" штук";
+            textBoxRangeCount.Text = Range.Count.ToString() + " штук";
             new ToolTip().SetToolTip(textBoxRangeCount, textBoxRangeCount.Text);
 
             textBoxName.Text = Range.Name;

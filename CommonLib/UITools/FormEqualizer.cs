@@ -1,23 +1,19 @@
 ﻿using CommonLib.Operations;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CommonLib.UITools
 {
     public partial class FormEqualizer : Form
     {
-        List<string> files;
+        private List<string> files;
         public string Directory;
-        string folder;
+        private string folder;
 
         public FormEqualizer(string directory, Icon icon)
         {
@@ -25,7 +21,7 @@ namespace CommonLib.UITools
             labelFiles.Text = "Файлы не выбраны";
             labelFolder.Text = "Папка не выбрана";
             Directory = directory;
-            this.Icon =icon;
+            this.Icon = icon;
         }
 
         private void buttonOpenFiles_Click(object sender, EventArgs e)
@@ -35,8 +31,8 @@ namespace CommonLib.UITools
                 DefaultExt = ".csv",
                 Filter = "*.csv|*.csv",
                 Multiselect = true,
-                InitialDirectory =  Directory
-        };
+                InitialDirectory = Directory
+            };
             if (of.ShowDialog() == DialogResult.OK)
             {
                 files = of.FileNames.ToList();
@@ -60,7 +56,7 @@ namespace CommonLib.UITools
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
-            if (files == null ||files.Count<2)
+            if (files == null || files.Count < 2)
             {
                 _ = MessageBox.Show(this, "Преобразование файлов", "Ошибка: необходимо выбрать 2 или более файлов");
             }

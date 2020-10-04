@@ -1,16 +1,12 @@
 ﻿using GMap.NET;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommonLib.Geomodel
 {
     /// <summary>
     /// математические функции расчётов на сфере
     /// </summary>
-    class SphereCalculations
+    internal class SphereCalculations
     {
         /// <summary>
         /// рассчет угла криволинейного треугольника на сфере. 

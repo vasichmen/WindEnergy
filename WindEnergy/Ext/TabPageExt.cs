@@ -1,12 +1,7 @@
 ﻿using CommonLib.UITools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Data;
 
 namespace WindEnergy.UI.Ext
 {

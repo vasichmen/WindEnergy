@@ -1,5 +1,4 @@
-﻿using CommonLib;
-using GMap.NET;
+﻿using GMap.NET;
 using System;
 using System.Data.SQLite;
 using System.Drawing;
@@ -10,7 +9,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB.ETOPO
     /// <summary>
     /// базовый класс базы данных ETOPO
     /// </summary>
-    internal abstract class BaseGrid: IDatabase
+    internal abstract class BaseGrid : IDatabase
     {
         protected int columns;
         protected int rows;

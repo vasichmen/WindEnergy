@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using CommonLib;
+using System;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindEnergy.WindLib.Classes;
+using WindEnergy.UI.Ext;
 using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.FileSystem;
 using WindEnergy.WindLib.Statistic.Calculations;
-using WindEnergy.UI.Ext;
-using CommonLib;
-using WindLib;
 using WindEnergy.WindLib.Statistic.Structures;
+using WindLib;
 
 namespace WindEnergy.UI.Tools
 {
@@ -172,7 +165,7 @@ namespace WindEnergy.UI.Tools
         {
             RawRange range = new RawRange((from t in years.Range
                                            where t.Date.Year == years.RecomendedYear.Year
-                                           select t  ));
+                                           select t));
             range.Name = "Расчетный год для " + years.Range.Name;
             range.Meteostation = years.Range.Meteostation;
             range.Position = years.Range.Position;

@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindEnergy.WindLib.Data.Providers.FileSystem.Import
 {
     public class CSVImporter : BaseImporter
     {
-        public CSVImporter (string fileName, BaseImporter baseImporter)
+        public CSVImporter(string fileName, BaseImporter baseImporter)
         {
             this.Initialize(fileName, baseImporter, FileFormats.CSV);
         }

@@ -3,9 +3,6 @@ using CommonLib.Classes.Collections.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Statistic.Collections;
@@ -32,7 +29,7 @@ namespace WindEnergy.WindLib.Statistic.Calculations
             range.Sort(new DateTimeComparerRawItem());
             if (range[range.Count - 1].Date - range[0].Date < TimeSpan.FromDays(366))
                 throw new ArgumentException("Ряд должен быть длиной больше одного года");
-            
+
 
             //среднемноголетняя скорость
             double averSpeed = range.Average((i) => i.Speed);
@@ -41,7 +38,7 @@ namespace WindEnergy.WindLib.Statistic.Calculations
                 throw new WindEnergyException("Ряд содержит недопустимые для расчета значения скорости");
 
             //разделяем исходный ряд по годам
-            var years = range.GroupBy((i) => i.Date.Year).ToList().ConvertAll((gr) => new RawRange(gr.ToList())); 
+            var years = range.GroupBy((i) => i.Date.Year).ToList().ConvertAll((gr) => new RawRange(gr.ToList()));
 
             //ОБРАБОТКА ВСЕХ РЯДОВ И ПОЛУЧЕНИЕ ИНФОРМАЦИИ
             CalculateYearInfo res = new CalculateYearInfo();
@@ -50,7 +47,7 @@ namespace WindEnergy.WindLib.Statistic.Calculations
             foreach (RawRange r in years)
             {
                 QualityInfo qinfo = Qualifier.ProcessRange(r);
-                
+
                 //если null, то ряд очень маленький или не удалось расчитать параметры
                 if (r == null || r[r.Count - 1].Date - r[0].Date < TimeSpan.FromDays(364))
                     continue;

@@ -1,26 +1,15 @@
-﻿using GMap.NET;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.WindLib.Data;
-using WindEnergy.WindLib.Data.Interfaces;
-using WindEnergy.WindLib.Data.Providers;
-using WindEnergy.WindLib.Data.Providers.InternetServices;
-using WindEnergy.UI.Dialogs;
+﻿using CommonLib.UITools;
 using CommonLibLib.Data.Interfaces;
 using CommonLibLib.Data.Providers.InternetServices;
-using WindLib;
-using CommonLib.UITools;
+using GMap.NET;
+using System;
+using System.Net;
+using System.Windows.Forms;
 using WindEnergy.UI.Properties;
+using WindEnergy.WindLib.Classes.Collections;
+using WindEnergy.WindLib.Classes.Structures;
+using WindEnergy.WindLib.Data.Providers.InternetServices;
+using WindLib;
 
 namespace WindEnergy.UI.Tools
 {

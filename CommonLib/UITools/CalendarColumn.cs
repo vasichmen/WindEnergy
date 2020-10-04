@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CommonLib.UITools
@@ -43,11 +39,11 @@ namespace CommonLib.UITools
             this.Style.Format = FORMAT;
         }
 
-        public override void InitializeEditingControl(int rowIndex, object  initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
+        public override void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
         {
             // Set the value of the editing control to the current cell value.
-            base.InitializeEditingControl(rowIndex, initialFormattedValue,  dataGridViewCellStyle);
-            CalendarEditingControl ctl =  DataGridView.EditingControl as CalendarEditingControl;
+            base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
+            CalendarEditingControl ctl = DataGridView.EditingControl as CalendarEditingControl;
             // Use the default row value when Value property is null.
             if (this.Value == null)
             {

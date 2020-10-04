@@ -2,12 +2,7 @@
 using GMap.NET;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
-using WindLib;
 
 namespace WindEnergy.WindLib.Transformation.Check.Limits
 {
@@ -17,7 +12,7 @@ namespace WindEnergy.WindLib.Transformation.Check.Limits
     public class StaticRegionLimits : ILimitsProvider
     {
         private readonly Dictionary<PointLatLng, ManualLimits> limits;
-        PointLatLng nearestPoint = PointLatLng.Empty;
+        private PointLatLng nearestPoint = PointLatLng.Empty;
 
         /// <summary>
         /// загружает ограничения из заданного файла

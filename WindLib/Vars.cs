@@ -1,16 +1,8 @@
 ﻿using CommonLibLib.Data.Providers.FileSystem;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures.Options;
-using WindEnergy.WindLib.Data.Interfaces;
-using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.DB;
 using WindEnergy.WindLib.Data.Providers.DB.ETOPO;
-using WindEnergy.WindLib.Data.Providers.FileSystem;
 
 namespace WindLib
 {
@@ -50,7 +42,7 @@ namespace WindLib
                     _ETOPOdatabase = new ETOPOProvider(Options.ETOPO2Folder);
                 return _ETOPOdatabase;
             }
-        }        
+        }
         /// <summary>
         /// подключение к базе данных ETOPO
         /// </summary>

@@ -1,5 +1,4 @@
-﻿using CommonLib;
-using CommonLib.Classes;
+﻿using CommonLib.Classes;
 using CommonLib.Data.Providers.InternetServices;
 using CommonLibLib.Data.Interfaces;
 using CommonLibLib.Data.Providers.InternetServices;
@@ -12,17 +11,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.WindLib.Data;
-using WindEnergy.WindLib.Data.Interfaces;
-using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.DB;
 using WindEnergy.WindLib.Data.Providers.FileSystem;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
@@ -742,7 +736,8 @@ namespace WindEnergy.WindLib
             }).Start();
 
             //вычисление случайной строки
-            Func<int,string> random = (length) => {
+            Func<int, string> random = (length) =>
+            {
                 Random _random = new Random(Environment.TickCount); string chars = "0123456789abcdefghijklmnopqrstuvwxyz"; StringBuilder builder = new StringBuilder(length);
                 for (int i = 0; i < length; ++i)
                     builder.Append(chars[_random.Next(chars.Length)]);
@@ -787,7 +782,7 @@ namespace WindEnergy.WindLib
                     {
                         try
                         {
-                    Requester req = new Requester();
+                            Requester req = new Requester();
                             //загрузка данных
 
                             string url = "https://power.larc.nasa.gov/cgi-bin/v1/DataAccess.py?request=execute&identifier=SinglePoint&parameters={0}&startDate={1}&endDate={2}&userCommunity=SSE&tempAverage=DAILY&outputList=ASCII&lat={3}&lon={4}&user={5}";

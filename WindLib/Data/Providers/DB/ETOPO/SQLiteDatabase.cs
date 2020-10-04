@@ -1,5 +1,4 @@
-﻿using CommonLib;
-using GMap.NET;
+﻿using GMap.NET;
 using System;
 using System.Data.SQLite;
 using System.Drawing;
@@ -10,7 +9,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB.ETOPO
     /// <summary>
     /// Работа с базой данных ETOPO в формате SQLite
     /// </summary>
-    internal class SQLiteDatabase: IDatabase
+    internal class SQLiteDatabase : IDatabase
     {
         private readonly string dbFile;
         private int rows;

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CommonLib.Classes
 {
@@ -13,22 +10,22 @@ namespace CommonLib.Classes
         /// <summary>
         /// список изменений
         /// </summary>
-        public string Changes { get;  set; }
+        public string Changes { get; set; }
 
         /// <summary>
         /// дата публикации
         /// </summary>
-        public DateTime ReleaseDate { get;  set; }
+        public DateTime ReleaseDate { get; set; }
 
         /// <summary>
         /// номер версии
         /// </summary>
-        public int VersionInt { get;  set; }
+        public int VersionInt { get; set; }
 
         /// <summary>
         /// текстовое представление весрии
         /// </summary>
-        public string VersionText { get;  set; }
+        public string VersionText { get; set; }
 
         /// <summary>
         /// ссылка для скачаивания

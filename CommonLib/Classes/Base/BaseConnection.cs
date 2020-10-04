@@ -2,17 +2,13 @@
 using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace CommonLib.Data.Providers.InternetServices
@@ -237,7 +233,7 @@ namespace CommonLib.Data.Providers.InternetServices
         protected JObject SendJsonGetRequest(string url, out HttpStatusCode code, bool gzip = true, string referer = "", string contentType = "application/json", string cookies = null)
         {
             JObject jobj;
-            string json = SendStringGetRequest(url, out  code, gzip, referer, contentType, "XMLHttpRequest", cookies);
+            string json = SendStringGetRequest(url, out code, gzip, referer, contentType, "XMLHttpRequest", cookies);
             try
             {
                 if (json == "")
@@ -329,7 +325,7 @@ namespace CommonLib.Data.Providers.InternetServices
             }
             catch (WebException we)
             {
-                if(we.Status == WebExceptionStatus.NameResolutionFailure)
+                if (we.Status == WebExceptionStatus.NameResolutionFailure)
                     throw new WebException("Ошибка подключения к DNS, проверьте соединение с интернетом", we);
                 if (we.Response == null)
                     throw new WebException("Сервер не отвечает, попробуйте позже", we);

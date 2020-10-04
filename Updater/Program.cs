@@ -1,28 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Updater
 {
-    class Program
+    internal class Program
     {
-        static string TempFolder = Application.StartupPath + "\\update_tmp";
-        static string postinstallFile = Application.StartupPath + "\\postinstall.exe";
-        static string preinstallFile = Application.StartupPath + "\\preinstall.exe";
-        static string TmpFile;
-        static DateTime LastPrint;
-        static object locker = new object();
+        private static string TempFolder = Application.StartupPath + "\\update_tmp";
+        private static string postinstallFile = Application.StartupPath + "\\postinstall.exe";
+        private static string preinstallFile = Application.StartupPath + "\\preinstall.exe";
+        private static string TmpFile;
+        private static DateTime LastPrint;
+        private static object locker = new object();
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (args.Length == 0)
                 return;

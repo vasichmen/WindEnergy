@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using CommonLib.Classes;
+using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using CommonLib;
-using CommonLib.Classes;
-using Newtonsoft.Json.Linq;
 
 namespace CommonLib.Data.Providers.InternetServices
 {
@@ -21,9 +14,9 @@ namespace CommonLib.Data.Providers.InternetServices
     /// </summary>
     public class Velomapa : BaseConnection
     {
-        public const string  SITE_ADDRESS = "https://velomapa.ru/";
+        public const string SITE_ADDRESS = "https://velomapa.ru/";
 
-        public Velomapa() : base(SITE_ADDRESS,null) { }
+        public Velomapa() : base(SITE_ADDRESS, null) { }
 
         /// <summary>
         /// минимальное время между запросами
@@ -57,11 +50,11 @@ namespace CommonLib.Data.Providers.InternetServices
         {
             string site = SITE_ADDRESS;
             string userkey = "";
-            byte[] arr = Driver.LoadID(Application.StartupPath+"\\id.key");
+            byte[] arr = Driver.LoadID(Application.StartupPath + "\\id.key");
             foreach (var c in arr)
                 userkey += c + " ";
             string ver = "WindEnergy " + Application.ProductVersion;
-            string url = string.Format("{0}/receiver.php?mode=attach&program_guid={1}&version={2}&user_name={3}", site, guid, ver,userkey);
+            string url = string.Format("{0}/receiver.php?mode=attach&program_guid={1}&version={2}&user_name={3}", site, guid, ver, userkey);
             string ans = this.SendStringGetRequest(url, false);
             if (ans != "OK")
                 throw new WebException(ans);

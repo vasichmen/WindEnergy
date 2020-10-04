@@ -1,5 +1,4 @@
-﻿using CommonLib;
-using CommonLib.Classes;
+﻿using CommonLib.Classes;
 using CommonLib.Data.Providers.InternetServices;
 using CommonLibLib.Data.Providers.FileSystem;
 using Fizzler.Systems.HtmlAgilityPack;
@@ -9,18 +8,13 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
-using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Interfaces;
-using WindEnergy.WindLib.Data.Providers.FileSystem;
 using WindLib;
 
 namespace WindEnergy.WindLib.Data.Providers.InternetServices

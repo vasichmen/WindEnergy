@@ -1,10 +1,5 @@
 ﻿using CommonLib.Classes.Base;
-using GMap.NET;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindEnergy.WindLib.Classes.Structures
 {
@@ -12,7 +7,7 @@ namespace WindEnergy.WindLib.Classes.Structures
     /// <summary>
     /// информация о метеостанции с архивом погоды
     /// </summary>
-    public class RP5MeteostationInfo: BaseMeteostationInfo
+    public class RP5MeteostationInfo : BaseMeteostationInfo
     {
         /// <summary>
         /// символьный код аэропорта (METAR id)
@@ -52,7 +47,7 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// <summary>
         /// адрес метеостанции (из поиска в РП5)
         /// </summary>
-        public string Address { get;  set; }
+        public string Address { get; set; }
 
         /// <summary>
         /// ссылка на страницу

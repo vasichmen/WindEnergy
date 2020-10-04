@@ -1,11 +1,8 @@
-﻿using CommonLib;
-using CommonLib.Geomodel;
+﻿using CommonLib.Geomodel;
 using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Providers.DB;
@@ -15,7 +12,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
     /// <summary>
     /// расчет и получение подходящих значений коэффициентов поднятия на высоту
     /// </summary>
-   public static class AMSSupport
+    public static class AMSSupport
     {
         /// <summary>
         /// на основе ряда наблюдений на высоте 10м подобрать АМС и выбрать ряд коэффициентов m для поднятия скорости на высоту

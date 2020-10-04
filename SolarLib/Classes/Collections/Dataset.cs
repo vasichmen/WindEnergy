@@ -1,9 +1,6 @@
 ﻿using SolarEnergy.SolarLib.Models.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolarEnergy.SolarLib.Classes.Collections
 {
@@ -29,7 +26,7 @@ namespace SolarEnergy.SolarLib.Classes.Collections
                         double aver = (from t in range
                                        where t.Date.Month == i
                                        select t.AllSkyInsolation).Average();
-                        DataHours<double> hours = model.GetData(aver,param);
+                        DataHours<double> hours = model.GetData(aver, param);
                         Months month = (Months)i;
                         this[month] = hours;
                         break;

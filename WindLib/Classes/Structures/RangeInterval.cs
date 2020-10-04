@@ -1,9 +1,5 @@
 ﻿using CommonLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindEnergy.WindLib.Classes.Structures
 {
@@ -30,16 +26,24 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// <summary>
         /// длительность диапазона для вывода в статистике
         /// </summary>
-        public string LengthString { get {
+        public string LengthString
+        {
+            get
+            {
                 return Length.ToText(true);
-            } }
+            }
+        }
 
         /// <summary>
         /// длина диапазона в минутах
         /// </summary>
-        public int LengthMinutes { get {
+        public int LengthMinutes
+        {
+            get
+            {
                 return (int)Length.TotalMinutes;
-            } }
+            }
+        }
 
         public override string ToString()
         {

@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CommonLib
 {
-    class Creator : Convoluter
+    internal class Creator : Convoluter
     {
         private readonly int key;
 
@@ -26,8 +24,8 @@ namespace CommonLib
 
     public static class Driver
     {
-        static string cacheID1 = null;
-        static string cacheID2 = null;
+        private static string cacheID1 = null;
+        private static string cacheID2 = null;
 
         public static byte[] GetID()
         {
@@ -98,7 +96,7 @@ namespace CommonLib
             }
         }
 
-        static string getFullKey()
+        private static string getFullKey()
         {
             SHA256 crypto = SHA256.Create();
             byte[] buffer = Encoding.Unicode.GetBytes(keygen().ToString() + GetID1() + GetID2());

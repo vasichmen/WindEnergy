@@ -1,24 +1,10 @@
 ﻿using CommonLib.UITools;
-using GMap.NET;
 using SolarEnergy.SolarLib.Classes.Collections;
-using SolarEnergy.SolarLib.Classes.Structures;
-using SolarEnergy.SolarLib.Data.Providers.InternetServices;
-using SolarEnergy.SolarLib.Models.Hours;
-using SolarEnergy.UI;
 using SolarEnergy.UI.Helpers;
-using SolarEnergy.UI.Properties;
 using SolarEnergy.UI.Tools;
 using SolarLib;
-using SolarLib.Classes.Structures.Options;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.UI.Ext;
 

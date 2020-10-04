@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindEnergy.UI.Dialogs;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.WindLib.Data;
-using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
-using WindEnergy.UI.Dialogs;
-using WindLib;
 using WindEnergy.WindLib.Transformation.Check;
+using WindLib;
 
 namespace WindEnergy.UI.Tools
 {
@@ -139,7 +133,7 @@ namespace WindEnergy.UI.Tools
                     {
                         pcChange.Invoke(0);
                         this.Invoke(setStatus, "Очистка ряда...");
-                        res = new Checker().ProcessRange(res, new CheckerParameters(LimitsProviders.StaticLimits,res.Position), out CheckerInfo stats, pcChange);
+                        res = new Checker().ProcessRange(res, new CheckerParameters(LimitsProviders.StaticLimits, res.Position), out CheckerInfo stats, pcChange);
                     }
 
                     if (this.InvokeRequired)
@@ -204,7 +198,7 @@ namespace WindEnergy.UI.Tools
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void comboBoxPoint_DrawItem(object sender, DrawItemEventArgs e)
+        private void comboBoxPoint_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (e.Index == -1) return;
             string text = this.comboBoxPoint.GetItemText(comboBoxPoint.Items[e.Index]);

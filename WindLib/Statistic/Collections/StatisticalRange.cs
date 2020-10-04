@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Data;
+﻿using System.Collections.Generic;
 using WindEnergy.WindLib.Statistic.Structures;
 
 namespace WindEnergy.WindLib.Statistic.Collections
@@ -18,12 +12,12 @@ namespace WindEnergy.WindLib.Statistic.Collections
         /// <summary>
         /// информация о градациях статистического ряда
         /// </summary>
-        public GradationInfo<T> Gradation { get;  }
+        public GradationInfo<T> Gradation { get; }
 
         /// <summary>
         /// возвращает значения вероятностей от 0 до 1
         /// </summary>
-        public List<double> Values { get ;  }
+        public List<double> Values { get; }
 
         /// <summary>
         /// ключи - интервалы (GradationItem, WindDirections)

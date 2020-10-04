@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.FileSystem;
-using WindEnergy.WindLib.Data.Providers.InternetServices;
 
 namespace WindEnergy.WindLib.Data
 {
@@ -28,10 +22,10 @@ namespace WindEnergy.WindLib.Data
             switch (ext)
             {
                 case ".csv":
-                    return  new CSVFile().LoadRange(FileName);
+                    return new CSVFile().LoadRange(FileName);
                 case ".xls":
                 case ".xlsx":
-                    return  new ExcelFile().LoadRange(FileName);
+                    return new ExcelFile().LoadRange(FileName);
                 default: throw new Exception("Открытие этого типа файлов не реализовано");
             }
         }

@@ -1,12 +1,6 @@
 ﻿using CommonLib;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.WindLib.Transformation.Altitude;
 using ZedGraph;
@@ -15,8 +9,8 @@ namespace WindEnergy.UI.Tools
 {
     public partial class FormRangeElevatorConfirmation : Form
     {
-        SuitAMSResult AMSList;
-        SuitAMSResultItem selectedAMS;
+        private SuitAMSResult AMSList;
+        private SuitAMSResultItem selectedAMS;
 
         public SuitAMSResultItem Result { get; private set; }
 
@@ -39,7 +33,7 @@ namespace WindEnergy.UI.Tools
             foreach (SuitAMSResultItem item in list)
             {
                 ListViewItem val = new ListViewItem(item.AMS.Name);
-                _ = val.SubItems.Add((item.Distance/1000).ToString("0.000"));
+                _ = val.SubItems.Add((item.Distance / 1000).ToString("0.000"));
                 _ = val.SubItems.Add(item.Deviation.ToString("0.0000"));
                 val.Tag = item;
                 _ = listViewAMS.Items.Add(val);

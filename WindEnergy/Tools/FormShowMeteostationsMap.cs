@@ -1,30 +1,23 @@
-﻿using GMap.NET;
+﻿using CommonLib.Classes;
+using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindEnergy.WindLib.Classes;
+using WindEnergy.UI.Properties;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.UI.Properties;
-using CommonLib.Classes;
-using CommonLib;
 using WindLib;
 
 namespace WindEnergy.UI.Tools
 {
     public partial class FormShowMeteostationsMap : Form
     {
-        bool IsDialog;
+        private bool IsDialog;
 
         /// <summary>
         /// видимый слой карты
@@ -33,7 +26,7 @@ namespace WindEnergy.UI.Tools
 
         public RP5MeteostationInfo Result { get; private set; }
 
-        public FormShowMeteostationsMap(bool isDialog=false)
+        public FormShowMeteostationsMap(bool isDialog = false)
         {
             IsDialog = isDialog;
             DialogResult = DialogResult.None;
@@ -278,7 +271,8 @@ namespace WindEnergy.UI.Tools
             if (item.Tag.GetType() != typeof(RP5MeteostationInfo)) return;
             RP5MeteostationInfo mi = (RP5MeteostationInfo)item.Tag;
 
-            if (IsDialog) {
+            if (IsDialog)
+            {
                 Result = mi;
                 DialogResult = DialogResult.OK;
                 Close();
@@ -309,7 +303,7 @@ namespace WindEnergy.UI.Tools
         private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
-            
+
         }
 
         private void FormShowMeteostationsMap_FormClosing(object sender, FormClosingEventArgs e)

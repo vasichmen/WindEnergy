@@ -59,7 +59,7 @@ namespace CommonLib
         private const double LOGPI = 1.14472988584940017414;
 
 
-        
+
 
         // Function Methods
 

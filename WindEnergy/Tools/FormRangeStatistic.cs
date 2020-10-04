@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using CommonLib;
+using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindEnergy.UI.Ext;
 using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Data.Providers;
 using WindEnergy.WindLib.Data.Providers.FileSystem;
 using WindEnergy.WindLib.Statistic.Structures;
-using WindEnergy.UI.Ext;
-using CommonLib;
 using WindLib;
 
 namespace WindEnergy.UI.Tools

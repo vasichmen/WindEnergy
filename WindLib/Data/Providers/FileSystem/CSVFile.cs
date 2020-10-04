@@ -4,11 +4,8 @@ using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
@@ -70,7 +67,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 line += ";" + (stat_speeds.Values[j] * 100).ToString("0.00");
 
             //по ряду наблюдений
-            line += string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f2};{8:f2}", 
+            line += string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f2};{8:f2}",
                 range_info.Vmin, range_info.Vmax, range_info.V0, range_info.Cv, range_info.StandardDeviationSpeed, range_info.VeybullGamma, range_info.VeybullBeta, range_info.PowerDensity, range_info.EnergyDensity);
 
             //повторяемости направлений ветра
@@ -328,7 +325,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             sw.WriteLine(caption);
             foreach (RawItem item in rang)
             {
-                if ( double.IsNaN(item.Speed) )
+                if (double.IsNaN(item.Speed))
                     continue;
                 sw.WriteLine($"{item.Date:dd.MM.yyyy HH:mm};{item.Temperature};{item.Wetness};{item.Direction};{item.Speed};{item.Pressure}");
             }

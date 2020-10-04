@@ -1,26 +1,20 @@
-﻿using GMap.NET;
+﻿using CommonLib;
+using CommonLib.Classes;
+using CommonLib.UITools;
+using GMap.NET;
 using ScintillaNET;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindEnergy.WindLib.Classes;
+using WindEnergy.UI.Ext;
+using WindEnergy.UI.Properties;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures.Options;
 using WindEnergy.WindLib.Data.Providers.FileSystem.Import;
-using WindEnergy.UI.Ext;
-using CommonLib;
-using CommonLib.Classes;
 using WindLib;
-using CommonLib.UITools;
-using WindEnergy.UI.Properties;
 
 namespace WindEnergy.UI.Dialogs
 {
@@ -113,7 +107,7 @@ namespace WindEnergy.UI.Dialogs
                         else
                             importer.Columns.Add((ImportFields)contr.Tag, (int)((NumericUpDown)contr).Value);
 
-            importer.Delimeter = importer.FileFormat == FileFormats.CSV? textBoxDelimeter.Text: ";";
+            importer.Delimeter = importer.FileFormat == FileFormats.CSV ? textBoxDelimeter.Text : ";";
             importer.Trimmers = textBoxTrimmers.Text.ToCharArray();
             importer.Encoding = Encoding.GetEncoding(comboBoxEncoding.SelectedItem as string);
             importer.DirectionUnit = (DirectionUnits)(new EnumTypeConverter<DirectionUnits>().ConvertFrom(comboBoxDirectUnit.SelectedItem));

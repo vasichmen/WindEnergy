@@ -1,12 +1,11 @@
-﻿using GMap.NET;
-using WindEnergy.WindLib.Classes.Structures;
+﻿using WindEnergy.WindLib.Classes.Structures;
 
 namespace WindEnergy.WindLib.Transformation.Check.Limits
 {
     /// <summary>
     /// представляет основные методы проверки данных
     /// </summary>
-    interface ILimitsProvider
+    internal interface ILimitsProvider
     {
         /// <summary>
         /// возвращает истину, если значение допустимо в этой точке

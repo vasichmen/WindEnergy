@@ -1,18 +1,14 @@
-﻿using CommonLib;
-using CommonLibLib.Data.Interfaces;
+﻿using CommonLibLib.Data.Interfaces;
 using GMap.NET;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace WindEnergy.WindLib.Data.Providers.DB.ETOPO
 {
     /// <summary>
     /// Данные о высоте из локальной базы данных ETOPO. 
     /// </summary>
-    public class ETOPOProvider:IGeoInfoProvider
+    public class ETOPOProvider : IGeoInfoProvider
     {
         /// <summary>
         /// тип базы данных
@@ -58,14 +54,15 @@ namespace WindEnergy.WindLib.Data.Providers.DB.ETOPO
             string[] hfiles = Directory.GetFiles(databaseFolder, "*.hdr", SearchOption.TopDirectoryOnly);
             if (hfiles.Length != 1)
             {
-                string[] sqfile = Directory.GetFiles(databaseFolder,"*.sq3",SearchOption.TopDirectoryOnly);
-                if (sqfile.Length > 0) {
-                   hfiles = sqfile;
+                string[] sqfile = Directory.GetFiles(databaseFolder, "*.sq3", SearchOption.TopDirectoryOnly);
+                if (sqfile.Length > 0)
+                {
+                    hfiles = sqfile;
                 }
                 else
-                    throw new FileLoadException ("В папке "+databaseFolder+" не обнаружено корректной базы данных");
+                    throw new FileLoadException("В папке " + databaseFolder + " не обнаружено корректной базы данных");
             }
-               
+
             string hfile = hfiles[0];
 
             //определение типа базы данных
@@ -100,9 +97,9 @@ namespace WindEnergy.WindLib.Data.Providers.DB.ETOPO
         /// </summary>
         /// <param name="FileName">Имя файла, в который будет экспортирована база данных</param>
         /// <param name="callback">Действие, выполняемое при сохранении</param>
-        public void ExportSQLite(string FileName,Action<string>callback=null)
+        public void ExportSQLite(string FileName, Action<string> callback = null)
         {
-            this.database.ExportToSQL(FileName,callback);
+            this.database.ExportToSQL(FileName, callback);
         }
 
         /// <summary>
@@ -127,7 +124,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB.ETOPO
         /// <returns></returns>
         public double GetElevation(double lat, double lon)
         { return GetElevation(new PointLatLng(lat, lon)); }
-        
+
 
         /// <summary>
         /// возвращает истину, если в заданной папке есть поддерживаемая база данных

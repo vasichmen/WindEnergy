@@ -11,7 +11,7 @@ namespace CommonLibLib.Data.Providers
     /// <summary>
     /// кэш в файловой системе
     /// </summary>
-    public class FileSystemCache 
+    public class FileSystemCache
     {
         /// <summary>
         /// информация о файле в кэше
@@ -344,7 +344,7 @@ namespace CommonLibLib.Data.Providers
             List<string> files = new List<string>(Directory.EnumerateFiles(directory));
             List<string> files_names = new List<string>(files.ConvertAll(new Converter<string, string>((file) => { return Path.GetFileName(file); })));
             var values = files_data.Values;
-            
+
             //удаление файлов, для которых нет записи в кэше
             Parallel.For(0, files.Count, new Action<int>((i) =>
             {

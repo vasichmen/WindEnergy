@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WindEnergy.WindLib.Classes.Structures.Options
+﻿namespace WindEnergy.WindLib.Classes.Structures.Options
 {
     /// <summary>
     /// настройки пользовательской градации
     /// </summary>
-   public  class UserGradation
+    public class UserGradation
     {
         public UserGradation()
         {

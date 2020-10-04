@@ -1,5 +1,4 @@
-﻿using CommonLib;
-using CommonLib.Classes;
+﻿using CommonLib.Classes;
 using CommonLib.Data.Providers.InternetServices;
 using CommonLibLib.Data.Interfaces;
 using GMap.NET;
@@ -8,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace CommonLibLib.Data.Providers.InternetServices
@@ -62,7 +59,7 @@ namespace CommonLibLib.Data.Providers.InternetServices
             JToken ans = SendJsonGetRequest(url, out HttpStatusCode code);
 
             if (ans == null)
-                throw new WindEnergyException("Не удалочь получить ответ");
+                throw new WindEnergyException("Не удалось получить ответ");
 
             JToken err = ans["error"];
             if (err != null)
@@ -83,10 +80,10 @@ namespace CommonLibLib.Data.Providers.InternetServices
             //http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?
             string url = "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?";
 
-            string data = $"f=pjson&address={HttpUtility.UrlEncode( query)}&category=City&maxLocations=30&langCode=ru&preferredLabelValues=matchedCity&token={Token}";
+            string data = $"f=pjson&address={HttpUtility.UrlEncode(query)}&category=City&maxLocations=30&langCode=ru&preferredLabelValues=matchedCity&token={Token}";
 
 
-            JToken ans = SendJsonGetRequest(url+data, out HttpStatusCode code);
+            JToken ans = SendJsonGetRequest(url + data, out HttpStatusCode code);
             JToken err = ans["error"];
             if (err != null)
                 throw new Exception(err["message"].ToString());
@@ -99,7 +96,7 @@ namespace CommonLibLib.Data.Providers.InternetServices
                 {
                     double lng = double.Parse(addr["location"]["x"].ToString().Replace(',', Constants.DecimalSeparator));
                     double lat = double.Parse(addr["location"]["y"].ToString().Replace(',', Constants.DecimalSeparator));
-                    res.Add(addr["address"].ToString(),new PointLatLng(lat,lng));
+                    res.Add(addr["address"].ToString(), new PointLatLng(lat, lng));
                 }
             }
 

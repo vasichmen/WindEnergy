@@ -1,11 +1,7 @@
-﻿using CommonLib;
-using CommonLib.Classes.Base;
-using System;
+﻿using CommonLib.Classes.Base;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 
 namespace WindEnergy.WindLib.Data.Providers.DB
@@ -28,7 +24,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         public override Dictionary<string, MicroclimateItemInfo> LoadDatabaseFile()
         {
             Dictionary<string, MicroclimateItemInfo> items = new Dictionary<string, MicroclimateItemInfo>();
-            StreamReader sr = new StreamReader(FileName,Encoding.UTF8, true);
+            StreamReader sr = new StreamReader(FileName, Encoding.UTF8, true);
             sr.ReadLine();//пропускаем первую строку-заголовок
             while (!sr.EndOfStream)
             {
@@ -67,7 +63,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         private Diapason<double> parseDiapason(string v)
         {
             string[] arr = v.Split('-');
-            Diapason<double> res = new Diapason<double>(double.Parse(arr[0].Replace('.',Constants.DecimalSeparator)),double.Parse(arr[1].Replace('.',Constants.DecimalSeparator)));
+            Diapason<double> res = new Diapason<double>(double.Parse(arr[0].Replace('.', Constants.DecimalSeparator)), double.Parse(arr[1].Replace('.', Constants.DecimalSeparator)));
             return res;
         }
     }

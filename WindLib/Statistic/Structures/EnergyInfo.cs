@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WindEnergy.WindLib.Statistic.Collections;
 
 namespace WindEnergy.WindLib.Statistic.Structures
 {
@@ -50,7 +45,7 @@ namespace WindEnergy.WindLib.Statistic.Structures
         /// <summary>
         /// среднеквадратическое отклонение скорости
         /// </summary>
-        public double StandardDeviationSpeed { get;  set; }
+        public double StandardDeviationSpeed { get; set; }
 
         /// <summary>
         /// максимальная скорость за период времени
@@ -60,7 +55,7 @@ namespace WindEnergy.WindLib.Statistic.Structures
         /// <summary>
         /// минимальная скорость
         /// </summary>
-        public double Vmin { get;  set; }
+        public double Vmin { get; set; }
 
         /// <summary>
         /// параметр распределения вейбулла гамма

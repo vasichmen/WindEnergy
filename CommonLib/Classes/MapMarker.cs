@@ -1,7 +1,7 @@
-﻿using System;
-using System.Drawing;
-using GMap.NET;
+﻿using GMap.NET;
 using GMap.NET.WindowsForms;
+using System;
+using System.Drawing;
 
 namespace CommonLib.Classes
 {
@@ -10,9 +10,9 @@ namespace CommonLib.Classes
     /// маркер на карте
     /// </summary>
     [Serializable]
-    public class MapMarker: GMapMarker
-    {       
-                /// <summary>
+    public class MapMarker : GMapMarker
+    {
+        /// <summary>
         /// картинка маркера
         /// </summary>
         private readonly Icon image;

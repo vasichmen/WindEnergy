@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using CommonLib;
-using CommonLib.Data.Providers.InternetServices;
+﻿using CommonLib.Data.Providers.InternetServices;
 using CommonLibLib.Data.Interfaces;
 using GMap.NET;
-using WindEnergy.WindLib.Data.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Xml;
 
 namespace WindEnergy.WindLib.Data.Providers.InternetServices
 {
     /// <summary>
     /// Реализация методов взаимодействия с API Яндекса
     /// </summary>
-    public class Yandex : BaseConnection,IGeocoderProvider
+    public class Yandex : BaseConnection, IGeocoderProvider
     {
         public override TimeSpan MinQueryInterval { get; }
         public override int MaxAttempts { get; }
@@ -120,7 +115,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
                     string coords = geoobj["Point"]["pos"].InnerText;
                     string lon = coords.Split(' ')[0];
                     string lat = coords.Split(' ')[1];
-                    PointLatLng crd = new PointLatLng(double.Parse(lat.Replace('.',Constants.DecimalSeparator)), double.Parse(lon.Replace('.', Constants.DecimalSeparator)));
+                    PointLatLng crd = new PointLatLng(double.Parse(lat.Replace('.', Constants.DecimalSeparator)), double.Parse(lon.Replace('.', Constants.DecimalSeparator)));
                     if (!res.ContainsKey(title))
                         res.Add(title, crd);
                 }

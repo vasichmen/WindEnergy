@@ -1,18 +1,13 @@
-﻿using CommonLib;
-using CommonLib.Classes.Base;
-using GMap.NET;
-using System;
+﻿using CommonLib.Classes.Base;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindEnergy.WindLib.Classes.Structures
 {
     /// <summary>
     /// Информация о метеостанции из БД АМС
     /// </summary>
-    public class AMSMeteostationInfo: BaseMeteostationInfo
+    public class AMSMeteostationInfo : BaseMeteostationInfo
     {
         /// <summary>
         /// коэффициенты m по месяцам 
@@ -29,11 +24,15 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// </summary>
         public double AverageM { get; set; }
 
-        public Dictionary<Months, double> RelativeSpeeds { get {
+        public Dictionary<Months, double> RelativeSpeeds
+        {
+            get
+            {
                 if (_relativeSpeeds == null)
                     _relativeSpeeds = CalcRelatives();
                 return _relativeSpeeds;
-            } }
+            }
+        }
 
         private Dictionary<Months, double> _relativeSpeeds = null;
 

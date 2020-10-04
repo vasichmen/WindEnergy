@@ -3,12 +3,10 @@ using GMap.NET;
 using SolarEnergy.SolarLib.Classes.Collections;
 using SolarEnergy.SolarLib.Classes.Structures;
 using SolarEnergy.SolarLib.Data.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SolarEnergy.SolarLib.Data.Providers.DB
 {
@@ -29,7 +27,7 @@ namespace SolarEnergy.SolarLib.Data.Providers.DB
             {
                 string[] arr = sr.ReadToEnd().Split('\n');
 
-                for (int i = 0; i < arr.Length-1;)
+                for (int i = 0; i < arr.Length - 1;)
                 {
                     i++;//пропуск заголовка
                     string[] line = arr[i].Split(';');
@@ -40,7 +38,7 @@ namespace SolarEnergy.SolarLib.Data.Providers.DB
                     Dataset dsClrsk = loadTable(arr, i + 3, 28);
                     NPSMeteostationInfo item = new NPSMeteostationInfo()
                     {
-                        Data = new DataItem() { DatasetAllsky = dsAllsk, DatasetClearSky = dsClrsk},
+                        Data = new DataItem() { DatasetAllsky = dsAllsk, DatasetClearSky = dsClrsk },
                         ID = id,
                         Name = name,
                         Position = pos

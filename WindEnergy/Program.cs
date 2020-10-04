@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CommonLib.Classes;
+using CommonLib.Data.Providers.InternetServices;
+using CommonLibLib.Data.Providers.FileSystem;
+using OfficeOpenXml;
+using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.UI.Common.Dialogs;
-using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Structures.Options;
-using WindEnergy.WindLib.Data.Providers;
-using WindEnergy.WindLib.Data.Providers.FileSystem;
-using WindEnergy.WindLib.Data.Providers.InternetServices;
-using WindEnergy.WindLib;
-using CommonLib;
-using CommonLib.Classes;
-using CommonLibLib.Data.Providers.FileSystem;
-using CommonLib.Data.Providers.InternetServices;
 using WindLib;
-using OfficeOpenXml;
 
 namespace WindEnergy.UI
 {
@@ -91,17 +81,17 @@ namespace WindEnergy.UI
                 Velomapa site = new Velomapa(); //связь с сайтом
                 site.SendStatisticAsync(Vars.Options.ApplicationGuid); //статистика
 
-                    //действие при проверке версии
-                    Action<VersionInfo> action = new Action<VersionInfo>((vi) =>
-                        {
-                    float curVer = Vars.Options.VersionInt;
-                    if (vi.VersionInt > curVer)
+                //действие при проверке версии
+                Action<VersionInfo> action = new Action<VersionInfo>((vi) =>
                     {
-                        FormUpdateDialog fud = new FormUpdateDialog(vi);
-                        if (Vars.Options.UpdateMode != UpdateDialogAnswer.AlwaysIgnore)
-                            winMain.Invoke(new Action(() => fud.ShowDialog()));
-                    }
-                });
+                        float curVer = Vars.Options.VersionInt;
+                        if (vi.VersionInt > curVer)
+                        {
+                            FormUpdateDialog fud = new FormUpdateDialog(vi);
+                            if (Vars.Options.UpdateMode != UpdateDialogAnswer.AlwaysIgnore)
+                                winMain.Invoke(new Action(() => fud.ShowDialog()));
+                        }
+                    });
                 site.GetVersionAsync(action); //проверка версии
             })
             ).Start();

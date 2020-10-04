@@ -1,12 +1,8 @@
 ﻿using CommonLib;
 using CommonLib.Classes;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Structures;
 
 namespace WindEnergy.WindLib.Statistic.Structures

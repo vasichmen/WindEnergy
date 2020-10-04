@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GMap.NET;
+using System;
 using System.Collections.Generic;
-using GMap.NET;
 
 namespace CommonLibLib.Data.Interfaces
 {

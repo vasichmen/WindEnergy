@@ -7,21 +7,15 @@ using SolarEnergy.SolarLib.Classes.Structures;
 using SolarEnergy.UI.Properties;
 using SolarLib;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SolarEnergy.UI.Tools
 {
     public partial class FormLoadFromNPS : Form
     {
-        PointLatLng point = PointLatLng.Empty;
-        MonthTransformationModels monthTransformator = MonthTransformationModels.None;
+        private PointLatLng point = PointLatLng.Empty;
+        private MonthTransformationModels monthTransformator = MonthTransformationModels.None;
 
         public DataRange Result { get; private set; }
 

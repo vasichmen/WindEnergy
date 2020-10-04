@@ -1,16 +1,8 @@
-﻿using SolarEnergy;
-using SolarEnergy.SolarLib.Classes.Collections;
-using SolarEnergy.SolarLib.Classes.Structures;
+﻿using SolarEnergy.SolarLib.Classes.Collections;
 using SolarEnergy.UI.Properties;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindEnergy.UI.Ext
@@ -25,7 +17,7 @@ namespace WindEnergy.UI.Ext
             ShowToolTips = true;
             DrawMode = TabDrawMode.OwnerDrawFixed;
             this.ItemSize = new Size(100, 20);
-            this.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
 
         /// <summary>
@@ -61,7 +53,7 @@ namespace WindEnergy.UI.Ext
 
             //закрытие при нажатии СКМ
             if (e.Button == MouseButtons.Middle)
-                for (int i = 0; i < this.TabPages.Count;i++)
+                for (int i = 0; i < this.TabPages.Count; i++)
                 {
                     Rectangle rect = GetTabRect(i);
                     if (rect.Contains(pt))
@@ -116,6 +108,6 @@ namespace WindEnergy.UI.Ext
                 }
             }
         }
-        
+
     }
 }

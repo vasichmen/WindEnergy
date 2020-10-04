@@ -2,10 +2,6 @@
 using SolarEnergy.SolarLib.Classes.Structures;
 using SolarEnergy.SolarLib.Models.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolarEnergy.SolarLib.Models.MonthTransformer
 {
@@ -20,7 +16,7 @@ namespace SolarEnergy.SolarLib.Models.MonthTransformer
 
             for (int i = 0; i < 8760; i++)
             {
-                long ticks = (long)( i * 60 * 60 * 10e6 );
+                long ticks = (long)(i * 60 * 60 * 10e6);
                 DateTime date = new DateTime(ticks);
                 Months month = (Months)date.Month;
                 int hour = date.Hour;
@@ -28,7 +24,7 @@ namespace SolarEnergy.SolarLib.Models.MonthTransformer
                 double clsk = dataItem.DatasetClearSky[month][hour];
                 double alsk = dataItem.DatasetAllsky[month][hour];
 
-                RawItem ni = new RawItem(date, alsk,clsk);
+                RawItem ni = new RawItem(date, alsk, clsk);
                 res.Add(ni);
             }
 

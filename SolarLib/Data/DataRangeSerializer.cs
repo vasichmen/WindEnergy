@@ -1,11 +1,6 @@
 ﻿using SolarEnergy.SolarLib.Classes.Collections;
-using SolarEnergy.SolarLib.Classes.Structures;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Data.Providers.FileSystem;
 
 namespace SolarEnergy.SolarLib.Data
@@ -36,7 +31,7 @@ namespace SolarEnergy.SolarLib.Data
             switch (ext)
             {
                 case ".csv":
-                    new CSVFile().SaveDataRange(rang,fileName);
+                    new CSVFile().SaveDataRange(rang, fileName);
                     break;
                 case ".xls":
                 default: throw new Exception("Сохранение этого типа файлов не реализовано");

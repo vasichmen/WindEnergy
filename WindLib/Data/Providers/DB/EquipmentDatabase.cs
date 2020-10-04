@@ -1,11 +1,8 @@
-﻿using CommonLib;
-using CommonLib.Classes.Base;
+﻿using CommonLib.Classes.Base;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 
 namespace WindEnergy.WindLib.Data.Providers.DB

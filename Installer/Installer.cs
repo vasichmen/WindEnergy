@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommonLib;
 using IWshRuntimeLibrary;
+using System;
 using System.Diagnostics;
-using CommonLib;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 
 namespace Installer
 {
-    class Installer
+    internal class Installer
     {
         public static void Install(string from, string dest)
         {
@@ -81,7 +78,7 @@ namespace Installer
         {
             //СОЗДАНИЕ ЯРЛЫКА
             WshShell shell = new WshShell();
-            string shortcutPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\"+Path.GetFileNameWithoutExtension(targetFile) + @".lnk";
+            string shortcutPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + Path.GetFileNameWithoutExtension(targetFile) + @".lnk";
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
             //задаем свойства для ярлыка
             //описание ярлыка в всплывающей подсказке

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 
 namespace WindEnergy.WindLib.Statistic.Structures
@@ -40,7 +37,7 @@ namespace WindEnergy.WindLib.Statistic.Structures
         /// <summary>
         /// максимальный перерыв в измерениях
         /// </summary>
-        public TimeSpan MaxEmptySpace { get;  }
+        public TimeSpan MaxEmptySpace { get; }
 
         /// <summary>
         /// создает новую структуру информации о качестве ряда с указанными значениями
@@ -48,7 +45,7 @@ namespace WindEnergy.WindLib.Statistic.Structures
         /// <param name="intervals">диапазоны наблюдений с разными значениями интервалов</param>
         /// <param name="maxEmptySpace"></param>
         /// <param name="measures">общее количество измерений в ряде</param>
-        public QualityInfo(List<RangeInterval> intervals, TimeSpan maxEmptySpace,int measures)
+        public QualityInfo(List<RangeInterval> intervals, TimeSpan maxEmptySpace, int measures)
         {
             if (intervals == null || intervals.Count == 0)
                 throw new ArgumentNullException("должны быть заданы интервалы наблюдений");
@@ -61,15 +58,15 @@ namespace WindEnergy.WindLib.Statistic.Structures
                 DateTime fromi = ri.Diapason.From;
                 DateTime toi = ri.Diapason.To;
                 TimeSpan span = toi - fromi;
-                int intervalMinutes = (int)ri.Interval; 
-                expectAm += (int)( span.TotalMinutes / intervalMinutes); 
+                int intervalMinutes = (int)ri.Interval;
+                expectAm += (int)(span.TotalMinutes / intervalMinutes);
             }
             expectAm++;
 
             MaxEmptySpace = maxEmptySpace;
             ExpectAmount = expectAm; //ожидаемое число измерений
             PassAmount = expectAm - measures; //количество пропусков в ряде
-            Completeness = (double)((double)measures / (double)expectAm); //полнота ряда
+            Completeness = (double)(measures / (double)expectAm); //полнота ряда
             if (Completeness > 1)
                 Completeness = 1;
             MeasureAmount = measures; //фактическое количество измерений

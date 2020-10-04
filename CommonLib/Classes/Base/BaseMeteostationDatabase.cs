@@ -1,11 +1,7 @@
-﻿using CommonLib.Classes.Base;
-using CommonLib.Geomodel;
+﻿using CommonLib.Geomodel;
 using GMap.NET;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommonLib.Classes.Base
 {
@@ -13,7 +9,7 @@ namespace CommonLib.Classes.Base
     /// <summary>
     /// базовые методы для работы с списками метеостанций
     /// </summary>
-    public abstract class BaseMeteostationDatabase<TKey,TValue> : BaseFileDatabase<TKey, TValue>
+    public abstract class BaseMeteostationDatabase<TKey, TValue> : BaseFileDatabase<TKey, TValue>
     {
 
         /// <summary>
@@ -29,7 +25,7 @@ namespace CommonLib.Classes.Base
         /// <param name="FileName">адрес файла БД</param>
         protected BaseMeteostationDatabase(string FileName) : base(FileName) { }
 
-        public override abstract Dictionary<TKey, TValue> LoadDatabaseFile();
+        public abstract override Dictionary<TKey, TValue> LoadDatabaseFile();
 
 
         /// <summary>
@@ -38,7 +34,7 @@ namespace CommonLib.Classes.Base
         /// <param name="coordinates"></param>
         /// <param name="maxRadius">радиус поиска в метрах</param>
         /// <returns></returns>
-        protected virtual BaseMeteostationInfo GetNearestMS(PointLatLng coordinates, double maxRadius=double.MaxValue)
+        protected virtual BaseMeteostationInfo GetNearestMS(PointLatLng coordinates, double maxRadius = double.MaxValue)
         {
             if (coordinates.IsEmpty)
                 return null;

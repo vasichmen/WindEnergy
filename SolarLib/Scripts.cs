@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SolarEnergy.SolarLib
+﻿namespace SolarEnergy.SolarLib
 {
-   public static class Scripts
+    public static class Scripts
     {
-        
+
     }
 }

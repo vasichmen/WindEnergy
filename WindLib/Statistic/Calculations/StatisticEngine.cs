@@ -3,9 +3,6 @@ using CommonLib.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WindEnergy.WindLib.Classes;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Statistic.Collections;
@@ -34,7 +31,7 @@ namespace WindEnergy.WindLib.Statistic.Calculations
             EnergyInfo res = new EnergyInfo();
             res.FromDate = range[0].Date;
             res.ToDate = range[range.Count - 1].Date;
-            res.PowerDensity = getAveragePower(range,density);
+            res.PowerDensity = getAveragePower(range, density);
             res.V0 = getAverageSpeed(range);
             res.StandardDeviationSpeed = getSigmV(res.V0, range);
             res.Vmax = getMaxSpeed(range);
@@ -117,7 +114,7 @@ namespace WindEnergy.WindLib.Statistic.Calculations
                     c++;
                 }
             }
-            double res = c==0?double.NaN: sum / c;
+            double res = c == 0 ? double.NaN : sum / c;
             return res;
         }
 
@@ -140,7 +137,7 @@ namespace WindEnergy.WindLib.Statistic.Calculations
                     c++;
                 }
             }
-            double res = c-1<=0?double.NaN:  Math.Sqrt(sum / (c - 1));
+            double res = c - 1 <= 0 ? double.NaN : Math.Sqrt(sum / (c - 1));
             return res;
 
         }
@@ -158,11 +155,11 @@ namespace WindEnergy.WindLib.Statistic.Calculations
                 double sum = 0;
                 int c = 0;
                 foreach (var l in input)
-                    if(!double.IsNaN(l.Speed))
-                {
-                    sum += l.Speed;
-                    c++;
-                }
+                    if (!double.IsNaN(l.Speed))
+                    {
+                        sum += l.Speed;
+                        c++;
+                    }
                 if (c == 0) return double.NaN;
                 return sum / c;
             }
@@ -212,10 +209,10 @@ namespace WindEnergy.WindLib.Statistic.Calculations
             //Cv
             double Cv = sigm / V0;
 
-            double VeyGamma= getVeybullGamma(Cv);
+            double VeyGamma = getVeybullGamma(Cv);
             double VeyBeta = getVeybullBeta(V0, VeyGamma);
 
-            return new EnergyInfo() { Cv = Cv, EnergyDensity = EDensity, PowerDensity = PDensity, StandardDeviationSpeed = sigm, V0 = V0, VeybullBeta=VeyBeta, VeybullGamma=VeyGamma };
+            return new EnergyInfo() { Cv = Cv, EnergyDensity = EDensity, PowerDensity = PDensity, StandardDeviationSpeed = sigm, V0 = V0, VeybullBeta = VeyBeta, VeybullGamma = VeyGamma };
         }
 
         /// <summary>

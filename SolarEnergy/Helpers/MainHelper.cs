@@ -1,15 +1,8 @@
-﻿using CommonLib;
-using SolarEnergy.SolarLib.Classes.Collections;
-using SolarEnergy.SolarLib.Classes.Structures;
+﻿using SolarEnergy.SolarLib.Classes.Collections;
 using SolarEnergy.SolarLib.Data;
 using SolarLib;
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.UI.Ext;
 

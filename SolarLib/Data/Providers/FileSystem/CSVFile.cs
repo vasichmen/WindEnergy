@@ -1,16 +1,8 @@
-﻿using CommonLib;
-using CommonLib.Classes;
-using GMap.NET;
-using SolarEnergy.SolarLib.Classes.Collections;
+﻿using SolarEnergy.SolarLib.Classes.Collections;
 using SolarEnergy.SolarLib.Classes.Structures;
-using SolarLib;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace WindEnergy.WindLib.Data.Providers.FileSystem
 {
@@ -33,7 +25,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             title = sr.ReadLine();
 
             DataRange res = new DataRange();
-            while(!sr.EndOfStream)
+            while (!sr.EndOfStream)
             {
                 string[] arr = sr.ReadLine().Split(';');
                 DateTime dt = DateTime.Parse(arr[0]);

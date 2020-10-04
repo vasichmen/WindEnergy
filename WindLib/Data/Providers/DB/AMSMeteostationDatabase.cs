@@ -1,5 +1,4 @@
-﻿using CommonLib;
-using CommonLib.Classes.Base;
+﻿using CommonLib.Classes.Base;
 using GMap.NET;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +9,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
     /// <summary>
     /// База данных коэффициентов пересчета на высоту по данным АМС
     /// </summary>
-    public class AMSMeteostationDatabase: BaseMeteostationDatabase<PointLatLng,AMSMeteostationInfo>
+    public class AMSMeteostationDatabase : BaseMeteostationDatabase<PointLatLng, AMSMeteostationInfo>
     {
         /// <summary>
         /// создает объект для этого файла, не загружая данные
@@ -22,7 +21,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         /// загрузить список ограничений скоростей по точкам
         /// </summary>
         /// <returns></returns>
-        public override Dictionary<PointLatLng, AMSMeteostationInfo>  LoadDatabaseFile()
+        public override Dictionary<PointLatLng, AMSMeteostationInfo> LoadDatabaseFile()
         {
             Dictionary<PointLatLng, AMSMeteostationInfo> items = new Dictionary<PointLatLng, AMSMeteostationInfo>();
             StreamReader sr = new StreamReader(FileName);

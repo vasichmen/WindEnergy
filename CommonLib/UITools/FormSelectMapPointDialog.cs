@@ -1,22 +1,18 @@
-﻿using GMap.NET;
+﻿using CommonLib.Classes;
+using CommonLibLib.Data.Providers.InternetServices;
+using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CommonLib.Classes;
-using CommonLib;
-using CommonLibLib.Data.Providers.InternetServices;
 
 namespace CommonLib.UITools
 {

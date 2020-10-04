@@ -1,13 +1,10 @@
 ﻿using GMap.NET;
-using System;
-using System.Collections.Generic;
-using System.Threading;
 namespace CommonLibLib.Data.Interfaces
 {
     /// <summary>
     /// поставщик данных о высоте точек
     /// </summary>
-     public  interface IGeoInfoProvider
+    public interface IGeoInfoProvider
     {
         /// <summary>
         /// если истина, то это локальный источник данных

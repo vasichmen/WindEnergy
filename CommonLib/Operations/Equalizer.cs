@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,8 +19,8 @@ namespace CommonLib.Operations
 
         private class Range : Dictionary<DateTime, Item>
         {
-            List<string> header = new List<string>();
-            bool separateDate;
+            private List<string> header = new List<string>();
+            private bool separateDate;
             public string FileName;
 
             /// <summary>
@@ -68,7 +67,7 @@ namespace CommonLib.Operations
 
                         //сохранение данных
                         for (int i = startData; i < arr.Length; i++)
-                            data += ";"+ arr[i];
+                            data += ";" + arr[i];
 
                         if (!res.ContainsKey(key))
                             res.Add(key, new Item() { Date = key, Data = data });

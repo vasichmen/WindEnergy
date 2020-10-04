@@ -1,11 +1,7 @@
-﻿using CommonLib;
-using GMap.NET;
+﻿using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Transformation.Check.Limits;
 using WindLib;

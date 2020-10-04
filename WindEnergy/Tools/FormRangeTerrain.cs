@@ -5,13 +5,8 @@ using GMap.NET;
 using ScintillaNET;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.UI.Dialogs;
 using WindEnergy.UI.Properties;
@@ -27,15 +22,15 @@ namespace WindEnergy.UI.Tools
     /// </summary>
     public partial class FormRangeTerrain : Form
     {
-        RawRange range;
-        FlugerMeteostationInfo flugerMeteostation = null;
-        Dictionary<WindDirections8, double> msClasses = null;
-        Dictionary<WindDirections8, double> pointClasses = null;
-        PointLatLng pointCoordinates = PointLatLng.Empty;
-        TerrainType terrainType = TerrainType.Macro;
-        AtmosphereStratification stratification;
-        MesoclimateItemInfo mesoclimateCoeff = null;
-        MicroclimateItemInfo microclimateCoeff = null;
+        private RawRange range;
+        private FlugerMeteostationInfo flugerMeteostation = null;
+        private Dictionary<WindDirections8, double> msClasses = null;
+        private Dictionary<WindDirections8, double> pointClasses = null;
+        private PointLatLng pointCoordinates = PointLatLng.Empty;
+        private TerrainType terrainType = TerrainType.Macro;
+        private AtmosphereStratification stratification;
+        private MesoclimateItemInfo mesoclimateCoeff = null;
+        private MicroclimateItemInfo microclimateCoeff = null;
 
         /// <summary>
         /// результат работы диалогового окна (новый ряд данных)
@@ -334,7 +329,7 @@ namespace WindEnergy.UI.Tools
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void comboBox_DrawItem(object sender, DrawItemEventArgs e)
+        private void comboBox_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (e.Index == -1) return;
             ComboBox combobox = sender as ComboBox;

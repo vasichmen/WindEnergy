@@ -2,9 +2,6 @@
 using CommonLib.Classes.Base;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindEnergy.WindLib.Classes.Structures
 {
@@ -67,7 +64,8 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// <summary>
         /// скорость ветра в м/с
         /// </summary>
-        public double Speed {
+        public double Speed
+        {
             get => speed;
             set
             {
@@ -93,7 +91,7 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// </summary>
         public double Wetness
         {
-            get => wetness; 
+            get => wetness;
             set
             {
                 if (value < 0 || value > 100)
@@ -116,7 +114,7 @@ namespace WindEnergy.WindLib.Classes.Structures
                 return (Date.Ticks / 1e7) / 60d;
             }
         }
-        
+
         /// <summary>
         /// создаёт новый объект с значениями по умолчанию
         /// </summary>
@@ -236,7 +234,7 @@ namespace WindEnergy.WindLib.Classes.Structures
         {
             get
             {
-                switch(DirectionRhumb)
+                switch (DirectionRhumb)
                 {
                     case WindDirections16.N:
                     case WindDirections16.NNE:

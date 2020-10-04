@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SolarEnergy.SolarLib.Classes.Structures
+﻿namespace SolarEnergy.SolarLib.Classes.Structures
 {
-   public class DataRangeConverterParams
+    public class DataRangeConverterParams
     {
         public StandartIntervals Interval { get; set; }
 

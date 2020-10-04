@@ -1,19 +1,17 @@
-﻿using System;
+﻿using CommonLib;
+using CommonLib.Classes;
+using CommonLib.Geomodel;
+using CommonLibLib.Data.Interfaces;
+using GMap.NET;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
-using CommonLib;
-using CommonLib.Classes;
-using WindEnergy.WindLib.Statistic.Structures;
 using WindEnergy.WindLib.Statistic.Calculations;
 using WindEnergy.WindLib.Statistic.Collections;
-using GMap.NET;
-using CommonLibLib.Data.Interfaces;
-using CommonLib.Geomodel;
-using System.Drawing;
+using WindEnergy.WindLib.Statistic.Structures;
 using WindEnergy.WindLib.Transformation.Restore.Interpolation;
 
 namespace WindEnergy.WindLib.Transformation.Terrain

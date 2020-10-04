@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommonLib
 {
@@ -11,7 +9,7 @@ namespace CommonLib
     /// </summary>
     public static class StringExtensions
     {
-        static Dictionary<char, char> invertor = new Dictionary<char, char>() {
+        private static Dictionary<char, char> invertor = new Dictionary<char, char>() {
             { 'a','a' },
             { 'b','и' },
             { 'c','с' },

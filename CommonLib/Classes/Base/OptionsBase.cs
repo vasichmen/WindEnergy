@@ -1,11 +1,6 @@
 ﻿using CommonLib.Data.Providers.InternetServices;
-using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -74,7 +69,7 @@ namespace CommonLib.Classes.Base
             }
         }
 
-        
+
         /// <summary>
         /// GUID экземпляра программы
         /// </summary>

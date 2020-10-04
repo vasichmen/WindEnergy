@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using GMap.NET;
-using WindEnergy.WindLib.Data.Interfaces;
-using System.Threading;
-using Newtonsoft.Json.Linq;
-using System.Collections.Concurrent;
-using System.IO;
-using System.Windows.Forms;
-using WindEnergy.WindLib.Data.Providers;
-using CommonLib.Data.Providers.InternetServices;
+﻿using CommonLib.Data.Providers.InternetServices;
 using CommonLibLib.Data.Interfaces;
-using CommonLib;
+using GMap.NET;
+using System;
+using System.Xml;
 
 namespace WindEnergy.WindLib.Data.Providers.InternetServices
 {
@@ -24,7 +12,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
     /// https://developers.google.com/maps/documentation/elevation/intro?hl=ru
     /// https://developers.google.com/maps/documentation/directions/intro?hl=ru
     /// </summary>
-   public class Google : BaseConnection, IGeoInfoProvider
+    public class Google : BaseConnection, IGeoInfoProvider
     {
         /// <summary>
         /// Создаёт новый объект связи с сервисом с заданной папкой кэша запросов и временем хранения кэша

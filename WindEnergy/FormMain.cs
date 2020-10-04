@@ -1,30 +1,17 @@
-﻿using System;
+﻿using CommonLib;
+using CommonLib.UITools;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindEnergy.WindLib;
-using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.WindLib.Data;
-using WindEnergy.WindLib.Data.Providers;
-using WindEnergy.WindLib.Data.Providers.InternetServices;
-using WindEnergy.WindLib.Statistic.Structures;
 using WindEnergy.UI.Dialogs;
 using WindEnergy.UI.Ext;
 using WindEnergy.UI.Helpers;
 using WindEnergy.UI.Tools;
+using WindEnergy.WindLib.Classes.Collections;
+using WindEnergy.WindLib.Classes.Structures;
 using WindLib;
-using CommonLib.UITools;
-using CommonLib;
 
 namespace WindEnergy.UI
 {

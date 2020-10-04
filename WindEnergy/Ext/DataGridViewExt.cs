@@ -1,10 +1,4 @@
-﻿using CommonLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace WindEnergy.UI.Ext
 {
@@ -46,12 +40,12 @@ namespace WindEnergy.UI.Ext
             if (!(sender as DataGridViewExt).CausesValidation)
                 return;
 
-             this.Rows[e.RowIndex].ErrorText = "";
+            this.Rows[e.RowIndex].ErrorText = "";
             //проверка значений double на соответствие типу
-            if (e.ColumnIndex == 0 || e.ColumnIndex == 2 || e.ColumnIndex == 3 || e.ColumnIndex == 5 )
+            if (e.ColumnIndex == 0 || e.ColumnIndex == 2 || e.ColumnIndex == 3 || e.ColumnIndex == 5)
             {
                 string val = e.FormattedValue as string;
-                if (!double.TryParse(val.Replace('.',Constants.DecimalSeparator),out double d))
+                if (!double.TryParse(val.Replace('.', Constants.DecimalSeparator), out double d))
                 {
                     this.Rows[e.RowIndex].ErrorText = $"Не удалось распознать число: {e.FormattedValue}";
                     e.Cancel = true;

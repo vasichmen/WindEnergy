@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.WindLib;
@@ -284,7 +278,7 @@ namespace WindEnergy.UI.Tools
 
             _ = Task.Run(() =>
             {
-                Scripts.LoadAllNasaDatabase(Application.StartupPath+"\\nasa.database", act, checkStop);
+                Scripts.LoadAllNasaDatabase(Application.StartupPath + "\\nasa.database", act, checkStop);
 
                 if (InvokeRequired)
                     _ = this.Invoke(new Action(() =>

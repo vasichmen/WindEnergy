@@ -1,29 +1,20 @@
-﻿using GMap.NET;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using WindEnergy.WindLib.Classes;
-using WindEnergy.WindLib.Classes.Collections;
-using WindEnergy.WindLib.Classes.Structures;
-using WindEnergy.WindLib.Data;
-using WindEnergy.WindLib.Data.Providers;
-using WindEnergy.WindLib.Statistic.Calculations;
-using WindEnergy.WindLib.Statistic.Structures;
-using WindEnergy.UI.Dialogs;
-using CommonLib;
+﻿using CommonLib;
 using CommonLib.Classes;
 using CommonLib.UITools;
-using WindLib;
+using GMap.NET;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Net;
+using System.Windows.Forms;
 using WindEnergy.UI.Properties;
+using WindEnergy.WindLib.Classes.Collections;
+using WindEnergy.WindLib.Classes.Structures;
+using WindEnergy.WindLib.Statistic.Calculations;
+using WindEnergy.WindLib.Statistic.Structures;
 using WindEnergy.WindLib.Transformation.Restore;
+using WindLib;
 
 namespace WindEnergy.UI.Tools
 {
@@ -72,7 +63,7 @@ namespace WindEnergy.UI.Tools
             Cursor = Cursors.WaitCursor;
             InterpolateMethods method = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem));
             StandartIntervals interval = (StandartIntervals)(new EnumTypeConverter<StandartIntervals>().ConvertFrom(comboBoxRepairInterval.SelectedItem));
-            Action<int, string> action = new Action<int, string>((percent,text) =>
+            Action<int, string> action = new Action<int, string>((percent, text) =>
             {
                 try
                 {

@@ -1,15 +1,10 @@
-﻿using CommonLib;
-using CommonLib.Data.Providers.InternetServices;
+﻿using CommonLib.Data.Providers.InternetServices;
 using GMap.NET;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Interfaces;
@@ -24,7 +19,7 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
         /// <summary>
         /// выбранные поля для загрузки https://power.larc.nasa.gov/docs/v1/#box
         /// </summary>
-        Dictionary<MeteorologyParameters, string> parameters = new Dictionary<MeteorologyParameters, string>() {
+        private Dictionary<MeteorologyParameters, string> parameters = new Dictionary<MeteorologyParameters, string>() {
             {MeteorologyParameters.Speed, "WS10M" },
             //{MeteorologyParameters.Direction, "WD10M" },
             {MeteorologyParameters.Temperature, "T10M" },

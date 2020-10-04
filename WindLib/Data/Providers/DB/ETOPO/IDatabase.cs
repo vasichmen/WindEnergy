@@ -1,10 +1,9 @@
-﻿using CommonLib;
-using GMap.NET;
+﻿using GMap.NET;
 using System;
 
 namespace WindEnergy.WindLib.Data.Providers.DB.ETOPO
 {
-    interface IDatabase
+    internal interface IDatabase
     {
         double this[PointLatLng coordinate] { get; }
         double this[int i, int j] { get; }
@@ -15,6 +14,6 @@ namespace WindEnergy.WindLib.Data.Providers.DB.ETOPO
         string HeaderFile { get; }
         int Rows { get; }
         ETOPODBType Type { get; }
-        void ExportToSQL(string FileName, Action<string> callback=null);
+        void ExportToSQL(string FileName, Action<string> callback = null);
     }
 }

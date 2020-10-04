@@ -1,13 +1,6 @@
-﻿using CommonLib;
-using GMap.NET;
+﻿using GMap.NET;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace WindEnergy.WindLib.Data.Providers.DB.ETOPO
 {
@@ -15,7 +8,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB.ETOPO
     /// База данных в двоичном файле .bin с заголовочным .hdr . 
     /// Поддерживаются бинарные файлы с целыми числами в ячейках с big-endian и little-endian порядком байт. 
     /// </summary>
-    class Int16Database : BaseGrid
+    internal class Int16Database : BaseGrid
     {
         private Int16[,] matrix;
         private Int16 noData;

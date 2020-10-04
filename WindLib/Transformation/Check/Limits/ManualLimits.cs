@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Structures;
 
 namespace WindEnergy.WindLib.Transformation.Check.Limits
@@ -33,8 +31,8 @@ namespace WindEnergy.WindLib.Transformation.Check.Limits
         /// <param name="speedInclude"></param>
         public ManualLimits(List<Diapason<double>> directionInclude, List<Diapason<double>> speedInclude)
         {
-            this.directionInclude = directionInclude!=null?directionInclude:new List<Diapason<double>>();
-            this.speedInclude = speedInclude!=null ? speedInclude : new List<Diapason<double>>();
+            this.directionInclude = directionInclude != null ? directionInclude : new List<Diapason<double>>();
+            this.speedInclude = speedInclude != null ? speedInclude : new List<Diapason<double>>();
         }
 
         public bool CheckItem(RawItem item)
@@ -67,12 +65,14 @@ namespace WindEnergy.WindLib.Transformation.Check.Limits
             switch (paramter)
             {
                 case MeteorologyParameters.Direction:
-                    double min = directionInclude.Min(new Func<Diapason<double>, double>((diapason)=>{
+                    double min = directionInclude.Min(new Func<Diapason<double>, double>((diapason) =>
+                    {
                         return diapason.From;
                     }));
                     return min;
                 case MeteorologyParameters.Speed:
-                    double mins = speedInclude.Min(new Func<Diapason<double>, double>((diapason) => {
+                    double mins = speedInclude.Min(new Func<Diapason<double>, double>((diapason) =>
+                    {
                         return diapason.From;
                     }));
                     return mins;
@@ -90,12 +90,14 @@ namespace WindEnergy.WindLib.Transformation.Check.Limits
             switch (paramter)
             {
                 case MeteorologyParameters.Direction:
-                    double max = directionInclude.Max(new Func<Diapason<double>, double>((diapason) => {
+                    double max = directionInclude.Max(new Func<Diapason<double>, double>((diapason) =>
+                    {
                         return diapason.To;
                     }));
                     return max;
                 case MeteorologyParameters.Speed:
-                    double maxs = speedInclude.Max(new Func<Diapason<double>, double>((diapason) => {
+                    double maxs = speedInclude.Max(new Func<Diapason<double>, double>((diapason) =>
+                    {
                         return diapason.To;
                     }));
                     return maxs;

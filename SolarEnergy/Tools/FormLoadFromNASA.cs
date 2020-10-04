@@ -8,13 +8,7 @@ using SolarEnergy.SolarLib.Data.Providers.InternetServices;
 using SolarEnergy.UI.Properties;
 using SolarLib;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SolarEnergy.UI.Tools
@@ -70,9 +64,9 @@ namespace SolarEnergy.UI.Tools
                 DialogResult = DialogResult.OK;
                 Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(this, "При загрузке данных произошла ошибка. Причина:\r\n" + ex.Message,this.Text,MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show(this, "При загрузке данных произошла ошибка. Причина:\r\n" + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
