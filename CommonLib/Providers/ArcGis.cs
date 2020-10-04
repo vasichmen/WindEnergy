@@ -1,4 +1,5 @@
 ﻿using CommonLib;
+using CommonLib.Classes;
 using CommonLib.Data.Providers.InternetServices;
 using CommonLibLib.Data.Interfaces;
 using GMap.NET;
@@ -59,6 +60,9 @@ namespace CommonLibLib.Data.Providers.InternetServices
                 Token
                 );
             JToken ans = SendJsonGetRequest(url, out HttpStatusCode code);
+
+            if (ans == null)
+                throw new WindEnergyException("Не удалочь получить ответ");
 
             JToken err = ans["error"];
             if (err != null)

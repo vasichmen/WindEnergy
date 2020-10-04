@@ -30,7 +30,7 @@ namespace WindEnergy.UI.Tools
     /// </summary>
     public partial class FormCheckRange : Form
     {
-        private RawRange range = null;
+        private RawRange range;
 
         /// <summary>
         /// точка на карте для которой происходит проверка ряда
@@ -46,8 +46,6 @@ namespace WindEnergy.UI.Tools
         /// </summary>
         public RawRange Result { get; private set; }
 
-
-
         /// <summary>
         /// открыть окно с заданным рядом
         /// </summary>
@@ -57,8 +55,6 @@ namespace WindEnergy.UI.Tools
             InitializeComponent();
             this.range = range;
         }
-
-
 
         #region проверка ряда
 
@@ -184,7 +180,6 @@ namespace WindEnergy.UI.Tools
         private void radioButtonLimits_CheckedChanged(object sender, EventArgs e)
         {
             buttonSelectPoint.Enabled = radioButtonSelectLimitsProvider.Checked;
-            // comboBoxLimitsProvider.Enabled = radioButtonSelectLimitsProvider.Checked;
             buttonEnterDirectionDiapason.Enabled = radioButtonEnterLimits.Checked;
             buttonEnterSpeedDiapason.Enabled = radioButtonEnterLimits.Checked;
         }
@@ -200,7 +195,7 @@ namespace WindEnergy.UI.Tools
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
                 labelPointCoordinates.Text = $"Широта: {spt.Result.Lat:0.000} Долгота: {spt.Result.Lng:0.000}";
-                labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(spt.Result);
+                loadAddressAsync(spt.Result);
                 toolTip1.SetToolTip(labelPointAddress, labelPointAddress.Text);
                 checkPoint = spt.Result;
             }
@@ -238,7 +233,6 @@ namespace WindEnergy.UI.Tools
 
         #endregion
 
-
         /// <summary>
         /// открытие окна и заполнение элементов в combobox
         /// </summary>
@@ -246,14 +240,36 @@ namespace WindEnergy.UI.Tools
         /// <param name="e"></param>
         private void formCheckRepairRange_Shown(object sender, EventArgs e)
         {
-
-            //comboBoxLimitsProvider.SelectedItem = LimitsProviders.StaticLimits.Description();
             checkPoint = range.Position;
+            loadAddressAsync(checkPoint);
             labelPointCoordinates.Text = $"Широта: {checkPoint.Lat:0.000} Долгота: {checkPoint.Lng:0.000}";
-            try
-            { labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(checkPoint); }
-            catch (Exception) { }
             radioButtonSelectLimitsProvider.Checked = true;
+        }
+
+        /// <summary>
+        /// Асинхронно загружает адрес точки ряда
+        /// </summary>
+        async void loadAddressAsync(PointLatLng point)
+        {
+            labelPointAddress.Text = "Поиск адреса...";
+            await Task.Run(() =>
+            {
+                string adr = "";
+                try
+                {
+                    adr = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(point);
+                }
+                catch (Exception)
+                {
+                    adr = "Не удалось найти адрес";
+                }
+
+                _ = this.Invoke(new Action(() =>
+                  {
+                      labelPointAddress.Text = adr;
+                  }));
+
+            }).ConfigureAwait(false);
         }
 
         private void labelPointCoordinates_TextChanged(object sender, EventArgs e)
