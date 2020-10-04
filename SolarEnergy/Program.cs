@@ -1,4 +1,5 @@
-﻿using CommonLib.Classes;
+﻿using CommonLib;
+using CommonLib.Classes;
 using CommonLib.Data.Providers.InternetServices;
 using CommonLibLib.Data.Providers.FileSystem;
 using SolarEnergy.UI;
@@ -8,6 +9,7 @@ using SolarLib.Classes.Structures.Options;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
