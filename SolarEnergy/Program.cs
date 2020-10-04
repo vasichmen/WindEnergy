@@ -54,48 +54,48 @@ namespace SolarEnergy
             {
 #endif
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
 
-            Vars.Options = Options.Load(Application.StartupPath + "\\solarOptions.xml");
-            if (Vars.Options == null)
-            {
-                throw new Exception("Файлы программы повреждены, запуск невозможен");
-            }
-            Vars.LocalFileSystem = new LocalFileSystem(Vars.Options.TempFolder);
+                Vars.Options = Options.Load(Application.StartupPath + "\\solarOptions.xml");
+                if (Vars.Options == null)
+                {
+                    throw new Exception("Файлы программы повреждены, запуск невозможен");
+                }
+                Vars.LocalFileSystem = new LocalFileSystem(Vars.Options.TempFolder);
 
-            winMain = new FormMain();
-
-
-            //обработчик выхода из приложения
-            Application.ApplicationExit += application_ApplicationExit;
+                winMain = new FormMain();
 
 
-            #region запись статистики, проверка версии
+                //обработчик выхода из приложения
+                Application.ApplicationExit += application_ApplicationExit;
 
-            new Task(new Action(() =>
-            {
-                Velomapa site = new Velomapa(); //связь с сайтом
+
+                #region запись статистики, проверка версии
+
+                new Task(new Action(() =>
+                {
+                    Velomapa site = new Velomapa(); //связь с сайтом
                 site.SendStatisticAsync(Vars.Options.ApplicationGuid); //статистика
 
-                    //действие при проверке версии
-                    Action<VersionInfo> action = new Action<VersionInfo>((vi) =>
-                        {
-                    float curVer = Vars.Options.VersionInt;
-                    if (vi.VersionInt > curVer)
+                //действие при проверке версии
+                Action<VersionInfo> action = new Action<VersionInfo>((vi) =>
                     {
-                        FormUpdateDialog fud = new FormUpdateDialog(vi);
-                        if (Vars.Options.UpdateMode != UpdateDialogAnswer.AlwaysIgnore)
-                            winMain.Invoke(new Action(() => fud.ShowDialog()));
-                    }
-                });
-                site.GetVersionAsync(action); //проверка версии
+                                float curVer = Vars.Options.VersionInt;
+                                if (vi.VersionInt > curVer)
+                                {
+                                    FormUpdateDialog fud = new FormUpdateDialog(vi);
+                                    if (Vars.Options.UpdateMode != UpdateDialogAnswer.AlwaysIgnore)
+                                        winMain.Invoke(new Action(() => fud.ShowDialog()));
+                                }
+                            });
+                    site.GetVersionAsync(action); //проверка версии
             })
-            ).Start();
+                ).Start();
 
-            #endregion
+                #endregion
 
-            Application.Run(winMain);
+                Application.Run(winMain);
 #if (!DEBUG)
             }
             catch (Exception e)
