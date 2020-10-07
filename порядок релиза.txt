@@ -1,7 +1,0 @@
-1. Проверить версию сборки в проектах WindEnergy, WinLib, SolarLib, CommonLib, SolarEnergy
-2. Актуализировать changelog.txt в проекте
-3. Пересобрать решение в Release
-4. сделать коммит релиза Release <version>
-5. make_release.bat
-6. make_zip.bat
-7. Опубликовать новую версию на сайте
