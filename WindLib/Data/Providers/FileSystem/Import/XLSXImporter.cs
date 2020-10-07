@@ -29,7 +29,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem.Import
             if (excelPackage == null || excelPackage.File.FullName != FilePath)
                 excelPackage = new ExcelPackage(fi);
 
-            ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[1];
+            ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[0];
 
             var arr = worksheet.Cells;
             StringBuilder sb = new StringBuilder();
