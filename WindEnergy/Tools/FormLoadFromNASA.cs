@@ -4,6 +4,7 @@ using CommonLibLib.Data.Providers.InternetServices;
 using GMap.NET;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.UI.Properties;
 using WindEnergy.WindLib.Classes.Collections;
@@ -47,20 +48,39 @@ namespace WindEnergy.UI.Tools
                 spoint.Position = spt.Result;
                 point = spt.Result;
                 labelPointCoordinates.Text = $"Широта: {spt.Result.Lat:0.000} Долгота: {spt.Result.Lng:0.000}";
-                try
-                {
-                    labelPointAddress.Text = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(spt.Result);
-                }
-                catch (WebException we)
-                {
-                    _ = MessageBox.Show(this, we.Message, "Загрузка ряда", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+
+                loadAddressAsync(spt.Result);
 
                 buttonDownload.Enabled = true;
                 dateTimePickerFromDate.Enabled = true;
                 dateTimePickerToDate.Enabled = true;
             }
+        }
+
+        /// <summary>
+        /// Асинхронно загружает адрес точки ряда
+        /// </summary>
+        private async void loadAddressAsync(PointLatLng point)
+        {
+            labelPointAddress.Text = "Поиск адреса...";
+            await Task.Run(() =>
+            {
+                string adr = "";
+                try
+                {
+                    adr = new Arcgis(Vars.Options.CacheFolder + "\\arcgis").GetAddress(point);
+                }
+                catch (Exception)
+                {
+                    adr = "Не удалось найти адрес";
+                }
+
+                _ = this.Invoke(new Action(() =>
+                {
+                    labelPointAddress.Text = adr;
+                }));
+
+            }).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -79,7 +99,15 @@ namespace WindEnergy.UI.Tools
             {
                 buttonDownload.Enabled = false;
                 RawRange res = engineNASA.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, spoint);
-                res.Name = geocoder.GetAddress(spoint.Position);
+                try
+                {
+                    res.Name = geocoder.GetAddress(spoint.Position);
+                }
+                catch(Exception)
+                {
+                    res.Name = $"Широта {spoint.Position.Lat:0.000} Долгота {spoint.Position.Lng:0.000}";
+                }
+
                 Result = res;
                 DialogResult = DialogResult.OK;
                 Close();
