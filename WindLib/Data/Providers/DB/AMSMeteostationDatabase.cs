@@ -29,10 +29,15 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             while (!sr.EndOfStream)
             {
                 string line = sr.ReadLine();
-                //MSID; Название; Широта; Долгота; V10 по месяцам, январь; февраль; март; апрель; май; июнь; июль; август; сентябрь; октябрь; ноябрь; декабрь; 
-                //m по месяцам,январь; февраль; март; апрель; май; июнь; июль; август; сентябрь; октябрь; ноябрь; декабрь; Среднее m;
+                //MSID;Название;Широта;Долгота;
+                //V10 по месяцам, январь;февраль;март;апрель;май;июнь;июль;август;сентябрь;октябрь;ноябрь;декабрь;
+                //V100 по месяцам, январь;февраль;март;апрель;май;июнь;июль;август;сентябрь;октябрь;ноябрь;декабрь;
+                //V200 по месяцам, январь;февраль;март;апрель;май;июнь;июль;август;сентябрь;октябрь;ноябрь;декабрь;
+                //m по месяцам,январь;февраль;март;апрель;май;июнь;июль;август;сентябрь;октябрь;ноябрь;декабрь;
+                //Среднее m;a;b;R;
+
                 string[] arr = line.Split(';');
-                if (arr.Length < 29)
+                if (arr.Length < 56)
                     continue;
 
                 int id = int.Parse(arr[0]);
@@ -40,25 +45,52 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                 double lat = double.Parse(arr[2].Replace(',', Constants.DecimalSeparator));
                 double lon = double.Parse(arr[3].Replace(',', Constants.DecimalSeparator));
                 PointLatLng p = new PointLatLng(lat, lon);
-                double averM = double.Parse(arr[28].Replace(',', Constants.DecimalSeparator));
 
                 //скорости на высоте 10м
-                Dictionary<Months, double> speeds = new Dictionary<Months, double>();
+                Dictionary<Months, double> speeds10 = new Dictionary<Months, double>();
                 for (int i = 1; i <= 12; i++)
                 {
                     double spd = double.Parse(arr[3 + i].Replace(',', Constants.DecimalSeparator));
                     Months month = (Months)i;
-                    speeds.Add(month, spd);
+                    speeds10.Add(month, spd);
+                }
+
+                //скорости на высоте 100м
+                Dictionary<Months, double> speeds100 = new Dictionary<Months, double>();
+                for (int i = 1; i <= 12; i++)
+                {
+                    double spd = double.Parse(arr[15 + i].Replace(',', Constants.DecimalSeparator));
+                    Months month = (Months)i;
+                    speeds100.Add(month, spd);
+                }
+
+                //скорости на высоте 200м
+                Dictionary<Months, double> speeds200 = new Dictionary<Months, double>();
+                for (int i = 1; i <= 12; i++)
+                {
+                    double spd = double.Parse(arr[27 + i].Replace(',', Constants.DecimalSeparator));
+                    Months month = (Months)i;
+                    speeds200.Add(month, spd);
                 }
 
                 //коэффициенты по месяцам
                 Dictionary<Months, double> Ms = new Dictionary<Months, double>();
                 for (int i = 1; i <= 12; i++)
                 {
-                    double m = double.Parse(arr[15 + i].Replace(',', Constants.DecimalSeparator));
+                    double m = double.Parse(arr[39 + i].Replace(',', Constants.DecimalSeparator));
                     Months month = (Months)i;
                     Ms.Add(month, m);
                 }
+
+                //среднее значение m
+                double averM = double.Parse(arr[52].Replace(',', Constants.DecimalSeparator));
+
+                //коэффициента модели
+                double a = double.Parse(arr[53].Replace(',', Constants.DecimalSeparator));
+                double b = double.Parse(arr[54].Replace(',', Constants.DecimalSeparator));
+                double R = double.Parse(arr[55].Replace(',', Constants.DecimalSeparator));
+
+
 
                 AMSMeteostationInfo data = new AMSMeteostationInfo()
                 {
@@ -67,7 +99,12 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                     Position = p,
                     AverageM = averM,
                     m = Ms,
-                    V10 = speeds
+                    V10 = speeds10,
+                    V100 = speeds100,
+                    V200 = speeds200,
+                    a = a,
+                    b = b,
+                    R = R
                 };
 
                 if (!items.ContainsKey(p))

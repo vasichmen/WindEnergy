@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
@@ -30,7 +31,7 @@ namespace WindEnergy.WindLib.Transformation.Altitude
             switch (param.HellmanCoefficientSource)
             {
                 case HellmanCoefficientSource.AMSAnalog:
-                    coeffs = param.SelectedAMS.AMS.m ?? null;
+                    coeffs = getAMSAnalogCoefficients(param.SelectedAMS.AMS, Range);
                     break;
                 case HellmanCoefficientSource.CustomMonths:
                     coeffs = param.CustomNCoefficientMonths;
@@ -40,7 +41,6 @@ namespace WindEnergy.WindLib.Transformation.Altitude
                     for (int i = 1; i <= 12; i++) coeffs.Add((Months)i, param.CustomMCoefficient);
                     break;
                 default: throw new Exception("Этот источник данных не реализован");
-
             }
 
             coeffs = coeffs ?? throw new ArgumentException("Недопустимые настройки, коэффициенты пересчета на высоту не получены");
@@ -69,6 +69,43 @@ namespace WindEnergy.WindLib.Transformation.Altitude
                 actionAfter.Invoke(res, param.SelectedAMS);
             });
             tsk.Start();
+        }
+
+        /// <summary>
+        /// возвращает коэффициенты m для каждого месяца по заданной модели АМС
+        /// </summary>
+        /// <param name="meteostation">модель АМС</param>
+        /// <param name="range">ряд данных</param>
+        /// <returns></returns>
+        static Dictionary<Months, double> getAMSAnalogCoefficients(AMSMeteostationInfo meteostation, RawRange range)
+        {
+            //средняя скорость по месяцам
+            Dictionary<Months, double> averSpeeds = new Dictionary<Months, double>();
+            Dictionary<Months, double> result = new Dictionary<Months, double>();
+            for (int m = 1; m <= 12; m++)
+            {
+                Months month = (Months)m;
+                var r = from t in range
+                        where t.Date.Month == m
+                        select t.Speed;
+
+                double mAverage = double.NaN;
+                if (r.Count() == 0)
+                    mAverage = 0;
+                else mAverage = r.Average();
+
+                //расчет коэффициентов m для каждого месяца по модели АМС: m=a*Vcp^(-b)
+                //у нас уже приходят b<0, поэтому умножать на -1 не надо
+                double mCoeff = meteostation.a * Math.Pow(mAverage, meteostation.b);
+
+                //если скорость меньше 2мс и m получился больше 0.5, то m=0.5
+                if (mAverage <= 2 && mCoeff > 0.5)
+                    result.Add(month, 0.5);
+                else
+                    result.Add(month, mCoeff);
+            }
+
+            return result;
         }
     }
 }

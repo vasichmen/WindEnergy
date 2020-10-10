@@ -9,6 +9,7 @@ using WindEnergy.UI.Dialogs;
 using WindEnergy.UI.Ext;
 using WindEnergy.UI.Helpers;
 using WindEnergy.UI.Tools;
+using WindEnergy.WindLib;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindLib;
@@ -491,7 +492,8 @@ namespace WindEnergy.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            bool f = Driver.CheckFullKey();
+            var ff = Vars.AMSMeteostations.List;
+            Scripts.ConvertAMSDatabaseFromXlsx(Application.StartupPath+"\\БД-ВПВ.xlsx", Application.StartupPath + "\\AMS.database.txt");
 
         }
     }

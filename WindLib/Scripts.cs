@@ -5,6 +5,7 @@ using CommonLibLib.Data.Providers.InternetServices;
 using GMap.NET;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -50,111 +51,150 @@ namespace WindEnergy.WindLib
         #region обновление БД АМС
 
         /// <summary>
-        /// Получает координаты и ID  метеостанций из созраненного листа Список метеостанций по ФО БД АМС
+        /// загрузка БД АМС из файла xlsx с коэффициентами модели a b
         /// </summary>
-        /// <param name="fromFile">сохраненный лист из БД АМС</param>
-        /// <param name="destFile">результирующая БД, файл будет перезаписан</param>
-        public static void ConvertMSIDFromFile(string fromFile, string destFile)
+        /// <param name="fileName"></param>
+        /// <param name="exportFile"></param>
+        public static void ConvertAMSDatabaseFromXlsx(string fileName, string exportFile)
         {
-            using (StreamReader sr = new StreamReader(fromFile))
+            ExcelPackage pack = new ExcelPackage(new FileInfo(fileName));
+            ExcelWorksheet names = pack.Workbook.Worksheets["номер-название"];
+            ExcelWorksheet positions = pack.Workbook.Worksheets["номер-широта-долгота"];
+            ExcelWorksheet speeds = pack.Workbook.Worksheets["номер-скорости"];
+            ExcelWorksheet coefficients = pack.Workbook.Worksheets["номер-коэффициенты"];
+            ExcelWorksheet models = pack.Workbook.Worksheets["номер-модель"];
+            StreamWriter sw = new StreamWriter(exportFile, false, Encoding.UTF8);
+
+            //запись заголовка
+            sw.WriteLine("MSID;Название;Широта;Долгота;" +
+                "V10 по месяцам, январь;февраль;март;апрель;май;июнь;июль;август;сентябрь;октябрь;ноябрь;декабрь;" +
+                "V100 по месяцам, январь;февраль;март;апрель;май;июнь;июль;август;сентябрь;октябрь;ноябрь;декабрь;" +
+                "V200 по месяцам, январь;февраль;март;апрель;май;июнь;июль;август;сентябрь;октябрь;ноябрь;декабрь;" +
+                "m по месяцам,январь;февраль;март;апрель;май;июнь;июль;август;сентябрь;октябрь;ноябрь;декабрь;" +
+                "Среднее m;a;b;R");
+
+
+            for (int row = 2; row < names.Dimension.Rows; row++)
             {
-                using (StreamWriter sw = new StreamWriter(destFile, false, Encoding.UTF8))
-                {
-                    List<int> ids = new List<int>();
-                    sr.ReadLine();
-                    while (!sr.EndOfStream)
-                    {
-                        string line = sr.ReadLine();
-                        string[] arr = line.Split(';');
-                        int id = int.Parse(arr[5]);
-                        if (!ids.Contains(id))
-                        {
-                            //ID;Name;Lat;Lon
-                            string name = arr[6];
-                            string lat = arr[7];
-                            string lon = arr[8];
-                            string lineW = $"{id};{name};{lat};{lon}";
-                            sw.WriteLine(lineW);
-                            ids.Add(id);
-                        }
-                    }
-                }
+                string id = names.Cells[row, 1].Value.ToString();
+                string name = names.Cells[row, 2].Value.ToString();
+                PointLatLng position = findPosition(positions, id);
+                Dictionary<Months, double> speed0 = findSpeeds(speeds, id, "0");
+                Dictionary<Months, double> speed100 = findSpeeds(speeds, id, "100");
+                Dictionary<Months, double> speed200 = findSpeeds(speeds, id, "200");
+                Dictionary<Months, double> coefficient = findCoefficients(coefficients, id);
+                double averCoeff = coefficient.Average((item) => item.Value);
+                double a = findValue(models, id, 2);
+                double b = findValue(models, id, 3);
+                double R = findValue(models, id, 4);
+
+                //проверка на полноту данных
+                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(name) || position.IsEmpty ||
+                    speed0.Count == 0 || speed100.Count == 0 || speed200.Count == 0 || coefficient.Count == 0 ||
+                    double.IsNaN(a) || double.IsNaN(b) || double.IsNaN(R)) continue;
+
+                //сохранение в файл
+                sw.Write($"{id};{name};{position.Lat};{position.Lng};");
+                for (int m = 1; m <= 12; m++)
+                    sw.Write(speed0[(Months)m] + ";");
+                for (int m = 1; m <= 12; m++)
+                    sw.Write(speed100[(Months)m] + ";");
+                for (int m = 1; m <= 12; m++)
+                    sw.Write(speed200[(Months)m] + ";");
+                for (int m = 1; m <= 12; m++)
+                    sw.Write(coefficient[(Months)m] + ";");
+                sw.Write($"{averCoeff};{a};{b};{R}");
+
+                sw.WriteLine();
             }
+            sw.Close();
+
+        }
+
+        private static double findValue(ExcelWorksheet models, string id, int pos)
+        {
+            for (int row = 1; row < models.Dimension.Rows; row++)
+                if (models.Cells[row, 1].Value != null && models.Cells[row, 1].Value.ToString() == id)
+                {
+                    string val = models.Cells[row, pos].Value != null ? models.Cells[row, pos].Value.ToString() : null;
+                    if (double.TryParse(val, out double res))
+                        return res;
+                    else
+                        return double.NaN;
+                }
+            return double.NaN;
         }
 
         /// <summary>
-        /// Загружает данные из сохраненного листа БД АМС "Скорости по ФО"
+        /// найти коэффициенты mдля заданной АМС
         /// </summary>
-        /// <param name="mFile"> лист БД АМС "Скорости по ФО"</param>
-        /// <param name="destFile">результирующий файл от метода Scripts.ConvertMSIDFromFile</param>
-        public static void ConvertMCoefficientsFromFile(string mFile, string destFile)
+        /// <param name="coefficients"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private static Dictionary<Months, double> findCoefficients(ExcelWorksheet coefficients, string id)
         {
-            List<string[]> destLines = new List<string[]>();
-            using (StreamReader sr = new StreamReader(destFile))
-            {
-                while (!sr.EndOfStream)
+            Dictionary<Months, double> res = new Dictionary<Months, double>();
+            for (int row = 1; row < coefficients.Dimension.Rows; row++)
+                if (coefficients.Cells[row, 1].Value != null && coefficients.Cells[row, 1].Value.ToString() == id)
                 {
-                    destLines.Add(sr.ReadLine().Split(';'));
-                }
-            }
-
-            Dictionary<int, string[]> mLines = new Dictionary<int, string[]>();
-            using (StreamReader sr = new StreamReader(mFile))
-            {
-                int nextLine = 0; //считаем, что первый заголовок на 0 строке
-                int i = 0;
-                string line = sr.ReadLine();
-                while (!sr.EndOfStream)
-                {
-                    if (i == nextLine)
+                    for (int m = 1; m <= 12; m++)
                     {
-                        string[] arr = line.Split(';');
-                        int id = int.Parse(arr[0]);
-
-                        //скорости
-                        string speedLine = sr.ReadLine();
-                        string[] speeds10 = speedLine.Split(';').Skip(14).Take(12).ToArray();
-
-                        //среднее m
-                        string averLine = sr.ReadLine();
-                        string[] mAver = averLine.Split(';').Skip(28).Take(1).ToArray();
-
-                        sr.ReadLine(); sr.ReadLine();
-
-                        //месячные m
-                        string mLine = sr.ReadLine();
-                        string[] ms = mLine.Split(';').Skip(14).Take(12).ToArray();
-
-                        string[] res = speeds10.Concat(ms).Concat(mAver).ToArray();
-                        mLines.Add(id, res);
-
-                        nextLine += 20; i += 5; //переход на следующий элемент
+                        Months month = (Months)m;
+                        string val = coefficients.Cells[row, m + 1].Value.ToString();
+                        double value = double.Parse(val);
+                        res.Add(month, value);
                     }
-                    i++;
-                    line = sr.ReadLine();
+                    return res;
                 }
-            }
-
-            using (StreamWriter sw = new StreamWriter(destFile, false, Encoding.UTF8))
-            {
-                foreach (var ln in destLines)
-                {
-                    int id = int.Parse(ln[0]);
-                    string[] data = mLines[id];
-                    string[] resultLine = ln.Concat(data).ToArray();
-                    string w = "";
-                    foreach (string s in resultLine)
-                        w += s + ";";
-                    w = w.Trim(';');
-                    sw.WriteLine(w);
-                }
-            }
-
-
-
-
+            return res;
         }
 
+        /// <summary>
+        /// найти скорости на заднной высоте для АМС
+        /// </summary>
+        /// <param name="speeds"></param>
+        /// <param name="id"></param>
+        /// <param name="alt"></param>
+        /// <returns></returns>
+        private static Dictionary<Months, double> findSpeeds(ExcelWorksheet speeds, string id, string alt)
+        {
+            Dictionary<Months, double> res = new Dictionary<Months, double>();
+            for (int row = 1; row < speeds.Dimension.Rows; row++)
+                if (speeds.Cells[row, 1].Value != null && speeds.Cells[row, 1].Value.ToString() == id)
+                    for (int i = row; i < row + 5; i++)
+                        if (speeds.Cells[i, 1].Value != null && speeds.Cells[i, 1].Value.ToString() == alt)
+                        {
+                            for (int m = 1; m <= 12; m++)
+                            {
+                                Months month = (Months)m;
+                                string val = speeds.Cells[i, m + 1].Value.ToString();
+                                double value = double.Parse(val);
+                                res.Add(month, value);
+                            }
+                            return res;
+                        }
+            return res;
+        }
+
+        /// <summary>
+        /// найти координаты для АМС
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private static PointLatLng findPosition(ExcelWorksheet sheet, string id)
+        {
+            for (int row = 2; row < sheet.Dimension.Rows; row++)
+            {
+                if (sheet.Cells[row, 1].Value != null && sheet.Cells[row, 1].Value.ToString() == id)
+                {
+                    double lat = double.Parse(sheet.Cells[row, 2].Value.ToString());
+                    double lon = double.Parse(sheet.Cells[row, 3].Value.ToString());
+                    return new PointLatLng(lat, lon);
+                }
+            }
+            return PointLatLng.Empty;
+        }
 
         #endregion
 
