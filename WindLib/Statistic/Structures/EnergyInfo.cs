@@ -43,17 +43,17 @@ namespace WindEnergy.WindLib.Statistic.Structures
         public double EnergyDensity { get; set; }
 
         /// <summary>
-        /// среднеквадратическое отклонение скорости
+        /// среднеквадратическое отклонение скорости, м/с
         /// </summary>
         public double StandardDeviationSpeed { get; set; }
 
         /// <summary>
-        /// максимальная скорость за период времени
+        /// максимальная скорость за период времени, м/м
         /// </summary>
         public double Vmax { get; set; }
 
         /// <summary>
-        /// минимальная скорость
+        /// минимальная скорость, м/с
         /// </summary>
         public double Vmin { get; set; }
 
@@ -63,8 +63,13 @@ namespace WindEnergy.WindLib.Statistic.Structures
         public double VeybullGamma { get; set; }
 
         /// <summary>
-        /// параметр распределения вейбулла бета
+        /// параметр распределения вейбулла бета, м/с
         /// </summary>
         public double VeybullBeta { get; set; }
+
+        /// <summary>
+        /// Экстремальна скорость ветра за 50 лет, м/с
+        /// </summary>
+        public double ExtremalSpeed { get; set; }
     }
 }

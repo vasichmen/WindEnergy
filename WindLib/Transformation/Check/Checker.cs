@@ -56,7 +56,7 @@ namespace WindEnergy.WindLib.Transformation.Check
 
             }
 
-            Parallel.ForEach(range, (item) =>
+            Parallel.ForEach(range,new ParallelOptions() {MaxDegreeOfParallelism=8 }, (item) =>
             {
                 incrementCount();
                 bool accepted = checkItem(item);

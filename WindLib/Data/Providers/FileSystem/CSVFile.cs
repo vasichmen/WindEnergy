@@ -59,7 +59,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 return;
             }
 
-            //  "Год;Месяц;кол-во изм;0.75;2.5;4.5;6.5;8.5;10.5;12.5;14.5;16.5;19;22.5;26.5;31.5;37.5;43.5;Vmin;Vmax;Vср.год;Cv(V);Nвал уд.;Эвал уд.;С;СВ;В;ЮВ;Ю;ЮЗ;З;СЗ;штиль";
+            //  "Год;Месяц;кол-во изм;0.75;2.5;4.5;6.5;8.5;10.5;12.5;14.5;16.5;19;22.5;26.5;31.5;37.5;43.5;Vmin;Vmax;Vср.год;Vэкст50,м/с;Cv(V);Nвал уд.;Эвал уд.;С;СВ;В;ЮВ;Ю;ЮЗ;З;СЗ;штиль";
             string line = $"{year};{month};{amount}";
 
             //повторяемости скоростей ветра
@@ -67,8 +67,8 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 line += ";" + (stat_speeds.Values[j] * 100).ToString("0.00");
 
             //по ряду наблюдений
-            line += string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f2};{8:f2}",
-                range_info.Vmin, range_info.Vmax, range_info.V0, range_info.Cv, range_info.StandardDeviationSpeed, range_info.VeybullGamma, range_info.VeybullBeta, range_info.PowerDensity, range_info.EnergyDensity);
+            line += string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f2};{8:f2};{9:f2}",
+                range_info.Vmin, range_info.Vmax, range_info.V0, range_info.ExtremalSpeed, range_info.Cv, range_info.StandardDeviationSpeed, range_info.VeybullGamma, range_info.VeybullBeta, range_info.PowerDensity, range_info.EnergyDensity);
 
             //повторяемости направлений ветра
             List<Enum> rs = WindDirections16.Calm.GetEnumItems().GetRange(0, 17);
@@ -254,7 +254,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
             string cap = "Год;Месяц;кол-во изм";
             foreach (GradationItem grad in Vars.Options.CurrentSpeedGradation.Items)
                 cap += ";" + grad.Average.ToString("0.00");
-            cap += ";Vmin, м/с;Vmax, м/с;Vср, м/с;Cv(V);𝜎(V);параметр γ;параметр β;Nвал уд., Вт/м^2;Эвал уд., Вт*ч/м^2";
+            cap += ";Vmin, м/с;Vmax, м/с;Vср, м/с;Vэкст50,м/с;Cv(V);𝜎(V);параметр γ;параметр β;Nвал уд., Вт/м^2;Эвал уд., Вт*ч/м^2";
             foreach (WindDirections16 wd in WindDirections16.Calm.GetEnumItems().GetRange(0, 17))
                 cap += ";" + wd.Description();
 

@@ -30,7 +30,7 @@ namespace WindEnergy.WindLib.Statistic.Calculations
                 return null;
             EnergyInfo res = new EnergyInfo();
             res.FromDate = range[0].Date;
-            res.ToDate = range[range.Count - 1].Date;
+            res.ToDate = range.Last().Date;
             res.PowerDensity = getAveragePower(range, density);
             res.V0 = getAverageSpeed(range);
             res.StandardDeviationSpeed = getSigmV(res.V0, range);
@@ -40,21 +40,48 @@ namespace WindEnergy.WindLib.Statistic.Calculations
             res.Cv = res.StandardDeviationSpeed / res.V0;
             res.VeybullGamma = getVeybullGamma(res.Cv);
             res.VeybullBeta = getVeybullBeta(res.V0, res.VeybullGamma);
+            res.ExtremalSpeed = getExtremalSpeed(res.V0, res.VeybullGamma);
+
             return res;
         }
 
-
         #region служебные
+
+        /// <summary>
+        /// возвращает экстремальную скорость ветра за 50 лет
+        /// </summary>
+        /// <param name="v0"></param>
+        /// <param name="veybullGamma"></param>
+        /// <returns></returns>
+        private static double getExtremalSpeed(double v0, double veybullGamma)
+        {
+            double k;
+            if (veybullGamma <= 1.77)
+            {
+                double T = 50d;
+                double n = 23037d;
+                double a, b, d;
+                a = SpecialFunction.gamma(1d + 1d / veybullGamma);
+                d = 1 - Math.Exp(Math.Log(1d - 1d / T) / n);
+                b = -1 * Math.Log(d);
+                k = (1 / a) * Math.Pow(b, 1 / veybullGamma);
+            }
+            else
+            {
+                k = 5;
+            }
+            return v0 * k;
+        }
 
         /// <summary>
         /// получиь параметр распределения вейбулла бета
         /// </summary>
         /// <returns></returns>
-        private static double getVeybullBeta(double V_average, double gamma)
+        private static double getVeybullBeta(double v0, double veybullGamma)
         {
-            double arg = 1d + 1d / gamma;
+            double arg = 1d + 1d / veybullGamma;
             double G = SpecialFunction.gamma(arg);
-            return V_average / G;
+            return v0 / G;
         }
 
         /// <summary>
@@ -212,7 +239,17 @@ namespace WindEnergy.WindLib.Statistic.Calculations
             double VeyGamma = getVeybullGamma(Cv);
             double VeyBeta = getVeybullBeta(V0, VeyGamma);
 
-            return new EnergyInfo() { Cv = Cv, EnergyDensity = EDensity, PowerDensity = PDensity, StandardDeviationSpeed = sigm, V0 = V0, VeybullBeta = VeyBeta, VeybullGamma = VeyGamma };
+            return new EnergyInfo()
+            {
+                Cv = Cv,
+                EnergyDensity = EDensity,
+                PowerDensity = PDensity,
+                StandardDeviationSpeed = sigm,
+                V0 = V0,
+                VeybullBeta = VeyBeta,
+                VeybullGamma = VeyGamma,
+
+            };
         }
 
         /// <summary>
