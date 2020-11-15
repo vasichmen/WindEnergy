@@ -71,7 +71,6 @@ namespace WindEnergy.UI.Helpers
         {
             try
             {
-                f.Cursor = Cursors.WaitCursor;
                 if (fileName == null)
                 {
                     SaveFileDialog sf = new SaveFileDialog();
@@ -83,6 +82,7 @@ namespace WindEnergy.UI.Helpers
 
                     if (sf.ShowDialog(f) == DialogResult.OK)
                     {
+                        f.Cursor = Cursors.WaitCursor;
                         Vars.Options.LastDirectory = Path.GetDirectoryName(sf.FileName);
                         RawRangeSerializer.SerializeFile(rang, sf.FileName);
                         rang.FilePath = sf.FileName;
