@@ -56,13 +56,13 @@ namespace WindEnergy.WindLib.Transformation.Check
 
             }
 
-            Parallel.ForEach(range,new ParallelOptions() {MaxDegreeOfParallelism=8 }, (item) =>
-            {
-                incrementCount();
-                bool accepted = checkItem(item);
-                if (accepted)
-                    resultCollection.Add(item);
-            });
+            Parallel.ForEach(range, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, (item) =>
+                {
+                    incrementCount();
+                    bool accepted = checkItem(item);
+                    if (accepted)
+                        resultCollection.Add(item);
+                });
 
             RawRange res = new RawRange(resultCollection.OrderBy(new Func<RawItem, double>((item) => { return item.DateArgument; })))
             {
