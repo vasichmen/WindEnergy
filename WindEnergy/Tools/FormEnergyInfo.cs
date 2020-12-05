@@ -196,6 +196,25 @@ namespace WindEnergy.UI.Tools
             }
         }
 
+
+        private void buttonOpenRange_Click(object sender, EventArgs e)
+        {
+            RawRange tempr = range.GetRange(
+              radioButtonSelectPeriod.Checked,
+              radioButtonSelectYearMonth.Checked,
+              dateTimePickerFrom.Value,
+              dateTimePickerTo.Value,
+              comboBoxYear.SelectedItem,
+              comboBoxMonth.SelectedItem
+              );
+            if (tempr == null)
+                throw new Exception("что-то совсем не так!!");
+            tempr.Name = range.Name + $" {dateTimePickerFrom.Value:dd.MM.yyyy} - {dateTimePickerTo.Value:dd.MM.yyyy}";
+
+            _ = Program.winMain.mainTabControl.OpenNewTab(tempr, tempr.Name).Focus();
+            Close(); 
+        }
+
         /// <summary>
         /// обновление всех элементов в соответствии с выбранными параметрами
         /// </summary>
@@ -209,8 +228,6 @@ namespace WindEnergy.UI.Tools
                 comboBoxYear.SelectedItem,
                 comboBoxMonth.SelectedItem
                 );
-            tempr.Position = range.Position;
-            tempr.Name = range.Name;
             if (tempr == null)
                 throw new Exception("что-то совсем не так!!");
 

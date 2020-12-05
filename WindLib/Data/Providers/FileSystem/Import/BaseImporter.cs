@@ -230,7 +230,6 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem.Import
                 res.Meteostation = Vars.RP5Meteostations.GetNearestMS(this.Coordinates);
             res.Position = this.Coordinates;
             res.Name = Path.GetFileNameWithoutExtension(this.FilePath);
-            res.FilePath = FilePath;
             res.EndChange();
             res.PerformRefreshQuality();
             return res;

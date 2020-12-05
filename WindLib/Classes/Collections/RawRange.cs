@@ -294,6 +294,7 @@ namespace WindEnergy.WindLib.Classes.Collections
             res.Name = Name;
             res.Position = Position;
             res.FilePath = FilePath;
+            res.Meteostation = Meteostation;
             return res;
         }
 

@@ -23,7 +23,7 @@ namespace WindEnergy.WindLib.Transformation.Check
         private int lims = 0, repeats = 0, other = 0, totalCount = 0;
         private double c = 0;
         private ConcurrentBag<RawItem> resultCollection = new ConcurrentBag<RawItem>();
-        private HashSet<double> dates = new HashSet<double>();
+        private ConcurrentDictionary<double, byte> dates = new ConcurrentDictionary<double,byte>();
         private Action<double> action = null;
         private ILimitsProvider provider;
         private PointLatLng coordinates = PointLatLng.Empty;
@@ -56,7 +56,7 @@ namespace WindEnergy.WindLib.Transformation.Check
 
             }
 
-            Parallel.ForEach(range, new ParallelOptions() { MaxDegreeOfParallelism = 4 }, (item) =>
+            Parallel.ForEach(range, new ParallelOptions(), (item) =>
                 {
                     incrementCount();
                     bool accepted = checkItem(item);
@@ -90,7 +90,7 @@ namespace WindEnergy.WindLib.Transformation.Check
 
             if (accept) //если всё ещё подходит, то проверяем дату
             {
-                accept &= !dates.Contains(item.DateArgument); //проверка повтора даты
+                accept &= !dates.ContainsKey(item.DateArgument); //проверка повтора даты
                 if (!accept) incrementRepeats();
             }
             if (accept)//если всё ещё подходит, то проверем значения скорости и направления (если не штиль, не переменное направление и не неопределённое и скорость равна 0 то не подходит)
@@ -104,7 +104,7 @@ namespace WindEnergy.WindLib.Transformation.Check
                 }
 
             if (accept)
-                dates.Add(item.DateArgument);
+                dates.TryAdd(item.DateArgument,0);
 
             return accept;
         }
