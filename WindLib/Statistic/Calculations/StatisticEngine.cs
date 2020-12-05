@@ -21,10 +21,12 @@ namespace WindEnergy.WindLib.Statistic.Calculations
         /// обработать ряд и получить характеристики по всему ряду
         /// </summary>
         /// <param name="range"></param>
+        /// <param name="totalRange"></param>
         /// <returns></returns>
-        public static EnergyInfo ProcessRange(RawRange range)
+        public static EnergyInfo ProcessRange(RawRange range, RawRange totalRange = null)
         {
             double density = range.AirDensity;
+            totalRange = totalRange ?? range;
 
             if (range.Count == 0)
                 return null;
@@ -41,11 +43,26 @@ namespace WindEnergy.WindLib.Statistic.Calculations
             res.VeybullGamma = getVeybullGamma(res.Cv);
             res.VeybullBeta = getVeybullBeta(res.V0, res.VeybullGamma);
             res.ExtremalSpeed = getExtremalSpeed(res.V0, res.VeybullGamma);
+            res.ExpectancyDeviation = getExpectancyDeviation(range, totalRange);
 
             return res;
         }
 
-        #region служебные
+        #region служебные 
+
+        /// <summary>
+        /// возвращает отклонение повторямости скорости от среднемноголетней
+        /// </summary>
+        /// <param name="range"></param>
+        /// <param name="totalRange"></param>
+        /// <returns></returns>
+        private static double getExpectancyDeviation(RawRange range, RawRange totalRange)
+        {
+            StatisticalRange<GradationItem> exp = GetExpectancy(totalRange, Vars.Options.CurrentSpeedGradation);
+            double averSpeed = totalRange.Average((t) => t.Speed);
+            DeviationsInfo dinfo = ProcessRangeDeviations(range, averSpeed, exp);
+            return dinfo.ExpDeviation;
+        }
 
         /// <summary>
         /// возвращает экстремальную скорость ветра за 50 лет
@@ -263,7 +280,8 @@ namespace WindEnergy.WindLib.Statistic.Calculations
         {
             DeviationsInfo res = new DeviationsInfo();
 
-            res.SpeedDeviation = Math.Abs(r.Average((t) => t.Speed) - averSpeed);
+            double aver = r.Average((t) => t.Speed);
+            res.SpeedDeviation = Math.Abs(aver - averSpeed);
 
             StatisticalRange<GradationItem> th = GetExpectancy(r, Vars.Options.CurrentSpeedGradation);
             res.ExpDeviation = Math.Sqrt(exp.Values.Zip(th.Values, (a, b) => Math.Pow(a - b, 2)).Aggregate((x, y) => x + y)); //корень из суммы квадратов разностей повторяемостей многолетней и этого промежутка

@@ -71,5 +71,10 @@ namespace WindEnergy.WindLib.Statistic.Structures
         /// Экстремальна скорость ветра за 50 лет, м/с
         /// </summary>
         public double ExtremalSpeed { get; set; }
+
+        /// <summary>
+        /// отклонение повторяемости скорости ветра от многолетней в долях
+        /// </summary>
+        public double ExpectancyDeviation { get; set; }
     }
 }

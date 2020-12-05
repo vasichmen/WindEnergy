@@ -234,7 +234,7 @@ namespace WindEnergy.UI.Tools
             //расчет параметров
             try
             {
-                range_info = StatisticEngine.ProcessRange(tempr);
+                range_info = StatisticEngine.ProcessRange(tempr, range);
                 stat_speeds = StatisticEngine.GetExpectancy(tempr, Vars.Options.CurrentSpeedGradation);
                 stat_directions = StatisticEngine.GetDirectionExpectancy(tempr, GradationInfo<WindDirections16>.Rhumb16Gradations);
                 exp_info = StatisticEngine.ProcessRange(stat_speeds);

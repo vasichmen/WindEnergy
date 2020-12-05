@@ -4,6 +4,7 @@ using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using WindEnergy.WindLib.Classes.Collections;
@@ -59,7 +60,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 return;
             }
 
-            //  "Год;Месяц;кол-во изм;0.75;2.5;4.5;6.5;8.5;10.5;12.5;14.5;16.5;19;22.5;26.5;31.5;37.5;43.5;Vmin;Vmax;Vср.год;Vэкст50,м/с;Cv(V);Nвал уд.;Эвал уд.;С;СВ;В;ЮВ;Ю;ЮЗ;З;СЗ;штиль";
+            //  "Год;Месяц;кол-во изм;0.75;2.5;4.5;6.5;8.5;10.5;12.5;14.5;16.5;19;22.5;26.5;31.5;37.5;43.5;Vmin;Vmax;Vср.год;Vэкст50,м/с;δ(P);Cv(V);Nвал уд.;Эвал уд.;С;СВ;В;ЮВ;Ю;ЮЗ;З;СЗ;штиль";
             string line = $"{year};{month};{amount}";
 
             //повторяемости скоростей ветра
@@ -67,8 +68,9 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 line += ";" + (stat_speeds.Values[j] * 100).ToString("0.00");
 
             //по ряду наблюдений
-            line += string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f2};{8:f2};{9:f2}",
-                range_info.Vmin, range_info.Vmax, range_info.V0, range_info.ExtremalSpeed, range_info.Cv, range_info.StandardDeviationSpeed, range_info.VeybullGamma, range_info.VeybullBeta, range_info.PowerDensity, range_info.EnergyDensity);
+            line += string.Format(";{0:f2};{1:f2};{2:f2};{3:f2};{4:f2};{5:f2};{6:f2};{7:f2};{8:f2};{9:f2};{10:f2}",
+                range_info.Vmin, range_info.Vmax, range_info.V0, range_info.ExtremalSpeed, range_info.ExpectancyDeviation, range_info.Cv,
+                range_info.StandardDeviationSpeed, range_info.VeybullGamma, range_info.VeybullBeta, range_info.PowerDensity, range_info.EnergyDensity);
 
             //повторяемости направлений ветра
             List<Enum> rs = WindDirections16.Calm.GetEnumItems().GetRange(0, 17);
@@ -278,7 +280,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                     RawRange rn = range.GetRange(false, true, DateTime.Now, DateTime.Now, year, month.Description());
                     if (rn == null || rn.Count == 0)
                         continue;
-                    EnergyInfo ri = StatisticEngine.ProcessRange(rn);
+                    EnergyInfo ri = StatisticEngine.ProcessRange(rn, range);
                     StatisticalRange<WindDirections16> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections16>.Rhumb16Gradations);
                     StatisticalRange<GradationItem> ss = StatisticEngine.GetExpectancy(rn, Vars.Options.CurrentSpeedGradation);
                     EnergyInfo ei = StatisticEngine.ProcessRange(ss);
@@ -296,7 +298,7 @@ namespace WindEnergy.WindLib.Data.Providers.FileSystem
                 RawRange rn = range.GetRange(false, true, DateTime.Now, DateTime.Now, "Все", month.Description());
                 if (rn == null || rn.Count == 0)
                     continue;
-                EnergyInfo ri = StatisticEngine.ProcessRange(rn);
+                EnergyInfo ri = StatisticEngine.ProcessRange(rn, range);
                 StatisticalRange<WindDirections16> sd = StatisticEngine.GetDirectionExpectancy(rn, GradationInfo<WindDirections16>.Rhumb16Gradations);
                 StatisticalRange<GradationItem> ss = StatisticEngine.GetExpectancy(rn, Vars.Options.CurrentSpeedGradation);
                 EnergyInfo ei = StatisticEngine.ProcessRange(ss);
