@@ -278,6 +278,7 @@ namespace CommonLib.UITools
                 double lat = double.Parse(toolStripTextBoxLat.Text.Replace('.', Constants.DecimalSeparator).Replace('.', Constants.DecimalSeparator));
                 double lon = double.Parse(toolStripTextBoxLon.Text.Replace('.', Constants.DecimalSeparator).Replace('.', Constants.DecimalSeparator));
                 gmapControlMap.Position = new PointLatLng(lat, lon);
+                cPoint = gmapControlMap.Position;
             }
             catch (Exception)
             { }
