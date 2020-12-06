@@ -1,4 +1,5 @@
-﻿using CommonLib.UITools;
+﻿using CommonLib;
+using CommonLib.UITools;
 using CommonLibLib.Data.Interfaces;
 using CommonLibLib.Data.Providers.InternetServices;
 using GMap.NET;
@@ -20,7 +21,6 @@ namespace WindEnergy.UI.Tools
     public partial class FormLoadFromNASA : Form
     {
         public RawRange Result { get; private set; }
-        private NASA engineNASA;
         private IGeocoderProvider geocoder;
         private RP5MeteostationInfo spoint;
         private PointLatLng point = PointLatLng.Empty;
@@ -30,8 +30,9 @@ namespace WindEnergy.UI.Tools
             InitializeComponent();
             Result = null;
             DialogResult = DialogResult.None;
-            engineNASA = new NASA(Vars.Options.CacheFolder + "\\nasa");
             geocoder = new Arcgis(Vars.Options.CacheFolder + "\\arcgis");
+            comboBoxSpeedHeight.Items.AddRange(NasaWindSpeedHeight.WS10M.GetItems().ToArray());
+            comboBoxSpeedHeight.SelectedItem = NasaWindSpeedHeight.WS10M.Description();
         }
 
         /// <summary>
@@ -98,12 +99,15 @@ namespace WindEnergy.UI.Tools
             try
             {
                 buttonDownload.Enabled = false;
+
+                NasaWindSpeedHeight spdParam = (NasaWindSpeedHeight)(new EnumTypeConverter<NasaWindSpeedHeight>().ConvertFrom(comboBoxSpeedHeight.SelectedItem));
+                NASA engineNASA = new NASA(Vars.Options.CacheFolder + "\\nasa", 168, spdParam);
                 RawRange res = engineNASA.GetRange(dateTimePickerFromDate.Value, dateTimePickerToDate.Value, spoint);
                 try
                 {
                     res.Name = geocoder.GetAddress(spoint.Position);
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     res.Name = $"Широта {spoint.Position.Lat:0.000} Долгота {spoint.Position.Lng:0.000}";
                 }

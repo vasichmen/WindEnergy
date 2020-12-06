@@ -115,7 +115,7 @@ namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
                     return double.NaN;
                 else
                 {
-                    if (baseFunc[x] == 0) //если в базовой функции это значение равно нулю, то возвращаем NaN, чтоб не завышать прибавлением b
+                    if (baseFunc[x] == 0) //если в базовой функции это значение равно нулю, то возвращаем NaN, чтоб не завышать результат прибавлением b
                         return double.NaN;
                     else
                         return a * baseFunc[x] + b;

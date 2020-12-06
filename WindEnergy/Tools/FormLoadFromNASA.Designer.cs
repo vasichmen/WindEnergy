@@ -39,14 +39,16 @@
             this.buttonSelectPoint = new System.Windows.Forms.Button();
             this.labelPointCoordinates = new System.Windows.Forms.Label();
             this.labelPointAddress = new System.Windows.Forms.Label();
+            this.comboBoxSpeedHeight = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(387, 121);
+            this.buttonCancel.Location = new System.Drawing.Point(330, 144);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(132, 23);
             this.buttonCancel.TabIndex = 15;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -55,7 +57,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(297, 93);
+            this.label4.Location = new System.Drawing.Point(297, 116);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(27, 13);
             this.label4.TabIndex = 14;
@@ -64,7 +66,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 93);
+            this.label3.Location = new System.Drawing.Point(9, 116);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(25, 13);
             this.label3.TabIndex = 13;
@@ -73,7 +75,7 @@
             // labelDateRange
             // 
             this.labelDateRange.AutoSize = true;
-            this.labelDateRange.Location = new System.Drawing.Point(9, 63);
+            this.labelDateRange.Location = new System.Drawing.Point(9, 86);
             this.labelDateRange.Name = "labelDateRange";
             this.labelDateRange.Size = new System.Drawing.Size(81, 13);
             this.labelDateRange.TabIndex = 12;
@@ -82,7 +84,7 @@
             // buttonDownload
             // 
             this.buttonDownload.Enabled = false;
-            this.buttonDownload.Location = new System.Drawing.Point(12, 121);
+            this.buttonDownload.Location = new System.Drawing.Point(12, 144);
             this.buttonDownload.Name = "buttonDownload";
             this.buttonDownload.Size = new System.Drawing.Size(160, 23);
             this.buttonDownload.TabIndex = 11;
@@ -93,7 +95,7 @@
             // dateTimePickerToDate
             // 
             this.dateTimePickerToDate.Enabled = false;
-            this.dateTimePickerToDate.Location = new System.Drawing.Point(330, 88);
+            this.dateTimePickerToDate.Location = new System.Drawing.Point(330, 111);
             this.dateTimePickerToDate.Name = "dateTimePickerToDate";
             this.dateTimePickerToDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerToDate.TabIndex = 10;
@@ -103,7 +105,7 @@
             // dateTimePickerFromDate
             // 
             this.dateTimePickerFromDate.Enabled = false;
-            this.dateTimePickerFromDate.Location = new System.Drawing.Point(40, 87);
+            this.dateTimePickerFromDate.Location = new System.Drawing.Point(40, 110);
             this.dateTimePickerFromDate.Name = "dateTimePickerFromDate";
             this.dateTimePickerFromDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerFromDate.TabIndex = 9;
@@ -139,11 +141,30 @@
             this.labelPointAddress.Text = "Адрес (точка не выбрана)";
             this.labelPointAddress.TextChanged += new System.EventHandler(this.labelPointAddress_TextChanged);
             // 
+            // comboBoxSpeedHeight
+            // 
+            this.comboBoxSpeedHeight.FormattingEnabled = true;
+            this.comboBoxSpeedHeight.Location = new System.Drawing.Point(12, 62);
+            this.comboBoxSpeedHeight.Name = "comboBoxSpeedHeight";
+            this.comboBoxSpeedHeight.Size = new System.Drawing.Size(450, 21);
+            this.comboBoxSpeedHeight.TabIndex = 18;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 46);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(130, 13);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "Высота скорости ветра:";
+            // 
             // FormLoadFromNASA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 156);
+            this.ClientSize = new System.Drawing.Size(479, 177);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comboBoxSpeedHeight);
             this.Controls.Add(this.labelPointAddress);
             this.Controls.Add(this.labelPointCoordinates);
             this.Controls.Add(this.buttonSelectPoint);
@@ -176,5 +197,7 @@
         private System.Windows.Forms.Button buttonSelectPoint;
         private System.Windows.Forms.Label labelPointCoordinates;
         private System.Windows.Forms.Label labelPointAddress;
+        private System.Windows.Forms.ComboBox comboBoxSpeedHeight;
+        private System.Windows.Forms.Label label1;
     }
 }

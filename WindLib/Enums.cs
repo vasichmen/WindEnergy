@@ -597,4 +597,29 @@ namespace WindEnergy
         [Description("Неустойчивая")]
         Unstable
     }
+
+    /// <summary>
+    /// варианты скорости для NASA
+    /// </summary>
+    [TypeConverter(typeof(EnumTypeConverter<NasaWindSpeedHeight>))]
+    public enum NasaWindSpeedHeight
+    {
+        [Description("Средняя скорость на высоте 50м")]
+        WS50M,
+
+        [Description("Средняя скорость на высоте 10м")]
+        WS10M,
+
+        [Description("Минимальная скорость на высоте 50м")]
+        WS50M_MIN,
+
+        [Description("Минимальная скорость на высоте 10м")]
+        WS10M_MIN,
+
+        [Description("Максимальная скорость на высоте 50м")]
+        WS50M_MAX,
+
+        [Description("Максимальная скорость на высоте 10м")]
+        WS10M_MAX
+    }
 }

@@ -13,19 +13,14 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
 {
     /// <summary>
     /// взаимодействие с БД NASA https://power.larc.nasa.gov/docs/v1/
+    /// список параметров https://power.larc.nasa.gov/#resources
     /// </summary>
     public class NASA : BaseConnection, IRangeProvider
     {
         /// <summary>
         /// выбранные поля для загрузки https://power.larc.nasa.gov/docs/v1/#box
         /// </summary>
-        private Dictionary<MeteorologyParameters, string> parameters = new Dictionary<MeteorologyParameters, string>() {
-            {MeteorologyParameters.Speed, "WS10M" },
-            //{MeteorologyParameters.Direction, "WD10M" },
-            {MeteorologyParameters.Temperature, "T10M" },
-            {MeteorologyParameters.Wetness, "RH2M" },
-            {MeteorologyParameters.Pressure, "PS" },
-        };
+        private Dictionary<MeteorologyParameters, string> parameters;
 
         public override TimeSpan MinQueryInterval { get { return TimeSpan.FromSeconds(1); } }
 
@@ -33,7 +28,17 @@ namespace WindEnergy.WindLib.Data.Providers.InternetServices
 
         public override TimeSpan SessionLifetime { get { return TimeSpan.FromMinutes(10); } }
 
-        public NASA(string cacheDirectory, double duration = 7 * 24) : base("https://power.larc.nasa.gov", cacheDirectory, duration) { }
+        public NASA(string cacheDirectory, double duration = 7 * 24, NasaWindSpeedHeight nasaWindSpeedHeight = NasaWindSpeedHeight.WS10M) : base("https://power.larc.nasa.gov", cacheDirectory, duration)
+        {
+            parameters = new Dictionary<MeteorologyParameters, string>() {
+            //{MeteorologyParameters.Direction, "WD10M" },
+            {MeteorologyParameters.Temperature, "T10M" },
+            {MeteorologyParameters.Wetness, "RH2M" },
+            {MeteorologyParameters.Pressure, "PS" },
+        };
+            string speedParamString = nasaWindSpeedHeight.ToString();
+            parameters.Add(MeteorologyParameters.Speed, speedParamString);
+        }
 
         /// <summary>
         /// получить ряд данных за указанный промежуток в заданной точке

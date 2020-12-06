@@ -150,6 +150,8 @@ namespace WindEnergy.WindLib.Transformation.Restore
                     double press = methodPress.GetValue(p);
                     if (double.IsNaN(speed))
                         continue;
+                    if (speed < 0)
+                        speed = 0;
                     res.Add(new RawItem(p, speed, direct, temp, wet, press));
                 }
                 res.EndChange();
