@@ -87,7 +87,7 @@ namespace WindEnergy.WindLib.Transformation.Restore
                     methodPress = new StepwiseInterpolateMethod(pressFunc);
                     break;
                 case InterpolateMethods.NearestMeteostation:
-                    if (param.Coordinates.IsEmpty)
+                    if (param.BaseRange != null)
                     {
                         //проверяем заданный ряд на возможность восстановления с помощью него
                         bool f = NearestMSInterpolateMethod.CheckNormalLaw(param.BaseRange, Vars.Options.NormalLawPirsonCoefficientDiapason);
@@ -101,7 +101,7 @@ namespace WindEnergy.WindLib.Transformation.Restore
                         baseRange = NearestMSInterpolateMethod.TryGetBaseRange(Range, param.Coordinates, out r, actionPercent);
                     }
 
-                    methodSpeeds = new NearestMSInterpolateMethod(speedFunc, baseRange, MeteorologyParameters.Speed);
+                    methodSpeeds = new NearestMSInterpolateMethod(speedFunc, baseRange, MeteorologyParameters.Speed, param.ReplaceExistMeasurements);
                     methodDirects = new LinearInterpolateMethod(directsFunc);
                     methodTemp = new LinearInterpolateMethod(tempFunc);
                     methodWet = new LinearInterpolateMethod(wetFunc);

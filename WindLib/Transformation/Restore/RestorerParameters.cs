@@ -36,6 +36,11 @@ namespace WindEnergy.WindLib.Transformation.Restore
         /// базовый ряд, на основе которого будет происходить восстановление
         /// </summary>
         public RawRange BaseRange { get; set; }
+
+        /// <summary>
+        /// Заменять существующие измерения в исходном ряде на расчетные (только для Восстановления ряда)
+        /// </summary>
+        public bool ReplaceExistMeasurements { get; set; }
     }
 
 }

@@ -71,12 +71,10 @@ namespace WindEnergy.UI.Tools
                         _ = Invoke(new Action(() =>
                         {
                             progressBarStatus.Value = percent;
-                            labelStatus.Text = text;
                         }));
                     else
                     {
                         progressBarStatus.Value = percent;
-                        labelStatus.Text = text;
                     }
                 }
                 catch (Exception) { }
@@ -153,27 +151,31 @@ namespace WindEnergy.UI.Tools
                         }
                     }
                 }
-                Restorer.ProcessRange(range, new RestorerParameters() { Interval = interval, Method = method, Coordinates = range.Position, BaseRange = baseRange }, action, actionAfter);
+                Restorer.ProcessRange(range, new RestorerParameters()
+                {
+                    Interval = interval,
+                    Method = method,
+                    Coordinates = range.Position,
+                    BaseRange = baseRange,
+                    ReplaceExistMeasurements = checkBoxReplaceExist.Checked
+                }, action, actionAfter);
 
             }
             catch (WebException exc)
             {
                 Cursor = Cursors.Arrow;
-                labelStatus.Text = "Состояние...";
                 _ = MessageBox.Show(this, exc.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
             catch (WindEnergyException wex)
             {
                 Cursor = Cursors.Arrow;
-                labelStatus.Text = "Состояние...";
                 _ = MessageBox.Show(this, wex.Message, "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
             catch (ApplicationException exc)
             {
                 Cursor = Cursors.Arrow;
-                labelStatus.Text = "Состояние...";
                 _ = MessageBox.Show(this, exc.Message + "\r\nПопробуйте уменьшить длину ряда", "Восстановление ряда", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Cancel;
             }
@@ -215,6 +217,7 @@ namespace WindEnergy.UI.Tools
         private void comboBoxInterpolateMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
             groupBox3.Visible = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem)) == InterpolateMethods.NearestMeteostation;
+            checkBoxReplaceExist.Visible = (InterpolateMethods)(new EnumTypeConverter<InterpolateMethods>().ConvertFrom(comboBoxInterpolateMethod.SelectedItem)) == InterpolateMethods.NearestMeteostation;
         }
     }
 }

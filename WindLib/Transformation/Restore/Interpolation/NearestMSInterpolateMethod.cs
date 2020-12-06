@@ -24,6 +24,7 @@ namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
         private readonly Dictionary<double, double> func;
         private readonly MeteorologyParameters parameterType;
         private readonly RawRange nearestRange;
+        private readonly bool replaceExistMeasurements;
         private readonly Func<double, double> getRes = null;
         private readonly Diapason<double> interpolationDiapason;
         public readonly bool Empty;
@@ -50,8 +51,9 @@ namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
         /// <param name="func">известные значения функции в заданной точке</param>
         /// <param name="coordinates">координаты точки, для которой известны значения func</param>
         /// <param name="parameterType">тип мтеорологического параметра</param>
-        public NearestMSInterpolateMethod(Dictionary<double, double> func, PointLatLng coordinates, MeteorologyParameters parameterType)
-            : this(func, getNearestRange(func, coordinates), parameterType) { }
+        /// <param name="replaceExistMeasurements">Заменять существующие измерения в исходном ряде на расчетные</param>
+        public NearestMSInterpolateMethod(Dictionary<double, double> func, PointLatLng coordinates, MeteorologyParameters parameterType, bool replaceExistMeasurements)
+            : this(func, getNearestRange(func, coordinates), parameterType, replaceExistMeasurements) { }
 
 
         /// <summary>
@@ -60,8 +62,9 @@ namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
         /// <param name="func">известные значения функции</param>
         /// <param name="baseInterpolator">интерполятор, откуда взять ряд наблюдения для этого экземпляра</param>
         /// <param name="parameterType">тип параметра для восстановления</param>
-        public NearestMSInterpolateMethod(Dictionary<double, double> func, NearestMSInterpolateMethod baseInterpolator, MeteorologyParameters parameterType)
-            : this(func, baseInterpolator.nearestRange, parameterType) { }
+        /// <param name="replaceExistMeasurements">Заменять существующие измерения в исходном ряде на расчетные</param>
+        public NearestMSInterpolateMethod(Dictionary<double, double> func, NearestMSInterpolateMethod baseInterpolator, MeteorologyParameters parameterType, bool replaceExistMeasurements)
+            : this(func, baseInterpolator.nearestRange, parameterType, replaceExistMeasurements) { }
 
         /// <summary>
         /// создание нового интерполятора с заданными значениями на основе существующего базового ряда наблюдения
@@ -69,7 +72,8 @@ namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
         /// <param name="func">известные значения функции в заданной точке</param>
         /// <param name="baseRange">базовый ряд (с ближайшей МС), на основе которого будет происходить восстановление</param>
         /// <param name="parameterType">тип мтеорологического параметра</param>
-        public NearestMSInterpolateMethod(Dictionary<double, double> func, RawRange baseRange, MeteorologyParameters parameterType)
+        /// <param name="replaceExistMeasurements">Заменять существующие измерения в исходном ряде на расчетные</param>
+        public NearestMSInterpolateMethod(Dictionary<double, double> func, RawRange baseRange, MeteorologyParameters parameterType, bool replaceExistMeasurements)
         {
             if (func.Keys.Count == 0)
             { Empty = true; return; }
@@ -77,6 +81,7 @@ namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
 
             this.parameterType = parameterType;
             this.func = func;
+            this.replaceExistMeasurements = replaceExistMeasurements;
             this.nearestRange = baseRange;
 
             //расчет диапазона сделанных измерений
@@ -100,8 +105,8 @@ namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
             //ФУНКЦИЯ ПОЛУЧЕНИЯ ЗНАЧЕНИЯ
             getRes = new Func<double, double>((x) =>
             {
-                //если в исходном ряде есть это значение, то его и возвращаем
-                if (func.ContainsKey(x))
+                //если в исходном ряде есть это значение и не надо заменять исходное, то его и возвращаем
+                if (func.ContainsKey(x) && !replaceExistMeasurements)
                     return func[x];
 
                 //Если в базовой функции нет измерения за этой время, то возвращаем NaN
@@ -109,7 +114,12 @@ namespace WindEnergy.WindLib.Transformation.Restore.Interpolation
                 if (!baseFunc.ContainsKey(x))
                     return double.NaN;
                 else
-                    return a * baseFunc[x] + b;
+                {
+                    if (baseFunc[x] == 0) //если в базовой функции это значение равно нулю, то возвращаем NaN, чтоб не завышать прибавлением b
+                        return double.NaN;
+                    else
+                        return a * baseFunc[x] + b;
+                }
             });
         }
 

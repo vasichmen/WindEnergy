@@ -66,7 +66,9 @@ namespace WindEnergy.WindLib.Statistic.Collections
                 if (double.IsNaN(val)) continue;
 
                 var gi = Gradation.GetItem(val);
-                Values[Keys.IndexOf(gi)]++;
+                var index = Keys.IndexOf(gi);
+                if (index < 0) continue;
+                Values[index]++;
             }
 
             foreach (object g in Keys)

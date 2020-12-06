@@ -95,11 +95,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox1.Location = new System.Drawing.Point(11, 130);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Location = new System.Drawing.Point(8, 106);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox1.Size = new System.Drawing.Size(751, 806);
+            this.groupBox1.Size = new System.Drawing.Size(563, 655);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Характеристики ветра";
@@ -107,7 +105,7 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 267F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.zedGraphControlDirection, 0, 2);
@@ -116,22 +114,21 @@
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.zedGraphControlSpeed, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 19);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 207F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 168F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 39.63783F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.36217F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(743, 783);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(557, 636);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
             // zedGraphControlDirection
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.zedGraphControlDirection, 3);
             this.zedGraphControlDirection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zedGraphControlDirection.Location = new System.Drawing.Point(5, 440);
-            this.zedGraphControlDirection.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.zedGraphControlDirection.Location = new System.Drawing.Point(4, 357);
+            this.zedGraphControlDirection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zedGraphControlDirection.Name = "zedGraphControlDirection";
             this.zedGraphControlDirection.ScrollGrace = 0D;
             this.zedGraphControlDirection.ScrollMaxX = 0D;
@@ -140,7 +137,7 @@
             this.zedGraphControlDirection.ScrollMinX = 0D;
             this.zedGraphControlDirection.ScrollMinY = 0D;
             this.zedGraphControlDirection.ScrollMinY2 = 0D;
-            this.zedGraphControlDirection.Size = new System.Drawing.Size(733, 338);
+            this.zedGraphControlDirection.Size = new System.Drawing.Size(549, 275);
             this.zedGraphControlDirection.TabIndex = 4;
             this.zedGraphControlDirection.UseExtendedPrintDialog = true;
             // 
@@ -155,79 +152,71 @@
             this.flowLayoutPanel3.Controls.Add(this.labelBetaTV);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(509, 4);
-            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(381, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(230, 199);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(173, 162);
             this.flowLayoutPanel3.TabIndex = 2;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(4, 0);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Location = new System.Drawing.Point(3, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(131, 17);
+            this.label11.Size = new System.Drawing.Size(102, 13);
             this.label11.TabIndex = 16;
             this.label11.Text = "По повторяемости";
             // 
             // labelPowerDensityTV
             // 
             this.labelPowerDensityTV.AutoSize = true;
-            this.labelPowerDensityTV.Location = new System.Drawing.Point(4, 17);
-            this.labelPowerDensityTV.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelPowerDensityTV.Location = new System.Drawing.Point(3, 13);
             this.labelPowerDensityTV.Name = "labelPowerDensityTV";
-            this.labelPowerDensityTV.Size = new System.Drawing.Size(46, 17);
+            this.labelPowerDensityTV.Size = new System.Drawing.Size(35, 13);
             this.labelPowerDensityTV.TabIndex = 5;
             this.labelPowerDensityTV.Text = "label6";
             // 
             // labelEnergyDensityTV
             // 
             this.labelEnergyDensityTV.AutoSize = true;
-            this.labelEnergyDensityTV.Location = new System.Drawing.Point(4, 34);
-            this.labelEnergyDensityTV.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelEnergyDensityTV.Location = new System.Drawing.Point(3, 26);
             this.labelEnergyDensityTV.Name = "labelEnergyDensityTV";
-            this.labelEnergyDensityTV.Size = new System.Drawing.Size(46, 17);
+            this.labelEnergyDensityTV.Size = new System.Drawing.Size(35, 13);
             this.labelEnergyDensityTV.TabIndex = 6;
             this.labelEnergyDensityTV.Text = "label6";
             // 
             // labelCvTV
             // 
             this.labelCvTV.AutoSize = true;
-            this.labelCvTV.Location = new System.Drawing.Point(4, 51);
-            this.labelCvTV.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelCvTV.Location = new System.Drawing.Point(3, 39);
             this.labelCvTV.Name = "labelCvTV";
-            this.labelCvTV.Size = new System.Drawing.Size(46, 17);
+            this.labelCvTV.Size = new System.Drawing.Size(35, 13);
             this.labelCvTV.TabIndex = 7;
             this.labelCvTV.Text = "label6";
             // 
             // labelV0TV
             // 
             this.labelV0TV.AutoSize = true;
-            this.labelV0TV.Location = new System.Drawing.Point(4, 68);
-            this.labelV0TV.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelV0TV.Location = new System.Drawing.Point(3, 52);
             this.labelV0TV.Name = "labelV0TV";
-            this.labelV0TV.Size = new System.Drawing.Size(46, 17);
+            this.labelV0TV.Size = new System.Drawing.Size(35, 13);
             this.labelV0TV.TabIndex = 8;
             this.labelV0TV.Text = "label6";
             // 
             // labelGammaTV
             // 
             this.labelGammaTV.AutoSize = true;
-            this.labelGammaTV.Location = new System.Drawing.Point(4, 85);
-            this.labelGammaTV.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelGammaTV.Location = new System.Drawing.Point(3, 65);
             this.labelGammaTV.Name = "labelGammaTV";
-            this.labelGammaTV.Size = new System.Drawing.Size(46, 17);
+            this.labelGammaTV.Size = new System.Drawing.Size(35, 13);
             this.labelGammaTV.TabIndex = 17;
             this.labelGammaTV.Text = "label6";
             // 
             // labelBetaTV
             // 
             this.labelBetaTV.AutoSize = true;
-            this.labelBetaTV.Location = new System.Drawing.Point(4, 102);
-            this.labelBetaTV.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelBetaTV.Location = new System.Drawing.Point(3, 78);
             this.labelBetaTV.Name = "labelBetaTV";
-            this.labelBetaTV.Size = new System.Drawing.Size(46, 17);
+            this.labelBetaTV.Size = new System.Drawing.Size(35, 13);
             this.labelBetaTV.TabIndex = 18;
             this.labelBetaTV.Text = "label6";
             // 
@@ -238,138 +227,125 @@
             this.flowLayoutPanel2.Controls.Add(this.labelEnergyDensity);
             this.flowLayoutPanel2.Controls.Add(this.labelCv);
             this.flowLayoutPanel2.Controls.Add(this.labelV0);
-            this.flowLayoutPanel2.Controls.Add(this.labelExtremalSpeed);
             this.flowLayoutPanel2.Controls.Add(this.labelGamma);
             this.flowLayoutPanel2.Controls.Add(this.labelBeta);
+            this.flowLayoutPanel2.Controls.Add(this.labelExtremalSpeed);
             this.flowLayoutPanel2.Controls.Add(this.labelVmax);
             this.flowLayoutPanel2.Controls.Add(this.labelVmin);
             this.flowLayoutPanel2.Controls.Add(this.labelStandardDeviationSpeed);
             this.flowLayoutPanel2.Controls.Add(this.labelAirDensity);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(271, 4);
-            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(203, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(230, 199);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(172, 162);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(4, 0);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Location = new System.Drawing.Point(3, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(147, 17);
+            this.label10.Size = new System.Drawing.Size(112, 13);
             this.label10.TabIndex = 15;
             this.label10.Text = "По ряду наблюдений";
             // 
             // labelPowerDensity
             // 
             this.labelPowerDensity.AutoSize = true;
-            this.labelPowerDensity.Location = new System.Drawing.Point(4, 17);
-            this.labelPowerDensity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelPowerDensity.Location = new System.Drawing.Point(3, 13);
             this.labelPowerDensity.Name = "labelPowerDensity";
-            this.labelPowerDensity.Size = new System.Drawing.Size(46, 17);
+            this.labelPowerDensity.Size = new System.Drawing.Size(35, 13);
             this.labelPowerDensity.TabIndex = 0;
             this.labelPowerDensity.Text = "label6";
             // 
             // labelEnergyDensity
             // 
             this.labelEnergyDensity.AutoSize = true;
-            this.labelEnergyDensity.Location = new System.Drawing.Point(4, 34);
-            this.labelEnergyDensity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelEnergyDensity.Location = new System.Drawing.Point(3, 26);
             this.labelEnergyDensity.Name = "labelEnergyDensity";
-            this.labelEnergyDensity.Size = new System.Drawing.Size(46, 17);
+            this.labelEnergyDensity.Size = new System.Drawing.Size(35, 13);
             this.labelEnergyDensity.TabIndex = 1;
             this.labelEnergyDensity.Text = "label6";
             // 
             // labelCv
             // 
             this.labelCv.AutoSize = true;
-            this.labelCv.Location = new System.Drawing.Point(4, 51);
-            this.labelCv.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelCv.Location = new System.Drawing.Point(3, 39);
             this.labelCv.Name = "labelCv";
-            this.labelCv.Size = new System.Drawing.Size(46, 17);
+            this.labelCv.Size = new System.Drawing.Size(35, 13);
             this.labelCv.TabIndex = 2;
             this.labelCv.Text = "label6";
             // 
             // labelV0
             // 
             this.labelV0.AutoSize = true;
-            this.labelV0.Location = new System.Drawing.Point(4, 68);
-            this.labelV0.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelV0.Location = new System.Drawing.Point(3, 52);
             this.labelV0.Name = "labelV0";
-            this.labelV0.Size = new System.Drawing.Size(46, 17);
+            this.labelV0.Size = new System.Drawing.Size(35, 13);
             this.labelV0.TabIndex = 3;
             this.labelV0.Text = "label6";
             // 
             // labelExtremalSpeed
             // 
             this.labelExtremalSpeed.AutoSize = true;
-            this.labelExtremalSpeed.Location = new System.Drawing.Point(4, 85);
-            this.labelExtremalSpeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelExtremalSpeed.Location = new System.Drawing.Point(3, 91);
             this.labelExtremalSpeed.Name = "labelExtremalSpeed";
-            this.labelExtremalSpeed.Size = new System.Drawing.Size(46, 17);
+            this.labelExtremalSpeed.Size = new System.Drawing.Size(35, 13);
             this.labelExtremalSpeed.TabIndex = 20;
             this.labelExtremalSpeed.Text = "label6";
             // 
             // labelGamma
             // 
             this.labelGamma.AutoSize = true;
-            this.labelGamma.Location = new System.Drawing.Point(4, 102);
-            this.labelGamma.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelGamma.Location = new System.Drawing.Point(3, 65);
             this.labelGamma.Name = "labelGamma";
-            this.labelGamma.Size = new System.Drawing.Size(46, 17);
+            this.labelGamma.Size = new System.Drawing.Size(35, 13);
             this.labelGamma.TabIndex = 16;
             this.labelGamma.Text = "label6";
             // 
             // labelBeta
             // 
             this.labelBeta.AutoSize = true;
-            this.labelBeta.Location = new System.Drawing.Point(4, 119);
-            this.labelBeta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelBeta.Location = new System.Drawing.Point(3, 78);
             this.labelBeta.Name = "labelBeta";
-            this.labelBeta.Size = new System.Drawing.Size(46, 17);
+            this.labelBeta.Size = new System.Drawing.Size(35, 13);
             this.labelBeta.TabIndex = 17;
             this.labelBeta.Text = "label6";
             // 
             // labelVmax
             // 
             this.labelVmax.AutoSize = true;
-            this.labelVmax.Location = new System.Drawing.Point(4, 136);
-            this.labelVmax.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelVmax.Location = new System.Drawing.Point(3, 104);
             this.labelVmax.Name = "labelVmax";
-            this.labelVmax.Size = new System.Drawing.Size(46, 17);
+            this.labelVmax.Size = new System.Drawing.Size(35, 13);
             this.labelVmax.TabIndex = 4;
             this.labelVmax.Text = "label6";
             // 
             // labelVmin
             // 
             this.labelVmin.AutoSize = true;
-            this.labelVmin.Location = new System.Drawing.Point(4, 153);
-            this.labelVmin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelVmin.Location = new System.Drawing.Point(3, 117);
             this.labelVmin.Name = "labelVmin";
-            this.labelVmin.Size = new System.Drawing.Size(46, 17);
+            this.labelVmin.Size = new System.Drawing.Size(35, 13);
             this.labelVmin.TabIndex = 18;
             this.labelVmin.Text = "label6";
             // 
             // labelStandardDeviationSpeed
             // 
             this.labelStandardDeviationSpeed.AutoSize = true;
-            this.labelStandardDeviationSpeed.Location = new System.Drawing.Point(4, 170);
-            this.labelStandardDeviationSpeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelStandardDeviationSpeed.Location = new System.Drawing.Point(3, 130);
             this.labelStandardDeviationSpeed.Name = "labelStandardDeviationSpeed";
-            this.labelStandardDeviationSpeed.Size = new System.Drawing.Size(46, 17);
+            this.labelStandardDeviationSpeed.Size = new System.Drawing.Size(35, 13);
             this.labelStandardDeviationSpeed.TabIndex = 18;
             this.labelStandardDeviationSpeed.Text = "label6";
             // 
             // labelAirDensity
             // 
             this.labelAirDensity.AutoSize = true;
-            this.labelAirDensity.Location = new System.Drawing.Point(159, 0);
-            this.labelAirDensity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelAirDensity.Location = new System.Drawing.Point(3, 143);
             this.labelAirDensity.Name = "labelAirDensity";
-            this.labelAirDensity.Size = new System.Drawing.Size(46, 17);
+            this.labelAirDensity.Size = new System.Drawing.Size(35, 13);
             this.labelAirDensity.TabIndex = 19;
             this.labelAirDensity.Text = "label6";
             // 
@@ -379,129 +355,117 @@
             this.flowLayoutPanel1.Controls.Add(this.label8);
             this.flowLayoutPanel1.Controls.Add(this.label7);
             this.flowLayoutPanel1.Controls.Add(this.cv);
-            this.flowLayoutPanel1.Controls.Add(this.label6);
             this.flowLayoutPanel1.Controls.Add(this.label12);
             this.flowLayoutPanel1.Controls.Add(this.label13);
+            this.flowLayoutPanel1.Controls.Add(this.label6);
             this.flowLayoutPanel1.Controls.Add(this.label5);
             this.flowLayoutPanel1.Controls.Add(this.label14);
             this.flowLayoutPanel1.Controls.Add(this.label17);
             this.flowLayoutPanel1.Controls.Add(this.label15);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 4);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 16, 0, 0);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(259, 199);
+            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 13, 0, 0);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(194, 162);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(4, 16);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(3, 13);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(141, 17);
+            this.label9.Size = new System.Drawing.Size(112, 13);
             this.label9.TabIndex = 10;
             this.label9.Text = "Удельная мощность";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(4, 33);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(3, 26);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(128, 17);
+            this.label8.Size = new System.Drawing.Size(101, 13);
             this.label8.TabIndex = 11;
             this.label8.Text = "Удельная энергия";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(4, 50);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(3, 39);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(168, 17);
+            this.label7.Size = new System.Drawing.Size(128, 13);
             this.label7.TabIndex = 12;
             this.label7.Text = "Коэффициент вариации";
             // 
             // cv
             // 
             this.cv.AutoSize = true;
-            this.cv.Location = new System.Drawing.Point(4, 67);
-            this.cv.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.cv.Location = new System.Drawing.Point(3, 52);
             this.cv.Name = "cv";
-            this.cv.Size = new System.Drawing.Size(128, 17);
+            this.cv.Size = new System.Drawing.Size(100, 13);
             this.cv.TabIndex = 13;
             this.cv.Text = "Средняя скорость";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(4, 84);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(3, 91);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(173, 17);
+            this.label6.Size = new System.Drawing.Size(137, 13);
             this.label6.TabIndex = 19;
             this.label6.Text = "Экстремальная скорость";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(4, 101);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Location = new System.Drawing.Point(3, 65);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(15, 17);
+            this.label12.Size = new System.Drawing.Size(13, 13);
             this.label12.TabIndex = 15;
             this.label12.Text = "γ";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(4, 118);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Location = new System.Drawing.Point(3, 78);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(16, 17);
+            this.label13.Size = new System.Drawing.Size(13, 13);
             this.label13.TabIndex = 16;
             this.label13.Text = "β";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 135);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(3, 104);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(168, 17);
+            this.label5.Size = new System.Drawing.Size(134, 13);
             this.label5.TabIndex = 14;
             this.label5.Text = "Максимальная скорость";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(4, 152);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Location = new System.Drawing.Point(3, 117);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(162, 17);
+            this.label14.Size = new System.Drawing.Size(128, 13);
             this.label14.TabIndex = 17;
             this.label14.Text = "Минимальная скорость";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(4, 169);
-            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label17.Location = new System.Drawing.Point(3, 130);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(246, 17);
+            this.label17.Size = new System.Drawing.Size(188, 13);
             this.label17.TabIndex = 17;
             this.label17.Text = "Среднеквадратическое отклонение";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(258, 16);
-            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Location = new System.Drawing.Point(3, 143);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(133, 17);
+            this.label15.Size = new System.Drawing.Size(104, 13);
             this.label15.TabIndex = 18;
             this.label15.Text = "Плотность воздуха";
             // 
@@ -509,8 +473,8 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.zedGraphControlSpeed, 3);
             this.zedGraphControlSpeed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zedGraphControlSpeed.Location = new System.Drawing.Point(5, 212);
-            this.zedGraphControlSpeed.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.zedGraphControlSpeed.Location = new System.Drawing.Point(4, 172);
+            this.zedGraphControlSpeed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zedGraphControlSpeed.Name = "zedGraphControlSpeed";
             this.zedGraphControlSpeed.ScrollGrace = 0D;
             this.zedGraphControlSpeed.ScrollMaxX = 0D;
@@ -519,43 +483,45 @@
             this.zedGraphControlSpeed.ScrollMinX = 0D;
             this.zedGraphControlSpeed.ScrollMinY = 0D;
             this.zedGraphControlSpeed.ScrollMinY2 = 0D;
-            this.zedGraphControlSpeed.Size = new System.Drawing.Size(733, 218);
+            this.zedGraphControlSpeed.Size = new System.Drawing.Size(549, 177);
             this.zedGraphControlSpeed.TabIndex = 3;
             this.zedGraphControlSpeed.UseExtendedPrintDialog = true;
             // 
             // dateTimePickerFrom
             // 
-            this.dateTimePickerFrom.Location = new System.Drawing.Point(41, 50);
-            this.dateTimePickerFrom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dateTimePickerFrom.Location = new System.Drawing.Point(31, 41);
+            this.dateTimePickerFrom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dateTimePickerFrom.Name = "dateTimePickerFrom";
-            this.dateTimePickerFrom.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePickerFrom.Size = new System.Drawing.Size(151, 20);
             this.dateTimePickerFrom.TabIndex = 6;
             this.dateTimePickerFrom.ValueChanged += new System.EventHandler(this.comboBoxYear_SelectionChangeCommitted);
             // 
             // dateTimePickerTo
             // 
-            this.dateTimePickerTo.Location = new System.Drawing.Point(41, 80);
-            this.dateTimePickerTo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dateTimePickerTo.Location = new System.Drawing.Point(31, 65);
+            this.dateTimePickerTo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dateTimePickerTo.Name = "dateTimePickerTo";
-            this.dateTimePickerTo.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePickerTo.Size = new System.Drawing.Size(151, 20);
             this.dateTimePickerTo.TabIndex = 7;
             this.dateTimePickerTo.ValueChanged += new System.EventHandler(this.comboBoxYear_SelectionChangeCommitted);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 87);
+            this.label3.Location = new System.Drawing.Point(3, 71);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(30, 17);
+            this.label3.Size = new System.Drawing.Size(24, 13);
             this.label3.TabIndex = 9;
             this.label3.Text = "По:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 53);
+            this.label4.Location = new System.Drawing.Point(10, 43);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(21, 17);
+            this.label4.Size = new System.Drawing.Size(17, 13);
             this.label4.TabIndex = 8;
             this.label4.Text = "С:";
             // 
@@ -563,10 +529,9 @@
             // 
             this.radioButtonSelectPeriod.AutoSize = true;
             this.radioButtonSelectPeriod.Checked = true;
-            this.radioButtonSelectPeriod.Location = new System.Drawing.Point(68, 20);
-            this.radioButtonSelectPeriod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButtonSelectPeriod.Location = new System.Drawing.Point(51, 16);
             this.radioButtonSelectPeriod.Name = "radioButtonSelectPeriod";
-            this.radioButtonSelectPeriod.Size = new System.Drawing.Size(138, 21);
+            this.radioButtonSelectPeriod.Size = new System.Drawing.Size(108, 17);
             this.radioButtonSelectPeriod.TabIndex = 10;
             this.radioButtonSelectPeriod.TabStop = true;
             this.radioButtonSelectPeriod.Text = "Выбрать период";
@@ -585,21 +550,18 @@
             this.groupBox3.Controls.Add(this.dateTimePickerTo);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Location = new System.Drawing.Point(9, 0);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Location = new System.Drawing.Point(7, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox3.Size = new System.Drawing.Size(596, 123);
+            this.groupBox3.Size = new System.Drawing.Size(447, 100);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             // 
             // radioButtonSelectYearMonth
             // 
             this.radioButtonSelectYearMonth.AutoSize = true;
-            this.radioButtonSelectYearMonth.Location = new System.Drawing.Point(337, 20);
-            this.radioButtonSelectYearMonth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButtonSelectYearMonth.Location = new System.Drawing.Point(253, 16);
             this.radioButtonSelectYearMonth.Name = "radioButtonSelectYearMonth";
-            this.radioButtonSelectYearMonth.Size = new System.Drawing.Size(167, 21);
+            this.radioButtonSelectYearMonth.Size = new System.Drawing.Size(133, 17);
             this.radioButtonSelectYearMonth.TabIndex = 16;
             this.radioButtonSelectYearMonth.Text = "Выбрать год и месяц";
             this.radioButtonSelectYearMonth.UseVisualStyleBackColor = true;
@@ -609,10 +571,10 @@
             // 
             this.comboBoxYear.Enabled = false;
             this.comboBoxYear.FormattingEnabled = true;
-            this.comboBoxYear.Location = new System.Drawing.Point(411, 44);
-            this.comboBoxYear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.comboBoxYear.Location = new System.Drawing.Point(308, 36);
+            this.comboBoxYear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBoxYear.Name = "comboBoxYear";
-            this.comboBoxYear.Size = new System.Drawing.Size(175, 24);
+            this.comboBoxYear.Size = new System.Drawing.Size(132, 21);
             this.comboBoxYear.TabIndex = 12;
             this.comboBoxYear.SelectionChangeCommitted += new System.EventHandler(this.comboBoxYear_SelectionChangeCommitted);
             // 
@@ -620,37 +582,38 @@
             // 
             this.comboBoxMonth.Enabled = false;
             this.comboBoxMonth.FormattingEnabled = true;
-            this.comboBoxMonth.Location = new System.Drawing.Point(411, 78);
-            this.comboBoxMonth.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.comboBoxMonth.Location = new System.Drawing.Point(308, 63);
+            this.comboBoxMonth.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBoxMonth.Name = "comboBoxMonth";
-            this.comboBoxMonth.Size = new System.Drawing.Size(175, 24);
+            this.comboBoxMonth.Size = new System.Drawing.Size(132, 21);
             this.comboBoxMonth.TabIndex = 13;
             this.comboBoxMonth.SelectionChangeCommitted += new System.EventHandler(this.comboBoxYear_SelectionChangeCommitted);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(279, 53);
+            this.label1.Location = new System.Drawing.Point(209, 43);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 17);
+            this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 14;
             this.label1.Text = "Выберите год:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(279, 85);
+            this.label2.Location = new System.Drawing.Point(209, 69);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 17);
+            this.label2.Size = new System.Drawing.Size(95, 13);
             this.label2.TabIndex = 15;
             this.label2.Text = "Выберите месяц:";
             // 
             // buttonSaveAs
             // 
-            this.buttonSaveAs.Location = new System.Drawing.Point(613, 5);
-            this.buttonSaveAs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonSaveAs.Location = new System.Drawing.Point(460, 4);
             this.buttonSaveAs.Name = "buttonSaveAs";
-            this.buttonSaveAs.Size = new System.Drawing.Size(148, 51);
+            this.buttonSaveAs.Size = new System.Drawing.Size(111, 41);
             this.buttonSaveAs.TabIndex = 16;
             this.buttonSaveAs.Text = "Сохранить результаты";
             this.toolTip1.SetToolTip(this.buttonSaveAs, "Сохранить подробный ВЭК в файл");
@@ -659,10 +622,9 @@
             // 
             // buttonOpenRange
             // 
-            this.buttonOpenRange.Location = new System.Drawing.Point(611, 71);
-            this.buttonOpenRange.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonOpenRange.Location = new System.Drawing.Point(458, 58);
             this.buttonOpenRange.Name = "buttonOpenRange";
-            this.buttonOpenRange.Size = new System.Drawing.Size(148, 51);
+            this.buttonOpenRange.Size = new System.Drawing.Size(111, 41);
             this.buttonOpenRange.TabIndex = 17;
             this.buttonOpenRange.Text = "Сохранить ряд";
             this.toolTip1.SetToolTip(this.buttonOpenRange, "Открыть ряд в отдельной вкладке в главном окне");
@@ -671,16 +633,15 @@
             // 
             // FormEnergyInfo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(772, 843);
+            this.ClientSize = new System.Drawing.Size(579, 685);
             this.Controls.Add(this.buttonOpenRange);
             this.Controls.Add(this.buttonSaveAs);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.MinimumSize = new System.Drawing.Size(642, 824);
+            this.MinimumSize = new System.Drawing.Size(486, 677);
             this.Name = "FormEnergyInfo";
             this.Text = "Основные энергетические характеристики ветра";
             this.Shown += new System.EventHandler(this.formEnergyInfo_Shown);

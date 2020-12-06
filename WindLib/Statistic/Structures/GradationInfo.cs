@@ -28,7 +28,7 @@ namespace WindEnergy.WindLib.Statistic.Structures
             {
                 var r = WindDirections16.Calm.GetEnumItems();
                 var ad = from x in r
-                         where ((WindDirections16)x) != WindDirections16.Calm && ((WindDirections16)x) != WindDirections16.Undefined && ((WindDirections16)x) != WindDirections16.Variable
+                         where ((WindDirections16)x) != WindDirections16.Undefined && ((WindDirections16)x) != WindDirections16.Variable
                          select x;
                 items.AddRange(ad);
             }
@@ -36,7 +36,7 @@ namespace WindEnergy.WindLib.Statistic.Structures
             {
                 var r = WindDirections8.Calm.GetEnumItems();
                 var ad = from x in r
-                         where ((WindDirections8)x) != WindDirections8.Calm && ((WindDirections8)x) != WindDirections8.Undefined && ((WindDirections8)x) != WindDirections8.Variable
+                         where ((WindDirections8)x) != WindDirections8.Undefined && ((WindDirections8)x) != WindDirections8.Variable
                          select x;
                 items.AddRange(ad);
             }

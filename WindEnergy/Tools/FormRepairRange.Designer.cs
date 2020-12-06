@@ -45,14 +45,14 @@
             this.buttonRepairRange = new System.Windows.Forms.Button();
             this.comboBoxRepairInterval = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.labelStatus = new System.Windows.Forms.Label();
+            this.checkBoxReplaceExist = new System.Windows.Forms.CheckBox();
             this.groupBoxMain.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxMain
             // 
-            this.groupBoxMain.Controls.Add(this.labelStatus);
+            this.groupBoxMain.Controls.Add(this.checkBoxReplaceExist);
             this.groupBoxMain.Controls.Add(this.progressBarStatus);
             this.groupBoxMain.Controls.Add(this.labelInterval);
             this.groupBoxMain.Controls.Add(this.labelRangeLength);
@@ -67,18 +67,18 @@
             this.groupBoxMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxMain.Location = new System.Drawing.Point(0, 0);
             this.groupBoxMain.Name = "groupBoxMain";
-            this.groupBoxMain.Size = new System.Drawing.Size(308, 330);
+            this.groupBoxMain.Size = new System.Drawing.Size(313, 333);
             this.groupBoxMain.TabIndex = 4;
             this.groupBoxMain.TabStop = false;
             this.groupBoxMain.Text = "Восстановление ряда";
             // 
-            // progressBar1
+            // progressBarStatus
             // 
             this.progressBarStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBarStatus.Location = new System.Drawing.Point(6, 300);
-            this.progressBarStatus.Name = "progressBar1";
-            this.progressBarStatus.Size = new System.Drawing.Size(293, 23);
+            this.progressBarStatus.Location = new System.Drawing.Point(6, 303);
+            this.progressBarStatus.Name = "progressBarStatus";
+            this.progressBarStatus.Size = new System.Drawing.Size(301, 23);
             this.progressBarStatus.TabIndex = 10;
             // 
             // labelInterval
@@ -125,7 +125,7 @@
             this.groupBox3.Controls.Add(this.radioButtonSelPoint);
             this.groupBox3.Location = new System.Drawing.Point(9, 183);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(293, 62);
+            this.groupBox3.Size = new System.Drawing.Size(298, 62);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Выбор источника ряда";
@@ -181,7 +181,7 @@
             this.comboBoxInterpolateMethod.FormattingEnabled = true;
             this.comboBoxInterpolateMethod.Location = new System.Drawing.Point(9, 156);
             this.comboBoxInterpolateMethod.Name = "comboBoxInterpolateMethod";
-            this.comboBoxInterpolateMethod.Size = new System.Drawing.Size(293, 21);
+            this.comboBoxInterpolateMethod.Size = new System.Drawing.Size(298, 21);
             this.comboBoxInterpolateMethod.TabIndex = 2;
             this.comboBoxInterpolateMethod.SelectedIndexChanged += new System.EventHandler(this.comboBoxInterpolateMethod_SelectedIndexChanged);
             // 
@@ -189,9 +189,9 @@
             // 
             this.buttonRepairRange.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonRepairRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRepairRange.Location = new System.Drawing.Point(68, 251);
+            this.buttonRepairRange.Location = new System.Drawing.Point(6, 274);
             this.buttonRepairRange.Name = "buttonRepairRange";
-            this.buttonRepairRange.Size = new System.Drawing.Size(139, 23);
+            this.buttonRepairRange.Size = new System.Drawing.Size(301, 23);
             this.buttonRepairRange.TabIndex = 1;
             this.buttonRepairRange.Text = "Восстановить ряд";
             this.buttonRepairRange.UseVisualStyleBackColor = true;
@@ -204,23 +204,24 @@
             this.comboBoxRepairInterval.FormattingEnabled = true;
             this.comboBoxRepairInterval.Location = new System.Drawing.Point(9, 104);
             this.comboBoxRepairInterval.Name = "comboBoxRepairInterval";
-            this.comboBoxRepairInterval.Size = new System.Drawing.Size(293, 21);
+            this.comboBoxRepairInterval.Size = new System.Drawing.Size(298, 21);
             this.comboBoxRepairInterval.TabIndex = 0;
             // 
-            // labelStatus
+            // checkBoxReplaceExist
             // 
-            this.labelStatus.AutoSize = true;
-            this.labelStatus.Location = new System.Drawing.Point(6, 284);
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(70, 13);
-            this.labelStatus.TabIndex = 11;
-            this.labelStatus.Text = "Состояние...";
+            this.checkBoxReplaceExist.AutoSize = true;
+            this.checkBoxReplaceExist.Location = new System.Drawing.Point(9, 251);
+            this.checkBoxReplaceExist.Name = "checkBoxReplaceExist";
+            this.checkBoxReplaceExist.Size = new System.Drawing.Size(215, 17);
+            this.checkBoxReplaceExist.TabIndex = 11;
+            this.checkBoxReplaceExist.Text = "Заменять существующие измерения";
+            this.checkBoxReplaceExist.UseVisualStyleBackColor = true;
             // 
             // FormRepairRange
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(308, 330);
+            this.ClientSize = new System.Drawing.Size(313, 333);
             this.Controls.Add(this.groupBoxMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(324, 360);
@@ -252,6 +253,6 @@
         private System.Windows.Forms.Label labelCompletness;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ProgressBar progressBarStatus;
-        private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.CheckBox checkBoxReplaceExist;
     }
 }

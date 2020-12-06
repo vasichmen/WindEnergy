@@ -25,6 +25,9 @@ namespace WindEnergy.WindLib.Classes.Structures
             {
                 if (double.IsNaN(value))
                 { direction = value; return; }
+                if (value == (double)WindDirections16.Calm)
+                { direction = (double)WindDirections16.Calm; return; }
+
                 if (value < 0 || value >= 360)
                     throw new ArgumentOutOfRangeException("Направление ветра должно быть от 0 до 360 градусов");
                 else
@@ -218,8 +221,8 @@ namespace WindEnergy.WindLib.Classes.Structures
                 case WindDirections16.NNW:
                     return 337.5;
                 case WindDirections16.Calm:
+                    return (double)WindDirections16.Calm;
                 case WindDirections16.Variable:
-                    return 0;
                 case WindDirections16.Undefined:
                     return double.NaN;
                 default: throw new Exception("Такого румба нет");
@@ -321,6 +324,9 @@ namespace WindEnergy.WindLib.Classes.Structures
         {
             if (double.IsNaN(directionValue))
                 return WindDirections16.Undefined;
+
+            if (directionValue == (double)WindDirections16.Calm)
+                return WindDirections16.Calm;
 
             //получаем градации по румбам, начиная с севера
             double[] l = new double[17];
