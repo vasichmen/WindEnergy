@@ -25,7 +25,7 @@ namespace WindEnergy.UI.Tools
         private RP5MeteostationInfo spoint;
         private PointLatLng point = PointLatLng.Empty;
 
-        public FormLoadFromNASA(PointLatLng point)
+        public FormLoadFromNASA(PointLatLng selectedPoint)
         {
             InitializeComponent();
             Result = null;
@@ -34,7 +34,11 @@ namespace WindEnergy.UI.Tools
             comboBoxSpeedHeight.Items.AddRange(NasaWindSpeedHeight.WS10M.GetItems().ToArray());
             comboBoxSpeedHeight.SelectedItem = NasaWindSpeedHeight.WS10M.Description();
             
-            this.point = point;
+            point = selectedPoint;
+            if (point.IsEmpty) //если точка пустая, то надо попробовать взять из последних
+            {
+                point = Vars.Options.LoadNasaLastPoint;
+            }
             if (!point.IsEmpty)
             {
                 spoint = new RP5MeteostationInfo();
@@ -113,6 +117,9 @@ namespace WindEnergy.UI.Tools
             try
             {
                 buttonDownload.Enabled = false;
+
+                //сохранение последней точки
+                Vars.Options.LoadNasaLastPoint = spoint.Position;
 
                 NasaWindSpeedHeight spdParam = (NasaWindSpeedHeight)(new EnumTypeConverter<NasaWindSpeedHeight>().ConvertFrom(comboBoxSpeedHeight.SelectedItem));
                 NASA engineNASA = new NASA(Vars.Options.CacheFolder + "\\nasa", 168, spdParam);

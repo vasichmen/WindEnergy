@@ -1,5 +1,6 @@
 ﻿using CommonLib.Classes;
 using CommonLib.Classes.Base;
+using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -44,6 +45,7 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
             ETOPO2Folder = Application.StartupPath + "\\Data\\ETOPO";
             RP5SearchEngine = RP5SearchEngine.DBSearch;
             RP5SourceEngine = RP5SourceType.OnlineAPI;
+            LoadNasaLastPoint = PointLatLng.Empty;
         }
 
         /// <summary>
@@ -210,6 +212,11 @@ namespace WindEnergy.WindLib.Classes.Structures.Options
         /// нужно ли использовать ограничение на отклонение скорости при поиске АМС
         /// </summary>
         public bool UseSuitAMSMaximalRelativeSpeedDeviation { get; set; }
+
+        /// <summary>
+        /// Последняя точка, в которой загружались данные НАСА
+        /// </summary>
+        public PointLatLng LoadNasaLastPoint { get; set; }
 
 
         /// <summary>
