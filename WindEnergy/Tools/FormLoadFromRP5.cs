@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonLib;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -7,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindEnergy.UI.Dialogs;
+using WindEnergy.UI.Ext;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindEnergy.WindLib.Data.Providers.InternetServices;
@@ -321,6 +323,10 @@ namespace WindEnergy.UI.Tools
                 dateTimePickerFromDate.Enabled = true;
                 dateTimePickerToDate.Enabled = true;
                 buttonDownload.Enabled = true;
+                linkLabelOpenNasa.Enabled = true;
+
+                //запись координат
+                labelCoordinates.Text = $"Координаты метеостанции: {selectedMeteostation.Position.ToString(4)}";
             }
             catch (WebException)
             {
@@ -370,11 +376,27 @@ namespace WindEnergy.UI.Tools
                 dateTimePickerFromDate.Enabled = true;
                 dateTimePickerToDate.Enabled = true;
                 buttonDownload.Enabled = true;
+                linkLabelOpenNasa.Enabled = true;
 
                 comboBoxPoint.Items.Clear();
                 comboBoxPoint.Items.Add(selectedMeteostation);
                 comboBoxPoint.SelectedItem = selectedMeteostation;
+
+                //запись координат
+                labelCoordinates.Text = $"Координаты метеостанции: {selectedMeteostation.Position.ToString(4)}";
             }
+        }
+
+        private void linkLabelOpenNasa_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            FormLoadFromNASA frm = new FormLoadFromNASA(selectedMeteostation.Position);
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                RawRange res = frm.Result;
+                TabPageExt tab = Program.winMain.mainTabControl.OpenNewTab(res, res.Name);
+                tab.HasNotSavedChanges = true;
+            }
+            frm.Dispose();
         }
     }
 }

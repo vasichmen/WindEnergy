@@ -44,13 +44,15 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.checkBoxClearRange = new System.Windows.Forms.CheckBox();
             this.labelStatus = new System.Windows.Forms.Label();
+            this.labelCoordinates = new System.Windows.Forms.Label();
+            this.linkLabelOpenNasa = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // dateTimePickerFromDate
             // 
-            this.dateTimePickerFromDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.dateTimePickerFromDate.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.dateTimePickerFromDate.Enabled = false;
-            this.dateTimePickerFromDate.Location = new System.Drawing.Point(40, 78);
+            this.dateTimePickerFromDate.Location = new System.Drawing.Point(43, 97);
             this.dateTimePickerFromDate.Name = "dateTimePickerFromDate";
             this.dateTimePickerFromDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerFromDate.TabIndex = 0;
@@ -58,9 +60,9 @@
             // 
             // dateTimePickerToDate
             // 
-            this.dateTimePickerToDate.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.dateTimePickerToDate.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.dateTimePickerToDate.Enabled = false;
-            this.dateTimePickerToDate.Location = new System.Drawing.Point(40, 104);
+            this.dateTimePickerToDate.Location = new System.Drawing.Point(43, 123);
             this.dateTimePickerToDate.Name = "dateTimePickerToDate";
             this.dateTimePickerToDate.Size = new System.Drawing.Size(132, 20);
             this.dateTimePickerToDate.TabIndex = 1;
@@ -69,9 +71,9 @@
             // 
             // buttonDownload
             // 
-            this.buttonDownload.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDownload.Enabled = false;
-            this.buttonDownload.Location = new System.Drawing.Point(254, 74);
+            this.buttonDownload.Location = new System.Drawing.Point(257, 93);
             this.buttonDownload.Name = "buttonDownload";
             this.buttonDownload.Size = new System.Drawing.Size(132, 23);
             this.buttonDownload.TabIndex = 2;
@@ -105,19 +107,19 @@
             // 
             // labelDateRange
             // 
-            this.labelDateRange.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.labelDateRange.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelDateRange.AutoSize = true;
-            this.labelDateRange.Location = new System.Drawing.Point(9, 53);
+            this.labelDateRange.Location = new System.Drawing.Point(12, 72);
             this.labelDateRange.Name = "labelDateRange";
-            this.labelDateRange.Size = new System.Drawing.Size(81, 13);
+            this.labelDateRange.Size = new System.Drawing.Size(131, 13);
             this.labelDateRange.TabIndex = 5;
-            this.labelDateRange.Text = "Диапазон дат:";
+            this.labelDateRange.Text = "Выберите диапазон дат:";
             // 
             // label3
             // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 84);
+            this.label3.Location = new System.Drawing.Point(12, 103);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(25, 13);
             this.label3.TabIndex = 6;
@@ -125,9 +127,9 @@
             // 
             // label4
             // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 110);
+            this.label4.Location = new System.Drawing.Point(11, 129);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(27, 13);
             this.label4.TabIndex = 7;
@@ -135,9 +137,9 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(254, 110);
+            this.buttonCancel.Location = new System.Drawing.Point(257, 129);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(132, 23);
             this.buttonCancel.TabIndex = 8;
@@ -149,7 +151,7 @@
             // 
             this.progressBarProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBarProgress.Location = new System.Drawing.Point(12, 168);
+            this.progressBarProgress.Location = new System.Drawing.Point(12, 192);
             this.progressBarProgress.Name = "progressBarProgress";
             this.progressBarProgress.Size = new System.Drawing.Size(374, 23);
             this.progressBarProgress.TabIndex = 9;
@@ -168,11 +170,11 @@
             // 
             // checkBoxClearRange
             // 
-            this.checkBoxClearRange.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.checkBoxClearRange.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.checkBoxClearRange.AutoSize = true;
             this.checkBoxClearRange.Checked = true;
             this.checkBoxClearRange.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxClearRange.Location = new System.Drawing.Point(11, 130);
+            this.checkBoxClearRange.Location = new System.Drawing.Point(14, 149);
             this.checkBoxClearRange.Name = "checkBoxClearRange";
             this.checkBoxClearRange.Size = new System.Drawing.Size(173, 17);
             this.checkBoxClearRange.TabIndex = 11;
@@ -182,13 +184,36 @@
             // 
             // labelStatus
             // 
-            this.labelStatus.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelStatus.AutoSize = true;
-            this.labelStatus.Location = new System.Drawing.Point(12, 152);
+            this.labelStatus.Location = new System.Drawing.Point(12, 176);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(70, 13);
             this.labelStatus.TabIndex = 12;
             this.labelStatus.Text = "Состояние...";
+            // 
+            // labelCoordinates
+            // 
+            this.labelCoordinates.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelCoordinates.AutoSize = true;
+            this.labelCoordinates.Location = new System.Drawing.Point(12, 49);
+            this.labelCoordinates.Name = "labelCoordinates";
+            this.labelCoordinates.Size = new System.Drawing.Size(142, 13);
+            this.labelCoordinates.TabIndex = 13;
+            this.labelCoordinates.Text = "Метеостанция не выбрана";
+            // 
+            // linkLabelOpenNasa
+            // 
+            this.linkLabelOpenNasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabelOpenNasa.AutoSize = true;
+            this.linkLabelOpenNasa.Enabled = false;
+            this.linkLabelOpenNasa.Location = new System.Drawing.Point(289, 49);
+            this.linkLabelOpenNasa.Name = "linkLabelOpenNasa";
+            this.linkLabelOpenNasa.Size = new System.Drawing.Size(92, 13);
+            this.linkLabelOpenNasa.TabIndex = 14;
+            this.linkLabelOpenNasa.TabStop = true;
+            this.linkLabelOpenNasa.Text = "Открыть в NASA";
+            this.linkLabelOpenNasa.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelOpenNasa_LinkClicked);
             // 
             // FormLoadFromRP5
             // 
@@ -196,7 +221,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(395, 203);
+            this.ClientSize = new System.Drawing.Size(395, 227);
+            this.Controls.Add(this.linkLabelOpenNasa);
+            this.Controls.Add(this.labelCoordinates);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.checkBoxClearRange);
             this.Controls.Add(this.linkLabelSelectOnMap);
@@ -211,7 +238,8 @@
             this.Controls.Add(this.dateTimePickerToDate);
             this.Controls.Add(this.dateTimePickerFromDate);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(411, 242);
+            this.MaximumSize = new System.Drawing.Size(700, 266);
+            this.MinimumSize = new System.Drawing.Size(411, 266);
             this.Name = "FormLoadFromRP5";
             this.Text = "Загрузка ряда с Расписания погоды";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.formLoadFromRP5_FormClosed);
@@ -237,5 +265,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox checkBoxClearRange;
         private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.Label labelCoordinates;
+        private System.Windows.Forms.LinkLabel linkLabelOpenNasa;
     }
 }

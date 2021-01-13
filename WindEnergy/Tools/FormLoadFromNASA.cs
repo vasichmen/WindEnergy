@@ -25,7 +25,7 @@ namespace WindEnergy.UI.Tools
         private RP5MeteostationInfo spoint;
         private PointLatLng point = PointLatLng.Empty;
 
-        public FormLoadFromNASA()
+        public FormLoadFromNASA(PointLatLng point)
         {
             InitializeComponent();
             Result = null;
@@ -33,6 +33,20 @@ namespace WindEnergy.UI.Tools
             geocoder = new Arcgis(Vars.Options.CacheFolder + "\\arcgis");
             comboBoxSpeedHeight.Items.AddRange(NasaWindSpeedHeight.WS10M.GetItems().ToArray());
             comboBoxSpeedHeight.SelectedItem = NasaWindSpeedHeight.WS10M.Description();
+            
+            this.point = point;
+            if (!point.IsEmpty)
+            {
+                spoint = new RP5MeteostationInfo();
+                spoint.Position = point;
+                labelPointCoordinates.Text = $"Широта: {point.Lat:0.000} Долгота: {point.Lng:0.000}";
+
+                loadAddressAsync(point);
+
+                buttonDownload.Enabled = true;
+                dateTimePickerFromDate.Enabled = true;
+                dateTimePickerToDate.Enabled = true;
+            }
         }
 
         /// <summary>
@@ -45,12 +59,12 @@ namespace WindEnergy.UI.Tools
             FormSelectMapPointDialog spt = new FormSelectMapPointDialog("Выберите точку на карте", point, Vars.Options.CacheFolder, Resources.rp5_marker, Vars.Options.MapProvider);
             if (spt.ShowDialog(this) == DialogResult.OK)
             {
-                spoint = new RP5MeteostationInfo();
-                spoint.Position = spt.Result;
                 point = spt.Result;
-                labelPointCoordinates.Text = $"Широта: {spt.Result.Lat:0.000} Долгота: {spt.Result.Lng:0.000}";
+                spoint = new RP5MeteostationInfo();
+                spoint.Position = point;
+                labelPointCoordinates.Text = $"Широта: {point.Lat:0.000} Долгота: {point.Lng:0.000}";
 
-                loadAddressAsync(spt.Result);
+                loadAddressAsync(point);
 
                 buttonDownload.Enabled = true;
                 dateTimePickerFromDate.Enabled = true;

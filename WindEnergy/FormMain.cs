@@ -1,5 +1,6 @@
 ﻿using CommonLib;
 using CommonLib.UITools;
+using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -169,9 +170,9 @@ namespace WindEnergy.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void downloadNASAToolStripMenuItem_Click(object sender, EventArgs e)
+        public void downloadNASAToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormLoadFromNASA frm = new FormLoadFromNASA();
+            FormLoadFromNASA frm = new FormLoadFromNASA(PointLatLng.Empty);
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 RawRange res = frm.Result;
