@@ -30,15 +30,6 @@ namespace WindEnergy.UI.Tools
         {
             InitializeComponent();
             range = rang;
-        }
-
-        /// <summary>
-        /// расчёт информации и вывод вариантов
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void formCalcYear_Shown(object sender, EventArgs e)
-        {
             try
             {
                 years = YearCalculator.ProcessRange(range);
@@ -50,7 +41,7 @@ namespace WindEnergy.UI.Tools
                     labelRecomendedYear.Text = "Рекомендуется в качестве расчетного принять " + years.RecomendedYear.Year + " год:";
                     labelAverageCalcYearSpeed.Text = "Средняя скорость: " + years.RecomendedYear.AverageSpeed.ToString("0.0") + " м/с";
                     labelCompletness.Text = "Полнота ряда: " + years.RecomendedYear.Completness.ToString("0.00") + " %";
-                    labelExpectDeviation.Text = "Отклонение повторяемости скорости: " + years.RecomendedYear.ExpectancyDeviation.ToString("0.00") + "%";
+                    labelExpectDeviation.Text = "Отклонение повторяемости скорости: " + years.RecomendedYear.ExpectancyDeviation.ToString("0.00") + "о.е.";
                     labelInterval.Text = "Δt: " + years.RecomendedYear.Interval.Description() + "";
                     labelMaxSpeed.Text = "Максимальная скорость: " + years.RecomendedYear.Vmax.ToString("0.0") + " м/с";
                     labelSpeedDeviation.Text = "Отклонение скорости от многолетней: " + years.RecomendedYear.SpeedDeviation.ToString("0.00") + " м/с";
@@ -138,9 +129,9 @@ namespace WindEnergy.UI.Tools
                     e.Column.Width = 120;
                     break;
                 case "expectancydeviation":
-                    e.Column.HeaderText = "Отклонение повторяемости, %";
+                    e.Column.HeaderText = "Отклонение повторяемости, о.е.";
                     e.Column.DefaultCellStyle.Format = "n2";
-                    e.Column.Width = 130;
+                    e.Column.Width = 135;
                     break;
                 case "averagespeed":
                     e.Column.HeaderText = "Средняя скорость, м/с";

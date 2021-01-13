@@ -178,7 +178,6 @@
             this.MinimumSize = new System.Drawing.Size(489, 428);
             this.Name = "FormCalcYear";
             this.Text = "Выбор расчётного года";
-            this.Shown += new System.EventHandler(this.formCalcYear_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExt1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
