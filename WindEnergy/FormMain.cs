@@ -50,6 +50,7 @@ namespace WindEnergy.UI
             bool fullVersion = Driver.CheckFullKey();
             ToolStripMenuItemRangeElevator.Visible = fullVersion;
             ToolStripMenuItemRangeTerrain.Visible = fullVersion;
+            powerCalculateToolStripMenuItem.Visible = fullVersion;
 #endif
 
             saveToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
@@ -62,6 +63,7 @@ namespace WindEnergy.UI
             ToolStripMenuItemCalcYear.Enabled = mainTabControl.SelectedTab != null;
             ToolStripMenuItemRangeElevator.Enabled = mainTabControl.SelectedTab != null;
             ToolStripMenuItemRangeTerrain.Enabled = mainTabControl.SelectedTab != null;
+            powerCalculateToolStripMenuItem.Enabled = mainTabControl.SelectedTab != null;
         }
 
         #region Файл
@@ -363,6 +365,19 @@ namespace WindEnergy.UI
             new FormLoadData().Show();
         }
 
+
+        /// <summary>
+        /// расчет выработки ВЭУ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void powerCalculateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RawRange rang = (mainTabControl.SelectedTab as TabPageExt).Range;
+            FormPowerCalculator frm = new FormPowerCalculator(rang);
+            frm.Show(this);
+        }
+
         #endregion
 
         #region Помощь
@@ -497,5 +512,6 @@ namespace WindEnergy.UI
             Scripts.ConvertAMSDatabaseFromXlsx(Application.StartupPath+"\\БД-ВПВ.xlsx", Application.StartupPath + "\\AMS.database.txt");
 
         }
+
     }
 }

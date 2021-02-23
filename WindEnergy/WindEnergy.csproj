@@ -230,6 +230,12 @@
     <Compile Include="Tools\FormOptions.Designer.cs">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\FormPowerCalculator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FormPowerCalculator.Designer.cs">
+      <DependentUpon>FormPowerCalculator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\FormRangeElevator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -326,6 +332,9 @@
     </Compile>
     <EmbeddedResource Include="Tools\FormOptions.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FormPowerCalculator.resx">
+      <DependentUpon>FormPowerCalculator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FormRangeElevator.resx">
       <DependentUpon>FormRangeElevator.cs</DependentUpon>

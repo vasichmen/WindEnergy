@@ -79,6 +79,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mainTabControl = new WindEnergy.UI.Ext.TabControlExt();
             this.button1 = new System.Windows.Forms.Button();
+            this.powerCalculateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -249,6 +250,7 @@
             this.ToolStripMenuItemCalcYear,
             this.ToolStripMenuItemRangeTerrain,
             this.ToolStripMenuItemRangeElevator,
+            this.powerCalculateToolStripMenuItem,
             this.toolStripSeparator4,
             this.equalizeRangesToolStripMenuItem,
             this.dailyAverageGraphsToolStripMenuItem,
@@ -491,7 +493,7 @@
             this.tableLayoutPanel1.Controls.Add(this.mainTabControl, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 58);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -506,7 +508,7 @@
             this.mainTabControl.HotTrack = true;
             this.mainTabControl.ItemSize = new System.Drawing.Size(70, 20);
             this.mainTabControl.Location = new System.Drawing.Point(4, 4);
-            this.mainTabControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mainTabControl.Margin = new System.Windows.Forms.Padding(4);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
             this.mainTabControl.ShowToolTips = true;
@@ -526,6 +528,13 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // powerCalculateToolStripMenuItem
+            // 
+            this.powerCalculateToolStripMenuItem.Name = "powerCalculateToolStripMenuItem";
+            this.powerCalculateToolStripMenuItem.Size = new System.Drawing.Size(449, 28);
+            this.powerCalculateToolStripMenuItem.Text = "Расчет выработки ВЭУ";
+            this.powerCalculateToolStripMenuItem.Click += new System.EventHandler(this.powerCalculateToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -538,7 +547,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.Text = "Wind Energy";
             this.Activated += new System.EventHandler(this.FormMain_Activated);
@@ -607,6 +616,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonLoadRP5Range;
         private System.Windows.Forms.ToolStripButton toolStripButtonLoadNASARange;
         private System.Windows.Forms.ToolStripButton toolStripButtonImportFile;
+        private System.Windows.Forms.ToolStripMenuItem powerCalculateToolStripMenuItem;
     }
 }
 

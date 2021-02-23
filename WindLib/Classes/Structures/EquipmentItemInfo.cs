@@ -65,6 +65,24 @@ namespace WindEnergy.WindLib.Classes.Structures
         public double NomWindSpeed { get; set; }
 
         /// <summary>
+        /// истина, если заполнена мощностная характеристика
+        /// </summary>
+        public bool HasCharacteristic { get { return this.PerformanceCharacteristic.Count > 0; } }
+
+        /// <summary>
+        /// истина, если у этой записи достаточно данных для расчета
+        /// </summary>
+        public bool EnoughDataToCalculate
+        {
+            get
+            {
+                return !double.IsNaN(MinWindSpeed) && !double.IsNaN(NomWindSpeed) && Regulator !=TurbineRegulations.None;
+            }
+        }
+
+
+
+        /// <summary>
         /// Рабочая характеристика, N(V), кВт, м/с
         /// </summary>
         public Dictionary<double, double> PerformanceCharacteristic { get; set; }
