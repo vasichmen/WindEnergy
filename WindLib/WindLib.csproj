@@ -213,6 +213,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Transformation\Check\Checker.cs" />
+    <Compile Include="Transformation\Restore\Interpolation\BaseInterpolateMethod.cs" />
     <Compile Include="Transformation\Restore\Interpolation\IInterpolateMethod.cs" />
     <Compile Include="Transformation\Restore\Interpolation\LagrangeInterpolateMethod.cs" />
     <Compile Include="Transformation\Restore\Interpolation\LinearInterpolateMethod.cs" />
