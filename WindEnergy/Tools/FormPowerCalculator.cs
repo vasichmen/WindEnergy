@@ -60,6 +60,14 @@ namespace WindEnergy.UI.Tools
 
             //основные характеристики
             comboBoxRegulator.SelectedItem = selectedEquipment.Regulator.Description();
+            textBoxPower.Text = selectedEquipment.Power.ToString();
+            textBoxMaxWindSpeed.Text = selectedEquipment.MaxWindSpeed.ToString();
+            textBoxMinWindSpeed.Text = selectedEquipment.MinWindSpeed.ToString();
+            textBoxNomWindSpeed.Text = selectedEquipment.NomWindSpeed.ToString();
+            textBoxDeveloper.Text = selectedEquipment.Developer;
+            textBoxDiameter.Text = selectedEquipment.Diameter.ToString();
+            textBoxModel.Text = selectedEquipment.Model;
+            textBoxTowerHeight.Text = selectedEquipment.TowerHeightString;
         }
 
 
@@ -97,6 +105,13 @@ namespace WindEnergy.UI.Tools
                 case "hascharacteristic":
                     e.Column.HeaderText = "Мощностная характеристика";
                     break;
+                case "maxwindspeed":
+                    e.Column.HeaderText = "Максимальная скорость ветра, м/с";
+                    e.Column.DefaultCellStyle.Format = "n1";
+                    break;
+                case "towerheightstring":
+                    e.Column.HeaderText = "Варианты высот башни, м";
+                    break;
 
                 //удаляемые колонки пишем тут:
                 case "performancecharacteristic":
@@ -117,6 +132,62 @@ namespace WindEnergy.UI.Tools
 
             selectedEquipment = (EquipmentItemInfo)dataGridView1.SelectedRows[0].DataBoundItem;
             recalculateInterface();
+        }
+
+        /// <summary>
+        /// перезапись данных в выбранном элементе при изменении в контроле
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void controlChanged(object sender, EventArgs e)
+        {
+            Control control = sender as Control;
+            switch (control.Tag)
+            {
+                case "developer":
+                    selectedEquipment.Developer = textBoxDeveloper.Text;
+                    break;
+                case "model":
+                    selectedEquipment.Model = textBoxModel.Text;
+                    break;
+                case "power":
+                    if (double.TryParse(textBoxPower.Text.Replace('.', Constants.DecimalSeparator), out double power))
+                        selectedEquipment.Power = power;
+                    break;
+                case "nomWindSpeed":
+                    if (double.TryParse(textBoxNomWindSpeed.Text.Replace('.', Constants.DecimalSeparator), out double nom))
+                        selectedEquipment.NomWindSpeed = nom;
+                    break;
+                case "minWindSpeed":
+                    if (double.TryParse(textBoxMinWindSpeed.Text.Replace('.', Constants.DecimalSeparator), out double min))
+                        selectedEquipment.MinWindSpeed = min;
+                    break;
+                case "maxWindSpeed":
+                    if (double.TryParse(textBoxMaxWindSpeed.Text.Replace('.', Constants.DecimalSeparator), out double max))
+                        selectedEquipment.MaxWindSpeed = max;
+                    break;
+                case "diameter":
+                    if (double.TryParse(textBoxDiameter.Text.Replace('.', Constants.DecimalSeparator), out double diameter))
+                        selectedEquipment.Diameter = diameter;
+                    break;
+                case "regulator":
+                    selectedEquipment.Regulator = (TurbineRegulations)(new EnumTypeConverter<TurbineRegulations>().ConvertFrom(comboBoxRegulator.SelectedItem));
+                    break;
+                case "towerHeight":
+                    string[] arr = textBoxTowerHeight.Text.Trim(new char[] { ',', '/', '.' }).Replace(" ", "").Split('/');
+                    List<double> vals = new List<double>();
+                    foreach (string elem in arr)
+                        if (double.TryParse(elem.Replace('.', Constants.DecimalSeparator), out double val))
+                            vals.Add(val);
+                    selectedEquipment.TowerHeight = vals;
+                    break;
+                default: throw new Exception("Поле не определено");
+            }
+        }
+
+        private void buttonSaveEquipmentInDb_Click(object sender, EventArgs e)
+        {
+            Vars.EquipmentDatabase.AddElement(selectedEquipment);
         }
     }
 }

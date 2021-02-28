@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using WindEnergy.WindLib.Classes.Structures;
 
@@ -51,7 +52,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                     double power = double.NaN;
                     double.TryParse(arr[2].Trim().Replace('.', Constants.DecimalSeparator), out power);
 
-                    //максимальная скорость
+                    //максимальная скорость (выбирается минимальная из списка)
                     string[] arrMaxSpeed = arr[12].Split('/');
                     List<double> maxSpeed = new List<double>();
                     foreach (string v in arrMaxSpeed)
@@ -60,6 +61,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                         if (double.TryParse(v.Trim().Replace('.', Constants.DecimalSeparator), out h))
                             maxSpeed.Add(h);
                     }
+                    double maxSpeedResult = maxSpeed.Count > 0 ? maxSpeed.Min() : double.NaN;
 
                     //минимальная скорость
                     double minSpeed = double.NaN;
@@ -111,7 +113,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                         Developer = arr[0].Trim(),
                         Model = arr[1].Trim(),
                         Diameter = d,
-                        MaxWindSpeed = maxSpeed,
+                        MaxWindSpeed = maxSpeedResult,
                         MinWindSpeed = minSpeed,
                         NomWindSpeed = nomSpeed,
                         Power = power,

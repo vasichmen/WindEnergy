@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace WindEnergy.WindLib.Classes.Structures
 {
@@ -11,7 +12,6 @@ namespace WindEnergy.WindLib.Classes.Structures
         {
             this.PerformanceCharacteristic = new Dictionary<double, double>();
             this.TowerHeight = new List<double>();
-            this.MaxWindSpeed = new List<double>();
         }
 
         /// <summary>
@@ -47,12 +47,23 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// <summary>
         /// максимальная скорость ветра м/с
         /// </summary>
-        public List<double> MaxWindSpeed { get; set; }
+        public double MaxWindSpeed { get; set; }
 
         /// <summary>
         /// Варианты высот башни, м
         /// </summary>
         public List<double> TowerHeight { get; set; }
+        public string TowerHeightString
+        {
+            get
+            {
+                string res = "";
+                foreach (double a in TowerHeight)
+                    res += a.ToString() + "/";
+
+                return res.Trim(new char[] { '/' });
+            }
+        }
 
         /// <summary>
         /// Минимальная скорость ветра, м/с
@@ -76,7 +87,7 @@ namespace WindEnergy.WindLib.Classes.Structures
         {
             get
             {
-                return !double.IsNaN(MinWindSpeed) && !double.IsNaN(NomWindSpeed) && Regulator !=TurbineRegulations.None;
+                return !double.IsNaN(MinWindSpeed) && !double.IsNaN(NomWindSpeed) && Regulator != TurbineRegulations.None;
             }
         }
 
