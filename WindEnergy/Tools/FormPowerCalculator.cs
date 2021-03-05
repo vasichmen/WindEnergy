@@ -53,10 +53,10 @@ namespace WindEnergy.UI.Tools
             radioButtonCharacteristicFromDatabase.Checked = false;
             radioButtonCharacteristicManual.Checked = false;
             radioButtonCharacteristicFromDatabase.Enabled = selectedEquipment.HasCharacteristic;
-            radioButtonCharacteristicCalculate.Enabled = selectedEquipment.EnoughDataToCalculate;
-            if (selectedEquipment.HasCharacteristic && selectedEquipment.EnoughDataToCalculate)
+            radioButtonCharacteristicCalculate.Enabled = selectedEquipment.EnoughDataToCalculateCharacteristic;
+            if (selectedEquipment.HasCharacteristic && selectedEquipment.EnoughDataToCalculateCharacteristic)
                 radioButtonCharacteristicFromDatabase.Checked = true;
-            else if (selectedEquipment.EnoughDataToCalculate)
+            else if (selectedEquipment.EnoughDataToCalculateCharacteristic)
                 radioButtonCharacteristicCalculate.Checked = true;
             else
                 radioButtonCharacteristicManual.Checked = true;
@@ -72,7 +72,7 @@ namespace WindEnergy.UI.Tools
             textBoxModel.Text = selectedEquipment.Model;
             textBoxID.Text = selectedEquipment.ID.ToString();
             textBoxTowerHeight.Text = selectedEquipment.TowerHeightString;
-            buttonCalculate.Enabled = selectedEquipment.EnoughDataToCalculate;
+            buttonCalculate.Enabled = selectedEquipment.EnoughDataToCalculateCharacteristic;
 
             //отрисовка графика характеристики
             zedGraphControl.GraphPane.CurveList.Clear();
@@ -210,6 +210,7 @@ namespace WindEnergy.UI.Tools
                     break;
                 default: throw new Exception("Поле не определено");
             }
+            recalculateInterface();
         }
 
         /// <summary>
@@ -245,9 +246,7 @@ namespace WindEnergy.UI.Tools
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
             if (prepareEquipment())
-            {
-                //TODO: расчет ВЭУ
-            }
+                new FormPowerCalculatorResult(selectedEquipment).Show(this);
         }
 
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)

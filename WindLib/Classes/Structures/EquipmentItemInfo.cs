@@ -84,7 +84,7 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// <summary>
         /// истина, если у этой записи достаточно данных для расчета мощностной характеристики
         /// </summary>
-        public bool EnoughDataToCalculate
+        public bool EnoughDataToCalculateCharacteristic
         {
             get
             {
@@ -94,6 +94,19 @@ namespace WindEnergy.WindLib.Classes.Structures
                     !double.IsNaN(NomWindSpeed) &&
                     !double.IsNaN(MaxWindSpeed) &&
                     !double.IsNaN(Power);
+            }
+        }
+
+        /// <summary>
+        /// истина, если у этой записи достаточно данных для выполнения основного расчета  ВЭУ
+        /// </summary>
+        public bool EnoughDataToCalculatePower
+        {
+            get
+            {
+                return
+                    EnoughDataToCalculateCharacteristic &&
+                    TowerHeight.Count > 0;
             }
         }
 

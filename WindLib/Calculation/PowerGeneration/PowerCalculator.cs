@@ -20,7 +20,7 @@ namespace WindEnergy.WindLib.Calculation.PowerGeneration
         /// <returns></returns>
         public static Dictionary<double, double> CalculatePerformanceCharacteristic(EquipmentItemInfo selectedEquipment)
         {
-            if (!selectedEquipment.EnoughDataToCalculate)
+            if (!selectedEquipment.EnoughDataToCalculateCharacteristic)
                 throw new WindEnergyException("Недостаточно данных для расчета мощностной характеристики");
 
             LinearInterpolateMethod interpolator = new LinearInterpolateMethod(new Dictionary<double, double>() {

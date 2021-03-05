@@ -64,6 +64,7 @@ namespace WindEnergy.UI.Tools
             this.label6 = new System.Windows.Forms.Label();
             this.textBoxPower = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -109,7 +110,7 @@ namespace WindEnergy.UI.Tools
             this.tableLayoutPanel3.Controls.Add(this.zedGraphControl, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 250);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -124,7 +125,7 @@ namespace WindEnergy.UI.Tools
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(4, 4);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
@@ -139,7 +140,7 @@ namespace WindEnergy.UI.Tools
             // 
             this.zedGraphControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.zedGraphControl.Location = new System.Drawing.Point(765, 5);
-            this.zedGraphControl.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.zedGraphControl.Margin = new System.Windows.Forms.Padding(5);
             this.zedGraphControl.Name = "zedGraphControl";
             this.zedGraphControl.ScrollGrace = 0D;
             this.zedGraphControl.ScrollMaxX = 0D;
@@ -161,7 +162,7 @@ namespace WindEnergy.UI.Tools
             this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -175,48 +176,51 @@ namespace WindEnergy.UI.Tools
             this.groupBox1.Controls.Add(this.radioButtonCharacteristicFromDatabase);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(764, 4);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(752, 230);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Мощностная характеристика";
+            this.groupBox1.Text = "Источник мощностной характеристики";
             // 
             // radioButtonCharacteristicManual
             // 
             this.radioButtonCharacteristicManual.AutoSize = true;
             this.radioButtonCharacteristicManual.Location = new System.Drawing.Point(8, 80);
-            this.radioButtonCharacteristicManual.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButtonCharacteristicManual.Margin = new System.Windows.Forms.Padding(4);
             this.radioButtonCharacteristicManual.Name = "radioButtonCharacteristicManual";
             this.radioButtonCharacteristicManual.Size = new System.Drawing.Size(329, 21);
             this.radioButtonCharacteristicManual.TabIndex = 2;
             this.radioButtonCharacteristicManual.TabStop = true;
             this.radioButtonCharacteristicManual.Text = "Ввести мощностную характеристику вручную";
+            this.toolTip1.SetToolTip(this.radioButtonCharacteristicManual, "Открыть окно для ввода мощностной характеристики");
             this.radioButtonCharacteristicManual.UseVisualStyleBackColor = true;
             // 
             // radioButtonCharacteristicCalculate
             // 
             this.radioButtonCharacteristicCalculate.AutoSize = true;
             this.radioButtonCharacteristicCalculate.Location = new System.Drawing.Point(8, 52);
-            this.radioButtonCharacteristicCalculate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButtonCharacteristicCalculate.Margin = new System.Windows.Forms.Padding(4);
             this.radioButtonCharacteristicCalculate.Name = "radioButtonCharacteristicCalculate";
             this.radioButtonCharacteristicCalculate.Size = new System.Drawing.Size(344, 21);
             this.radioButtonCharacteristicCalculate.TabIndex = 1;
             this.radioButtonCharacteristicCalculate.TabStop = true;
             this.radioButtonCharacteristicCalculate.Text = "Расчитать характеристику на основе Vmin и Vр";
+            this.toolTip1.SetToolTip(this.radioButtonCharacteristicCalculate, "Расчет мощностной характеристики на основе заданных Vmin, Vmax, Pnom, Vnom по лин" +
+        "ейному закону");
             this.radioButtonCharacteristicCalculate.UseVisualStyleBackColor = true;
             // 
             // radioButtonCharacteristicFromDatabase
             // 
             this.radioButtonCharacteristicFromDatabase.AutoSize = true;
             this.radioButtonCharacteristicFromDatabase.Location = new System.Drawing.Point(8, 23);
-            this.radioButtonCharacteristicFromDatabase.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButtonCharacteristicFromDatabase.Margin = new System.Windows.Forms.Padding(4);
             this.radioButtonCharacteristicFromDatabase.Name = "radioButtonCharacteristicFromDatabase";
-            this.radioButtonCharacteristicFromDatabase.Size = new System.Drawing.Size(480, 21);
+            this.radioButtonCharacteristicFromDatabase.Size = new System.Drawing.Size(482, 21);
             this.radioButtonCharacteristicFromDatabase.TabIndex = 0;
             this.radioButtonCharacteristicFromDatabase.TabStop = true;
-            this.radioButtonCharacteristicFromDatabase.Text = "Использовать характеристику из БД энергетическое обородование";
+            this.radioButtonCharacteristicFromDatabase.Text = "Использовать характеристику из БД Энергетическое обородование";
             this.radioButtonCharacteristicFromDatabase.UseVisualStyleBackColor = true;
             // 
             // groupBox2
@@ -245,9 +249,9 @@ namespace WindEnergy.UI.Tools
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(4, 4);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(752, 230);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
@@ -257,7 +261,7 @@ namespace WindEnergy.UI.Tools
             // 
             this.comboBoxRegulator.FormattingEnabled = true;
             this.comboBoxRegulator.Location = new System.Drawing.Point(200, 148);
-            this.comboBoxRegulator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxRegulator.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxRegulator.Name = "comboBoxRegulator";
             this.comboBoxRegulator.Size = new System.Drawing.Size(132, 24);
             this.comboBoxRegulator.TabIndex = 19;
@@ -276,7 +280,7 @@ namespace WindEnergy.UI.Tools
             // textBoxDiameter
             // 
             this.textBoxDiameter.Location = new System.Drawing.Point(257, 116);
-            this.textBoxDiameter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxDiameter.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxDiameter.Name = "textBoxDiameter";
             this.textBoxDiameter.Size = new System.Drawing.Size(75, 22);
             this.textBoxDiameter.TabIndex = 16;
@@ -296,7 +300,7 @@ namespace WindEnergy.UI.Tools
             // 
             this.textBoxID.Enabled = false;
             this.textBoxID.Location = new System.Drawing.Point(257, 20);
-            this.textBoxID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxID.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxID.Name = "textBoxID";
             this.textBoxID.Size = new System.Drawing.Size(75, 22);
             this.textBoxID.TabIndex = 17;
@@ -315,7 +319,7 @@ namespace WindEnergy.UI.Tools
             // textBoxMinWindSpeed
             // 
             this.textBoxMinWindSpeed.Location = new System.Drawing.Point(257, 52);
-            this.textBoxMinWindSpeed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxMinWindSpeed.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxMinWindSpeed.Name = "textBoxMinWindSpeed";
             this.textBoxMinWindSpeed.Size = new System.Drawing.Size(75, 22);
             this.textBoxMinWindSpeed.TabIndex = 17;
@@ -334,7 +338,7 @@ namespace WindEnergy.UI.Tools
             // textBoxMaxWindSpeed
             // 
             this.textBoxMaxWindSpeed.Location = new System.Drawing.Point(257, 84);
-            this.textBoxMaxWindSpeed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxMaxWindSpeed.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxMaxWindSpeed.Name = "textBoxMaxWindSpeed";
             this.textBoxMaxWindSpeed.Size = new System.Drawing.Size(75, 22);
             this.textBoxMaxWindSpeed.TabIndex = 13;
@@ -352,34 +356,40 @@ namespace WindEnergy.UI.Tools
             // 
             // buttonCalculate
             // 
-            this.buttonCalculate.Location = new System.Drawing.Point(611, 191);
-            this.buttonCalculate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonCalculate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCalculate.Location = new System.Drawing.Point(611, 182);
+            this.buttonCalculate.Margin = new System.Windows.Forms.Padding(4);
             this.buttonCalculate.Name = "buttonCalculate";
-            this.buttonCalculate.Size = new System.Drawing.Size(133, 28);
+            this.buttonCalculate.Size = new System.Drawing.Size(133, 40);
             this.buttonCalculate.TabIndex = 11;
             this.buttonCalculate.Text = "Расчитать ";
+            this.toolTip1.SetToolTip(this.buttonCalculate, "Если кнопка не активна, значит у выбранной ВЭУ не заполнены необходимые параметры" +
+        "");
             this.buttonCalculate.UseVisualStyleBackColor = true;
             this.buttonCalculate.Click += new System.EventHandler(this.buttonCalculate_Click);
             // 
             // buttonSaveEquipmentInDb
             // 
-            this.buttonSaveEquipmentInDb.Location = new System.Drawing.Point(361, 191);
-            this.buttonSaveEquipmentInDb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonSaveEquipmentInDb.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonSaveEquipmentInDb.Location = new System.Drawing.Point(360, 182);
+            this.buttonSaveEquipmentInDb.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSaveEquipmentInDb.Name = "buttonSaveEquipmentInDb";
-            this.buttonSaveEquipmentInDb.Size = new System.Drawing.Size(140, 28);
+            this.buttonSaveEquipmentInDb.Size = new System.Drawing.Size(195, 40);
             this.buttonSaveEquipmentInDb.TabIndex = 10;
             this.buttonSaveEquipmentInDb.Text = "Сохранить ВЭУ";
+            this.toolTip1.SetToolTip(this.buttonSaveEquipmentInDb, "Сохраняет настроенные параметры ВЭУ в БД Энергетическое оборудование");
             this.buttonSaveEquipmentInDb.UseVisualStyleBackColor = true;
             this.buttonSaveEquipmentInDb.Click += new System.EventHandler(this.buttonSaveEquipmentInDb_Click);
             // 
             // textBoxTowerHeight
             // 
             this.textBoxTowerHeight.Location = new System.Drawing.Point(611, 149);
-            this.textBoxTowerHeight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxTowerHeight.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxTowerHeight.Name = "textBoxTowerHeight";
             this.textBoxTowerHeight.Size = new System.Drawing.Size(132, 22);
             this.textBoxTowerHeight.TabIndex = 7;
             this.textBoxTowerHeight.Tag = "towerHeight";
+            this.toolTip1.SetToolTip(this.textBoxTowerHeight, "Перечислите варианты высот башни, разделяя их символом \"/\"");
             this.textBoxTowerHeight.TextChanged += new System.EventHandler(this.controlChanged);
             // 
             // label9
@@ -395,7 +405,7 @@ namespace WindEnergy.UI.Tools
             // textBoxNomWindSpeed
             // 
             this.textBoxNomWindSpeed.Location = new System.Drawing.Point(611, 117);
-            this.textBoxNomWindSpeed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxNomWindSpeed.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxNomWindSpeed.Name = "textBoxNomWindSpeed";
             this.textBoxNomWindSpeed.Size = new System.Drawing.Size(132, 22);
             this.textBoxNomWindSpeed.TabIndex = 7;
@@ -415,7 +425,7 @@ namespace WindEnergy.UI.Tools
             // textBoxModel
             // 
             this.textBoxModel.Location = new System.Drawing.Point(537, 52);
-            this.textBoxModel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxModel.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxModel.Name = "textBoxModel";
             this.textBoxModel.Size = new System.Drawing.Size(205, 22);
             this.textBoxModel.TabIndex = 3;
@@ -435,7 +445,7 @@ namespace WindEnergy.UI.Tools
             // textBoxDeveloper
             // 
             this.textBoxDeveloper.Location = new System.Drawing.Point(537, 20);
-            this.textBoxDeveloper.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxDeveloper.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxDeveloper.Name = "textBoxDeveloper";
             this.textBoxDeveloper.Size = new System.Drawing.Size(205, 22);
             this.textBoxDeveloper.TabIndex = 3;
@@ -455,7 +465,7 @@ namespace WindEnergy.UI.Tools
             // textBoxPower
             // 
             this.textBoxPower.Location = new System.Drawing.Point(611, 84);
-            this.textBoxPower.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxPower.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxPower.Name = "textBoxPower";
             this.textBoxPower.Size = new System.Drawing.Size(132, 22);
             this.textBoxPower.TabIndex = 1;
@@ -474,6 +484,7 @@ namespace WindEnergy.UI.Tools
             // 
             // FormPowerCalculator
             // 
+            this.AcceptButton = this.buttonCalculate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1528, 562);
@@ -530,5 +541,6 @@ namespace WindEnergy.UI.Tools
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxMaxWindSpeed;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
