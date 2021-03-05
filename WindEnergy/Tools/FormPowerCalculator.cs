@@ -8,9 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindEnergy.UI.Dialogs;
+using WindEnergy.WindLib.Calculation.PowerGeneration;
 using WindEnergy.WindLib.Classes.Collections;
 using WindEnergy.WindLib.Classes.Structures;
 using WindLib;
+using ZedGraph;
 
 namespace WindEnergy.UI.Tools
 {
@@ -67,7 +70,29 @@ namespace WindEnergy.UI.Tools
             textBoxDeveloper.Text = selectedEquipment.Developer;
             textBoxDiameter.Text = selectedEquipment.Diameter.ToString();
             textBoxModel.Text = selectedEquipment.Model;
+            textBoxID.Text = selectedEquipment.ID.ToString();
             textBoxTowerHeight.Text = selectedEquipment.TowerHeightString;
+            buttonCalculate.Enabled = selectedEquipment.EnoughDataToCalculate;
+
+            //отрисовка графика характеристики
+            zedGraphControl.GraphPane.CurveList.Clear();
+            if (selectedEquipment.HasCharacteristic)
+            {
+                List<double> keys = selectedEquipment.PerformanceCharacteristic.Keys.ToList();
+                keys.Sort();
+                GraphPane spane = zedGraphControl.GraphPane;
+                spane.Title.Text = "P(V), кВт";
+                spane.XAxis.Title.Text = "V, м/с";
+                spane.YAxis.Title.Text = "P(V), кВт";
+                spane.GraphObjList.Clear();
+                spane.CurveList.Clear();
+                PointPairList slist = new PointPairList();
+                foreach (double key in keys)
+                    slist.Add(key, selectedEquipment.PerformanceCharacteristic[key]);
+                _ = spane.AddCurve("P(V)", slist, Color.Red);
+            }
+            zedGraphControl.AxisChange();
+            zedGraphControl.Invalidate();
         }
 
 
@@ -181,13 +206,46 @@ namespace WindEnergy.UI.Tools
                             vals.Add(val);
                     selectedEquipment.TowerHeight = vals;
                     break;
+                case "id":
+                    break;
                 default: throw new Exception("Поле не определено");
             }
         }
 
+        /// <summary>
+        /// заполнение выбранного элемента перед сохранением в БД или расчетом
+        /// </summary>
+        private bool prepareEquipment()
+        {
+            if (radioButtonCharacteristicCalculate.Checked)
+                selectedEquipment.PerformanceCharacteristic = PowerCalculator.CalculatePerformanceCharacteristic(selectedEquipment);
+            else if (radioButtonCharacteristicManual.Checked)
+            {
+                FormPerformanceCharacteristicDialog fpcd = new FormPerformanceCharacteristicDialog(30);
+                if (fpcd.ShowDialog(this) == DialogResult.OK)
+                {
+                    selectedEquipment.PerformanceCharacteristic = fpcd.Result;
+                }
+                else return false;
+            }
+            return true;
+        }
+
         private void buttonSaveEquipmentInDb_Click(object sender, EventArgs e)
         {
-            Vars.EquipmentDatabase.AddElement(selectedEquipment);
+            if (prepareEquipment())
+            {
+                Vars.EquipmentDatabase.AddElement(selectedEquipment);
+                _ = MessageBox.Show("Новая запись сохранена в БД Энергетическое оборудование");
+            }
+        }
+
+        private void buttonCalculate_Click(object sender, EventArgs e)
+        {
+            if (prepareEquipment())
+            {
+                //TODO: расчет ВЭУ
+            }
         }
     }
 }

@@ -17,6 +17,11 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         /// <param name="FileName">адрес файла БД</param>
         public MesoclimateTableDatabase(string FileName) : base(FileName) { }
 
+        public override void ExportDatabaseFile()
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// загрузка файла БД
         /// </summary>
@@ -52,6 +57,11 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             }
             sr.Close();
             return items;
+        }
+
+        protected override string GenerateNextKey()
+        {
+            throw new System.Exception("Вместо этого метода надо вызывать AddElement с параметром key");
         }
     }
 }

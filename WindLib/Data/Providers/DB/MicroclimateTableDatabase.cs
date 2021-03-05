@@ -17,6 +17,11 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         /// <param name="FileName">адрес файла БД</param>
         public MicroclimateTableDatabase(string FileName) : base(FileName) { }
 
+        public override void ExportDatabaseFile()
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// загрузка файла БД
         /// </summary>
@@ -65,6 +70,11 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             string[] arr = v.Split('-');
             Diapason<double> res = new Diapason<double>(double.Parse(arr[0].Replace('.', Constants.DecimalSeparator)), double.Parse(arr[1].Replace('.', Constants.DecimalSeparator)));
             return res;
+        }
+
+        protected override string GenerateNextKey()
+        {
+            throw new System.Exception("Вместо этого метода надо вызывать AddElement с параметром key");
         }
     }
 }

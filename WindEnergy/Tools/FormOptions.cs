@@ -256,7 +256,7 @@ namespace WindEnergy.UI.Tools
             of.Filter = "Текстовые файлы *.txt|*.txt";
             if (of.ShowDialog(this) == DialogResult.OK)
             {
-                bool f = Vars.SpeedLimits.CheckRegionLimitsFile(of.FileName);
+                bool f = Vars.SpeedLimits.CheckDatabaseFile();
                 if (!f)
                 {
                     _ = MessageBox.Show(this, "Не удалось открыть выбранный файл", "Изменение файла ограничений скоростей", MessageBoxButtons.OK, MessageBoxIcon.Warning);

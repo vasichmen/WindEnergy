@@ -71,7 +71,7 @@ namespace WindLib
             get
             {
                 if (_SpeedLimits == null)
-                    _SpeedLimits = new SpeedLimitsDatabase();
+                    _SpeedLimits = new SpeedLimitsDatabase(Options.StaticRegionLimitsSourceFile);
                 return _SpeedLimits;
             }
             set { _SpeedLimits = value; }

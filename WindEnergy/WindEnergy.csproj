@@ -132,6 +132,12 @@
     <Compile Include="Dialogs\FormChooseMeteostAirportDialog.Designer.cs">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\FormPerformanceCharacteristicDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FormPerformanceCharacteristicDialog.Designer.cs">
+      <DependentUpon>FormPerformanceCharacteristicDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\FormRhumbsValuesDialogs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -280,6 +286,9 @@
     </Compile>
     <EmbeddedResource Include="Dialogs\FormChooseMeteostAirportDialog.resx">
       <DependentUpon>FormChooseMeteostAirportDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FormPerformanceCharacteristicDialog.resx">
+      <DependentUpon>FormPerformanceCharacteristicDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FormRhumbsValuesDialogs.resx">
       <DependentUpon>FormRhumbsValuesDialogs.cs</DependentUpon>

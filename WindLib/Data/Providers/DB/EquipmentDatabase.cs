@@ -19,6 +19,57 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         /// <param name="FileName"></param>
         public EquipmentDatabase(string FileName) : base(FileName) { }
 
+        public override void ExportDatabaseFile()
+        {
+            using (StreamWriter sw = new StreamWriter(this.FileName, false, Encoding.UTF8))
+            {
+                //              0            1      2               3        4         5              6              7                   8          9               10                 11              12               13                                                                            42    43             44           45               46                            47        48               49            50       51     52      53   54    55      56            57                    58         
+                sw.WriteLine("Производитель;Модель;Мощность, кВт;Диаметр,м;Регулир.;Мультипликатор;Оффшорисполн.;Макс.скорость, м/с;Производство;Высота башни, м;Мин.скорость, м/с;Ном.скорость, м/с;Макс.скорость, м/с;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;Число лопастей;Угол лопасти;Высота втулки, м;Вращ. ВК, об/мин;перед. Число;Тип ген-ра;Напряж.ген., кВ;Вращ.рот, об/мин;Лопасть;Ротор;Гондола;Башня;Общий;Страна;Шум, дБ(А);Систмы регулирования;Тормозная система;;;Сайт;;;;;;;;Видео");
+
+                foreach (EquipmentItemInfo item in List)
+                {
+                    string regulator;
+                    switch (item.Regulator)
+                    {
+                        case TurbineRegulations.Pitch: regulator = "pitch"; break;
+                        case TurbineRegulations.Stall: regulator = "stall"; break;
+                        case TurbineRegulations.Fixed: regulator = "fixed"; break;
+                        case TurbineRegulations.None: regulator = "nd"; break;
+                        default: throw new Exception("Этот тип регулирования не реализован");
+                    }
+
+
+                    string characteristic = "";
+                    for (double i = 1; i <= 30; i++)
+                        characteristic += (item.PerformanceCharacteristic.ContainsKey(i) ? item.PerformanceCharacteristic[i].ToString() : "") + ";";
+
+                    //                                      7    9   10 11  12
+                    string format = "{0};{1};{2};{3};{4};;;{5};;{6};{7};{8};{9};{10}";
+                    string line = string.Format(format,
+                        item.Developer, //0
+                        item.Model, //1
+                        item.Power, //2
+                        item.Diameter,//3
+                        regulator,//4
+                        item.MaxWindSpeed,//5
+                        item.TowerHeightString,//6
+                        item.MinWindSpeed,//7
+                        item.NomWindSpeed,//8
+                        item.MaxWindSpeed,//9
+                        characteristic
+                        );
+                    sw.WriteLine(line);
+                }
+
+                sw.Close();
+            }
+        }
+
+        protected override int GenerateNextKey()
+        {
+            return Dictionary.Keys.Max() + 1;
+        }
+
         /// <summary>
         /// загрузка файла БД
         /// </summary>

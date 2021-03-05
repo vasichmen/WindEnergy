@@ -266,5 +266,15 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         {
             return Dictionary.ContainsKey(meteostation.ID);
         }
+
+        public override void ExportDatabaseFile()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override string GenerateNextKey()
+        {
+            throw new System.Exception("Вместо этого метода надо вызывать AddElement с параметром key");
+        }
     }
 }

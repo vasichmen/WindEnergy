@@ -1,4 +1,5 @@
-﻿using GMap.NET;
+﻿using CommonLib.Classes.Base;
+using GMap.NET;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,48 +12,19 @@ namespace WindEnergy.WindLib.Data.Providers.DB
     /// <summary>
     /// База данных ограничений скоростей ветра по регионам
     /// </summary>
-    public class SpeedLimitsDatabase
+    public class SpeedLimitsDatabase : BaseFileDatabase<PointLatLng, ManualLimits>
     {
-        private Dictionary<PointLatLng, ManualLimits> _staticSpeedLimits = null;
+        public SpeedLimitsDatabase(string fileName) : base(fileName) { }
 
-        /// <summary>
-        /// список ограничений по регионам
-        /// </summary>
-        public Dictionary<PointLatLng, ManualLimits> List
+        public override void ExportDatabaseFile()
         {
-            get
-            {
-                if (_staticSpeedLimits == null || _staticSpeedLimits.Count == 0)
-                    _staticSpeedLimits = loadStaticSpeedLimits(Vars.Options.StaticRegionLimitsSourceFile);
-                return _staticSpeedLimits;
-            }
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// пробует загрузить файл ограничений и возвращает true, если  загрузка удалась
-        /// </summary>
-        /// <param name="fileName">адрес файла</param>
-        /// <returns></returns>
-        public bool CheckRegionLimitsFile(string fileName)
-        {
-            try
-            {
-                loadStaticSpeedLimits(fileName);
-                return true;
-            }
-            catch (Exception)
-            { return false; }
-        }
-
-        /// <summary>
-        /// загрузить список ограничений скоростей по точкам
-        /// </summary>
-        /// <param name="filename">адрес файла ограничения скоростей</param>
-        /// <returns></returns>
-        private Dictionary<PointLatLng, ManualLimits> loadStaticSpeedLimits(string filename)
+        public override Dictionary<PointLatLng, ManualLimits> LoadDatabaseFile()
         {
             Dictionary<PointLatLng, ManualLimits> limits = new Dictionary<PointLatLng, ManualLimits>();
-            StreamReader sr = new StreamReader(filename);
+            StreamReader sr = new StreamReader(FileName);
             sr.ReadLine();//пропускаем первую строку-заголовок
             while (!sr.EndOfStream)
             {
@@ -68,6 +40,11 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             }
             sr.Close();
             return limits;
+        }
+
+        protected override PointLatLng GenerateNextKey()
+        {
+            throw new System.Exception("Вместо этого метода надо вызывать AddElement с параметром key");
         }
 
     }

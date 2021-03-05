@@ -91,5 +91,15 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             List<FlugerMeteostationInfo> res = base.GetNearestMS(coordinates, radius, addOwn).Cast<FlugerMeteostationInfo>().ToList();
             return res;
         }
+
+        public override void ExportDatabaseFile()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override PointLatLng GenerateNextKey()
+        {
+            throw new System.Exception("Вместо этого метода надо вызывать AddElement с параметром key");
+        }
     }
 }

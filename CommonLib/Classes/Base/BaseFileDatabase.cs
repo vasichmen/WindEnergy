@@ -86,10 +86,39 @@ namespace CommonLib.Classes.Base
         }
 
         /// <summary>
+        /// добавляет элемент в БД и перезаписывает файл
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="element"></param>
+        public void AddElement(TData element)
+        {
+            this.AddElement(GenerateNextKey(), element);
+        }
+
+        /// <summary>
+        /// добавляет элемент в БД и перезаписывает файл
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="element"></param>
+        public void AddElement(TKey key, TData element)
+        {
+            if (_dictionary == null)
+                LoadDatabaseFile();
+
+            _dictionary.Add(key, element);
+            _list = null;
+            ExportDatabaseFile();
+        }
+
+        /// <summary>
         /// метод, загружающий файл в память
         /// </summary>
         /// <returns></returns>
         public abstract Dictionary<TKey, TData> LoadDatabaseFile();
+
+        public abstract void ExportDatabaseFile();
+
+        protected abstract TKey GenerateNextKey();
 
     }
 }

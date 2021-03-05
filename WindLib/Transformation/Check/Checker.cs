@@ -50,7 +50,7 @@ namespace WindEnergy.WindLib.Transformation.Check
                         provider = new ManualLimits(param.DirectionInclude, param.SpeedInclude);
                     break;
                 case LimitsProviders.StaticLimits:
-                    provider = new StaticRegionLimits(Vars.SpeedLimits.List, param.Coordinates);
+                    provider = new StaticRegionLimits(Vars.SpeedLimits.Dictionary, param.Coordinates);
                     break;
                 default: throw new Exception("Этот провайдер не реализован");
 

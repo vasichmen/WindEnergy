@@ -81,13 +81,18 @@ namespace WindEnergy.WindLib.Classes.Structures
         public bool HasCharacteristic { get { return this.PerformanceCharacteristic.Count > 0; } }
 
         /// <summary>
-        /// истина, если у этой записи достаточно данных для расчета
+        /// истина, если у этой записи достаточно данных для расчета мощностной характеристики
         /// </summary>
         public bool EnoughDataToCalculate
         {
             get
             {
-                return !double.IsNaN(MinWindSpeed) && !double.IsNaN(NomWindSpeed) && Regulator != TurbineRegulations.None;
+                return
+                    Regulator == TurbineRegulations.Pitch && //расчет характеристики возожен только для турбинс pitch регулированием
+                    !double.IsNaN(MinWindSpeed) &&
+                    !double.IsNaN(NomWindSpeed) &&
+                    !double.IsNaN(MaxWindSpeed) &&
+                    !double.IsNaN(Power);
             }
         }
 
