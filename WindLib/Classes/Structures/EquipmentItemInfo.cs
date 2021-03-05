@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WindEnergy.WindLib.Classes.Structures
@@ -102,5 +103,27 @@ namespace WindEnergy.WindLib.Classes.Structures
         /// Рабочая характеристика, N(V), кВт, м/с
         /// </summary>
         public Dictionary<double, double> PerformanceCharacteristic { get; set; }
+
+        /// <summary>
+        /// Возвращает копию объекта
+        /// </summary>
+        /// <returns></returns>
+        public EquipmentItemInfo Clone()
+        {
+            return new EquipmentItemInfo()
+            {
+                Developer = this.Developer,
+                ID = this.ID,
+                Diameter = this.Diameter,
+                MaxWindSpeed = this.MaxWindSpeed,
+                MinWindSpeed = this.MinWindSpeed,
+                Model = this.Model,
+                TowerHeight = this.TowerHeight.ToList(),
+                NomWindSpeed = this.NomWindSpeed,
+                PerformanceCharacteristic = new Dictionary<double, double>(this.PerformanceCharacteristic),
+                Regulator = this.Regulator,
+                Power = this.Power
+            };
+        }
     }
 }

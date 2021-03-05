@@ -58,10 +58,5 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             sr.Close();
             return items;
         }
-
-        protected override string GenerateNextKey()
-        {
-            throw new System.Exception("Вместо этого метода надо вызывать AddElement с параметром key");
-        }
     }
 }

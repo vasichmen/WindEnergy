@@ -90,24 +90,24 @@ namespace CommonLib.Classes.Base
         /// </summary>
         /// <param name="key"></param>
         /// <param name="element"></param>
-        public void AddElement(TData element)
+        public void AddElement(TKey key, TData element)
         {
-            this.AddElement(GenerateNextKey(), element);
+            Dictionary.Add(key, element);
+            _list = null;
+            ExportDatabaseFile();
+            _dictionary = null;
         }
 
         /// <summary>
-        /// добавляет элемент в БД и перезаписывает файл
+        /// удаление элемента из БД
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="element"></param>
-        public void AddElement(TKey key, TData element)
+        public void DeleteElement(TKey key)
         {
-            if (_dictionary == null)
-                LoadDatabaseFile();
-
-            _dictionary.Add(key, element);
+            Dictionary.Remove(key);
             _list = null;
             ExportDatabaseFile();
+            _dictionary = null;
         }
 
         /// <summary>
@@ -117,8 +117,6 @@ namespace CommonLib.Classes.Base
         public abstract Dictionary<TKey, TData> LoadDatabaseFile();
 
         public abstract void ExportDatabaseFile();
-
-        protected abstract TKey GenerateNextKey();
 
     }
 }

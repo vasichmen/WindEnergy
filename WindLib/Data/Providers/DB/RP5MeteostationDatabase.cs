@@ -271,10 +271,5 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         {
             throw new NotImplementedException();
         }
-
-        protected override string GenerateNextKey()
-        {
-            throw new System.Exception("Вместо этого метода надо вызывать AddElement с параметром key");
-        }
     }
 }

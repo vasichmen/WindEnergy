@@ -42,10 +42,5 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             return limits;
         }
 
-        protected override PointLatLng GenerateNextKey()
-        {
-            throw new System.Exception("Вместо этого метода надо вызывать AddElement с параметром key");
-        }
-
     }
 }

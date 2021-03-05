@@ -23,8 +23,8 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         {
             using (StreamWriter sw = new StreamWriter(this.FileName, false, Encoding.UTF8))
             {
-                //              0            1      2               3        4         5              6              7                   8          9               10                 11              12               13                                                                            42    43             44           45               46                            47        48               49            50       51     52      53   54    55      56            57                    58         
-                sw.WriteLine("Производитель;Модель;Мощность, кВт;Диаметр,м;Регулир.;Мультипликатор;Оффшорисполн.;Макс.скорость, м/с;Производство;Высота башни, м;Мин.скорость, м/с;Ном.скорость, м/с;Макс.скорость, м/с;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;Число лопастей;Угол лопасти;Высота втулки, м;Вращ. ВК, об/мин;перед. Число;Тип ген-ра;Напряж.ген., кВ;Вращ.рот, об/мин;Лопасть;Ротор;Гондола;Башня;Общий;Страна;Шум, дБ(А);Систмы регулирования;Тормозная система;;;Сайт;;;;;;;;Видео");
+                //             0     1            2     3               4        5         6              7              8                   9          10               11                12              13              14                                                                         
+                sw.WriteLine("ID;Производитель;Модель;Мощность, кВт;Диаметр,м;Регулир.;Мультипликатор;Оффшорисполн.;Макс.скорость, м/с;Производство;Высота башни, м;Мин.скорость, м/с;Ном.скорость, м/с;Макс.скорость, м/с;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;Число лопастей;Угол лопасти;Высота втулки, м;Вращ. ВК, об/мин;перед. Число;Тип ген-ра;Напряж.ген., кВ;Вращ.рот, об/мин;Лопасть;Ротор;Гондола;Башня;Общий;Страна;Шум, дБ(А);Систмы регулирования;Тормозная система;;;Сайт;;;;;;;;Видео");
 
                 foreach (EquipmentItemInfo item in List)
                 {
@@ -43,20 +43,21 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                     for (double i = 1; i <= 30; i++)
                         characteristic += (item.PerformanceCharacteristic.ContainsKey(i) ? item.PerformanceCharacteristic[i].ToString() : "") + ";";
 
-                    //                                      7    9   10 11  12
-                    string format = "{0};{1};{2};{3};{4};;;{5};;{6};{7};{8};{9};{10}";
+                    //                                          8    10  11  12  13   14
+                    string format = "{0};{1};{2};{3};{4};{5};;;{6};;{7};{8};{9};{10};{11}";
                     string line = string.Format(format,
-                        item.Developer, //0
-                        item.Model, //1
-                        item.Power, //2
-                        item.Diameter,//3
-                        regulator,//4
-                        item.MaxWindSpeed,//5
-                        item.TowerHeightString,//6
-                        item.MinWindSpeed,//7
-                        item.NomWindSpeed,//8
-                        item.MaxWindSpeed,//9
-                        characteristic
+                        item.ID, //0
+                        item.Developer, //1
+                        item.Model, //2
+                        item.Power, //3
+                        item.Diameter,//4
+                        regulator,//5
+                        item.MaxWindSpeed,//6
+                        item.TowerHeightString,//7
+                        item.MinWindSpeed,//8
+                        item.NomWindSpeed,//9
+                        item.MaxWindSpeed,//10
+                        characteristic //11 - 41
                         );
                     sw.WriteLine(line);
                 }
@@ -65,7 +66,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             }
         }
 
-        protected override int GenerateNextKey()
+        public int GenerateNextKey()
         {
             return Dictionary.Keys.Max() + 1;
         }
@@ -80,14 +81,13 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             {
                 Dictionary<int, EquipmentItemInfo> res = new Dictionary<int, EquipmentItemInfo>();
                 sr.ReadLine();
-                int id = 0;
                 while (!sr.EndOfStream)
                 {
                     string[] arr = sr.ReadLine().Split(';');
 
                     //рабочая характеристика
                     Dictionary<double, double> perf = new Dictionary<double, double>();
-                    int st = 13, length = 30;
+                    int st = 14, length = 30;
                     for (int i = st; i < st + length; i++)
                     {
                         bool exist = double.TryParse(arr[i].Trim().Replace('.', Constants.DecimalSeparator), out double val);
@@ -95,16 +95,21 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                             perf.Add(i - st + 1, val);
                     }
 
+                    //ID
+                    int id = int.MinValue;
+                    if (!int.TryParse(arr[0].Trim().Replace('.', Constants.DecimalSeparator), out id))
+                        continue;
+
                     //диаметр
                     double d = double.NaN;
-                    double.TryParse(arr[3].Trim().Replace('.', Constants.DecimalSeparator), out d);
+                    double.TryParse(arr[4].Trim().Replace('.', Constants.DecimalSeparator), out d);
 
                     //мощность
                     double power = double.NaN;
-                    double.TryParse(arr[2].Trim().Replace('.', Constants.DecimalSeparator), out power);
+                    double.TryParse(arr[3].Trim().Replace('.', Constants.DecimalSeparator), out power);
 
                     //максимальная скорость (выбирается минимальная из списка)
-                    string[] arrMaxSpeed = arr[12].Split('/');
+                    string[] arrMaxSpeed = arr[13].Split('/');
                     List<double> maxSpeed = new List<double>();
                     foreach (string v in arrMaxSpeed)
                     {
@@ -116,14 +121,14 @@ namespace WindEnergy.WindLib.Data.Providers.DB
 
                     //минимальная скорость
                     double minSpeed = double.NaN;
-                    double.TryParse(arr[10].Trim().Replace('.', Constants.DecimalSeparator), out minSpeed);
+                    double.TryParse(arr[11].Trim().Replace('.', Constants.DecimalSeparator), out minSpeed);
 
                     //номинальная скорость
                     double nomSpeed = double.NaN;
-                    double.TryParse(arr[11].Trim().Replace('.', Constants.DecimalSeparator), out nomSpeed);
+                    double.TryParse(arr[12].Trim().Replace('.', Constants.DecimalSeparator), out nomSpeed);
 
                     //высота башни 
-                    string[] arrH = arr[9].Trim().Split('/');
+                    string[] arrH = arr[10].Trim().Split('/');
                     List<double> height = new List<double>();
                     foreach (string v in arrH)
                     {
@@ -134,7 +139,7 @@ namespace WindEnergy.WindLib.Data.Providers.DB
 
                     //тип регулирования
                     TurbineRegulations regulator;
-                    switch (arr[4].ToLower().Trim())
+                    switch (arr[5].ToLower().Trim())
                     {
                         //мусорные типы
                         case "100":
@@ -157,12 +162,12 @@ namespace WindEnergy.WindLib.Data.Providers.DB
                         default: throw new Exception("Тип регулирования не реализован");
                     }
 
-                    res.Add(id++, new EquipmentItemInfo()
+                    res.Add(id, new EquipmentItemInfo()
                     {
                         ID = id,
                         PerformanceCharacteristic = perf,
-                        Developer = arr[0].Trim(),
-                        Model = arr[1].Trim(),
+                        Developer = arr[1].Trim(),
+                        Model = arr[2].Trim(),
                         Diameter = d,
                         MaxWindSpeed = maxSpeedResult,
                         MinWindSpeed = minSpeed,

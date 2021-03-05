@@ -71,10 +71,5 @@ namespace WindEnergy.WindLib.Data.Providers.DB
             Diapason<double> res = new Diapason<double>(double.Parse(arr[0].Replace('.', Constants.DecimalSeparator)), double.Parse(arr[1].Replace('.', Constants.DecimalSeparator)));
             return res;
         }
-
-        protected override string GenerateNextKey()
-        {
-            throw new System.Exception("Вместо этого метода надо вызывать AddElement с параметром key");
-        }
     }
 }

@@ -155,7 +155,7 @@ namespace WindEnergy.UI.Tools
             if (dataGridView1.SelectedRows.Count == 0)
                 return;
 
-            selectedEquipment = (EquipmentItemInfo)dataGridView1.SelectedRows[0].DataBoundItem;
+            selectedEquipment =( (EquipmentItemInfo)dataGridView1.SelectedRows[0].DataBoundItem).Clone();
             recalculateInterface();
         }
 
@@ -235,7 +235,9 @@ namespace WindEnergy.UI.Tools
         {
             if (prepareEquipment())
             {
-                Vars.EquipmentDatabase.AddElement(selectedEquipment);
+                selectedEquipment.ID = Vars.EquipmentDatabase.GenerateNextKey();
+                Vars.EquipmentDatabase.AddElement(selectedEquipment.ID, selectedEquipment);
+                loadTable();
                 _ = MessageBox.Show("Новая запись сохранена в БД Энергетическое оборудование");
             }
         }
@@ -245,6 +247,18 @@ namespace WindEnergy.UI.Tools
             if (prepareEquipment())
             {
                 //TODO: расчет ВЭУ
+            }
+        }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Delete)
+            {
+                if(MessageBox.Show(this,"Вы действиетльно хотите удалить эту ВЭУ?", "Удаление ВЭУ",MessageBoxButtons.YesNo,MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    Vars.EquipmentDatabase.DeleteElement(selectedEquipment.ID);
+                    loadTable();
+                }
             }
         }
     }

@@ -143,10 +143,5 @@ namespace WindEnergy.WindLib.Data.Providers.DB
         {
             throw new System.NotImplementedException();
         }
-
-        protected override PointLatLng GenerateNextKey()
-        {
-            throw new System.Exception("Вместо этого метода надо вызывать AddElement с параметром key");
-        }
     }
 }

@@ -133,6 +133,7 @@ namespace WindEnergy.UI.Tools
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.DataGridViewColumnAdded);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             // 
             // zedGraphControl
             // 
